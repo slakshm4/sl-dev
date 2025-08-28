@@ -1,88 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thursday - Personal Website</title>
-    <style>
-        /* ...all your CSS from the prompt... */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        /* ...rest of CSS unchanged... */
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thursday - Personal Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #ffffff;
+            color: #37352f;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: #fbfbfa;
+            padding: 32px 24px;
+            border-right: 1px solid #e9e9e7;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .profile-section {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #37352f;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #37352f;
+            margin-bottom: 4px;
+        }
+
+        .profile-title {
+            font-size: 14px;
+            color: #787774;
+            margin-bottom: 24px;
+        }
+
+        .quick-links {
+            margin-bottom: 32px;
+        }
+
+        .quick-links h3 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #787774;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 2px 0;
+            text-decoration: none;
+            color: #37352f;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background-color 0.15s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #f1f1ef;
+        }
+
+        .nav-link.active {
+            background-color: #2383e2;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 48px 64px;
+            background-color: #ffffff;
+        }
+
+        .header {
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #37352f;
+            margin-bottom: 8px;
+        }
+
+        .header-description {
+            font-size: 16px;
+            color: #787774;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .latest-post {
+            background-color: #fbfbfa;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 48px;
+            border: 1px solid #e9e9e7;
+        }
+
+        .latest-post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .latest-post h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #37352f;
+        }
+
+        .post-tag {
+            background-color: #e9e9e7;
+            color: #787774;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #2d5016 100%);
+            border-radius: 8px;
+            margin: 24px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%);
+        }
+
+        .featured-text {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+
+        .featured-text h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .featured-text .subtitle {
+            font-size: 28px;
+            font-weight: 300;
+            font-style: italic;
+            opacity: 0.9;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .post-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #37352f;
+            margin-bottom: 16px;
+        }
+
+        .read-more {
+            color: #2383e2;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        .widget {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            width: 120px;
+            height: 140px;
+            background-color: #ffffff;
+            border: 1px solid #e9e9e7;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .widget-powered {
+            font-size: 10px;
+            color: #787774;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .widget-logo {
+            width: 40px;
+            height: 40px;
+            background-color: #ff6b35;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .widget-brand {
+            font-size: 12px;
+            font-weight: 600;
+            color: #37352f;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                padding: 24px;
+            }
+            
+            .widget {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 24px auto 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <div class="profile-section">
-                <div class="profile-avatar">👤</div>
-                <div class="profile-name">Thursday</div>
-                <div class="profile-title">Writer & Musician</div>
-            </div>
-            <div class="quick-links">
-                <h3>Quick Links</h3>
-                <a href="#" class="nav-link">
-                    <span class="nav-icon">🏠</span>
-                    About Me
-                </a>
-                <a href="#" class="nav-link">
-                    <span class="nav-icon">📁</span>
-                    All Projects
-                </a>
-                <a href="#" class="nav-link">
-                    <span class="nav-icon">📓</span>
-                    Journal
-                </a>
-                <a href="#" class="nav-link">
-                    <span class="nav-icon">📄</span>
-                    Resume
-                </a>
-                <a href="#" class="nav-link">
-                    <span class="nav-icon">🎵</span>
-                    Resonance
-                </a>
-                <a href="#" class="nav-link">
-                    <span class="nav-icon">📧</span>
-                    Contact Me
-                </a>
-            </div>
-        </div>
-        <div class="main-content">
-            <div class="widget">
-                <div class="widget-powered">Powered By</div>
-                <div class="widget-logo">H</div>
-                <div class="widget-brand">HimsUke.com</div>
-            </div>
-            <div class="header">
-                <h1>Hi, there!</h1>
-                <div class="header-description">
-                    I'm <strong>Thursday</strong>, and I like to <strong>write</strong> when I have free time.<br><br>
-                    I also play the baritone horn for my university's marching band. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
-            </div>
-            <div class="latest-post">
-                <div class="latest-post-header">
-                    <h2>Latest Post</h2>
-                    <span class="post-tag">Design</span>
-                </div>
-                <div class="featured-image">
-                    <div class="featured-text">
-                        <h3>THROUGH</h3>
-                        <div class="subtitle">trials to triumph</div>
-                    </div>
-                </div>
-                <h3 style="font-size: 28px; font-weight: 700; color: #37352f; margin: 24px 0 16px 0;">
-                    TROUGH TRIALS, TO TRIUMPH
-                </h3>
-                <div class="post-content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
-                <a href="#" class="read-more">READ MORE</a>
-            </div>
-        </div>
-    </div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="profile-section">
+                <div class="profile-avatar">👤</div>
+                <div class="profile-name">Thursday</div>
+                <div class="profile-title">Writer & Musician</div>
+            </div>
+
+            <div class="quick-links">
+                <h3>Quick Links</h3>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    About Me
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">📁</span>
+                    All Projects
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">📓</span>
+                    Journal
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">📄</span>
+                    Resume
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">🎵</span>
+                    Resonance
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">📧</span>
+                    Contact Me
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="widget">
+                <div class="widget-powered">Powered By</div>
+                <div class="widget-logo">H</div>
+                <div class="widget-brand">HimsUke.com</div>
+            </div>
+
+            <div class="header">
+                <h1>Hi, there!</h1>
+                <div class="header-description">
+                    I'm <strong>Thursday</strong>, and I like to <strong>write</strong> when I have free time.<br><br>
+                    I also play the baritone horn for my university's marching band. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </div>
+            </div>
+
+            <div class="latest-post">
+                <div class="latest-post-header">
+                    <h2>Latest Post</h2>
+                    <span class="post-tag">Design</span>
+                </div>
+
+                <div class="featured-image">
+                    <div class="featured-text">
+                        <h3>THROUGH</h3>
+                        <div class="subtitle">trials to triumph</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 28px; font-weight: 700; color: #37352f; margin: 24px 0 16px 0;">
+                    THROUGH TRIALS, TO TRIUMPH
+                </h3>
+
+                <div class="post-content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </div>
+
+                <a href="#" class="read-more">READ MORE</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
