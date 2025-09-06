@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shradha Lakshman - Health Innovation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #fafafa;
+            color: #1d1d1f;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .greeting {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #007aff, #5856d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro-text {
+            font-size: 1.25rem;
+            font-weight: 400;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            color: #424245;
+        }
+
+        .intro-text strong {
+            color: #1d1d1f;
+            font-weight: 600;
+        }
+
+        .featured-work {
+            margin-top: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1d1d1f;
+        }
+
+        .section-tag {
+            background: rgba(0, 122, 255, 0.1);
+            color: #007aff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .featured-card {
+            background: #ffffff;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .featured-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header {
+            padding: 0;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+        }
+
+        .eureka-header {
+            background: linear-gradient(135deg, #66d9a6 0%, #4bc47a 100%);
+        }
+
+        .northcoast-header {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        }
+
+        .collaboration-header {
+            background: linear-gradient(135deg, #d64545 0%, #b73636 100%);
+        }
+
+        .featured-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .card-content {
+            padding: 2.5rem;
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .project-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #424245;
+            margin-bottom: 2rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: #007aff;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+
+        .project-link:hover {
+            color: #0051d5;
+            transform: translateX(2px);
+        }
+
+        .coming-soon {
+            color: #007aff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-accessibility {
+            background: rgba(214, 69, 69, 0.1);
+            color: #d64545;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .tag-community {
+            background: rgba(74, 144, 226, 0.1);
+            color: #4a90e2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .greeting {
+                font-size: 2.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .featured-title {
+                font-size: 2rem;
+            }
+
+            .card-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="greeting">Hi, there!</h1>
+        <p class="intro-text">
+            I'm <strong>Shradha Lakshman</strong>, a dental hygiene student at UBC passionate about 
+            <strong>health education and innovation</strong>.
+        </p>
+        <p class="intro-text">
+            I'm the founder and CEO of Eureka Enterprises, where I'm developing Eureka: 
+            QuestScapes - a gamified web-based application for HIV/AIDS education among 
+            Canadian youth. I've had the privilege of representing the dental hygiene 
+            profession and UBC Faculty of Dentistry across Northern BC through the 
+            Healthcare Travelling Roadshow, and held a position as Collaborative Health 
+            Education Project Assistant, advancing accessibility-driven curriculum redesign at 
+            one of the top health institutions in the world.
+        </p>
+
+        <div class="featured-work">
+            <div class="section-header">
+            </div>
+            
+            <div class="featured-card">
+                <div class="section-header" style="margin-bottom: 0; padding: 1.5rem 2.5rem 1rem 2.5rem;">
+                    <h2 style="font-size: 1.5rem; color: #424245; margin: 0;">Featured Work</h2>
+                    <span class="section-tag">Health Innovation</span>
+                </div>
+                <div class="card-header eureka-header">
+                    <h3 class="featured-title">Eureka: QuestScapes</h3>
+                    <p class="featured-subtitle">Gamified Health Initiative</p>
+                </div>
+                <div class="card-content">
+                    <h4 class="project-title">Gamified HIV/AIDS Education for Youth</h4>
+                    <p class="project-description">
+                        As founder and CEO of Eureka Enterprises, I am leading the development of Eureka: QuestScapes — a pioneering, gamified web-based platform transforming HIV/AIDS education for Canadian youth. This forward-thinking initiative received an $800 bursary from North American non-profit LetsStopAIDS, acknowledging its innovative impact and groundbreaking approach to health education. By utilizing interactive storytelling, immersive gameplay, and engaging trivia-based combat mechanics within a classic 2D platformer, Eureka enables youth to build health literacy, confront stigma, and embrace preventive behaviors.
+                    </p>
+                    <span class="coming-soon">WEBSITE COMING SOON</span>
+                </div>
+            </div>
+            
+            <div class="featured-card">
+                <div class="section-header" style="margin-bottom: 0; padding: 1.5rem 2.5rem 1rem 2.5rem;">
+                    <h2 style="font-size: 1.5rem; color: #424245; margin: 0;">Healthcare Outreach</h2>
+                    <span class="tag-community">Community Education</span>
+                </div>
+                <div class="card-header northcoast-header">
+                    <h3 class="featured-title">North Coast</h3>
+                    <p class="featured-subtitle">Travelling Healthcare Roadshow</p>
+                </div>
+                <div class="card-content">
+                    <h4 class="project-title">Inspiring Future Health Professionals</h4>
+                    <p class="project-description">
+                        As the Dental Hygiene Representative for UNBC's 2025 Healthcare Travelling Roadshow, I delivered dynamic oral health education across Northern BC's North Coast, representing the dental hygiene profession and UBC Faculty of Dentistry. Through interactive workshops with students in grades 4–12, I underscored the significance of the oral-systemic link and emphasized dental hygiene's critical role as a primary care profession within the health sector. By collaborating with educators and community leaders, I tailored content to engage and empower participants, fostering curiosity and confidence.
+                    </p>
+                    <a href="https://www.terracestandard.com/local-news/students-urged-to-consider-health-careers-7987947" target="_blank" class="project-link">READ FEATURE ARTICLE</a>
+                </div>
+            </div>
+            
+            <div class="featured-card">
+                <div class="section-header" style="margin-bottom: 0; padding: 1.5rem 2.5rem 1rem 2.5rem;">
+                    <h2 style="font-size: 1.5rem; color: #424245; margin: 0;">Curriculum Development</h2>
+                    <span class="tag-accessibility">Accessibility</span>
+                </div>
+                <div class="card-header collaboration-header">
+                    <h3 class="featured-title">Collaborative Health Education</h3>
+                    <p class="featured-subtitle">Project Assistant (UDL)</p>
+                </div>
+                <div class="card-content">
+                    <h4 class="project-title">Advancing Accessible Interprofessional Education</h4>
+                    <p class="project-description">
+                        In 2025, I worked with UBC Health as Lead Developer on curriculum materials and visuals reaching 2,000+ students across 14 health programs. I collaborated with faculty, clinicians, and institutional stakeholders to engineer interprofessional workshops on ethics, health informatics, and collaborative decision-making, improving accessibility, cultural sensitivity, and learner engagement. I co-authored the UBC Health Facilitator Guide, developed a simplified, icon-based version of the CIHC Competency Framework, and served as French Language Editor for its Référentiel des compétences, strengthening the national bilingual standard.
+                    </p>
+                    <span class="project-link">FORTHCOMING PUBLICATIONS IN PROGRESS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
