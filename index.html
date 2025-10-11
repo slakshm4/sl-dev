@@ -6,1159 +6,1808 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shradha Lakshman</title>
     <style>
+        /* Complete CSS redesign with Apple-inspired aesthetics and animations */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f5f5f7;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background-color: #ffffff;
             color: #1d1d1f;
-            line-height: 1.6;
+            line-height: 1.47059;
+            font-size: 17px;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
         }
 
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 300px;
-            background: white;
-            padding: 2rem;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        /* Added floating sidebar button with magnetic effect */
+        .sidebar-toggle {
             position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .profile-section {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .profile-image {
-            width: 80px;
-            height: 80px;
+            top: 80px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #0071e3 0%, #0077ed 100%);
             border-radius: 50%;
-            background: linear-gradient(135deg, #666, #999);
+            border: none;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 2rem;
-            color: white;
-            background-image: url('web profile size (32).png.webp');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
         }
 
-        .profile-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        .sidebar-toggle:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(0, 113, 227, 0.4);
+        }
+
+        .sidebar-toggle:active {
+            transform: scale(0.95);
+        }
+
+        /* Replaced emoji with SVG icon for sidebar toggle */
+        .sidebar-toggle svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-toggle:hover svg {
+            transform: scale(1.2);
+        }
+
+        .sidebar-toggle::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-toggle:hover::after {
+            opacity: 1;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* Added slide-out sidebar panel */
+        .profile-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: saturate(180%) blur(20px);
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            transition: right 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .profile-sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
             color: #1d1d1f;
-        }
-
-        .profile-title {
-            color: #86868b;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        .quick-links {
-            margin-top: 2rem;
-        }
-
-        .quick-links h3 {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #86868b;
-            margin-bottom: 1rem;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-link {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
-            padding: 0.75rem 0;
-            color: #1d1d1f;
-            text-decoration: none;
-            border-radius: 6px;
-            margin-bottom: 0.25rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
+            justify-content: center;
+            border-radius: 50%;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .sidebar-close:hover {
+            transform: rotate(90deg);
             background: #f5f5f7;
-            color: #007aff;
         }
 
-        /* Main Content */
-        .main-content {
-            margin-left: 300px;
-            flex: 1;
-            padding: 2rem;
-            max-width: calc(100% - 300px);
+        .sidebar-profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 60px auto 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
         }
 
-        .content-section {
-            display: none;
+        .sidebar-profile-image:hover {
+            transform: scale(1.05) rotate(2deg);
         }
 
-        .content-section.active {
-            display: block;
+        .sidebar-profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        .greeting {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #1d1d1f;
+        .sidebar-profile-image:hover img {
+            transform: scale(1.1);
         }
 
-        .intro-text {
-            font-size: 1.25rem;
-            font-weight: 400;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            color: #424245;
+        .sidebar-profile-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0,113,227,0.2) 0%, rgba(102,217,166,0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .intro-text strong {
-            color: #1d1d1f;
+        .sidebar-profile-image:hover::after {
+            opacity: 1;
+        }
+
+        .sidebar-name {
+            text-align: center;
+            font-size: 32px;
             font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
         }
 
-        /* Featured Work Section */
-        .featured-work {
-            margin-top: 3rem;
+        .sidebar-title {
+            text-align: center;
+            font-size: 17px;
+            color: #6e6e73;
+            margin-bottom: 32px;
         }
 
-        .section-header {
+        .sidebar-quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-link {
+            padding: 16px 24px;
+            background: #f5f5f7;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1d1d1f;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-link:hover {
+            background: #0071e3;
+            color: white;
+            transform: translateX(-8px);
+        }
+
+        .sidebar-link::before {
+            content: '→';
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-link:hover::before {
+            transform: translateX(4px);
+        }
+
+        /* Sticky Navigation Header */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 9999;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+        }
+
+        .nav-header.scrolled {
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            height: 48px;
         }
 
-        .section-title {
-            font-size: 1.5rem;
+        .nav-logo {
+            font-size: 21px;
             font-weight: 600;
             color: #1d1d1f;
+            text-decoration: none;
+            letter-spacing: -0.03em;
+            transition: opacity 0.3s ease;
         }
 
-        .section-tag {
-            background: #e5e5ea;
-            color: #86868b;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .nav-logo:hover {
+            opacity: 0.7;
         }
 
-        .featured-section-tag {
-            background: rgba(0, 122, 255, 0.1);
-            color: #007aff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            list-style: none;
         }
 
-        .featured-card {
-            background: #ffffff;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        .nav-menu a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
         }
 
-        .featured-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        .nav-menu a:hover {
+            opacity: 0.6;
         }
 
-        .card-header {
-            padding: 0;
-            height: 200px;
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #1d1d1f;
+            padding: 8px;
+        }
+
+        /* Enhanced hero section with parallax and advanced animations */
+        /* Enhanced hero section with Apple-style abstract banner */
+        .hero-section {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
             text-align: center;
+            padding: 120px 22px 80px;
+            background: #000000;
+            margin-top: 48px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            position: relative;
+            overflow: hidden;
         }
 
-        .eureka-header {
+        /* Added Apple-style abstract gradient banner background */
+        .hero-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(0, 113, 227, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(102, 217, 166, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(147, 51, 234, 0.3) 0%, transparent 60%),
+                linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            animation: bannerFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bannerFloat {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(0deg);
+            }
+            33% {
+                transform: scale(1.05) rotate(1deg);
+                filter: hue-rotate(10deg);
+            }
+            66% {
+                transform: scale(0.98) rotate(-1deg);
+                filter: hue-rotate(-10deg);
+            }
+        }
+
+        /* Added animated gradient orbs */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .hero-orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 113, 227, 0.6) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .hero-orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(102, 217, 166, 0.5) 0%, transparent 70%);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: 5s;
+        }
+
+        .hero-orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
+
+        /* Removed small profile image, content now overlays banner */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced hero title with scroll-triggered parallax */
+        .hero-title {
+            font-size: 80px;
+            font-weight: 600;
+            line-height: 1.05;
+            letter-spacing: -0.015em;
+            color: #ffffff;
+            margin-bottom: 16px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.5s forwards;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            line-height: 1.14286;
+            letter-spacing: 0.007em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 24px;
+            max-width: 800px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.7s forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-description {
+            font-size: 21px;
+            line-height: 1.381;
+            font-weight: 400;
+            letter-spacing: 0.011em;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 980px;
+            margin: 0 auto 48px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.9s forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main Content Container */
+        .main-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+
+        /* Enhanced section styles with stagger animations */
+        .content-section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header-main {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #6e6e73;
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .content-section.visible .section-eyebrow {
+            animation: fadeInUp 0.6s ease-out 0.1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title-main {
+            font-size: 56px;
+            font-weight: 600;
+            line-height: 1.07143;
+            letter-spacing: -0.005em;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            font-size: 21px;
+            line-height: 1.381;
+            font-weight: 400;
+            letter-spacing: 0.011em;
+            color: #6e6e73;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Enhanced featured work cards with 3D transforms and advanced hover effects */
+        .featured-grid {
+            display: grid;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .featured-card-apple {
+            background: #fbfbfd;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(40px) rotateX(5deg);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .featured-card-apple.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0deg);
+        }
+
+        .featured-card-apple:hover {
+            transform: translateY(-12px) rotateX(2deg) scale(1.02);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-visual {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Added animated gradient overlay */
+        .card-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            transition: transform 0.5s ease;
+        }
+
+        .featured-card-apple:hover .card-visual::before {
+            transform: scale(1.1);
+        }
+
+        /* Added animated accent circles */
+        .card-visual::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .eureka-visual {
             background: linear-gradient(135deg, #66d9a6 0%, #4bc47a 100%);
         }
 
-        .northcoast-header {
+        .northcoast-visual {
             background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
         }
 
-        .collaboration-header {
+        .collaboration-visual {
             background: linear-gradient(135deg, #d64545 0%, #b73636 100%);
         }
 
-        .featured-title {
-            font-size: 2.5rem;
+        .card-visual-title {
+            font-size: 64px;
             font-weight: 700;
             color: white;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.02em;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .featured-subtitle {
-            font-size: 1.1rem;
+        .featured-card-apple:hover .card-visual-title {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .card-visual-subtitle {
+            font-size: 24px;
             color: rgba(255, 255, 255, 0.9);
             font-weight: 500;
-            font-style: italic;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .card-content {
-            padding: 2.5rem;
+        .featured-card-apple:hover .card-visual-subtitle {
+            transform: translateY(-3px);
         }
 
-        .project-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1d1d1f;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
+        .card-body {
+            padding: 48px;
+            position: relative;
         }
 
-        .project-description {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: #424245;
-            margin-bottom: 2rem;
-        }
-
-        .project-link {
+        .card-tag {
             display: inline-block;
-            color: #007aff;
+            font-size: 12px;
             font-weight: 600;
-            text-decoration: none;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            transition: all 0.2s ease;
-        }
-
-        .project-link:hover {
-            color: #0051d5;
-            transform: translateX(2px);
-        }
-
-        .coming-soon {
-            color: #007aff;
-            font-weight: 600;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-        }
-
-        .tag-accessibility {
-            background: rgba(214, 69, 69, 0.1);
-            color: #d64545;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .featured-card-apple:hover .card-tag {
+            transform: translateX(5px);
+        }
+
+        .tag-innovation {
+            background: rgba(102, 217, 166, 0.15);
+            color: #4bc47a;
         }
 
         .tag-community {
-            background: rgba(74, 144, 226, 0.1);
-            color: #4a90e2;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            background: rgba(74, 144, 226, 0.15);
+            color: #357abd;
+        }
+
+        .tag-accessibility {
+            background: rgba(214, 69, 69, 0.15);
+            color: #b73636;
+        }
+
+        .card-title {
+            font-size: 32px;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            line-height: 1.125;
+            letter-spacing: 0.004em;
+            color: #1d1d1f;
+            margin-bottom: 16px;
         }
 
-        /* About Me section styles */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+        .card-text {
+            font-size: 17px;
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            color: #6e6e73;
+            margin-bottom: 24px;
         }
 
-        .about-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            color: #0071e3;
+            font-size: 17px;
+            font-weight: 400;
+            text-decoration: none;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
-        .about-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, #66d9a6, #4bc47a);
+        .card-link:hover {
+            text-decoration: underline;
         }
 
-        .about-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        .card-link::after {
+            content: '›';
+            font-size: 24px;
+            margin-left: 4px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .about-card-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        .card-link:hover::after {
+            transform: translateX(6px);
+        }
+
+        /* Enhanced about grid with stagger animations */
+        .about-grid-apple {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .about-card-apple {
+            background: #fbfbfd;
+            border-radius: 18px;
+            padding: 48px 32px;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+        }
+
+        .about-card-apple.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .about-card-apple:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .about-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
             display: block;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .about-card-apple:hover .about-icon {
+            transform: scale(1.2) rotate(5deg);
         }
 
         .about-card-title {
-            font-size: 1.2rem;
+            font-size: 24px;
             font-weight: 600;
+            line-height: 1.16667;
+            letter-spacing: 0.009em;
             color: #1d1d1f;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
         }
 
-        .about-card-content {
-            color: #86868b;
-            line-height: 1.6;
-            font-size: 0.95rem;
+        .about-card-text {
+            font-size: 17px;
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            color: #6e6e73;
         }
 
-        .fun-fact {
-            background: linear-gradient(135deg, #f5f5f7, #e5e5ea);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-top: 1rem;
-            font-style: italic;
-            color: #86868b;
-        }
-
-        .highlight {
-            color: #007aff;
+        .highlight-text {
+            color: #0071e3;
             font-weight: 500;
         }
 
-        /* Contact grid styles */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+        .fun-fact-apple {
+            background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 24px;
+            font-style: italic;
+            color: #6e6e73;
+            font-size: 15px;
+            line-height: 1.47059;
+            transition: transform 0.3s ease;
         }
 
-        .contact-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            text-align: center;
-            transition: all 0.3s ease;
+        .about-card-apple:hover .fun-fact-apple {
+            transform: translateY(-5px);
+        }
+
+        /* Enhanced timeline cards with slide-in animations */
+        .timeline-card {
+            background: #fbfbfd;
+            border-radius: 18px;
+            padding: 48px;
+            margin-bottom: 32px;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateX(-40px);
             position: relative;
-            overflow: hidden;
         }
 
-        .contact-card::before {
+        .timeline-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Added accent line on hover */
+        .timeline-card::before {
             content: '';
             position: absolute;
-            top: 0;
             left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, #66d9a6, #4bc47a);
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #0071e3 0%, #66d9a6 100%);
+            border-radius: 4px 0 0 4px;
+            transform: scaleY(0);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        .timeline-card:hover::before {
+            transform: scaleY(1);
         }
 
-        .contact-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .contact-card h3 {
+        .timeline-title {
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.14286;
+            letter-spacing: 0.007em;
             color: #1d1d1f;
-            margin-bottom: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .timeline-position {
+            font-size: 17px;
+            font-weight: 500;
+            color: #0071e3;
+            margin-bottom: 20px;
+        }
+
+        .timeline-description {
+            font-size: 17px;
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            color: #6e6e73;
+            margin-bottom: 24px;
+        }
+
+        .impact-badge {
+            background: linear-gradient(135deg, #66d9a6 0%, #4bc47a 100%);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            line-height: 1.47059;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .timeline-card:hover .impact-badge {
+            transform: translateY(-3px);
+        }
+
+        .impact-badge strong {
             font-weight: 600;
         }
 
-        .contact-info {
-            color: #86868b;
-            text-decoration: none;
-            line-height: 1.5;
+        .tag-in-progress {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(255, 193, 7, 0.15);
+            color: #f5a623;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+            animation: pulse-tag 2s ease-in-out infinite;
         }
 
-        .contact-info:hover {
-            color: #007aff;
+        @keyframes pulse-tag {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
-        /* Publications Styles */
-        .publications-content {
-            max-width: 800px;
-        }
-
-        .publications-nav {
+        /* Publications */
+        .pub-nav {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 12px;
+            margin-bottom: 48px;
+            justify-content: center;
         }
 
-        .pub-nav-btn {
-            padding: 0.75rem 1.5rem;
+        .pub-nav-button {
+            padding: 12px 24px;
             background: #f5f5f7;
             color: #1d1d1f;
             border: none;
-            border-radius: 20px;
+            border-radius: 980px;
             cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             text-decoration: none;
             display: inline-block;
         }
 
-        .pub-nav-btn:hover, .pub-nav-btn.active {
-            background: #007aff;
+        .pub-nav-button:hover,
+        .pub-nav-button.active {
+            background: #0071e3;
             color: white;
+            transform: translateY(-2px);
         }
 
-        .pub-section {
+        .pub-section-content {
             display: none;
         }
 
-        .pub-section.active {
+        .pub-section-content.active {
             display: block;
         }
 
-        .pub-tile {
-            background: white;
-            padding: 2rem;
-            margin: 1.5rem 0;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .pub-card {
+            background: #fbfbfd;
+            padding: 40px;
+            margin: 24px 0;
+            border-radius: 18px;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .pub-tile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        .pub-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
         }
 
-        .pub-tile h4 {
+        .pub-card h4 {
             color: #1d1d1f;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-size: 21px;
             font-weight: 600;
             font-style: italic;
         }
 
-        .pub-tile ul {
+        .pub-card ul {
             list-style: none;
             padding-left: 0;
         }
 
-        .pub-tile li {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
+        .pub-card li {
+            margin-bottom: 16px;
+            padding-left: 24px;
             position: relative;
-            color: #86868b;
-            line-height: 1.5;
+            color: #6e6e73;
+            line-height: 1.47059;
         }
 
-        .pub-tile li:before {
+        .pub-card li:before {
             content: "•";
-            color: #007aff;
+            color: #0071e3;
             font-weight: bold;
             position: absolute;
             left: 0;
         }
 
-        .pub-tile a {
-            color: #007aff;
+        .pub-card a {
+            color: #0071e3;
             text-decoration: none;
             word-break: break-all;
-            overflow-wrap: anywhere;
         }
 
-        .pub-tile a:hover {
+        .pub-card a:hover {
             text-decoration: underline;
         }
 
-        
-        /* Generic content sections */
-        .content-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        /* Enhanced contact grid with scale animations */
+        .contact-grid-apple {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 60px;
         }
 
-        .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        .contact-card-apple {
+            background: #fbfbfd;
+            border-radius: 18px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: scale(0.9) rotateY(10deg);
+            transform-style: preserve-3d;
         }
 
-        .content-card h3 {
+        .contact-card-apple.visible {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg);
+        }
+
+        .contact-card-apple:hover {
+            transform: scale(1.05) translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .contact-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .contact-card-apple:hover .contact-icon {
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        .contact-card-apple h3 {
             color: #1d1d1f;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
+            font-size: 24px;
             font-weight: 600;
         }
 
-        .content-card p {
-            color: #86868b;
-            line-height: 1.6;
+        .contact-info {
+            color: #6e6e73;
+            text-decoration: none;
+            line-height: 1.47059;
+            font-size: 17px;
+            transition: color 0.3s ease;
         }
 
-        /* Leadership card styles */
-        .leadership-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .contact-info:hover {
+            color: #0071e3;
         }
 
-        .leadership-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        /* Footer */
+        .footer {
+            background: #f5f5f7;
+            padding: 40px 22px;
+            text-align: center;
+            margin-top: 100px;
         }
 
-        .leadership-card-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 0.5rem;
+        .footer-text {
+            font-size: 12px;
+            color: #6e6e73;
+            line-height: 1.33337;
         }
 
-        .leadership-card-position {
-            color: #007aff;
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .leadership-card-description {
-            color: #86868b;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .impact-tag {
-            background: linear-gradient(135deg, #66d9a6, #4bc47a);
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .impact-tag strong {
-            color: white;
-        }
-
-        /* Mobile responsiveness */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                z-index: 1000;
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-                max-width: 100%;
-                padding: 1rem;
-            }
-
-            .greeting {
-                font-size: 2rem;
-            }
-
-            .featured-card {
-                padding: 2rem;
-            }
-
-            .featured-title {
-                font-size: 1.5rem;
-            }
-
-            .publications-nav {
-                flex-direction: column;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .mobile-menu-btn {
-                position: fixed;
-                top: 1rem;
-                left: 1rem;
-                z-index: 1001;
-                background: white;
-                border: none;
-                padding: 0.5rem;
-                border-radius: 6px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                cursor: pointer;
-                display: block;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .mobile-menu-btn {
+            .nav-menu {
                 display: none;
             }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-subtitle {
+                font-size: 21px;
+            }
+
+            .hero-description {
+                font-size: 17px;
+            }
+
+            .section-title-main {
+                font-size: 40px;
+            }
+
+            .section-description {
+                font-size: 17px;
+            }
+
+            .card-visual {
+                height: 300px;
+                padding: 40px;
+            }
+
+            .card-visual-title {
+                font-size: 40px;
+            }
+
+            .card-visual-subtitle {
+                font-size: 17px;
+            }
+
+            .card-body {
+                padding: 32px;
+            }
+
+            .card-title {
+                font-size: 24px;
+            }
+
+            .timeline-card {
+                padding: 32px;
+            }
+
+            .timeline-title {
+                font-size: 21px;
+            }
+
+            .about-grid-apple,
+            .contact-grid-apple {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .sidebar-toggle {
+                width: 56px;
+                height: 56px;
+                right: 20px;
+                top: 60px;
+            }
+
+            .sidebar-toggle svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            /* Optimize orbs for mobile */
+            .hero-orb-1 {
+                width: 300px;
+                height: 300px;
+            }
+
+            .hero-orb-2 {
+                width: 250px;
+                height: 250px;
+            }
+
+            .hero-orb-3 {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 48px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0071e3 0%, #66d9a6 100%);
+            z-index: 9998;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.1s ease;
         }
     </style>
 </head>
 <body>
-    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <!-- Replaced emoji with SVG icon -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open profile sidebar">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+    </button>
+
+    <!-- Added slide-out profile sidebar -->
+    <aside class="profile-sidebar" id="profileSidebar">
+        <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">×</button>
+        <div class="sidebar-profile-image">
+            <img src="Web profile size (32).png.webp" alt="Shradha Lakshman" />
+        </div>
+        <h2 class="sidebar-name">Shradha Lakshman</h2>
+        <p class="sidebar-title">Dental Hygiene Student & Health Educator</p>
+        <nav class="sidebar-quick-links">
+            <a href="#" class="sidebar-link" onclick="showSection('home'); toggleSidebar();">Home</a>
+            <a href="#" class="sidebar-link" onclick="showSection('about'); toggleSidebar();">About Me</a>
+            <a href="#" class="sidebar-link" onclick="showSection('publications'); toggleSidebar();">Publications</a>
+            <a href="#" class="sidebar-link" onclick="showSection('education'); toggleSidebar();">Experience</a>
+            <a href="#" class="sidebar-link" onclick="showSection('leadership'); toggleSidebar();">Leadership</a>
+            <a href="#" class="sidebar-link" onclick="showSection('contact'); toggleSidebar();">Contact</a>
+        </nav>
+    </aside>
+
+    <!-- Added sticky navigation header with blur effect -->
+    <div class="scroll-progress" id="scrollProgress"></div>
     
-    <div class="container">
-        <aside class="sidebar" id="sidebar">
-            <div class="profile-section">
-<div class="profile-image">
-  <img src="Web profile size (32).png.webp" alt="Image of Shradha Lakshman" class="profile-pic" />
-</div>
+    <header class="nav-header" id="navHeader">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" onclick="showSection('home')">Shradha Lakshman</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a onclick="showSection('home')">Home</a></li>
+                    <li><a onclick="showSection('about')">About</a></li>
+                    <li><a onclick="showSection('publications')">Publications</a></li>
+                    <li><a onclick="showSection('education')">Experience</a></li>
+                    <li><a onclick="showSection('leadership')">Leadership</a></li>
+                    <li><a onclick="showSection('contact')">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<style>
-.profile-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-  background: #fff;
-}
+    <!-- Redesigned hero section with Apple-style abstract banner -->
+    <section class="hero-section">
+        <div class="hero-banner"></div>
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Hi, there!</h1>
+            <p class="hero-subtitle">Dental Hygiene Student & Health Educator</p>
+            <p class="hero-description">
+                I'm <strong>Shradha Lakshman</strong>, a dental hygiene student at UBC passionate about 
+                <strong>health education and innovation</strong>. I'm the founder and CEO of Eureka Enterprises, where I'm developing Eureka: 
+                QuestScapes - a gamified web-based application for HIV/AIDS education among 
+                Canadian youth.
+            </p>
+        </div>
+    </section>
 
-.profile-pic {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-</style>               
-                <div class="profile-name">Shradha Lakshman</div>
-                <div class="profile-title">Dental Hygiene Student & Health Educator</div>
+    <main class="main-container">
+        <!-- Restructured featured work section with Apple-style cards -->
+        <section id="home-content" class="content-section">
+            <div class="section-header-main">
+                <div class="section-eyebrow">Featured Work</div>
+                <h2 class="section-title-main">Making an Impact</h2>
+                <p class="section-description">
+                    Transforming health education through innovation, community outreach, and accessible curriculum development.
+                </p>
             </div>
 
-            <nav class="quick-links">
-                <h3>Quick Links</h3>
-                <a class="nav-link active" onclick="showSection('home')">
-                    Home
-                </a>
-                <a class="nav-link" onclick="showSection('about')">
-                    About Me
-                </a>
-                <a class="nav-link" onclick="showSection('publications')">
-                    Publications
-                </a>
-                <a class="nav-link" onclick="showSection('education')">
-                    Education & Experience
-                </a>
-                <a class="nav-link" onclick="showSection('leadership')">
-                    Leadership
-                </a>
-                <a class="nav-link" onclick="showSection('contact')">
-                    Contact Me
-                </a>
-            </nav>
-        </aside>
+            <div class="featured-grid">
+                <div class="featured-card-apple">
+                    <div class="card-visual eureka-visual">
+                        <h3 class="card-visual-title">Eureka: QuestScapes</h3>
+                        <p class="card-visual-subtitle">Gamified Health Initiative</p>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-innovation">Health Innovation</span>
+                        <h4 class="card-title">Gamified HIV/AIDS Education for Youth</h4>
+                        <p class="card-text">
+                            As founder and CEO of Eureka Enterprises, I am leading the development of Eureka: QuestScapes — a pioneering, gamified web-based platform transforming HIV/AIDS education for Canadian youth. This forward-thinking initiative received an $800 bursary from North American non-profit LetsStopAIDS, acknowledging its innovative impact and groundbreaking approach to health education. By utilizing interactive storytelling, immersive gameplay, and engaging trivia-based combat mechanics within a classic 2D platformer, Eureka enables youth to build health literacy, confront stigma, and embrace preventive behaviors.
+                        </p>
+                        <span class="card-link" style="color: #6e6e73; cursor: default;">Website Coming Soon</span>
+                    </div>
+                </div>
 
-       <main class="main-content">
-            <section id="home" class="content-section active">
-                <h1 class="greeting">Hi, there!</h1>
-                <p class="intro-text">
-                    I'm <strong>Shradha Lakshman</strong>, a dental hygiene student at UBC passionate about 
-                    <strong>health education and innovation</strong>.
+                <div class="featured-card-apple">
+                    <div class="card-visual northcoast-visual">
+                        <h3 class="card-visual-title">North Coast</h3>
+                        <p class="card-visual-subtitle">Healthcare Travelling Roadshow</p>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-community">Community Education</span>
+                        <h4 class="card-title">Inspiring Future Health Professionals</h4>
+                        <p class="card-text">
+                            As the Dental Hygiene Representative chosen for UNBC's 2025 North Coast Healthcare Travelling Roadshow that aims to expose high school students to different healthcare careers, I delivered dynamic oral health education across Northern BC's North Coast, representing the dental hygiene profession and UBC Faculty of Dentistry. Through interactive workshops with students in grades 4–12, I underscored the significance of the oral-systemic link and emphasized dental hygiene's critical role as a primary care profession within the health sector. By collaborating with educators and community leaders, I tailored content to engage and empower participants, fostering curiosity and confidence.
+                        </p>
+                        <a href="https://www.terracestandard.com/local-news/students-urged-to-consider-health-careers-7987947" target="_blank" class="card-link">Read Feature Article</a>
+                        <br><br>
+                        <a href="https://www.unbc.ca/healthcare-travelling-roadshow" target="_blank" class="card-link">Learn More</a>
+                    </div>
+                </div>
+
+                <div class="featured-card-apple">
+                    <div class="card-visual collaboration-visual">
+                        <h3 class="card-visual-title">Collaborative Health Education</h3>
+                        <p class="card-visual-subtitle">Project Assistant (UDL)</p>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-accessibility">Accessibility</span>
+                        <h4 class="card-title">Advancing Accessible Interprofessional Education</h4>
+                        <p class="card-text">
+                            In 2025, I worked with UBC Health as Lead Developer on curriculum materials and visuals reaching 2,000+ students across 14 health programs. I collaborated with faculty, clinicians, and institutional stakeholders to engineer interprofessional workshops on ethics, health informatics, and collaborative decision-making, improving accessibility, cultural sensitivity, and learner engagement. I co-authored the UBC Health Facilitator Guide, developed a simplified, icon-based version of the CIHC Competency Framework, and served as French Language Editor for its Référentiel des compétences, strengthening the national bilingual standard.
+                        </p>
+                        <a class="card-link" onclick="showSection('publications')">View Publications</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Redesigned about section with Apple-style grid -->
+        <section id="about" class="content-section" style="display: none;">
+            <div class="section-header-main">
+                <div class="section-eyebrow">About</div>
+                <h2 class="section-title-main">About Me</h2>
+            </div>
+
+            <div class="about-grid-apple">
+                <div class="about-card-apple">
+                    <span class="about-icon">🌍</span>
+                    <h3 class="about-card-title">Background & Education</h3>
+                    <p class="about-card-text">
+                        Born in India and raised in Ottawa, Ontario, I attended a francophone school and completed the <span class="highlight-text">International Baccalaureate program</span>. This diverse educational foundation shaped my appreciation for different cultures and languages.
+                    </p>
+                </div>
+
+                <div class="about-card-apple">
+                    <span class="about-icon">🎵</span>
+                    <h3 class="about-card-title">Music & Performance</h3>
+                    <p class="about-card-text">
+                        I've pursued vocal training through the <span class="highlight-text">Royal Conservatory of Music to Level 6</span>, earning certification to teach singing. Classically trained in opera, musical theatre, and folk music, I've challenged myself to sing in <span class="highlight-text">21 languages</span> to address Eurocentrism in creative spaces.
+                    </p>
+                </div>
+
+                <div class="about-card-apple">
+                    <span class="about-icon">✍️</span>
+                    <h3 class="about-card-title">Creative Pursuits</h3>
+                    <p class="about-card-text">
+                        As a passionate <span class="highlight-text">singer-songwriter, artist, and author</span>, I channel my creativity through art, poetry, and a sci-fi fantasy novel I work on in my spare time. Though I haven't released music yet, storytelling remains central to who I am.
+                    </p>
+                </div>
+
+                <div class="about-card-apple">
+                    <span class="about-icon">🐱</span>
+                    <h3 class="about-card-title">Personal Interests</h3>
+                    <p class="about-card-text">
+                        I love cats, reading, and embracing whimsy in everyday life. I'm currently learning to skateboard and enjoy finding joy in unexpected places and new challenges.
+                    </p>
+                    <div class="fun-fact-apple">
+                        Fun fact: The four ducks on my phone case are named <span class="highlight-text">Ronald, Conald, Wonald, and Monald</span> (to the dismay of those who insist one should be called Donald).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Redesigned publications section -->
+        <section id="publications" class="content-section" style="display: none;">
+            <div class="section-header-main">
+                <div class="section-eyebrow">Research</div>
+                <h2 class="section-title-main">Academic Resource Development</h2>
+            </div>
+
+            <div class="pub-nav">
+                <button class="pub-nav-button active" onclick="showPublicationSection('grey-literature')">Grey Literature</button>
+                <button class="pub-nav-button" onclick="showPublicationSection('academic-literature')">Academic Literature</button>
+            </div>
+
+            <div id="grey-literature" class="pub-section-content active">
+                <div class="pub-card">
+                    <h4>Scholarly Contributions</h4>
+                    <ul>
+                        <li>Collaborative Health Education Enrichment Working Group (includes Lakshman S). Interprofessional Education (IPE) Facilitator Guide. 3rd ed. Vancouver (BC): University of British Columbia Health; 2025. Available from: <a href="https://health.ubc.ca/media/file/ipe-facilitator-guide-third-editionpdf" target="_blank">https://health.ubc.ca/media/file/ipe-facilitator-guide-third-editionpdf</a></li>
+                    </ul>
+                </div>
+
+                <div class="pub-card">
+                    <h4>Educational Curriculum Development</h4>
+                    <ul>
+                        <li>Contributed to the redesign and visual enhancement/accessibility of PowerPoint slide decks for UBCH interprofessional integrated curriculum workshops, including modules on:
+                            <ul style="padding-left: 2rem;">
+                                <li>Collaborative Leadership for Shared Decision-Making</li>
+                                <li>Relationship-Focused Care</li>
+                                <li>Health Informatics</li>
+                                <li>Substance Use Education</li>
+                                <li>Professionalism</li>
+                                <li>iEthics (Foundations of Ethical Practice; Ethical Decision-Making)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="pub-card">
+                    <h4>Teaching Support</h4>
+                    <ul>
+                        <li>Assisted with the lecture slide design, video, and in-person orientation for the UBC Health Integrated Curriculum presentation to the year one dental students, Faculty of Dentistry, UBC.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="academic-literature" class="pub-section-content">
+                <div class="pub-card">
+                    <h4>Academic Literature</h4>
+                    <ul>
+                        <li>COMING SOON</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Redesigned education section -->
+        <section id="education" class="content-section" style="display: none;">
+            <div class="section-header-main">
+                <div class="section-eyebrow">Experience</div>
+                <h2 class="section-title-main">Education & Experience</h2>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">University of British Columbia</h3>
+                <p class="timeline-position">Bachelor of Dental Sciences, Dental Hygiene Degree Programme - Class of 2026</p>
+                <p class="timeline-description">
+                    Joined the Student Professionalism and Ethics Association's UBC Chapter – the first Dental Hygiene Representative in UBC history. Participated in peer mentorship, and served as a panelist in 2 Senior Student Mentorship Panels. Developed and delivered comprehensive oral health literacy education material for students at Skwo:Wech Elementary School, and care aides at S.U.C.C.E.S.S. Simon KY Lee Care Home. Attended the 2023 UBC Student Leadership Conference as a delegate.
                 </p>
-                <p class="intro-text">
-                    I'm the founder and CEO of Eureka Enterprises, where I'm developing Eureka: 
-                    QuestScapes - a gamified web-based application for HIV/AIDS education among 
-                    Canadian youth. I've had the privilege of representing the dental hygiene 
-                    profession and UBC Faculty of Dentistry across Northern BC through the 
-                    Healthcare Travelling Roadshow, and held a position as Collaborative Health 
-                    Education Project Assistant, advancing accessibility-driven curriculum redesign at 
-                    one of the top health institutions in the world.
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Provided dignified oral healthcare to vulnerable populations and addressed critical oral health disparities in the community.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">UBC Student Dental Hygiene Practice</h3>
+                <p class="timeline-position">Clinical Practice & Patient Care</p>
+                <p class="timeline-description">
+                    Performed comprehensive client care including: Clinical competencies such as panoramic radiographs and extraoral bitewings under DMD prescription. Proficient in occlusal, periapical, and bitewing imaging using paralleling technique and bisecting-angle method. Skilled in preventive and therapeutic interventions including silver diamine fluoride application, sealants, local anaesthesia, tobacco cessation counseling, nutrition care planning, intraoral photography, study model preparation, sports mouth guard fabrication, teeth whitening trays, and desensitization procedures. Experienced in magnetostrictive and piezoelectric power instrumentation. Competent in topical fluoride application, margination, and temporary restorations across diverse patient populations.
                 </p>
-
-                <div class="featured-work">
-                    <div class="featured-card">
-                        <div class="section-header" style="margin-bottom: 0; padding: 1.5rem 2.5rem 1rem 2.5rem;">
-                            <h2 style="font-size: 1.5rem; color: #424245; margin: 0;">Featured Work</h2>
-                            <span class="featured-section-tag">Health Innovation</span>
-                        </div>
-                        <div class="card-header eureka-header">
-                            <h3 class="featured-title">Eureka: QuestScapes</h3>
-                            <p class="featured-subtitle">Gamified Health Initiative</p>
-                        </div>
-                        <div class="card-content">
-                            <h4 class="project-title">Gamified HIV/AIDS Education for Youth</h4>
-                            <p class="project-description">
-                                As founder and CEO of Eureka Enterprises, I am leading the development of Eureka: QuestScapes — a pioneering, gamified web-based platform transforming HIV/AIDS education for Canadian youth. This forward-thinking initiative received an $800 bursary from North American non-profit LetsStopAIDS, acknowledging its innovative impact and groundbreaking approach to health education. By utilizing interactive storytelling, immersive gameplay, and engaging trivia-based combat mechanics within a classic 2D platformer, Eureka enables youth to build health literacy, confront stigma, and embrace preventive behaviors.
-                            </p>
-                            <span class="coming-soon">WEBSITE COMING SOON</span>
-                        </div>
-                    </div>
-                    
-                    <div class="featured-card">
-                        <div class="section-header" style="margin-bottom: 0; padding: 1.5rem 2.5rem 1rem 2.5rem;">
-                            <h2 style="font-size: 1.5rem; color: #424245; margin: 0;">Healthcare Outreach</h2>
-                            <span class="tag-community">Community Education</span>
-                        </div>
-                        <div class="card-header northcoast-header">
-                            <h3 class="featured-title">North Coast</h3>
-                            <p class="featured-subtitle">Healthcare Travelling Roadshow</p>
-                        </div>
-                        <div class="card-content">
-                            <h4 class="project-title">Inspiring Future Health Professionals</h4>
-                            <p class="project-description">
-                                As the Dental Hygiene Representative chosen for UNBC's 2025 North Coast Healthcare Travelling Roadshow that aims to expose high school students to different healthcare careers, I delivered dynamic oral health education across Northern BC's North Coast, representing the dental hygiene profession and UBC Faculty of Dentistry. Through interactive workshops with students in grades 4–12, I underscored the significance of the oral-systemic link and emphasized dental hygiene's critical role as a primary care profession within the health sector. By collaborating with educators and community leaders, I tailored content to engage and empower participants, fostering curiosity and confidence. 
-                            </p>
-                            <a href="https://www.terracestandard.com/local-news/students-urged-to-consider-health-careers-7987947" target="_blank" class="project-link">READ FEATURE ARTICLE</a>
-                            <br><br>
-                            <a href="https://www.unbc.ca/healthcare-travelling-roadshow" target="_blank" class="project-link">LEARN MORE HERE</a>
-                        </div>
-                    </div>
-                    
-                    <div class="featured-card">
-                        <div class="section-header" style="margin-bottom: 0; padding: 1.5rem 2.5rem 1rem 2.5rem;">
-                            <h2 style="font-size: 1.5rem; color: #424245; margin: 0;">Curriculum Development</h2>
-                            <span class="tag-accessibility">Accessibility</span>
-                        </div>
-                        <div class="card-header collaboration-header">
-                            <h3 class="featured-title">Collaborative Health Education</h3>
-                            <p class="featured-subtitle">Project Assistant (UDL)</p>
-                        </div>
-                        <div class="card-content">
-                            <h4 class="project-title">Advancing Accessible Interprofessional Education</h4>
-                            <p class="project-description">
-                                In 2025, I worked with UBC Health as Lead Developer on curriculum materials and visuals reaching 2,000+ students across 14 health programs. I collaborated with faculty, clinicians, and institutional stakeholders to engineer interprofessional workshops on ethics, health informatics, and collaborative decision-making, improving accessibility, cultural sensitivity, and learner engagement. I co-authored the UBC Health Facilitator Guide, developed a simplified, icon-based version of the CIHC Competency Framework, and served as French Language Editor for its Référentiel des compétences, strengthening the national bilingual standard.
-                            </p>
-                            <a class="project-link" onclick="showSection('publications')">PUBLICATIONS</a>
-                        </div>
-                    </div>
+                <div class="impact-badge">
+                    <strong>Training:</strong> Comprehensive understanding of embryology, cariology, microbiology, serology, immunology, anatomy, physiology, psychology, pharmacology, health policy, and cultural humility, among other topics. Participated in cadaveric dissections and will assist graduate periodontal surgery during rotations.
                 </div>
-            </section>
-            
-            <section id="about" class="content-section">
-                <h1 class="greeting">About Me</h1>
-                
-                <div class="about-grid">
-                    <div class="about-card">
-                        <span class="about-card-icon">🌍</span>
-                        <h3 class="about-card-title">Background & Education</h3>
-                        <div class="about-card-content">
-                            Born in India and raised in Ottawa, Ontario, I attended a francophone school and completed the <span class="highlight">International Baccalaureate program</span>. This diverse educational foundation shaped my appreciation for different cultures and languages.
-                        </div>
-                    </div>
+            </div>
 
-                    <div class="about-card">
-                        <span class="about-card-icon">🎵</span>
-                        <h3 class="about-card-title">Music & Performance</h3>
-                        <div class="about-card-content">
-                            I've pursued vocal training through the <span class="highlight">Royal Conservatory of Music to Level 6</span>, earning certification to teach singing. Classically trained in opera, musical theatre, and folk music, I've challenged myself to sing in <span class="highlight">21 languages</span> to address Eurocentrism in creative spaces.
-                        </div>
-                    </div>
-
-                    <div class="about-card">
-                        <span class="about-card-icon">✍️</span>
-                        <h3 class="about-card-title">Creative Pursuits</h3>
-                        <div class="about-card-content">
-                            As a passionate <span class="highlight">singer-songwriter, artist, and author</span>, I channel my creativity through art, poetry, and a sci-fi fantasy novel I work on in my spare time. Though I haven't released music yet, storytelling remains central to who I am.
-                        </div>
-                    </div>
-
-                    <div class="about-card">
-                        <span class="about-card-icon">🐱</span>
-                        <h3 class="about-card-title">Personal Interests</h3>
-                        <div class="about-card-content">
-                            I love cats, reading, and embracing whimsy in everyday life. I'm currently learning to skateboard and enjoy finding joy in unexpected places and new challenges.
-                        </div>
-                        <div class="fun-fact">
-                            Fun fact: The four ducks on my phone case are named <span class="highlight">Ronald, Conald, Wonald, and Monald</span> (to the dismay of those who insist one should be called Donald).
-                        </div>
-                    </div>
+            <div class="timeline-card">
+                <h3 class="timeline-title">Skwo:Wech Elementary School</h3>
+                <p class="timeline-position">Oral Health Education Initiative</p>
+                <p class="timeline-description">
+                    Assessed oral health literacy needs among elementary school students and developed age-appropriate educational materials. Performed comprehensive oral hygiene instruction tailored to young learners, significantly increasing oral health literacy and promoting preventive care habits within the school community.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Enhanced oral health awareness and established foundational preventive care habits among students.
                 </div>
-            </section>
+            </div>
 
-            <section id="publications" class="content-section">
-                <div class="publications-content">
-                    <h1 class="greeting">Academic Resource Development</h1>
-                    
-                    <div class="publications-nav">
-                        <button class="pub-nav-btn active" onclick="showPublicationSection('grey-literature')">Grey Literature</button>
-                        <button class="pub-nav-btn" onclick="showPublicationSection('academic-literature')">Academic Literature</button>
-                    </div>
-
-                    <div id="grey-literature" class="pub-section active">
-                        <div class="pub-tile">
-                            <h4>Scholarly Contributions</h4>
-                            <ul>
-                                <li>Collaborative Health Education Enrichment Working Group (includes Lakshman S). Interprofessional Education (IPE) Facilitator Guide. 3rd ed. Vancouver (BC): University of British Columbia Health; 2025. Available from: <a href="https://health.ubc.ca/media/file/ipe-facilitator-guide-third-editionpdf" target="_blank">https://health.ubc.ca/media/file/ipe-facilitator-guide-third-editionpdf</a>
-                            </ul>
-                         </div>
-
-                         <div class="pub-tile">
-                            <h4>Educational Curriculum Development</h4>
-                            <ul>
-                                <li>Contributed to the redesign and visual enhancement/accessibility of PowerPoint slide decks for UBCH interprofessional integrated curriculum workshops, including modules on:
-                                    <ul style="padding-left: 2rem;">
-                                        <li>Collaborative Leadership for Shared Decision-Making</li>
-                                        <li>Relationship-Focused Care</li>
-                                        <li>Health Informatics</li>
-                                        <li>Substance Use Education</li>
-                                        <li>Professionalism</li>
-                                        <li>iEthics (Foundations of Ethical Practice; Ethical Decision-Making)</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="pub-tile">
-                            <h4> Teaching Support</h4>
-                            <ul>
-                                <li>Assisted with the lecture slide design, video, and in-person orientation for the UBC Health Integrated Curriculum presentation to the year one dental students, Faculty of Dentistry, UBC.</li>
-                            </ul>
-                        </div>
-
-                    <div id="academic-literature" class="pub-section">
-                        <div class="pub-tile">
-                            <h4>Academic Literature</h4>
-                            <ul>
-                                <li>COMING SOON</li> </li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="timeline-card">
+                <h3 class="timeline-title">S.U.C.C.E.S.S. Simon KY Lee Care Home</h3>
+                <p class="timeline-position">Senior Care Oral Health Program</p>
+                <p class="timeline-description">
+                    Conducted comprehensive needs assessments for care aides and developed specialized oral health education programs for elderly care. Performed targeted oral hygiene instruction focusing on geriatric oral health challenges, significantly improving oral health literacy among care staff and enhancing quality of care for residents.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Improved oral health standards in senior care and enhanced caregiver knowledge of geriatric oral hygiene protocols.
                 </div>
-            </section>
+            </div>
 
-            </section>
-            <section id="education" class="content-section">
-                <h1 class="greeting">Education & Experience</h1>
-                
-                <div class="leadership-card">
-                    <div class="leadership-card-title">University of British Columbia</div>
-                    <div class="leadership-card-position">Bachelor of Dental Sciences, Dental Hygiene Degree Programme - Class of 2026</div>
-                    <div class="leadership-card-description">
-                        Joined the Student Professionalism and Ethics Association's UBC Chapter – the first Dental Hygiene Representative in UBC history. Participated in peer mentorship, and served as a panelist in 2 Senior Student Mentorship Panels. Developed and delivered comprehensive oral health literacy education material for students at Skwo:Wech Elementary School, and care aides at S.U.C.C.E.S.S. Simon KY Lee Care Home. Attended the 2023 UBC Student Leadership Conference as a delegate.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Provided dignified oral healthcare to vulnerable populations and addressed critical oral health disparities in the community.
-                    </div>
+            <div class="timeline-card">
+                <h3 class="timeline-title">Union Gospel Mission - The Orchard</h3>
+                <p class="timeline-position">Outreach Clinical Services</p>
+                <span class="tag-in-progress">In Progress</span>
+                <p class="timeline-description">
+                    Delivered clinical dental hygiene care to individuals experiencing homelessness and housing insecurity. Assessed diverse oral health needs and provided compassionate, culturally sensitive oral hygiene instruction while increasing oral health literacy among clients facing complex social and health challenges.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Provided dignified oral healthcare to vulnerable populations and addressed critical oral health disparities in the community.
                 </div>
-                
-                <div class="leadership-card">
-                    <div class="leadership-card-title">UBC Student Dental Hygiene Practice</div>
-                    <div class="leadership-card-position">Clinical Practice & Patient Care</div>
-                    <div class="leadership-card-description">
-                        Performed comprehensive client care including: Clinical competencies such as panoramic radiographs and extraoral bitewings under DMD prescription. Proficient in occlusal, periapical, and bitewing imaging using paralleling technique and bisecting-angle method. Skilled in preventive and therapeutic interventions including silver diamine fluoride application, sealants, local anaesthesia, tobacco cessation counseling, nutrition care planning, intraoral photography, study model preparation, sports mouth guard fabrication, teeth whitening trays, and desensitization procedures. Experienced in magnetostrictive and piezoelectric power instrumentation. Competent in topical fluoride application, margination, and temporary restorations across diverse patient populations.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Training:</strong> Comprehensive understanding of embryology, cariology, microbiology, serology, immunology, anatomy, physiology, psychology, pharmacology, health policy, and cultural humility, among other topics. Participated in cadaveric dissections and will assist graduate periodontal surgery during rotations.
-                    </div>
-                </div>
+            </div>
 
-                <div class="leadership-card">
-                    <div class="leadership-card-title">Skwo:Wech Elementary School</div>
-                    <div class="leadership-card-position">Oral Health Education Initiative</div>
-                    <div class="leadership-card-description">
-                        Assessed oral health literacy needs among elementary school students and developed age-appropriate educational materials. Performed comprehensive oral hygiene instruction tailored to young learners, significantly increasing oral health literacy and promoting preventive care habits within the school community.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Enhanced oral health awareness and established foundational preventive care practices among students.
-                    </div>
+            <div class="timeline-card">
+                <h3 class="timeline-title">The Elizabeth Fry Society of Greater Vancouver</h3>
+                <p class="timeline-position">Community Health Services</p>
+                <span class="tag-in-progress">In Progress</span>
+                <p class="timeline-description">
+                    Provided clinical dental hygiene services to underserved populations, including comprehensive oral health assessments and preventive care. Performed oral hygiene instruction tailored to individuals facing barriers to traditional healthcare access, while increasing oral health literacy within vulnerable community populations.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Delivered essential oral health services to marginalized individuals and promoted health equity through accessible care.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">Pioneer Community Living Association</h3>
+                <p class="timeline-position">Specialized Care Services</p>
+                <span class="tag-in-progress">In Progress</span>
+                <p class="timeline-description">
+                    Provided clinical dental hygiene services to individuals with developmental disabilities and complex care needs. Performed specialized oral hygiene instruction adapted to diverse abilities and learning styles, while increasing oral health literacy among clients and care staff to support ongoing oral health maintenance.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Delivered accessible, individualized oral healthcare and empowered caregivers with specialized knowledge for ongoing support.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">UBC Clinical Care Rotations</h3>
+                <p class="timeline-position">Clinical Practice in Pediatrics, Periodontics, Periodontic Surgery, etc.</p>
+                <span class="tag-in-progress">In Progress</span>
+                <p class="timeline-description">
+                    Delivered clinical dental hygiene services to patients spanning various developmental stages, departments, and backgrounds. Performed unique patient-centered oral hygiene instruction using appropriate techniques, while increasing oral health literacy among patients and caregivers to establish lifelong preventive care practices.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Fostered positive dental experiences for children, families, and other clients with personalized knowledge for maintaining optimal oral health.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">École Secondaire Publique Gisèle Lalonde</h3>
+                <p class="timeline-position">OSSD and IB Diploma (Programme du Diplôme du Baccalauréat International) - Jun 2022</p>
+                <p class="timeline-description">
+                    Completed comprehensive secondary education in a francophone environment, earning both the Ontario Secondary School Diploma and the prestigious International Baccalaureate Diploma. The IB programme provided rigorous academic preparation with emphasis on critical thinking, intercultural understanding, and community service.
+                </p>
+                <div class="impact-badge">
+                    <strong>Location:</strong> Orléans, ON
+                </div>
+            </div>
+        </section>
+
+        <!-- Redesigned leadership section -->
+        <section id="leadership" class="content-section" style="display: none;">
+            <div class="section-header-main">
+                <div class="section-eyebrow">Leadership</div>
+                <h2 class="section-title-main">Leadership</h2>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">ADEA Academic Dental Careers Fellowship Program (ADCFP)</h3>
+                <p class="timeline-position">Fellow, 2024 – Present</p>
+                <p class="timeline-description">
+                    Selected as a fellow in the national ADEA program to explore academic career pathways in dentistry and dental hygiene. Engaged in mentorship with faculty on teaching strategies, research, and the future of dental education.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Expanded knowledge of academic leadership and developed skills foundational to a potential career in dental education.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">North Coast Travelling Healthcare Roadshow</h3>
+                <p class="timeline-position">Dental Hygiene Representative, May 5th – May 11th 2025</p>
+                <p class="timeline-description">
+                    Selected as dental Hygiene Representative and delivered interactive oral health workshops across Northern BC, highlighting the oral-systemic link and dental hygiene's primary care role.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Expanded knowledge of academic leadership and developed skills foundational to a potential career in dental education.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">Oral Cancer Screening Day (Upcoming)</h3>
+                <p class="timeline-position">Volunteer Student Dental Hygienist, Sept 28, 2025 – Pacific Oral Health Centre, Surrey</p>
+                <p class="timeline-description">
+                    Will participate in a community outreach initiative providing oral cancer screenings alongside faculty, clinicians, and oral medicine specialists. Training includes EO/IO exams and the use of VELscope technology for early detection.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Opportunity to enhance clinical skills, contribute to community health, and promote awareness of oral cancer prevention.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">Student Professionalism & Ethics Association (SPEA), UBC Chapter</h3>
+                <p class="timeline-position">Dental Hygiene Representative, Mar 2024 – Present</p>
+                <p class="timeline-description">
+                    Served as the first dental hygiene representative in UBC SPEA history, integrating the dental hygiene perspective into organizational initiatives. Organized inter-cohort events addressing ethical dilemmas in academic and professional practice.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Increased student engagement across multiple hygiene cohorts and fostered a more inclusive, ethically reflective professional community.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">UBC Faculty of Dentistry Peer Mentorship Program</h3>
+                <p class="timeline-position">Dental Hygiene Year 3 Peer Mentor, Sep 2024 – April 2025</p>
+                <p class="timeline-description">
+                    Supported first-year students through wellness-focused initiatives, academic guidance, and community-building events. Designed promotional campaigns, including posters and Instagram content, to increase visibility and participation in mentorship programming.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Helped foster a culture of support, belonging, and resilience, easing the transition into the dental hygiene program.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">Place Vanier Student Association House Council Chair & Area Council Member</h3>
+                <p class="timeline-position">House President, Kootenay & Sherwood Lett, Sep 2023 – Apr 2024</p>
+                <p class="timeline-description">
+                    Chaired two residence house councils within a larger Area Council, overseeing operations and delegating responsibilities. Implemented a resident feedback system via Google Forms, analyzed results, and presented actionable data to senior administrators. Authored a detailed transition report to ensure effective leadership succession.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Strengthened student advocacy and introduced sustainable systems that improved operations and future leadership continuity.
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <h3 class="timeline-title">UBC Student Leadership Conference</h3>
+                <p class="timeline-position">Delegate, UBC Dental Hygiene, January 2023</p>
+                <p class="timeline-description">
+                    Represented UBC Faculty of Dentistry and UBC Dental Hygiene as a delegate at the 2023 Student Leadership Conference. Forged professional connections with peers and emerging leaders spanning numerous disciplines, both nationally and internationally.
+                </p>
+                <div class="impact-badge">
+                    <strong>Impact:</strong> Exchanged ideas on leadership, advocacy, and innovation, which, in turn, elevated the profile of UBC Dental Hygiene.
+                </div>
+            </div>
+        </section>
+
+        <!-- Redesigned contact section -->
+        <section id="contact" class="content-section" style="display: none;">
+            <div class="section-header-main">
+                <div class="section-eyebrow">Get in Touch</div>
+                <h2 class="section-title-main">Contact Me</h2>
+            </div>
+
+            <div class="contact-grid-apple">
+                <div class="contact-card-apple">
+                    <span class="contact-icon">📧</span>
+                    <h3>Email</h3>
+                    <a href="mailto:slakshm4@student.ubc.ca" class="contact-info">slakshm4@student.ubc.ca</a>
                 </div>
 
-                <div class="leadership-card">
-                    <div class="leadership-card-title">S.U.C.C.E.S.S. Simon KY Lee Care Home</div>
-                    <div class="leadership-card-position">Senior Care Oral Health Program</div>
-                    <div class="leadership-card-description">
-                        Conducted comprehensive needs assessments for care aides and developed specialized oral health education programs for elderly care. Performed targeted oral hygiene instruction focusing on geriatric oral health challenges, significantly improving oral health literacy among care staff and enhancing quality of care for residents.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Improved oral health standards in senior care and enhanced caregiver knowledge of geriatric oral hygiene protocols.
-                    </div>
+                <div class="contact-card-apple">
+                    <span class="contact-icon">🎓</span>
+                    <h3>University</h3>
+                    <div class="contact-info">University of British Columbia<br>Faculty of Dentistry</div>
                 </div>
 
-                 <div class="leadership-card">
-                    <div class="leadership-card-title">Union Gospel Mission - The Orchard</div>
-                    <div class="leadership-card-position">Outreach Clinical Services</div>
-                    <span class="tag-in-progress" style="display: inline-block; padding: 4px 12px; background-color: rgba(255, 193, 7, 0.7); color: #856404; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">In Progress</span>
-                    <div class="leadership-card-description">
-                        Delivered clinical dental hygiene care to individuals experiencing homelessness and housing insecurity. Assessed diverse oral health needs and provided compassionate, culturally sensitive oral hygiene instruction while increasing oral health literacy among clients facing complex social and health challenges.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Provided dignified oral healthcare to vulnerable populations and addressed critical oral health disparities in the community.
-                    </div>
+                <div class="contact-card-apple">
+                    <span class="contact-icon">🏢</span>
+                    <h3>Professional</h3>
+                    <div class="contact-info">Eureka Enterprises<br>Founder & CEO</div>
                 </div>
-                
-                <div class="leadership-card">
-                    <div class="leadership-card-title">The Elizabeth Fry Society of Greater Vancouver</div>
-                    <div class="leadership-card-position">Community Health Services</div>
-                    <span class="tag-in-progress" style="display: inline-block; padding: 4px 12px; background-color: rgba(255, 193, 7, 0.7); color: #856404; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">In Progress</span>
-                    <div class="leadership-card-description">
-                        Provided clinical dental hygiene services to underserved populations, including comprehensive oral health assessments and preventive care. Performed oral hygiene instruction tailored to individuals facing barriers to traditional healthcare access, while increasing oral health literacy within vulnerable community populations.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Delivered essential oral health services to marginalized individuals and promoted health equity through accessible care.
-                    </div>
-                </div>
+            </div>
+        </section>
+    </main>
 
-                <div class="leadership-card">
-                    <div class="leadership-card-title">Pioneer Community Living Association</div>
-                    <div class="leadership-card-position">Specialized Care Services</div>
-                    <span class="tag-in-progress" style="display: inline-block; padding: 4px 12px; background-color: rgba(255, 193, 7, 0.7); color: #856404; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">In Progress</span>
-                    <div class="leadership-card-description">
-                        Provided clinical dental hygiene services to individuals with developmental disabilities and complex care needs. Performed specialized oral hygiene instruction adapted to diverse abilities and learning styles, while increasing oral health literacy among clients and care staff to support ongoing oral health maintenance.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Delivered accessible, individualized oral healthcare and empowered caregivers with specialized knowledge for ongoing support.
-                    </div>
-                </div>
-
-                <div class="leadership-card">
-                    <div class="leadership-card-title">UBC Clinical Care Rotations</div>
-                    <div class="leadership-card-position">Clinical Practice in Pediatrics, Periodontics, Periodontic Surgery, etc.</div>
-                    <span class="tag-in-progress" style="display: inline-block; padding: 4px 12px; background-color: rgba(255, 193, 7, 0.7); color: #856404; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">In Progress</span>
-                    <div class="leadership-card-description">
-                        Delivered clinical dental hygiene services to patients spanning various developmental stages, departments, and backgrounds. Performed unique patient-centered oral hygiene instruction using appropriate techniques, while increasing oral health literacy among patients and caregivers to establish lifelong preventive care practices.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Fostered positive dental experiences for children, families, and other clients with personalized knowledge for maintaining optimal oral health.
-                    </div>
-                </div>
-
-                <div class="leadership-card">
-                    <div class="leadership-card-title">École Secondaire Publique Gisèle Lalonde</div>
-                    <div class="leadership-card-position">OSSD and IB Diploma (Programme du Diplôme du Baccalauréat International) - Jun 2022</div>
-                    <div class="leadership-card-description">
-                        Completed comprehensive secondary education in a francophone environment, earning both the Ontario Secondary School Diploma and the prestigious International Baccalaureate Diploma. The IB programme provided rigorous academic preparation with emphasis on critical thinking, intercultural understanding, and community service.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Location:</strong> Orléans, ON
-                    </div>
-                </div>
-            </section>
-
-            <section id="leadership" class="content-section">
-                <h1 class="greeting">Leadership</h1>
-               
-                <div class="leadership-card">
-                    <div class="leadership-card-title">ADEA Academic Dental Careers Fellowship Program (ADCFP)</div>
-                    <div class="leadership-card-position">Fellow, 2024 – Present</div>
-                    <div class="leadership-card-description">
-                        Selected as a fellow in the national ADEA program to explore academic career pathways in dentistry and dental hygiene. Engaged in mentorship with faculty on teaching strategies, research, and the future of dental education.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Expanded knowledge of academic leadership and developed skills foundational to a potential career in dental education.
-                    </div>
-                </div>
-
-                <div class="leadership-card">
-                    <div class="leadership-card-title">North Coast Travelling Healthcare Roadshow</div>
-                    <div class="leadership-card-position">Dental Hygiene Representative, May 5th – May 11th 2025</div>
-                    <div class="leadership-card-description">
-                        Selected as dental Hygiene Representative and delivered interactive oral health workshops across Northern BC, highlighting the oral-systemic link and dental hygiene’s primary care role.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Expanded knowledge of academic leadership and developed skills foundational to a potential career in dental education.
-                    </div>
-                </div>
-
-                <div class="leadership-card">
-                    <div class="leadership-card-title">Oral Cancer Screening Day (Upcoming)</div>
-                    <div class="leadership-card-position">Volunteer Student Dental Hygienist, Sept 28, 2025 – Pacific Oral Health Centre, Surrey</div>
-                    <div class="leadership-card-description">
-                        Will participate in a community outreach initiative providing oral cancer screenings alongside faculty, clinicians, and oral medicine specialists. Training includes EO/IO exams and the use of VELscope technology for early detection.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Opportunity to enhance clinical skills, contribute to community health, and promote awareness of oral cancer prevention.
-                    </div>
-                </div>
-
-                <div class="leadership-card">
-                    <div class="leadership-card-title">Student Professionalism & Ethics Association (SPEA), UBC Chapter</div>
-                    <div class="leadership-card-position">Dental Hygiene Representative, Mar 2024 – Present</div>
-                    <div class="leadership-card-description">
-                        Served as the first dental hygiene representative in UBC SPEA history, integrating the dental hygiene perspective into organizational initiatives. Organized inter-cohort events addressing ethical dilemmas in academic and professional practice.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Increased student engagement across multiple hygiene cohorts and fostered a more inclusive, ethically reflective professional community.
-                    </div>
-                </div>
-
-                <div class="leadership-card">
-                    <div class="leadership-card-title">UBC Faculty of Dentistry Peer Mentorship Program</div>
-                    <div class="leadership-card-position">Dental Hygiene Year 3 Peer Mentor, Sep 2024 – April 2025</div>
-                    <div class="leadership-card-description">
-                        Supported first-year students through wellness-focused initiatives, academic guidance, and community-building events. Designed promotional campaigns, including posters and Instagram content, to increase visibility and participation in mentorship programming.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Helped foster a culture of support, belonging, and resilience, easing the transition into the dental hygiene program.
-                    </div>
-                </div>
-
-                <div class="leadership-card">
-                    <div class="leadership-card-title">Place Vanier Student Association House Council Chair & Area Council Member</div>
-                    <div class="leadership-card-position">House President, Kootenay & Sherwood Lett, Sep 2023 – Apr 2024</div>
-                    <div class="leadership-card-description">
-                        Chaired two residence house councils within a larger Area Council, overseeing operations and delegating responsibilities. Implemented a resident feedback system via Google Forms, analyzed results, and presented actionable data to senior administrators. Authored a detailed transition report to ensure effective leadership succession.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Strengthened student advocacy and introduced sustainable systems that improved operations and future leadership continuity.
-                    </div>
-                </div>
-
-                <div class="leadership-card">
-                    <div class="leadership-card-title">UBC Student Leadership Conference</div>
-                    <div class="leadership-card-position">Delegate, UBC Dental Hygiene, January 2023</div>
-                    <div class="leadership-card-description">
-                        Represented UBC Faculty of Dentistry and UBC Dental Hygiene as a delegate at the 2023 Student Leadership Conference. Forged professional connections with peers and emerging leaders spanning numerous disciplines, both nationally and internationally.
-                    </div>
-                    <div class="impact-tag">
-                        <strong>Impact:</strong> Exchanged ideas on leadership, advocacy, and innovation, which, in turn, elevated the profile of UBC Dental Hygiene.
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact" class="content-section">
-                <h1 class="greeting">Contact Me</h1>
-                
-                <div class="contact-grid">
-                    <div class="contact-card">
-                        <span class="contact-icon">📧</span>
-                        <h3>Email</h3>
-                        <a href="mailto:slakshm4@student.ubc.ca" class="contact-info">slakshm4@student.ubc.ca</a>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <span class="contact-icon">🎓</span>
-                        <h3>University</h3>
-                        <div class="contact-info">University of British Columbia<br>Faculty of Dentistry</div>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <span class="contact-icon">🏢</span>
-                        <h3>Professional</h3>
-                        <div class="contact-info">Eureka Enterprises<br>Founder & CEO</div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+    <!-- Added footer -->
+    <footer class="footer">
+        <p class="footer-text">© 2025 Shradha Lakshman. All rights reserved.</p>
+    </footer>
 
     <script>
-        function showSection(sectionId) {
-            // Hide all content sections
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+        function toggleSidebar() {
+            const sidebar = document.getElementById('profileSidebar');
+            sidebar.classList.toggle('active');
+        }
 
-            // Remove active class from all nav links
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('profileSidebar');
+            const toggle = document.querySelector('.sidebar-toggle');
+            
+            if (sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                !toggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+        
+        /* Added parallax scroll effect for hero section */
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / scrollHeight);
+            scrollProgress.style.transform = `scaleX(${scrolled})`;
 
-            // Show selected section
-            const targetSection = document.getElementById(sectionId);
-            if (targetSection) {
-                targetSection.classList.add('active');
+            // Parallax effect for hero content
+            const heroContent = document.querySelector('.hero-content');
+            const heroOrbs = document.querySelectorAll('.hero-orb');
+            
+            if (heroContent && window.scrollY < window.innerHeight) {
+                const scrollPercent = window.scrollY / window.innerHeight;
+                heroContent.style.transform = `translateY(${scrollPercent * 100}px)`;
+                heroContent.style.opacity = 1 - scrollPercent * 1.5;
+                
+                heroOrbs.forEach((orb, index) => {
+                    const speed = 0.5 + (index * 0.2);
+                    orb.style.transform = `translateY(${scrollPercent * 100 * speed}px)`;
+                });
+            }
+        });
+
+        // Navigation header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const navHeader = document.getElementById('navHeader');
+            const currentScroll = window.scrollY;
+            
+            if (currentScroll > 50) {
+                navHeader.classList.add('scrolled');
+            } else {
+                navHeader.classList.remove('scrolled');
             }
             
-            // Add active class to clicked nav link
-            if (event && event.target) {
-                event.target.classList.add('active');
+            lastScroll = currentScroll;
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Stagger animation delays for cards in grids
+                    const delay = entry.target.classList.contains('about-card-apple') || 
+                                 entry.target.classList.contains('contact-card-apple') ||
+                                 entry.target.classList.contains('featured-card-apple')
+                                 ? index * 150 : index * 100;
+                    
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, delay);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        function observeElements() {
+            document.querySelectorAll('.content-section, .featured-card-apple, .about-card-apple, .timeline-card, .contact-card-apple').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Section navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Show hero for home
+            const heroSection = document.querySelector('.hero-section');
+            if (sectionId === 'home') {
+                heroSection.style.display = 'flex';
+                document.getElementById('home-content').style.display = 'block';
+            } else {
+                heroSection.style.display = 'none';
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                }
             }
 
-            // Close mobile menu if open
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Re-observe elements for animations
+            setTimeout(() => {
+                observeElements();
+            }, 100);
+
+            // Close mobile menu
             closeMobileMenu();
         }
 
+        // Publications navigation
         function showPublicationSection(sectionId) {
-            // Hide all publication sections
-            const sections = document.querySelectorAll('.pub-section');
-            sections.forEach(section => {
+            document.querySelectorAll('.pub-section-content').forEach(section => {
                 section.classList.remove('active');
             });
 
-            // Remove active class from all buttons
-            const buttons = document.querySelectorAll('.pub-nav-btn');
-            buttons.forEach(button => {
+            document.querySelectorAll('.pub-nav-button').forEach(button => {
                 button.classList.remove('active');
             });
 
-            // Show selected section
             document.getElementById(sectionId).classList.add('active');
-            
-            // Add active class to clicked button
             event.target.classList.add('active');
         }
 
+        // Mobile menu
         function toggleMobileMenu() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('open');
+            const navMenu = document.getElementById('navMenu');
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+            
+            if (navMenu.style.display === 'flex') {
+                navMenu.style.position = 'absolute';
+                navMenu.style.top = '48px';
+                navMenu.style.left = '0';
+                navMenu.style.right = '0';
+                navMenu.style.background = 'rgba(255, 255, 255, 0.95)';
+                navMenu.style.backdropFilter = 'saturate(180%) blur(20px)';
+                navMenu.style.flexDirection = 'column';
+                navMenu.style.padding = '20px';
+                navMenu.style.gap = '16px';
+                navMenu.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            }
         }
 
         function closeMobileMenu() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('open');
+            if (window.innerWidth <= 768) {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.style.display = 'none';
+            }
         }
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('sidebar');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            observeElements();
             
-            if (window.innerWidth <= 768 && 
-                !sidebar.contains(event.target) && 
-                !menuBtn.contains(event.target)) {
-                closeMobileMenu();
+            // Trigger initial animations
+            setTimeout(() => {
+                document.querySelectorAll('.content-section').forEach(section => {
+                    if (section.style.display !== 'none') {
+                        section.classList.add('visible');
+                    }
+                });
+            }, 100);
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.style.display = 'flex';
+                navMenu.style.position = 'static';
+                navMenu.style.flexDirection = 'row';
+                navMenu.style.padding = '0';
+                navMenu.style.background = 'none';
+                navMenu.style.boxShadow = 'none';
             }
         });
     </script>
