@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shradha Lakshman</title>
     <style>
-        /* Complete CSS redesign with Apple-inspired aesthetics and animations */
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +27,6 @@
             overflow-x: hidden;
         }
 
-        /* Added floating sidebar button with magnetic effect */
         .sidebar-toggle {
             position: fixed;
             top: 80px;
@@ -57,7 +55,6 @@
             transform: scale(0.95);
         }
 
-        /* Replaced emoji with SVG icon for sidebar toggle */
         .sidebar-toggle svg {
             width: 28px;
             height: 28px;
@@ -285,7 +282,6 @@
             opacity: 0.6;
         }
 
-        /* Mobile menu button */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -296,8 +292,6 @@
             padding: 8px;
         }
 
-        /* Enhanced hero section with parallax and advanced animations */
-        /* Enhanced hero section with Apple-style abstract banner */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -314,7 +308,6 @@
             overflow: hidden;
         }
 
-        /* Added Apple-style abstract gradient banner background */
         .hero-banner {
             position: absolute;
             top: 0;
@@ -393,7 +386,6 @@
             }
         }
 
-        /* Removed small profile image, content now overlays banner */
         .hero-content {
             position: relative;
             z-index: 10;
@@ -405,7 +397,6 @@
             }
         }
 
-        /* Enhanced hero title with scroll-triggered parallax */
         .hero-title {
             font-size: 80px;
             font-weight: 600;
@@ -465,7 +456,6 @@
             padding: 0 22px;
         }
 
-        /* Enhanced section styles with stagger animations */
         .content-section {
             padding: 100px 0;
             opacity: 0;
@@ -528,7 +518,6 @@
             margin: 0 auto;
         }
 
-        /* Enhanced featured work cards with 3D transforms and advanced hover effects */
         .featured-grid {
             display: grid;
             gap: 40px;
@@ -567,7 +556,6 @@
             overflow: hidden;
         }
 
-        /* Added animated gradient overlay */
         .card-visual::before {
             content: '';
             position: absolute;
@@ -583,7 +571,6 @@
             transform: scale(1.1);
         }
 
-        /* Added animated accent circles */
         .card-visual::after {
             content: '';
             position: absolute;
@@ -797,7 +784,6 @@
             transform: translateY(-5px);
         }
 
-        /* Enhanced timeline cards with slide-in animations */
         .timeline-card {
             background: #fbfbfd;
             border-radius: 18px;
@@ -819,7 +805,6 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
         }
 
-        /* Added accent line on hover */
         .timeline-card::before {
             content: '';
             position: absolute;
@@ -988,7 +973,6 @@
             text-decoration: underline;
         }
 
-        /* Enhanced contact grid with scale animations */
         .contact-grid-apple {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1174,14 +1158,17 @@
     </style>
 </head>
 <body>
-    <!-- Replaced emoji with SVG icon -->
     <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open profile sidebar">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            <circle cx="5" cy="6" r="1.5"/>
+            <line x1="9" y1="6" x2="19" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="5" cy="12" r="1.5"/>
+            <line x1="9" y1="12" x2="19" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="5" cy="18" r="1.5"/>
+            <line x1="9" y1="18" x2="19" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
         </svg>
     </button>
 
-    <!-- Added slide-out profile sidebar -->
     <aside class="profile-sidebar" id="profileSidebar">
         <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">×</button>
         <div class="sidebar-profile-image">
@@ -1199,7 +1186,6 @@
         </nav>
     </aside>
 
-    <!-- Added sticky navigation header with blur effect -->
     <div class="scroll-progress" id="scrollProgress"></div>
     
     <header class="nav-header" id="navHeader">
@@ -1219,7 +1205,6 @@
         </div>
     </header>
 
-    <!-- Redesigned hero section with Apple-style abstract banner -->
     <section class="hero-section">
         <div class="hero-banner"></div>
         <div class="hero-orb hero-orb-1"></div>
@@ -1239,7 +1224,6 @@
     </section>
 
     <main class="main-container">
-        <!-- Restructured featured work section with Apple-style cards -->
         <section id="home-content" class="content-section">
             <div class="section-header-main">
                 <div class="section-eyebrow">Featured Work</div>
@@ -1299,7 +1283,6 @@
             </div>
         </section>
 
-        <!-- Redesigned about section with Apple-style grid -->
         <section id="about" class="content-section" style="display: none;">
             <div class="section-header-main">
                 <div class="section-eyebrow">About</div>
@@ -1344,7 +1327,6 @@
             </div>
         </section>
 
-        <!-- Redesigned publications section -->
         <section id="publications" class="content-section" style="display: none;">
             <div class="section-header-main">
                 <div class="section-eyebrow">Research</div>
@@ -1367,7 +1349,8 @@
                 <div class="pub-card">
                     <h4>Educational Curriculum Development</h4>
                     <ul>
-                        <li>Contributed to the redesign and visual enhancement/accessibility of PowerPoint slide decks for UBCH interprofessional integrated curriculum workshops, including modules on:
+                        <li>Contributed to the redesign and visual enhancement/accessibility of PowerPoint slide decks for UBCH interprofessional integrated curriculum workshops, including modules on:<br>
+                            <br>
                             <ul style="padding-left: 2rem;">
                                 <li>Collaborative Leadership for Shared Decision-Making</li>
                                 <li>Relationship-Focused Care</li>
@@ -1398,7 +1381,6 @@
             </div>
         </section>
 
-        <!-- Redesigned education section -->
         <section id="education" class="content-section" style="display: none;">
             <div class="section-header-main">
                 <div class="section-eyebrow">Experience</div>
@@ -1450,7 +1432,7 @@
             </div>
 
             <div class="timeline-card">
-                <h3 class="timeline-title">Union Gospel Mission - The Orchard</h3>
+                <h3 class="timeline-title">Union Gospel Mission - The Orchard & New Westminster</h3>
                 <p class="timeline-position">Outreach Clinical Services</p>
                 <span class="tag-in-progress">In Progress</span>
                 <p class="timeline-description">
@@ -1509,7 +1491,6 @@
             </div>
         </section>
 
-        <!-- Redesigned leadership section -->
         <section id="leadership" class="content-section" style="display: none;">
             <div class="section-header-main">
                 <div class="section-eyebrow">Leadership</div>
@@ -1539,7 +1520,7 @@
             </div>
 
             <div class="timeline-card">
-                <h3 class="timeline-title">Oral Cancer Screening Day (Upcoming)</h3>
+                <h3 class="timeline-title">Oral Cancer Screening Day</h3>
                 <p class="timeline-position">Volunteer Student Dental Hygienist, Sept 28, 2025 – Pacific Oral Health Centre, Surrey</p>
                 <p class="timeline-description">
                     Will participate in a community outreach initiative providing oral cancer screenings alongside faculty, clinicians, and oral medicine specialists. Training includes EO/IO exams and the use of VELscope technology for early detection.
@@ -1594,7 +1575,6 @@
             </div>
         </section>
 
-        <!-- Redesigned contact section -->
         <section id="contact" class="content-section" style="display: none;">
             <div class="section-header-main">
                 <div class="section-eyebrow">Get in Touch</div>
@@ -1623,7 +1603,6 @@
         </section>
     </main>
 
-    <!-- Added footer -->
     <footer class="footer">
         <p class="footer-text">© 2025 Shradha Lakshman. All rights reserved.</p>
     </footer>
@@ -1634,7 +1613,6 @@
             sidebar.classList.toggle('active');
         }
 
-        // Close sidebar when clicking outside
         document.addEventListener('click', (e) => {
             const sidebar = document.getElementById('profileSidebar');
             const toggle = document.querySelector('.sidebar-toggle');
