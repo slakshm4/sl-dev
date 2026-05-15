@@ -1,0 +1,122 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+.nav {
+  position: fixed;
+
+  top: 38px;
+
+  /* OFFSET RIGHT FOR SPINE GRAPHIC BALANCE */
+  left: 57%;
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 38px;
+
+  z-index: 1000;
+}
+
+/* NAV TEXT */
+.nav-item {
+  position: relative;
+
+  font-family: 'Oswald', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+
+  letter-spacing: 0.02em;
+
+  color: #a2cba1;
+
+  text-decoration: none;
+
+  cursor: pointer;
+  display: inline-block;
+
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease,
+    filter 0.45s ease;
+}
+
+/* LIFT + GLOW */
+.nav-item:hover {
+  transform: translateY(-2px);
+
+  text-shadow:
+    0 5px 10px rgba(0, 0, 0, 0.14),
+    0 0 8px rgba(255, 255, 255, 0.08);
+
+  filter: brightness(1.04);
+
+  opacity: 0.98;
+}
+
+/* SHIMMER */
+.nav-item::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -140%;
+
+  width: 28%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.16) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  transform: skewX(-20deg);
+
+  pointer-events: none;
+}
+
+/* PLAY SHIMMER */
+.nav-item:hover::after {
+  animation: shimmer 0.7s ease;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -140%;
+  }
+
+  100% {
+    left: 180%;
+  }
+}
+</style>
+
+<nav class="nav">
+
+  <a class="nav-item" href="/">
+    home
+  </a>
+
+  <a class="nav-item" href="/north-star">
+    north star
+  </a>
+
+  <a class="nav-item" href="/explore">
+    explore
+  </a>
+
+  <a class="nav-item" href="/experience">
+    experience
+  </a>
+
+  <a class="nav-item" href="/notebook">
+    notebook
+  </a>
+
+  <a class="nav-item" href="/say-hi">
+    say hi!
+  </a>
+
+</nav>

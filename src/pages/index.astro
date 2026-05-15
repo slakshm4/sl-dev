@@ -1,17 +1,109 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <img
+      src="/spine.png"
+      class="spine"
+      alt=""
+    />
+
+    <div class="hero-text">
+      <h2>hi, i'm</h2>
+      <h1>shradha<br />lakshman.</h1>
+    </div>
+
+  </section>
+
+  <!-- SCROLL SECTION -->
+  <section class="content">
+
+    <div class="panel"></div>
+
+    <img
+      src="/jaw.png"
+      class="jaw"
+      alt=""
+    />
+
+  </section>
+
+</Layout>
+
+<style>
+
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* SECOND SECTION */
+.content {
+  position: relative;
+  min-height: 140vh;
+  background: #d9d9d9;
+}
+
+/* LEFT SPINE IMAGE */
+.spine {
+  position: absolute;
+  left: -3%;
+  top: 0;
+
+  height: 100%;
+  object-fit: contain;
+
+  z-index: 3;
+}
+
+/* MAIN TEXT */
+.hero-text {
+  position: absolute;
+
+  top: 18%;
+  left: 42%;
+
+  color: #a2cba1;
+
+  z-index: 5;
+}
+
+.hero-text h1 {
+  font-size: 9rem;
+  line-height: 0.9;
+}
+
+.hero-text h2 {
+  font-size: 4rem;
+}
+
+/* RIGHT PANEL */
+.panel {
+  position: absolute;
+
+  right: 8%;
+  top: -120px;
+
+  width: 300px;
+  height: 900px;
+
+  background: #5d7d61;
+}
+
+/* JAW */
+.jaw {
+  position: absolute;
+
+  right: 4%;
+  bottom: 10%;
+
+  width: 260px;
+}
+
+</style>
