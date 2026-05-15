@@ -2,21 +2,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
 
 .nav {
-  position: fixed;
+  position: absolute;
 
-  top: 38px;
+  top: 42px;
 
-  /* OFFSET RIGHT FOR SPINE GRAPHIC BALANCE */
-  left: 57%;
+  /* OFFSET RIGHT FOR SPINE BALANCE */
+  left: 56%;
   transform: translateX(-50%);
 
   display: flex;
-  gap: 38px;
+  gap: 42px;
 
   z-index: 1000;
 }
 
-/* NAV TEXT */
+/* NAV LINKS */
 .nav-item {
   position: relative;
 
@@ -30,8 +30,9 @@
 
   text-decoration: none;
 
-  cursor: pointer;
   display: inline-block;
+
+  will-change: transform;
 
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -40,17 +41,19 @@
     filter 0.45s ease;
 }
 
-/* LIFT + GLOW */
+/* HOVER */
 .nav-item:hover {
+
   transform: translateY(-2px);
 
   text-shadow:
-    0 5px 10px rgba(0, 0, 0, 0.14),
-    0 0 8px rgba(255, 255, 255, 0.08);
+    0 6px 14px rgba(0, 0, 0, 0.18),
+    0 0 10px rgba(255, 255, 255, 0.09),
+    0 0 18px rgba(162, 203, 161, 0.08);
 
-  filter: brightness(1.04);
+  filter: brightness(1.06);
 
-  opacity: 0.98;
+  opacity: 0.99;
 }
 
 /* SHIMMER */
@@ -60,35 +63,39 @@
   position: absolute;
 
   top: 0;
-  left: -140%;
+  left: -120%;
 
-  width: 28%;
+  width: 18%;
   height: 100%;
 
   background: linear-gradient(
     120deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.16) 50%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.22) 50%,
+    rgba(255,255,255,0) 100%
   );
 
-  transform: skewX(-20deg);
+  transform: skewX(-18deg);
+
+  opacity: 0;
 
   pointer-events: none;
 }
 
-/* PLAY SHIMMER */
+/* ONLY ACTIVATE ON HOVER */
 .nav-item:hover::after {
-  animation: shimmer 0.7s ease;
+  opacity: 1;
+  animation: shimmer 0.75s ease;
 }
 
 @keyframes shimmer {
+
   0% {
-    left: -140%;
+    left: -120%;
   }
 
   100% {
-    left: 180%;
+    left: 170%;
   }
 }
 </style>
