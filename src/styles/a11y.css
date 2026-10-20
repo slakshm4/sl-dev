@@ -130,3 +130,29 @@ html.js[data-a11y="on"] .hl { background-size: 100% 100% !important; }
 :root[data-a11y="on"] .tri-line { display: inline; white-space: normal; }
 :root[data-a11y="on"] .tri p { font-size: 1.05rem; }
 :root[data-a11y="on"] .tri { text-align: left; }
+
+/* ── newer decorations: plain and quiet in accessible mode ── */
+:root[data-a11y="on"] :is(.sprite, .clip, .strip-sprites, .fn-fill, .nbf-pk, .nbf-art, .nbf-open, .nbc-asset, .of, .hero-arrow) { display: none !important; }
+/* notebook: the folder drawer becomes a plain list of big, labelled buttons; the open folder is just a heading and its cards */
+:root[data-a11y="on"] .nb-stack { display: grid; gap: 1rem; padding-top: 0.6rem; }
+:root[data-a11y="on"] .nbf {
+  height: auto; margin: 0 !important; transform: none !important; background: var(--fc); border: 3px solid var(--ink); border-radius: 10px; padding: 1rem 1.2rem; box-shadow: 4px 4px 0 var(--shadow);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1.2rem; animation: none !important;
+}
+:root[data-a11y="on"] .nbf-label { position: static; transform: none; width: auto; height: auto; padding: 0; background: none; border: 0; font-size: 1.25rem; font-weight: 700; gap: 0.7rem; }
+:root[data-a11y="on"] .nbf-n { font-size: 0.9rem; }
+:root[data-a11y="on"] .nbf-hint { position: static; font-size: 1.1rem !important; }
+:root[data-a11y="on"] .nb-tabs { padding: 0.4rem 0 0.8rem; gap: 0.5rem; margin-bottom: 0; }
+:root[data-a11y="on"] .nb-tab { transform: none; border: 3px solid var(--ink); border-radius: 10px; padding: 0.6rem 1rem; }
+:root[data-a11y="on"] .nb-tab::before, :root[data-a11y="on"] .nb-tab::after { display: none; }
+:root[data-a11y="on"] .nb-tab { background: var(--tc); }
+:root[data-a11y="on"] .nb-tab[aria-selected="true"] { box-shadow: 0 0 0 4px var(--paper), 0 0 0 7px var(--ink); }
+:root[data-a11y="on"] .nb-tab-l { font-size: 1.1rem; }
+:root[data-a11y="on"] .nb-panel { padding-bottom: 0.5rem; }
+:root[data-a11y="on"] .nb-spill { padding-top: 0.4rem; }
+:root[data-a11y="on"] .nb-close { position: static; display: inline-block; margin: 0.2rem 0 0.8rem; }
+:root[data-a11y="on"] .nbc { transform: none !important; animation: none !important; }
+:root[data-a11y="on"] .nb-cards { gap: 1.8rem 1.4rem; }
+/* e-portfolio note on experience: the crossed-out words stay readable */
+:root[data-a11y="on"] .scribble::after { display: none; }
+:root[data-a11y="on"] .scribble { text-decoration: line-through; text-decoration-thickness: 2px; }

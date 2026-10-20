@@ -44,7 +44,7 @@ let counter = 0;
               <Sticker name={["pencil", "tooth", "cassette", "sparkle"][i]} size={40} class="nbf-st" />
             </span>
             <span class="nbf-art" aria-hidden="true"><span class="nbf-shape"></span></span>
-            <span class="nbf-label"><span class="nbf-l">{s.label}</span><span class="nbf-n keep-case">{count(s)}</span></span>
+            <span class="nbf-label"><span class="nbf-l">{s.label}</span><span class="nbf-n keep-case" aria-hidden="true">{count(s)}</span><span class="sr-only">, {count(s)} pieces. </span></span>
             <span class="nbf-hint hand">{short(s.hint)}</span>
             <span class="nbf-open hand" aria-hidden="true">open it</span>
           </button>
@@ -56,7 +56,7 @@ let counter = 0;
         {notebook.map((s) => (
           <button class={`nb-tab nb-tab--${s.tone}`} role="tab" id={`tab-${s.id}`} aria-controls={`panel-${s.id}`} aria-selected="false" tabindex="-1" type="button">
             <span class="nb-tab-l">{s.label}</span>
-            <span class="nb-tab-n keep-case">{count(s)}</span>
+            <span class="nb-tab-n keep-case" aria-hidden="true">{count(s)}</span><span class="sr-only">, {count(s)} pieces</span>
           </button>
         ))}
       </div>
@@ -91,8 +91,8 @@ let counter = 0;
                             <Sticker name={stickers[(i * 5 + 3) % stickers.length]} size={s.id === "case-studies" ? 62 : 46} />
                           </span>
                           <span class="nbc-body">
-                            <span class={`chip chip--${s.tone} keep-case`}>{e.tag}</span>
                             <span class="nbc-title">{e.title}</span>
+                            <span class={`chip chip--${s.tone} keep-case`}>{e.tag}</span>
                             {e.blurb && <span class="nbc-blurb">{e.blurb}</span>}
                             {e.status === "draft" && <span class="stamp nbc-stamp keep-case">in the drafts</span>}
                             {e.external && <span class="nbc-out keep-case">opens in a new tab ↗</span>}
@@ -237,6 +237,7 @@ let counter = 0;
   .nbc-pic .sticker { transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1); filter: drop-shadow(2px 3px 0 rgba(31, 27, 46, 0.3)); }
   .nbc:hover .sticker { transform: rotate(-14deg) scale(1.2); }
   .nbc-body { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.8rem 0.95rem 1rem; flex: 1; }
+  .nbc-body .chip { order: -1; }
   .nbc-title { font: 600 1.18rem/1.15 var(--f-display); letter-spacing: -0.01em; }
   .nbc-blurb { font-size: 0.96rem; line-height: 1.4; color: #4c4666; }
   .nbc-stamp { margin-top: auto; --stamp: #4a58ab; font-size: 0.7rem; }

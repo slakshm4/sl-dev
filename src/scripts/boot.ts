@@ -12,8 +12,16 @@ import { initRecords, initFacts } from "./records";
 const safe = (fn: () => void) => { try { fn(); } catch (e) { console.warn(e); } };
 
 let ran = false;
+let first = true;
 function pageLoad() {
   ran = true;
+  // after a client-side navigation, put keyboard and screen-reader focus at the top of the new page's content
+  // (the router swaps the page without a reload, so focus would otherwise stay on a link that no longer exists)
+  if (!first) {
+    const m = document.getElementById("main");
+    if (m) { m.setAttribute("tabindex", "-1"); m.focus({ preventScroll: true }); }
+  }
+  first = false;
   safe(initChrome);
   safe(initTooth);
   safe(initEyes);

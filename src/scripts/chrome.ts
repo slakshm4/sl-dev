@@ -9,13 +9,12 @@ function sync() {
   const off = r.dataset.motion === "off";
   document.querySelectorAll<HTMLElement>('[data-toggle="theme"]').forEach((b) => {
     b.setAttribute("aria-pressed", String(dark));
-    b.setAttribute("aria-label", dark ? "switch to light mode" : "switch to dark mode");
+    b.setAttribute("aria-label", "dark mode");
     b.title = dark ? "switch to light mode" : "switch to dark mode";
   });
   document.querySelectorAll<HTMLElement>('[data-toggle="motion"]').forEach((b) => {
     b.setAttribute("aria-pressed", String(off));
-    const label = off ? "resume motion" : "pause motion";
-    b.setAttribute("aria-label", label);
+    b.setAttribute("aria-label", "pause animations");
     b.title = off ? "animations are paused. tap to bring back the turning tooth, floating stickers, and page effects" : "pause the animations (turning tooth, floating stickers, page effects)";
   });
   const acc = r.dataset.a11y === "on";
@@ -102,10 +101,12 @@ export function initChrome() {
           const next = r.dataset.theme === "dark" ? "light" : "dark";
           r.dataset.theme = next;
           store.set("theme", next);
+          say(next === "dark" ? "dark mode on." : "dark mode off.");
         } else if (kind === "motion") {
           const next = r.dataset.motion === "off" ? "on" : "off";
           r.dataset.motion = next;
           store.set("motion", next);
+          say(next === "off" ? "animations paused." : "animations on.");
         } else if (kind === "a11y") {
           setAccessible(r.dataset.a11y !== "on");
         } else if (kind === "menu") {

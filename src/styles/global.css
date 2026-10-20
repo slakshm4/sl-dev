@@ -346,3 +346,4 @@ html.js .hl:not(.is-in) { background-size: 0 100%; }
 .lite .pol[data-reveal]:not(.is-in) .pol-card { transform: none; }
 .lite .nb-panel.is-open { animation: lite-fade 0.25s ease-out; }
 @keyframes lite-fade { from { opacity: 0; } to { opacity: 1; } }
+#main:focus, #main:focus-visible { outline: none !important; box-shadow: none !important; }
