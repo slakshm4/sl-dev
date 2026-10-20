@@ -1,0 +1,132 @@
+/* ═════════════════════════════════════════════════════════════
+   a11y.css  ·  "accessible mode" (the round person button at the top-left of the nav).
+   it is on whenever <html data-a11y="on">. what it does, in plain words:
+
+   · reading   OpenDyslexic everywhere (it is open-licence, see public/fonts/OFL.txt), roomier line and letter spacing,
+               left-aligned text, no italics, no all-over faux-handwriting
+   · seeing    every patterned paper (floral, newsprint, kraft, gingham, grid, dots) becomes one flat colour behind words,
+               no grain, no text shadows, no tilted headings, darker secondary text, links always underlined,
+               thicker focus rings
+   · moving    nothing animates (the turning tooth, floating stickers, typing, page effects, hover wiggles)
+               and anything waiting to scroll into view is simply shown. chrome.ts also sets data-motion="off"
+   · hearing   chrome.ts announces the switch through the live region in Layout.astro. the rest (landmarks, skip link,
+               alt text, language of the French poems, aria-pressed buttons) is built into the pages themselves.
+
+   aim: WCAG 2.0 level AA. this is a best-effort build, not a certified audit.
+   ═════════════════════════════════════════════════════════════ */
+
+@font-face { font-family: "OpenDyslexic"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/opendyslexic-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "OpenDyslexic"; font-style: italic; font-weight: 400; font-display: swap; src: url("/fonts/opendyslexic-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "OpenDyslexic"; font-style: normal; font-weight: 700; font-display: swap; src: url("/fonts/opendyslexic-700-normal.woff2") format("woff2"); }
+
+/* ── type ───────────────────────────────────────────────────── */
+:root[data-a11y="on"] {
+  --f-display: "OpenDyslexic", "Atkinson Hyperlegible", "Verdana", sans-serif;
+  --f-body: "OpenDyslexic", "Atkinson Hyperlegible", "Verdana", sans-serif;
+  --f-type: "OpenDyslexic", "Atkinson Hyperlegible", "Verdana", sans-serif;
+  --f-hand: "OpenDyslexic", "Atkinson Hyperlegible", "Verdana", sans-serif;
+  --ink-soft: var(--ink);
+  --link: #1f2a7a;
+  --focus: #1f2a7a;
+  --shadow: rgba(31, 27, 46, 0.4);
+  scroll-behavior: auto;
+}
+:root[data-a11y="on"][data-theme="dark"] {
+  --link: #c9d1ff;
+  --focus: #ffe58a;
+  --shadow: rgba(0, 0, 0, 0.7);
+}
+
+:root[data-a11y="on"] body {
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  word-spacing: 0.12em;
+  text-align: left;
+  hyphens: none;
+}
+:root[data-a11y="on"] :is(p, li, dd, dt, blockquote, figcaption, summary, label, td, th, .pc-body, .pc-ln, .st-row) {
+  line-height: 1.85 !important;
+  letter-spacing: 0.02em !important;
+  word-spacing: 0.12em !important;
+  text-align: left !important;
+  text-wrap: wrap !important;
+  hyphens: none !important;
+  overflow-wrap: break-word;
+}
+:root[data-a11y="on"] :is(h1, h2, h3, h4) { line-height: 1.3 !important; letter-spacing: 0.01em !important; text-wrap: wrap; overflow-wrap: break-word; }
+:root[data-a11y="on"] :is(em, i, cite, blockquote, .nav-item, .is-voice, .pc-body--verse, .hl) { font-style: normal !important; }
+:root[data-a11y="on"] .hand { font-size: 1.08em !important; letter-spacing: 0.01em; line-height: 1.4; }
+/* small print gets no smaller than a comfortable size */
+:root[data-a11y="on"] :is(.stamp, .pc-sec, .st-head, [class*="-tag"], [class*="-pill"], [class*="-kicker"]) { font-size: max(0.9rem, 1em); }
+
+/* ── headings that were set as big torn word-strips: a calmer size, straight, not tilted ── */
+:root[data-a11y="on"] .strip { font-size: clamp(1.7rem, 4.6vw, 3.1rem) !important; line-height: 1.25; letter-spacing: 0.01em !important; transform: none !important; padding: 0.15em 0.5em 0.25em; }
+:root[data-a11y="on"] .strip--seg { font-size: clamp(1.45rem, 3.6vw, 2.1rem) !important; }
+:root[data-a11y="on"] .strip--seg + .strip--seg { font-size: clamp(1.15rem, 2.6vw, 1.5rem) !important; }
+:root[data-a11y="on"] .strip-title { gap: 0.8rem 1rem; }
+:root[data-a11y="on"] .strip--floral { text-shadow: none; }
+:root[data-a11y="on"] :is(.strip--news, .strip--floral)::after { background: var(--strip-bg, #fbf2d4) !important; }
+:root[data-a11y="on"] .strip--floral { --strip-bg: #f4dfe6; }
+:root[data-a11y="on"] :is(.pc-note, .pc-box, .pc-sheet, .pc-plate) { transform: none !important; }
+
+/* ── flat, quiet paper behind words ── */
+:root[data-a11y="on"] :is(.scrap--news, .scrap--floral, .scrap--kraft, .scrap--grid, .scrap--dots)::after {
+  background-image: none !important; background-color: var(--paper) !important; filter: url(#rip-fine) !important;
+}
+:root[data-a11y="on"] :is(.paper--floral, .paper--newsprint, .paper--kraft, .paper--butter, .paper--grid, .paper--ruled, .paper--gingham) {
+  background-image: none !important; background-color: var(--paper) !important;
+}
+:root[data-a11y="on"] .pc-plate { background-image: none !important; background-color: #fdf9e9 !important; outline: none !important; }
+:root[data-a11y="on"] .grain { display: none; }
+:root[data-a11y="on"] body { background-image: none; }
+:root[data-a11y="on"] *, :root[data-a11y="on"] *::before, :root[data-a11y="on"] *::after { text-shadow: none !important; mix-blend-mode: normal !important; }
+
+/* ── links, focus, cursor ── */
+:root[data-a11y="on"] a:not(.nav-item):not(.tooth-link):not(.skip) { text-decoration: underline !important; text-decoration-thickness: 2px !important; text-underline-offset: 0.2em !important; }
+:root[data-a11y="on"] :where(a, button, summary, [tabindex], input, select, textarea):focus-visible {
+  outline: 4px solid var(--focus); outline-offset: 3px; box-shadow: 0 0 0 8px var(--paper); border-radius: 6px;
+}
+:root[data-a11y="on"], :root[data-a11y="on"] * { cursor: auto; }
+:root[data-a11y="on"] :is(a, button, summary, label[for], [role="button"], select) { cursor: pointer; }
+:root[data-a11y="on"] :is(input[type="text"], input[type="email"], textarea) { cursor: text; }
+
+/* ── nav ── */
+:root[data-a11y="on"] .nav-item { font-size: clamp(0.95rem, 1.35vw, 1.15rem); letter-spacing: 0.01em; padding: 0.4rem 0.15rem; }
+:root[data-a11y="on"] .nav-item:is(:hover, :focus-visible) { transform: none; text-shadow: none; background: none; -webkit-text-fill-color: currentColor; animation: none; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.25em; }
+:root[data-a11y="on"] .nav-item[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.3em; }
+:root[data-a11y="on"] .nav-item[aria-current="page"]::before { display: none; }
+:root[data-a11y="on"] .nav { gap: clamp(0.5rem, 1.6vw, 1.6rem); }
+:root[data-a11y="on"] .nav-group { gap: clamp(0.6rem, 1.6vw, 1.6rem); }
+:root[data-a11y="on"] .tool:hover, :root[data-a11y="on"] .a11y-btn:hover { transform: none; }
+:root[data-a11y="on"] .a11y-btn:hover { transform: translateY(-50%); }
+@media (max-width: 880px) { :root[data-a11y="on"] .nav-item { font-size: 1.4rem; } }
+
+/* ── nothing moves (the "motion off" rule in global.css does the same for data-motion="off") ── */
+:root[data-a11y="on"] *, :root[data-a11y="on"] *::before, :root[data-a11y="on"] *::after {
+  animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important;
+}
+:root[data-a11y="on"] .tooth-turn { animation: none !important; transform: rotateY(-14deg); }
+:root[data-a11y="on"] .tooth-3d { transform: none !important; }
+:root[data-a11y="on"] .tooth-3d:hover { transform: none !important; }
+:root[data-a11y="on"] [data-reveal], :root[data-a11y="on"] .hl { opacity: 1; }
+:root[data-a11y="on"] .click-star { display: none !important; }
+html.js[data-a11y="on"] .hl { background-size: 100% 100% !important; }
+
+/* the big italic drop-cap splits the first word in two for screen readers and for slow readers: plain letters instead */
+:root[data-a11y="on"] .pc-body--prose .pc-blk:first-child .blk-p:first-child::first-letter { float: none; margin: 0; padding: 0; font: inherit; background: none; color: inherit; }
+/* small screens: loose stickers would sit on top of the words, so they go */
+@media (max-width: 760px) { :root[data-a11y="on"] .sticker { display: none; } :root[data-a11y="on"] .cat-egg .sticker { display: block; } }
+/* rubber stamps: solid, straight, dark enough to read on the lilac desk */
+:root[data-a11y="on"] .stamp { opacity: 1; transform: none !important; filter: none; color: #1f2a7a !important; background: var(--paper); }
+:root[data-a11y="on"][data-theme="dark"] .stamp { color: #d7ddff !important; }
+
+/* OpenDyslexic is wide: let long words break rather than run off a narrow screen */
+:root[data-a11y="on"] body :not(svg, svg *, pre, code) { overflow-wrap: anywhere; }
+/* "other brain debris" scraps: big handwriting becomes a normal, straight, readable card */
+:root[data-a11y="on"] .pc-scrap { font-size: 1.2rem; line-height: 1.7; transform: none !important; justify-self: stretch !important; max-width: 100%; }
+:root[data-a11y="on"] .pc-scrap-list li { overflow-wrap: anywhere; }
+/* north star: the paragraph shaped like a triangle becomes an ordinary paragraph */
+:root[data-a11y="on"] .tri-line { display: inline; white-space: normal; }
+:root[data-a11y="on"] .tri p { font-size: 1.05rem; }
+:root[data-a11y="on"] .tri { text-align: left; }

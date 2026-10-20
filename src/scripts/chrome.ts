@@ -18,7 +18,41 @@ function sync() {
     b.setAttribute("aria-label", label);
     b.title = off ? "animations are paused. tap to bring back the turning tooth, floating stickers, and page effects" : "pause the animations (turning tooth, floating stickers, page effects)";
   });
+  const acc = r.dataset.a11y === "on";
+  document.querySelectorAll<HTMLElement>('[data-toggle="a11y"]').forEach((b) => {
+    b.setAttribute("aria-pressed", String(acc));
+    b.title = acc ? "accessible mode is on. tap to go back to the scrapbook look" : "switch to accessible mode: easier-to-read font, no animation, plainer backgrounds, higher contrast";
+  });
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#16132a" : "#ddd7ec");
+}
+
+/** a polite announcement for screen readers (the live region sits in Layout.astro) */
+function say(msg: string) {
+  const el = document.getElementById("a11y-status");
+  if (!el) return;
+  el.textContent = "";
+  setTimeout(() => { el.textContent = msg; }, 60);
+}
+
+/** accessible mode: dyslexia-friendly font, everything still, plain backgrounds, stronger contrast (the styles are in a11y.css) */
+function setAccessible(on: boolean) {
+  const r = document.documentElement;
+  r.dataset.a11y = on ? "on" : "off";
+  store.set("a11y", on ? "on" : "off");
+  if (on) {
+    // remember what the motion switch was, so turning accessible mode off puts it back
+    store.set("motion-before-a11y", r.dataset.motion === "off" ? "off" : "on");
+    r.dataset.motion = "off";
+    store.set("motion", "off");
+    // anything that was waiting to scroll into view just shows now
+    document.querySelectorAll("[data-reveal], .hl").forEach((e) => e.classList.add("is-in"));
+    document.querySelectorAll(".hand-arrow[data-draw]").forEach((e) => e.classList.add("is-drawn"));
+  } else {
+    const before = store.get("motion-before-a11y") === "off" ? "off" : "on";
+    r.dataset.motion = before;
+    store.set("motion", before);
+  }
+  say(on ? "accessible mode on. the font is now OpenDyslexic, animations are off, and backgrounds are plainer with stronger contrast." : "accessible mode off.");
 }
 
 function setMenu(open: boolean) {
@@ -72,6 +106,8 @@ export function initChrome() {
           const next = r.dataset.motion === "off" ? "on" : "off";
           r.dataset.motion = next;
           store.set("motion", next);
+        } else if (kind === "a11y") {
+          setAccessible(r.dataset.a11y !== "on");
         } else if (kind === "menu") {
           setMenu(!document.body.classList.contains("menu-open"));
         }

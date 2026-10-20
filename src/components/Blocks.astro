@@ -56,4 +56,7 @@ const blocks = toBlocks(items);
   .blk-fig:nth-of-type(even) .blk-fig-in { transform: rotate(0.9deg); }
   .blk-fig img { display: block; max-width: 100%; max-height: min(78vh, 46rem); width: auto; height: auto; margin: 0 auto; border: 1.5px solid #1f1b2e; }
   .blk-fig figcaption { margin: 0.75rem auto 0; max-width: 34rem; font: 400 0.82rem/1.4 var(--f-type); color: #4c4666; text-align: center; }
+  /* in dark mode the caption sits on dark paper (except on the always-light writing sheets) */
+  :root[data-theme="dark"] .blk-fig figcaption { color: var(--ink-soft); }
+  :root[data-theme="dark"] .pc-plate .blk-fig figcaption { color: #4c4666; }
 </style>

@@ -1,0 +1,4 @@
+OpenDyslexic (opendyslexic-400-normal / -400-italic / -700-normal .woff2)
+Copyright (c) Abelardo Gonzalez, https://opendyslexic.org
+Licensed under the SIL Open Font License, Version 1.1: https://openfontlicense.org
+(free to use, embed and redistribute with a site, as long as this notice stays with the font files.)

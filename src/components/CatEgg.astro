@@ -4,9 +4,11 @@
 import Sticker from "./Sticker.astro";
 const href = "https://www.youtube.com/watch?v=3-y0p0GL4TI";
 ---
+<aside aria-label="a small surprise">
 <a class="cat-egg" href={href} target="_blank" rel="noopener" aria-label="a cat is peeking in. it links to a Bongo Cat video of What Was I Made For? (opens YouTube in a new tab)">
   <Sticker name="cat" size={64} />
 </a>
+</aside>
 
 <style is:global>
   .cat-egg {

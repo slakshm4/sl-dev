@@ -75,6 +75,17 @@ the tooth docked in the nav is a link home on every page: the tooth itself is a 
 
 touch devices (coarse pointers) get a lighter site: no page-transition snapshots (pages simply load), simpler torn paper edges, no grain layer, and no endless looping animations. the play/pause button in the nav pauses or resumes all animation on any device; it's remembered, and defaults to paused if the device asks for reduced motion.
 
+## accessible mode
+
+the round person button at the top-left of the nav switches the whole site into accessible mode (remembered in `localStorage` under `a11y`, applied before the page paints by the little script in `Layout.astro`, and announced to screen readers through the `#a11y-status` live region). it sets `data-a11y="on"` on `<html>`; everything it changes is in `src/styles/a11y.css` (one file, easy to tweak or delete):
+
+- **reading**: OpenDyslexic (files in `public/fonts/`, licence note in `OFL.txt`), looser line / letter / word spacing, left-aligned text, no italics, no drop cap, the triangle paragraph on north star becomes a normal paragraph
+- **seeing**: patterned papers become flat colour behind words, no grain or text shadows, straight (not tilted) headings, stronger link and focus styles, darker stamps, the normal cursor, loose stickers hidden on phones
+- **moving**: nothing animates (it also sets the existing motion switch to off, and puts it back when you turn accessible mode off), and anything waiting to scroll into view is just shown
+- **screen readers**: the button is a real `<button aria-pressed>` and is the first thing in the tab order after "skip to content". the French lines of the (dé)générescence poems carry `lang="fr"` (and the quoted English lines `lang="en"`) so they are read with the right accent
+
+it is built toward WCAG 2.0 level AA and was checked with axe-core (colour contrast, labels, landmarks, headings, language) on every page in light and dark, with and without accessible mode. that is a strong start, not a certified audit: a real screen reader pass (VoiceOver / NVDA) and a manual keyboard pass are still worth doing.
+
 ## things to check / fill in
 
 - little town: the stamp "july 2026 · Robson Square, Vancouver" was inferred from your note; change `year` / `place` in `projects.ts` if it's wrong.

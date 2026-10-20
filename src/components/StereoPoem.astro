@@ -1,6 +1,7 @@
 ---
 // StereoPoem.astro  ·  a poem split between the ears: the left-ear line and the right-ear line sit side by side.
 // the english voice (every line inside quote marks) is set in italics. the translation follows, smaller.
+// screen readers: the french lines are marked lang="fr" and the quoted english lines lang="en", so each is read in the right accent.
 import { voiceFlags, plain, esc } from "../lib/text";
 const { pairs = [], translation = [] } = Astro.props;
 const flat = (ps: [string, string][]) => ps.flat();
@@ -20,8 +21,8 @@ const line = (s: string) => esc(s);
   <div class="st-rows">
     {main.map((r) => (
       <p class="st-row">
-        <span class={`st-l${r.lv ? " is-voice" : ""}`}><span class="sr-only">left ear: </span>{r.l}</span>
-        <span class={`st-r${r.rv ? " is-voice" : ""}`}><span class="sr-only">right ear: </span>{r.r}</span>
+        <span class={`st-l${r.lv ? " is-voice" : ""}`} lang={r.lv ? "en" : "fr"}><span class="sr-only" lang="en">left ear: </span>{r.l}</span>
+        <span class={`st-r${r.rv ? " is-voice" : ""}`} lang={r.rv ? "en" : "fr"}><span class="sr-only" lang="en">right ear: </span>{r.r}</span>
       </p>
     ))}
   </div>

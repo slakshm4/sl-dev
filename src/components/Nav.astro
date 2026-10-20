@@ -20,6 +20,12 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
   <!-- the docked tooth is a picture floating above the nav (it can't take clicks), so this invisible link sits right under it: tap the tooth, go home. the "home" word in the nav is the keyboard / screen-reader route. -->
   <a class="tooth-link" href="/" tabindex="-1" aria-hidden="true"></a>
 
+  <!-- accessible mode: first in the tab order (right after the skip link); sits on the left so the round tools on the right keep their room -->
+  <button class="a11y-btn" type="button" data-toggle="a11y" aria-pressed="false" aria-label="accessible mode" title="switch to accessible mode: easier-to-read font, no animation, plainer backgrounds, higher contrast">
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7.2" r="1.7" fill="currentColor"/><path d="M6.4 10.2l5.6.9 5.6-.9M12 11.2v3.6M12 14.8l-2.6 4.4M12 14.8l2.6 4.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="a11y-btn-label">accessible mode</span>
+  </button>
+
   <nav class="nav" id="site-nav" aria-label="main">
     <ul class="nav-group">
       {left.map((l) => (
@@ -56,7 +62,7 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
   .nav-paper::before { content: ""; position: absolute; inset: -30px -30px -5px -30px; background: var(--chalk); filter: url(#rip); }
   .nav-paper::after  { content: ""; position: absolute; inset: -30px -30px 0 -30px; background: var(--paper); filter: url(#rip-fine); }
 
-  .tooth-link { position: absolute; z-index: 2; top: 0; left: 50%; width: min(calc(var(--tw) * 0.2), 96px); height: var(--header-h); transform: translateX(-50%); -webkit-tap-highlight-color: transparent; }
+  .tooth-link { position: absolute; z-index: 2; top: 0; left: 50%; width: 64px; height: var(--header-h); transform: translateX(-50%); -webkit-tap-highlight-color: transparent; }
   /* the tooth gives a little wiggle when the pointer is over it */
   .tooth-3d { transition: transform 0.35s cubic-bezier(0.34, 1.7, 0.5, 1); }
   @media (hover: hover) { :root:has(.tooth-link:hover) .tooth-3d { transform: rotate(-7deg) scale(1.12); } }
@@ -84,6 +90,21 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
     background: var(--ink); -webkit-mask: var(--star-mask) center / contain no-repeat; mask: var(--star-mask) center / contain no-repeat;
   }
 
+  .a11y-btn {
+    position: absolute; z-index: 2; left: var(--gutter); top: 50%; transform: translateY(-50%);
+    display: inline-flex; align-items: center; gap: 0.5rem; height: 44px; min-width: 44px; padding: 0; justify-content: center;
+    background: var(--paper); color: var(--ink); border: 2px solid var(--ink); border-radius: 99px;
+    font: 500 1rem/1 var(--f-body); white-space: nowrap;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s;
+  }
+  .a11y-btn:hover { transform: translateY(-50%) rotate(-4deg) scale(1.05); }
+  .a11y-btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .a11y-btn-label { display: none; }
+  /* wide screens have room for the words */
+  @media (min-width: 1680px) { .a11y-btn { padding: 0 1rem 0 0.7rem; } .a11y-btn-label { display: inline; } }
+  @media (max-width: 880px) { .a11y-btn { left: 0.75rem; } }
+  /* in accessible mode the motion switch is pointless (everything is already still) */
+  :root[data-a11y="on"] .tool[data-toggle="motion"] { display: none; }
   .nav-tools { position: absolute; z-index: 2; right: var(--gutter); top: 50%; transform: translateY(-50%); display: flex; gap: 0.4rem; }
   .tool {
     display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
@@ -98,6 +119,13 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
   :root[data-motion="off"] .tool-pause { display: none; }
   :root[data-motion="off"] .tool-play { display: block; }
 
+  /* very small phones: slimmer buttons so the docked tooth never sits on top of one */
+  @media (max-width: 380px) {
+    .tool { width: 38px; height: 38px; }
+    .tool svg { width: 20px; height: 20px; }
+    .nav-tools { gap: 0.25rem; right: 0.5rem; }
+    .a11y-btn { height: 38px; min-width: 38px; left: 0.5rem; }
+  }
   @media (max-width: 880px) {
     .tool--menu { display: grid; }
     .nav-tools { right: 0.75rem; }

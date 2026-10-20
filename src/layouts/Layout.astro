@@ -60,13 +60,15 @@ const preview = `${origin}/tooth-preview.png`;
         try { lite = matchMedia("(pointer: coarse)").matches; } catch (e) {}
         if (lite) { try { document.startViewTransition = undefined; } catch (e) {} }
         function apply() {
-          var t = "light", m = "on";
+          var t = "light", m = "on", a = "off";
           try {
             t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
             m = localStorage.getItem("motion") || (matchMedia("(prefers-reduced-motion: reduce)").matches ? "off" : "on");
+            a = localStorage.getItem("a11y") === "on" ? "on" : "off";
           } catch (e) {}
           d.setAttribute("data-theme", t);
-          d.setAttribute("data-motion", m);
+          d.setAttribute("data-motion", a === "on" ? "off" : m);
+          d.setAttribute("data-a11y", a);
           d.classList.add("js");
           if (lite) d.classList.add("lite");
         }
@@ -79,6 +81,8 @@ const preview = `${origin}/tooth-preview.png`;
   </head>
   <body data-page={page}>
     <a class="skip" href="#main">skip to content</a>
+    <!-- screen readers hear changes made by the accessible-mode button through this -->
+    <div id="a11y-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <!-- svg filters that make paper edges torn and ink a little wobbly -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">

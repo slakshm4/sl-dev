@@ -27,6 +27,12 @@ function find() {
   last = -1;
 }
 
+/** how wide the tooth is once it is docked in the nav (px) */
+const dockSize = () => (matchMedia("(max-width: 380px)").matches ? 42 : matchMedia("(max-width: 880px)").matches ? 48 : 56);
+
+/** a few px down, so the docked tooth is centred in the strip, level with the words */
+const dockDrop = () => (matchMedia("(max-width: 880px)").matches ? 9 : 6);
+
 function paint() {
   find();
   const p = Math.round(cur * 1000) / 1000;
@@ -34,7 +40,11 @@ function paint() {
   last = p;
   const { tooth, shadow, stage, scroll, intro } = els;
   // the tooth: slides from the middle of the hero up to the nav while shrinking. (--y0 is set in Tooth.astro)
-  if (tooth) tooth.style.transform = `translate(-50%, calc(${1 - p} * var(--y0))) scale(${1 - 0.82 * p})`;
+  // (it docks at a fixed, small size, whatever size the hero tooth is on this screen, so it sits neatly inside the nav strip)
+  if (tooth) {
+    const k = Math.min(1, dockSize() / (tooth.offsetWidth || 300));
+    tooth.style.transform = `translate(-50%, calc(${1 - p} * var(--y0) + ${dockDrop() * p}px)) scale(${1 - (1 - k) * p})`;
+  }
   if (shadow) shadow.style.opacity = String(clamp(1 - p * 1.4, 0, 1));
   if (stage) stage.style.opacity = String(clamp(1 - p * 2.4, 0, 1));
   if (scroll) scroll.style.opacity = String(clamp(1 - p * 3, 0, 1));
@@ -59,7 +69,7 @@ export function initTooth() {
   if (!wired) {
     wired = true;
     addEventListener("scroll", kick, { passive: true });
-    addEventListener("resize", kick);
+    addEventListener("resize", () => { last = -1; kick(); });
     const watch = () => mo.observe(document.body, { attributes: true, attributeFilter: ["class"] });
     const mo = new MutationObserver(kick);
     watch();
