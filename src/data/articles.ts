@@ -17,6 +17,35 @@ const soon = ["the full write-up for this one is still being assembled: sketches
 
 const caseStudies: Piece[] = [
   {
+    slug: "contextomy",
+    title: "contextomy",
+    kicker: "web",
+    blurb: "blackout poetry reimagined.",
+    body: [
+      "i love blackout poetry. i know how that sounds. depending on who you ask, it is either a kitschy classroom craft or something you would find on r/im14andthisisdeep: thick black bars, one very deep sentence, a lot of void. i have heard the jokes, and some of them are fair.",
+      "but i keep coming back to it, because it is a strangely honest kind of editing. you do not write anything. you read a page until a smaller page shows up inside it, and every word you keep only means something because of everything you chose to cover.",
+      "that is, more or less, what _contextomy_ means: lifting words out of their surroundings until they say something new. usually it is a bad thing. here, it is the whole point, done in the open, with the original page still sitting right there.",
+      "contextomy is the studio i wished existed. pick a page from a small archive of public-domain poetry and prose (Dickinson, Poe, Austen, Thoreau, Shelley, Carroll), or bring your own words. then strike out whatever does not belong with a redaction block, a Sharpie scribble, a strikethrough, or a slow fade. choose the paper, the palette, the typeface, the spacing. when it feels finished, keep it as a print, a GIF, or a short film of the poem surfacing from the page.",
+      "i wanted it to feel like a desk rather than a tool. nothing gets uploaded, there are no accounts, and your poems live in your own browser. every export carries a small \"made with contextomy\" mark and a quiet fingerprint of the poem, like a signature at the bottom of the page.",
+      "so yes: kitschy, maybe. but so is most of what people love on purpose. i would rather make the kitsch beautiful than pretend i don't love it.",
+    ],
+    link: { label: "try it!", href: "https://slakshm4.github.io/contextomy/" },
+  },
+  { slug: "sidequest-service", title: "sidequest service", kicker: "web", blurb: "indecisive? try your hand at slots!", body: soon },
+  {
+    slug: "sitarify",
+    title: "sitarify",
+    kicker: "music",
+    blurb: "a visualizer of Karnatik and Hindustani music, making it accessible to everyone.",
+    body: [
+      "i built sitarify from a feeling i know well as an nri: being close to a culture, but often meeting it through fragments.",
+      "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back— a drone in the background, a raga name i half-recognize, the sense that there is a whole language of feeling i want to spend more time learning.",
+      "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods, stories, and ways of moving. i wanted it to feel less like putting an \"Indian\" filter on music, and more like an invitation to listen differently.",
+      "maybe it is also my own small way of making the distance feel a little more inhabitable.",
+    ],
+    link: { label: "try it!", href: "https://slakshm4.github.io/sitarify/" },
+  },
+  {
     slug: "what-species-are-you",
     title: "what species are you",
     kicker: "quiz",
@@ -35,35 +64,6 @@ const caseStudies: Piece[] = [
   { slug: "portable-photo-booth", title: "portable photo booth using Raspberry Pi", kicker: "hardware", draft: true, body: soon },
   { slug: "joeldi-centre", title: "joeldi centre for human approximation", kicker: "world-building", draft: true, body: soon },
   { slug: "v2-appreciation-mural", title: "v2 appreciation digital mural", kicker: "web", draft: true, body: soon },
-  {
-    slug: "sitarify",
-    title: "sitarify",
-    kicker: "music",
-    blurb: "a visualizer of Karnatik and Hindustani music, making it accessible to everyone.",
-    body: [
-      "i built sitarify from a feeling i know well as an nri: being close to a culture, but often meeting it through fragments.",
-      "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back— a drone in the background, a raga name i half-recognize, the sense that there is a whole language of feeling i want to spend more time learning.",
-      "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods, stories, and ways of moving. i wanted it to feel less like putting an \"Indian\" filter on music, and more like an invitation to listen differently.",
-      "maybe it is also my own small way of making the distance feel a little more inhabitable.",
-    ],
-    link: { label: "try it!", href: "https://slakshm4.github.io/sitarify/" },
-  },
-  {
-    slug: "contextomy",
-    title: "contextomy",
-    kicker: "web",
-    blurb: "blackout poetry reimagined.",
-    body: [
-      "i love blackout poetry. i know how that sounds. depending on who you ask, it is either a kitschy classroom craft or something you would find on r/im14andthisisdeep: thick black bars, one very deep sentence, a lot of void. i have heard the jokes, and some of them are fair.",
-      "but i keep coming back to it, because it is a strangely honest kind of editing. you do not write anything. you read a page until a smaller page shows up inside it, and every word you keep only means something because of everything you chose to cover.",
-      "that is, more or less, what _contextomy_ means: lifting words out of their surroundings until they say something new. usually it is a bad thing. here, it is the whole point, done in the open, with the original page still sitting right there.",
-      "contextomy is the studio i wished existed. pick a page from a small archive of public-domain poetry and prose (Dickinson, Poe, Austen, Thoreau, Shelley, Carroll), or bring your own words. then strike out whatever does not belong with a redaction block, a Sharpie scribble, a strikethrough, or a slow fade. choose the paper, the palette, the typeface, the spacing. when it feels finished, keep it as a print, a GIF, or a short film of the poem surfacing from the page.",
-      "i wanted it to feel like a desk rather than a tool. nothing gets uploaded, there are no accounts, and your poems live in your own browser. every export carries a small \"made with contextomy\" mark and a quiet fingerprint of the poem, like a signature at the bottom of the page.",
-      "so yes: kitschy, maybe. but so is most of what people love on purpose. i would rather make the kitsch beautiful than pretend i don't love it.",
-    ],
-    link: { label: "try it!", href: "https://slakshm4.github.io/contextomy/" },
-  },
-  { slug: "activity-randomizer", title: "activity randomizer / slots", kicker: "web", draft: true, body: soon },
   { slug: "hydraulic-press-simulator", title: "hydraulic press simulator with water bottles", kicker: "simulation", draft: true, body: soon },
   { slug: "vancouver-clocks-pomodoro", title: "Vancouver clocks themed pomodoro", kicker: "web", draft: true, body: soon },
   {
