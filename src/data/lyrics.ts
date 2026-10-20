@@ -150,7 +150,7 @@ export const lyricPieces: Piece[] = [
       "i don't think i can stay standing\nmy legs are giving out\nfrom all the pressure i've been coping with\ni haven't the wherewithal",
       "to see\nbeyond the scattered memories, they are far and few in between\nto see (to see, to see)\nbeyond a few feet in front of me (cherry blossoms and roses)",
       "a garden in my stomach\nroots, stems and leaves tear through my organs\nbut i've never been one for horticulture",
-      "my heart it begs and pleads\nwhile yours it beats with a practiced ease\nand i'm jealous of how easy it all seems (for you)",
+      "my heart it begs and pleads\nwhile yours it beats with a practised ease\nand i'm jealous of how easy it all seems (for you)",
       "but i\ni don't think i can stay standing\nmy legs are giving out\nfrom all the pressure i've been coping (with)\ni haven't the wherewithal",
       "to see\nbeyond a few feet in front of me (forget me nots)\nto see (to see, to see)\nmy reflection (in the mirror)",
       "my body's not my own\nit doesn't belong to me anymore (sunflowers)\ni think i'm someone else\n(who have i become, who have i become)",

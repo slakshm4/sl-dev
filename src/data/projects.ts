@@ -107,7 +107,7 @@ export const projects: Project[] = [
   {
     slug: "adea-fellowship",
     title: "fellowship evaluation",
-    note: "evaluation of a dental fellowship analyzing novice educator development through curriculum delivery experiences in preclinical dentistry.",
+    note: "evaluation of a dental fellowship analysing novice educator development through curriculum delivery experiences in preclinical dentistry.",
     year: "june 2026",
     place: "Saskatoon, SK",
     paper: "ruled",

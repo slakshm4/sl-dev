@@ -43,7 +43,7 @@ const caseStudies: Piece[] = [
     body: [
       "i built sitarify from a feeling i know well as an nri: being close to a culture, but often meeting it through fragments.",
       "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back—a drone in the background, a raga name i half-recognize, the sense that there is a whole language of feeling i want to spend more time learning.",
-      "sitarify lets you hear any song reimagined on a modeled sitar, while making room for both Hindustani and Karnatik ragas, their moods, stories, and ways of moving. i wanted it to feel less like putting an \"Indian\" filter on music, and more like an invitation to listen differently.",
+      "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods, stories, and ways of moving. i wanted it to feel less like putting an \"Indian\" filter on music, and more like an invitation to listen differently.",
       "maybe it is also my own small way of making the distance feel a little more inhabitable.",
     ],
     link: { label: "try it!", href: "https://slakshm4.github.io/sitarify/" },
