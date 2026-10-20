@@ -36,7 +36,7 @@ const caseStudies: Piece[] = [
     slug: "sitarify",
     title: "sitarify",
     kicker: "music",
-    blurb: "a visualizer of Karnatik and Hindustani music, making it accessible to everyone.",
+    blurb: "hindustani and karnatik music visualizer— let's take a journey.",
     body: [
       "i built sitarify from a feeling i know well as an nri: being close to a culture, but often meeting it through fragments.",
       "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back— a drone in the background, a raga name i half-recognize, the sense that there is a whole language of feeling i want to spend more time learning.",
