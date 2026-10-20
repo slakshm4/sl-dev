@@ -30,7 +30,7 @@ export function initTabs() {
         const sy = pr.top + ofh - lip * 0.55;
         li.style.setProperty("--fx", `${Math.round(sx - cx)}px`);
         li.style.setProperty("--fy", `${Math.round(sy - cy)}px`);
-        li.style.setProperty("--fr", `${(n % 2 ? 1 : -1) * (10 + ((n * 7) % 16))}deg`);
+        li.style.setProperty("--fr", `${(n % 2 ? 1 : -1) * (4 + ((n * 5) % 8))}deg`);
       });
     };
 

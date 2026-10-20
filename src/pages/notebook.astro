@@ -222,16 +222,13 @@ let counter = 0;
   .nb-cards { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 2.4rem 1.9rem; padding: 0.8rem 0.9rem 1rem; }
   .nbc { position: relative; z-index: var(--zi, 1); transform: translate(var(--jx, 0px), var(--jy, 0px)) rotate(var(--tilt, 0deg)); transition: transform 0.45s cubic-bezier(0.34, 1.7, 0.5, 1); }
   .nbc:hover, .nbc:focus-within { transform: translate(var(--jx, 0px), calc(var(--jy, 0px) - 6px)) rotate(0deg) scale(1.03); z-index: 6; }
-  html.js .nb-panel.is-open .nbc { animation: nb-shake-out 1.05s cubic-bezier(0.22, 0.7, 0.3, 1) backwards; animation-delay: calc(var(--k, 0) * 75ms + 220ms); }
-  html.js .nb-panel.is-open .of--back { animation: of-shake 0.8s ease-out; transform-origin: 50% 100%; }
-  @keyframes of-shake { 12% { transform: rotate(-0.5deg) translateY(-3px); } 30% { transform: rotate(0.5deg) translateY(2px); } 48% { transform: rotate(-0.3deg); } 66% { transform: rotate(0.25deg); } }
-  /* from a spot in the folder's pocket (--fx, --fy, set per card by tabs.ts) out to where it lands, with a little wobble on the way */
+  html.js .nb-panel.is-open .nbc { animation: nb-shake-out 2.4s cubic-bezier(0.25, 0.7, 0.25, 1) backwards; animation-delay: calc(min(var(--k, 0) * 170ms, 1500ms) + 350ms); }
+  html.js .nb-panel.is-open .of--back { animation: of-shake 1.6s ease-in-out; transform-origin: 50% 100%; }
+  @keyframes of-shake { 20% { transform: rotate(-0.25deg) translateY(-1px); } 50% { transform: rotate(0.2deg); } 80% { transform: rotate(-0.1deg); } }
+  /* from a spot in the folder's pocket (--fx, --fy, set per card by tabs.ts) to where it lands: one slow, soft drift, no bounce */
   @keyframes nb-shake-out {
-    0%   { opacity: 0; transform: translate(var(--fx, 0px), var(--fy, 0px)) rotate(var(--fr, 0deg)) scale(0.6); }
-    8%   { opacity: 1; }
-    58%  { transform: translate(var(--jx, 0px), calc(var(--jy, 0px) + 14px)) rotate(calc(var(--tilt, 0deg) + 6deg)) scale(1.03); }
-    74%  { transform: translate(var(--jx, 0px), calc(var(--jy, 0px) - 5px)) rotate(calc(var(--tilt, 0deg) - 4deg)) scale(1); }
-    88%  { transform: translate(var(--jx, 0px), var(--jy, 0px)) rotate(calc(var(--tilt, 0deg) + 1.5deg)); }
+    0%   { opacity: 0; transform: translate(var(--fx, 0px), var(--fy, 0px)) rotate(var(--fr, 0deg)) scale(0.88); }
+    45%  { opacity: 1; }
     100% { opacity: 1; transform: translate(var(--jx, 0px), var(--jy, 0px)) rotate(var(--tilt, 0deg)); }
   }
 
