@@ -9,7 +9,7 @@ import Blocks from "../../../components/Blocks.astro";
 import WriteCard from "../../../components/WriteCard.astro";
 import StereoPoem from "../../../components/StereoPoem.astro";
 import { writing, shown, pieceHref } from "../../../data/writing";
-import { inline, plain, readTime } from "../../../lib/text";
+import { inline, plain, readTime, toBlocks } from "../../../lib/text";
 
 export function getStaticPaths() {
   const out = [];
@@ -44,7 +44,7 @@ const scrapFrames = ["dots", "kraft", "grid", "dots"];
 const tapes = ["peri", "butter", "blush", "sage"];
 const back = anthology ? { href: pieceHref(drawer, anthology), label: anthology.title } : drawer.tab ? { href: `/notebook#${drawer.tab}`, label: drawer.title } : { href: `/notebook/${drawer.slug}`, label: drawer.title };
 const hasSheet = piece.stereo || piece.body.length > 0;
-const lead = (piece.blurb ?? piece.body[0] ?? drawer.sub).replace(/^#+\s*/, "");
+const lead = (piece.blurb ?? piece.body[0] ?? drawer.sub).replace(/^(#+|-)\s*/, "").replace(/\n- /g, "; ");
 const desc = plain(lead).slice(0, 170);
 const ext = (h) => /^https?:/.test(h);
 ---
@@ -81,12 +81,15 @@ const ext = (h) => /^https?:/.test(h);
 
       {drawer.style === "scraps" && !piece.stereo ? (
         <div class="pc-scraps">
-          {sections.map((b, k) => (
-            <p class={`pc-scrap scrap scrap--${scrapFrames[(k + di) % 4]}`} style={`--rot:${[-2, 1.4, -0.8, 2][k % 4]}deg`}>
-              <span class={`tape tape--${tapes[(k + 1) % 4]}`} style="top:-12px;left:42%;--r:3deg"></span>
-              <span set:html={inline(b.text)} />
-            </p>
-          ))}
+          {sections.map((b, k) => {
+            const blk = toBlocks([b.text])[0];
+            return (
+              <div class={`pc-scrap scrap scrap--${scrapFrames[(k + di) % 4]}${blk.t === "ul" ? " pc-scrap--list" : ""}`} style={`--rot:${[-2, 1.4, -0.8, 2][k % 4]}deg`}>
+                <span class={`tape tape--${tapes[(k + 1) % 4]}`} style="top:-12px;left:42%;--r:3deg"></span>
+                {blk.t === "ul" ? <ul class="pc-scrap-list">{blk.items.map((x) => <li set:html={x} />)}</ul> : <p set:html={inline(b.text)} />}
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div class={`pc-sheet scrap scrap--${drawer.frame}`}>
@@ -100,10 +103,22 @@ const ext = (h) => /^https?:/.test(h);
                 {sections.map((b) => (
                   <section class="pc-blk">
                     {b.label && <h2 class="pc-sec keep-case">{b.label}</h2>}
-                    {drawer.style === "marginalia" ? <p><span class="hl" set:html={inline(b.text)} /></p> : <Blocks items={[b.text]} />}
+                    {drawer.style === "marginalia" ? <p><span class="hl" set:html={inline(b.text)} /></p>
+                      : drawer.style === "lyrics" ? <p class="pc-lines">{b.text.split("\n").map((l) => <span class="pc-ln" set:html={inline(l)} />)}</p>
+                      : <Blocks items={[b.text]} />}
                   </section>
                 ))}
               </div>
+            )}
+            {piece.footnotes && piece.footnotes.length > 0 && (
+              <aside class="pc-fn" aria-labelledby="pc-fn-h">
+                <h2 id="pc-fn-h" class="pc-sec keep-case">footnotes</h2>
+                <ol class="pc-fn-list">
+                  {piece.footnotes.map((f, k) => (
+                    <li id={`fn-${k + 1}`}><span set:html={inline(f)} />&nbsp;<a class="pc-fn-back" href={`#fnref-${k + 1}`} aria-label={`back to footnote ${k + 1} in the words`}>↩</a></li>
+                  ))}
+                </ol>
+              </aside>
             )}
           </div>
         </div>
@@ -206,12 +221,33 @@ const ext = (h) => /^https?:/.test(h);
   .pc-plate--butter:has(.pc-body--lyrics) { outline: 2px dashed rgba(31, 27, 46, 0.35); outline-offset: -11px; }
   .pc-body--lyrics { font: 400 1.05rem/1.9 var(--f-type); }
   .pc-body--lyrics .pc-blk + .pc-blk { margin-top: 1.6rem; }
+  /* every lyric line is its own line; when one is too long for the page its second line hangs in, so it can't be mistaken for a new line */
+  .pc-body--lyrics .pc-ln { display: block; padding: 0.12em 0 0.12em 1.7em; text-indent: -1.7em; line-height: 1.55; }
   .pc-sec { display: inline-block; margin: 0 0 0.4rem; padding: 0.15rem 0.7rem; font: 400 0.78rem/1.6 var(--f-type); letter-spacing: 0.14em; color: #fffdf3; background: #1f1b2e; border-radius: 2px; }
 
   /* scraps: every paragraph is its own torn bit of paper */
   .pc-scraps { display: grid; gap: 2.2rem; padding: 1rem 0 0.5rem; }
-  .pc-scrap { margin: 0; max-width: 30rem; padding: 1.2rem 1.5rem 1.3rem; font: 400 1.7rem/1.2 var(--f-hand); white-space: pre-line; transform: rotate(var(--rot)); color: #1f1b2e; --scrap-bg: #fbf0c4; }
+  .pc-scrap { position: relative; margin: 0; max-width: 30rem; padding: 1.2rem 1.5rem 1.3rem; font: 400 1.7rem/1.2 var(--f-hand); white-space: pre-line; transform: rotate(var(--rot)); color: #1f1b2e; --scrap-bg: #fbf0c4; }
+  .pc-scrap p { margin: 0; }
   .pc-scrap:nth-child(even) { justify-self: end; }
+  /* a list on one scrap: handwritten, with round bullets */
+  .pc-scrap--list { max-width: 40rem; }
+  .pc-scrap-list { list-style: none; display: grid; gap: 0.75rem; margin: 0; padding: 0; white-space: normal; }
+  .pc-scrap-list li { position: relative; padding-left: 1.5rem; overflow-wrap: break-word; }
+  .pc-scrap-list li::before { content: ""; position: absolute; left: 0.1rem; top: 0.42em; width: 0.62rem; height: 0.62rem; border: 2px solid #1f1b2e; border-radius: 50%; background: var(--peri); }
+
+  /* footnotes: small print under the words, on the same sheet */
+  .pc-fn { margin-top: 2.6rem; padding-top: 1.3rem; border-top: 2px dashed rgba(31, 27, 46, 0.35); }
+  .pc-fn .pc-sec { margin-bottom: 0.9rem; }
+  .pc-fn-list { margin: 0; padding: 0 0 0 1.6rem; font: 400 0.95rem/1.6 var(--f-body); }
+  .pc-fn-list li { margin: 0 0 0.95rem; padding-left: 0.3rem; overflow-wrap: anywhere; scroll-margin-top: 6rem; }
+  .pc-fn-list li::marker { font: 600 0.85rem var(--f-type); color: #4a58ab; }
+  .pc-fn-list li:target { background: rgba(244, 215, 119, 0.55); }
+  .pc-fn-back { margin-left: 0.2rem; text-decoration: none; font-size: 1.1em; }
+
+  /* links sit on cream paper in every theme, so they keep their dark colours */
+  .pc-plate a, .pc-scrap a, .pc-note a, .pc-box a { color: #3c4a9e; }
+  .pc-plate a:hover, .pc-scrap a:hover, .pc-note a:hover { color: #1f1b2e; }
 
   .pc-parts { margin-top: 3.4rem; }
   .pc-parts-h { margin: 0; font-size: 2.2rem; font-weight: 400; color: var(--ink-soft); }
@@ -229,8 +265,11 @@ const ext = (h) => /^https?:/.test(h);
     .pc-body { font-size: 1.1rem; }
     .pc-body--prose { font-size: 1.12rem; line-height: 1.7; }
     .pc-body--verse { font-size: 1.3rem; }
+    .pc-body--lyrics { font-size: 0.97rem; }
     .pc-plate--ruled { padding-left: calc(var(--pad-x) + 0.8rem); }
     .pc-st--1 { top: -40px; } .pc-st--1 svg { width: 52px; height: 52px; } .pc-st--3 svg { width: 46px; height: 46px; }
     .pc-box p { font-size: 1.45rem; }
+    /* a tilted scrap's corners would poke past the screen edge: keep a little air around it */
+    .pc-scrap { margin-inline: 0.8rem; }
   }
 </style>

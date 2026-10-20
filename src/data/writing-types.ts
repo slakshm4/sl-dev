@@ -21,6 +21,8 @@ export type Piece = {
   /** a longer boxed note on the page (e.g. an explanation of the title) */
   noteBox?: { title?: string; body: string[] };
   link?: { label: string; href: string };
+  /** numbered notes under the words. in the text, a [^1] after a word becomes a small number that jumps to note 1 (the first string here) */
+  footnotes?: string[];
   /** little rubber stamps under the title ("cd in the works") */
   stamps?: string[];
   /** shows the "sample" stamp */

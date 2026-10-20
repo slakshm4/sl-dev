@@ -77,7 +77,7 @@ const sections = [
               <article class="job">
                 <p class="job-when keep-case">{j.when}</p>
                 <div>
-                  <h3>{j.role} <span class={`stamp job-stamp job-stamp--${j.status} keep-case`}>{j.status}</span></h3>
+                  <h3>{j.href ? <a class="cv-link" href={j.href}>{j.role}</a> : j.role} <span class={`stamp job-stamp job-stamp--${j.status} keep-case`}>{j.status}</span></h3>
                   <p class="job-org">{j.org}</p>
                   <ul class="bullets">{j.bullets.map((b) => <li>{b}</li>)}</ul>
                 </div>
@@ -89,7 +89,7 @@ const sections = [
                 <h3 class="cv-h">talks, posters + panels</h3>
                 <ol class="talks">
                   {talks.map((t, i) => (
-                    <li><span class="talk-no keep-case">{i + 1}</span><div><strong>{t.title}</strong><em>{t.role}</em><span>{t.body}</span></div></li>
+                    <li><span class="talk-no keep-case">{i + 1}</span><div><strong>{t.href ? <a class="cv-link" href={t.href}>{t.title}</a> : t.title}</strong><em>{t.role}</em><span>{t.body}</span></div></li>
                   ))}
                 </ol>
                 <h3 class="cv-h">resources, frameworks + publications</h3>
@@ -105,7 +105,7 @@ const sections = [
             {s.id === "leadership" && (
               <ul class="lead">
                 {leadership.map((l) => (
-                  <li><strong>{l.role}</strong><em>{l.org}</em><span>{l.body}</span></li>
+                  <li><strong>{l.role}</strong><em>{l.href ? <a class="cv-link" href={l.href}>{l.org}</a> : l.org}</em><span>{l.body}</span></li>
                 ))}
               </ul>
             )}
@@ -191,6 +191,9 @@ const sections = [
   .pubs li { font-size: 0.95rem; line-height: 1.42; padding-left: 1rem; border-left: 3px solid var(--peri); overflow-wrap: anywhere; }
   .lead { list-style: none; display: grid; gap: 1.1rem; }
   .lead li { padding-left: 1rem; border-left: 4px solid var(--blush); }
+  /* a cv line that links to its polaroid project page */
+  .cv-link { color: inherit; text-decoration: underline; text-decoration-color: var(--peri); text-decoration-thickness: 2.5px; text-underline-offset: 0.22em; }
+  .cv-link:hover, .cv-link:focus-visible { text-decoration-color: var(--ink); background: color-mix(in srgb, var(--butter) 70%, transparent); }
   .certs { display: flex; gap: 1rem; flex-wrap: wrap; margin: 0.4rem 0 0; }
   .cert { font-size: 1.2rem; padding: 0.55em 1em; --stamp: var(--peri-deep); }
 

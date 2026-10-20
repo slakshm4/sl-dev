@@ -1,7 +1,8 @@
 ---
 // Blocks.astro  ·  turns a list of strings (the mini-markup from src/lib/text.ts) into headings, paragraphs, pull quotes,
-// lists and pictures. used for pieces of writing and for project write-ups.
+// lists, pictures and arrow call-outs. used for pieces of writing and for project write-ups.
 import { toBlocks } from "../lib/text";
+import HandArrow from "./HandArrow.astro";
 const { items = [], marks = false } = Astro.props;
 const blocks = toBlocks(items);
 ---
@@ -9,6 +10,12 @@ const blocks = toBlocks(items);
   if (b.t === "h2") return <h2 class="blk-h" set:html={b.html} />;
   if (b.t === "h3") return <h3 class="blk-h3" set:html={b.html} />;
   if (b.t === "quote") return <blockquote class="blk-quote"><p set:html={b.html} /></blockquote>;
+  if (b.t === "cta") return (
+    <div class="blk-cta">
+      <HandArrow shape="wave" size={76} class="blk-cta-arrow" />
+      <p class="blk-cta-t hand" set:html={b.html} />
+    </div>
+  );
   if (b.t === "ul") return <ul class="blk-list">{b.items.map((x) => <li set:html={x} />)}</ul>;
   if (b.t === "ol") return <ol class="blk-list">{b.items.map((x) => <li set:html={x} />)}</ol>;
   if (b.t === "img") return (
@@ -32,6 +39,18 @@ const blocks = toBlocks(items);
   .blk-quote p { margin: 0; font: italic 500 clamp(1.3rem, 3vw, 1.6rem)/1.35 var(--f-display); }
   .blk-list { margin: 0.9rem 0 0.9rem 1.5rem; padding: 0; }
   .blk-list li { margin: 0.55rem 0; padding-left: 0.3rem; }
+  /* a hand-drawn arrow pointing down at a line of handwriting (and the link that ends it) */
+  .blk-cta { margin: 1.5rem 0 0.3rem; }
+  .blk-cta-arrow { display: block; margin: 0 0 -0.35rem 1.4rem; }
+  .blk-cta .blk-cta-t { margin: 0; font-size: clamp(1.75rem, 4.6vw, 2.3rem); line-height: 1.12; transform: rotate(-1deg); transform-origin: 0 50%; overflow-wrap: break-word; }
+  .blk-cta .blk-cta-t a { color: #3c4a9e; text-decoration: underline wavy #4a58ab; text-decoration-thickness: 2px; text-underline-offset: 0.2em; display: inline-block; }
+  .blk-cta .blk-cta-t a:hover, .blk-cta .blk-cta-t a:focus-visible { background: rgba(244, 215, 119, 0.7); }
+  /* footnote numbers: a little tab raised above the word */
+  .fnref { margin-left: 0.08em; font: 600 0.68em/1 var(--f-type); vertical-align: baseline; position: relative; top: -0.7em; }
+  .fnref + .fnref { margin-left: 0.2em; }
+  .fnref a { position: relative; padding: 0.22em 0.38em; text-decoration: none; color: #3c4a9e; background: rgba(182, 192, 246, 0.55); border-radius: 3px; }
+  .fnref a::after { content: ""; position: absolute; inset: -0.7em -0.4em; }
+  .fnref a:hover, .fnref a:focus-visible { background: #4a58ab; color: #fffdf3; }
   .blk-fig { margin: 2.2rem 0; text-align: center; }
   .blk-fig-in { display: inline-block; max-width: 100%; padding: 0.55rem 0.55rem 0.4rem; background: #fffdf3; border: 2px solid #1f1b2e; box-shadow: 5px 6px 0 var(--shadow); transform: rotate(-0.8deg); }
   .blk-fig:nth-of-type(even) .blk-fig-in { transform: rotate(0.9deg); }

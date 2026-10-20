@@ -20,7 +20,7 @@ export const strengths = [
   "documentation, coordination, and stakeholder communication",
 ];
 
-export type Job = { role: string; org: string; when: string; status?: "current" | "completed"; bullets: string[] };
+export type Job = { role: string; org: string; when: string; status?: "current" | "completed"; bullets: string[]; /** the role links to its polaroid project page */ href?: string };
 
 export const jobs: Job[] = [
   {
@@ -59,6 +59,7 @@ export const jobs: Job[] = [
   },
   {
     role: "collaborative health education (che) project assistant",
+    href: "/projects/che-project",
     org: "UBC Health, University of British Columbia",
     when: "may–aug 2025",
     status: "completed",
@@ -110,14 +111,14 @@ export const education = {
 
 export const leadership = [
   { role: "academic dental careers fellowship program fellow", org: "American Dental Education Association (ADEA)", body: "co-facilitated motivational interviewing instruction and interprofessional orientation." },
-  { role: "dental hygiene representative", org: "2025 healthcare travelling roadshow · Northern BC", body: "represented dental hygiene and shared career pathways and oral-health education with youth across Northern BC." },
+  { role: "dental hygiene representative", org: "2025 healthcare travelling roadshow · Northern BC", href: "/projects/roadshow", body: "represented dental hygiene and shared career pathways and oral-health education with youth across Northern BC." },
   { role: "inaugural dental hygiene representative", org: "Student Professionalism & Ethics Association in Dentistry, UBC", body: "contributed to equity-driven, ethics-informed student leadership." },
   { role: "peer mentor", org: "UBC Faculty of Dentistry", body: "mentored 53 junior students on study strategies and academic readiness." },
   { role: "booth representative", org: "Canadian Society for Disability and Oral Health · Pacific Dental Conference", body: "shared accessibility and disability-inclusive care strategies." },
 ];
 
 export const talks = [
-  { title: "Canadian Oral Health Summit", role: "poster and oral presenter", body: "presented work evaluating fellowship activities and learner outcomes." },
+  { title: "Canadian Oral Health Summit", href: "/projects/adea-fellowship", role: "poster and oral presenter", body: "presented work evaluating fellowship activities and learner outcomes." },
   { title: "Pacific Dental Conference", role: "booth representative, Canadian Society for Disability and Oral Health", body: "shared accessibility and disability-inclusive care strategies." },
   { title: "mentorship panels", role: "panelist, year 2 and year 3 panels", body: "senior student mentorship panels at the UBC Faculty of Dentistry." },
 ];
@@ -129,8 +130,6 @@ export const publications: { group: string; items: string[] }[] = [
     items: [
       "Collaborative Health Education Enrichment Working Group (includes Lakshman S). interprofessional education (ipe) facilitator guide. 3rd ed. Vancouver (BC): University of British Columbia Health; 2025.",
       "Lakshman S, editor. session zero—competency assessment of interprofessional teams. Vancouver (BC): UBC Health, University of British Columbia; forthcoming.",
-      "Lakshman S, editor. TBC on the run—relationship-focused care/services [educational module]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
-      "Lakshman S, editor. TBC on the run—collaborative leadership for shared decision-making [educational module]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
     ],
   },
   {
@@ -138,7 +137,6 @@ export const publications: { group: string; items: string[] }[] = [
     items: [
       "Lakshman S, designer. Canadian Interprofessional Health Collaborative (CIHC). simplified competency framework for advancing collaboration [Internet]. Vancouver (BC): CIHC; 2025.",
       "Lakshman S, designer. Canadian Interprofessional Health Collaborative (CIHC). référentiel de compétences du CPIS pour l'avancement de la collaboration en santé et services sociaux—version simplifiée [Internet]. Vancouver (BC): CIHC; 2025.",
-      "Lakshman S, French language editor. Canadian Interprofessional Health Collaborative (CIHC). référentiel des compétences du CPIS pour l'avancement de la collaboration en santé et services sociaux [Internet]. Vancouver (BC): CIHC; forthcoming.",
     ],
   },
   {
@@ -156,6 +154,7 @@ export const publications: { group: string; items: string[] }[] = [
     group: "teaching",
     items: [
       "Lakshman S, lecturer. interprofessional education & integrated curriculum orientation [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2025.",
+      "Lakshman S, lecturer. compassionate conversations… (motivational interviewing) [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2025.",
     ],
   },
   {

@@ -17,7 +17,7 @@
 //  link       a button under the piece, e.g. { label: "listen", href: "https://…" } (optional).
 //  tags       the little pills on the card and the page: ["essay"], ["short story", "free verse"]…
 //  pinned     true = the piece sits at the top of its drawer, always.
-//  the long pieces live in their own files: prose.ts (essays + stories), poems.ts ((dé)générescence), articles.ts (the three notebook tabs).
+//  the long pieces live in their own files: prose.ts (essays + stories), poems.ts ((dé)générescence), lyrics.ts (the songs, with footnotes), articles.ts (the three notebook tabs).
 //  every piece also accepts the mini-markup in src/lib/text.ts: _italic_, "## heading", "> pull quote", [links](/like/this).
 //
 //  per drawer: `frame` is the patterned paper around the sheet (floral · news · kraft · dots · grid),
@@ -30,6 +30,7 @@ import type { Drawer, Piece } from "./writing-types";
 import { prosePieces } from "./prose";
 import { poemPieces } from "./poems";
 import { tabDrawers } from "./articles";
+import { lyricPieces } from "./lyrics";
 
 const words: Drawer[] = [
   {
@@ -93,28 +94,53 @@ const words: Drawer[] = [
     stickers: ["eye", "pencil", "sparkle", "star"],
     pieces: [
       {
-        slug: "first-sample",
-        title: "a sample annotation",
-        date: "month year",
+        slug: "the-loop-closes",
+        title: "the loop closes",
         kicker: "philosophy",
-        blurb: "a short thought with a note in the margin.",
-        sample: true,
-        note: "(margin note goes here)",
+        blurb: "margin note: grief has changed my definition of an ending.",
+        note: "margin note: grief has changed my definition of an ending.",
+        stickers: ["moon", "eye", "star"],
         body: [
-          "an annotation is a short thought set down next to something bigger. this is where it goes.",
-          "two or three lines is plenty.",
+          "i used to think death was the worst thing that could happen because it makes a person unavailable to you. i still think absence is brutal. but i have trouble with the concept of brutal and bad as synonyms of one another.",
+          "i was raised with the idea that life is part of a much larger cycle: karma, return, release. i don't pretend to know what happens next. but the image that stays with me is the closing of a loop. something completed, even if i was not ready to stop holding its hand. there's an episode, [Chapter 7: Four Souls](https://open.spotify.com/episode/1cfQ6nXr2kCqBpeF5Bch7U?si=597ee447d62d4207), of _Midnight Burger_, a fictional podcast about a transdimensional diner (don't ask), that explores a similar concept.",
+          "loss has not made death feel neat. it has made me less interested in calling it a failure.",
         ],
       },
       {
-        slug: "second-sample",
-        title: "errata, sample edition",
-        date: "month year",
+        slug: "closure",
+        title: "closure",
         kicker: "errata",
-        blurb: "a correction to something i used to believe.",
-        sample: true,
-        note: "formerly: sure about this.",
-        stickers: ["star", "eye"],
-        body: ["a correction, printed in the smallest type possible so it can't be missed."],
+        blurb: "correction to a previous belief: closure is not a door.",
+        note: "correction to a previous belief: closure is not a door.",
+        stickers: ["key", "pencil", "star"],
+        body: [
+          "i thought closure was an event: one conversation, one realization, one very cinematic final scene.",
+          "now i think it is more like moving house with too many boxes. years later, you find one in a closet. you open it. it is still yours, but it is no longer the centrepiece. it no longer seeks attention. it no longer lives in the middle of the room.",
+        ],
+      },
+      {
+        slug: "being-understood",
+        title: "being understood",
+        kicker: "philosophy",
+        blurb: "margin note: perhaps this is why i over-explain.",
+        note: "margin note: perhaps this is why i over-explain.",
+        stickers: ["eye", "cloud", "sparkle"],
+        body: [
+          "being understood is lovely, but it is not the price of admission for being real.",
+          "some things in me will remain poorly captioned. some things will be misread. i am trying to let that be an ordinary sadness instead of evidence that i have failed to communicate.",
+        ],
+      },
+      {
+        slug: "the-optimized-life",
+        title: "the optimized life",
+        kicker: "errata",
+        blurb: "revision: not every hour needs a destiny.",
+        note: "revision: not every hour needs a destiny.",
+        stickers: ["leaf", "sun", "pencil"],
+        body: [
+          "i used to think a good day was one i could account for.",
+          "now i think a good day can include staring at (or hugging, or communicating with using dowsing sticks cuz apparently that actually works quite well) a tree (be careful, kind, and patient, because they're actually quite prideful beings), sending one email (yippee!), eating something beige (a donut? a singular noodle?), and briefly becoming obsessed with a niche question (which i tend to do… a lot). productivity has a place (sort of). it just… doesn't need to be the landlord.",
+        ],
       },
     ],
   },
@@ -129,27 +155,44 @@ const words: Drawer[] = [
     stickers: ["cloud", "butterfly", "key", "fish"],
     pieces: [
       {
-        slug: "first-sample",
-        title: "a sample loose thread",
-        date: "month year",
+        slug: "coherent-version-of-ourselves",
+        title: "do we owe people the most coherent version of ourselves?",
         kicker: "unresolved",
-        blurb: "a thought that hasn't landed yet. come argue with it.",
-        sample: true,
-        note: "tug on this one. tell me what you think.",
+        stickers: ["key", "cloud"],
         body: [
-          "a loose thread starts with a question you can't quite put down.",
-          "say what you think so far, say where it stops making sense, and leave the end open.",
+          "i admire coherence. i also think it can become a very polished cage.",
+          "when someone has known you for a long time, how much notice do you owe them before changing your mind, your shape, your whole little operating system? is surprise a kind of betrayal, or just proof that a person is still alive?",
         ],
       },
       {
-        slug: "second-sample",
-        title: "a second sample thread",
-        date: "month year",
+        slug: "what-makes-a-ritual-work",
+        title: "what makes a ritual work?",
         kicker: "unresolved",
-        blurb: "another open question, set out on gingham.",
-        sample: true,
-        stickers: ["fish", "cloud"],
-        body: ["one more placeholder, so you can see two threads side by side."],
+        stickers: ["moon", "sparkle", "flower"],
+        body: [
+          "is it repetition? witnesses? specificity? the fact that it interrupts the day long enough for you to notice you are in it?",
+          "disclaimer: i know nothing about Wicca. or any other culture that has rituals outside of Hinduism. but in a broader sense, i keep wondering whether a ritual has to be inherited to feel sacred, or whether you can make one out of a particular tea, a particular walk, a particular song you only play when your heart needs somewhere to sit.",
+        ],
+      },
+      {
+        slug: "private-without-becoming-lonely",
+        title: "can a life be private without becoming lonely?",
+        kicker: "unresolved",
+        stickers: ["leaf", "cloud", "key"],
+        body: [
+          "there is a version of privacy that feels like a locked door, and another that feels like a garden wall: not everything is visible, but something (?) is still growing there (or maybe not…? Schrödinger's plant.)",
+          "i am trying to learn the difference.",
+        ],
+      },
+      {
+        slug: "small-inconveniences",
+        title: "why are small inconveniences sometimes so emotionally loud?",
+        kicker: "unresolved",
+        stickers: ["fish", "cloud", "ghost"],
+        body: [
+          "a missing sock: manageable. a delayed bus: normal. a website asking me to create an account to read one sentence: suddenly, the whole project of civilization feels poorly supervised.",
+          "i do not have a theory. i do, however, have a sneaking suspicion that it is never really about the sock. because when will life ever be that simple?",
+        ],
       },
     ],
   },
@@ -164,23 +207,40 @@ const words: Drawer[] = [
     stickers: ["ghost", "fish", "star", "cat"],
     pieces: [
       {
-        slug: "first-sample",
-        title: "a sample scrap",
-        date: "month year",
+        slug: "tiny-emergency-sized-versions",
+        title: "things that should be available in a tiny, emergency-sized version",
         kicker: "debris",
-        blurb: "a fragment that doesn't belong anywhere else.",
-        sample: true,
-        body: ["lists, overheard lines, half ideas, things that were funny at 2am.", "each paragraph lands on its own little scrap."],
+        stickers: ["star", "cat", "sparkle"],
+        body: [
+          "- a nap\n- an apology (like. a real one i mean)\n- Breka chipotle chicken and bacon pockets\n- the answer to \"where the $&#% did i put that ???\"\n- a person who says \"ok wait, that was lowkey a good point tho\"",
+        ],
       },
       {
-        slug: "second-sample",
-        title: "another sample scrap",
-        date: "month year",
+        slug: "unreasonable-opinions",
+        title: "unreasonable opinions i am willing to defend",
         kicker: "debris",
-        blurb: "more debris, more stickers.",
-        sample: true,
-        stickers: ["cat", "star", "ghost", "sparkle"],
-        body: ["something small.", "something stranger.", "something with a sticker on it."],
+        stickers: ["ghost", "pencil", "star"],
+        body: [
+          "- the best pen is the one that appears in your bag exactly when you need it.\n- a chair should not be allowed to look so uncomfortable.\n- every city needs more places where you can sit without immediately being expected to buy a croissant.\n- the moon has excellent branding.",
+        ],
+      },
+      {
+        slug: "a-brief-taxonomy-of-tabs",
+        title: "a brief taxonomy of tabs",
+        kicker: "debris",
+        stickers: ["fish", "star", "cloud"],
+        body: [
+          "- the tab i need right now. (where are you now? Atlantis…)\n- the tab i opened because i had a thought… and then immediately lost it :c\n- the tab that has been playing music for twenty minutes. (no seriously which one is it)\n- the tab that contains a recipe i will never make but cannot emotionally release (is food-related emotional constipation a thing? because if so, i definitely have that.)\n- the tab that is somehow holding my entire life together. (Excel my goat)",
+        ],
+      },
+      {
+        slug: "little-miracles",
+        title: "things that feel like a little miracle",
+        kicker: "debris",
+        stickers: ["sparkle", "cat", "star"],
+        body: [
+          "- a green light arriving exactly as you do.\n- finding money in an old pocket. (bonus points if it's something you just thrifted!)\n- someone using a phrase you thought only existed in your family. (impossible edition for all my fellow Tamizhargal)\n- remembering the word you were looking for halfway through brushing your teeth. (2 mins twice a day guys please idw see ur gums haemorrhaging when im trying to scale them)\n- the last bite being the best bite. (nuff said.)",
+        ],
       },
     ],
   },
@@ -228,32 +288,7 @@ const words: Drawer[] = [
     paper: "butter",
     style: "lyrics",
     stickers: ["music", "cassette", "star-paper", "sparkle"],
-    pieces: [
-      {
-        slug: "first-sample",
-        title: "a sample song",
-        date: "month year",
-        kicker: "songwriting",
-        blurb: "a placeholder lyric sheet: verse, chorus, verse.",
-        sample: true,
-        note: "(a link to the recording goes under the lyrics.)",
-        body: [
-          "[verse 1]\nthe first line sets the key\nthe second answers it",
-          "[chorus]\nthis is where it lifts\nthis is where you sing along",
-          "[verse 2]\nthe story keeps moving\nthe words keep their shape",
-        ],
-      },
-      {
-        slug: "second-sample",
-        title: "another sample song",
-        date: "month year",
-        kicker: "songwriting",
-        blurb: "a second lyric sheet, with a bridge.",
-        sample: true,
-        stickers: ["cassette", "music", "star-paper"],
-        body: ["[verse]\nfour lines, more or less\neach on its own line", "[bridge]\nthe part where it turns"],
-      },
-    ],
+    pieces: lyricPieces,
   },
 ];
 

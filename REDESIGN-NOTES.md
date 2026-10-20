@@ -18,13 +18,14 @@ pushing to `main` deploys the site through `.github/workflows/deploy.yml` (githu
 | cv content shown on /experience | `src/data/cv.ts` |
 | notebook tabs (words · case studies · ephemera · trials) | `src/data/notebook.ts` |
 | **case studies, ephemera and trials**: one article per card | `src/data/articles.ts` |
-| **words drawers**: reflections, annotations on life, loose threads, other brain debris, poems, songs | `src/data/writing.ts` |
+| **words drawers**: reflections, annotations on life, loose threads, other brain debris, poems | `src/data/writing.ts` |
+| **songs** (seven lyric sheets, with footnotes) | `src/data/lyrics.ts` |
 | **prose** (essays + short stories) | `src/data/prose.ts` |
 | **(dé)générescence** (the five stereo poems) | `src/data/poems.ts` |
 | shapes shared by those data files | `src/data/writing-types.ts` |
 | pages for drawers and pieces | `src/pages/notebook/[drawer]/index.astro` and `[piece].astro` |
 | the little text markup used inside all of the above | `src/lib/text.ts` |
-| ten songs | `src/data/songs.json` |
+| ten songs on the say-hi record shelf | `src/data/songs.json` |
 | email / phone / instagram / linkedin / two truths | top of `src/pages/say-hi.astro` |
 | colours, cursor, torn paper, tape | `src/styles/global.css`, `src/styles/paper.css` |
 | animation + interaction code | `src/scripts/` |
@@ -38,6 +39,9 @@ every string in `body` (and every project `story`) is one block. inside a string
 - `[a link](/somewhere-on-this-site)` stays on the site; `[a link](https://example.com)` opens in a new tab
 - a block that starts with `## ` is a heading, `### ` a smaller heading, `> ` a pull quote, `- ` a bullet list, `1. ` a numbered list
 - `![describe the picture](/images/file.webp "caption")` is a picture (put the file in `public/images/`)
+- a block that starts with `~> ` is a hand-drawn arrow pointing at a line of handwriting; links inside it work (`~> an uprising is on the horizon. [which side are you on?](https://…)`)
+- `word[^1]` puts a small footnote number after the word. the notes themselves go in the piece's `footnotes: [...]` list (first string = note 1) and appear under the words with a ↩ link back (see `the-trees-know-your-name` in `lyrics.ts`)
+- a piece can also have `link: { label: "try it!", href: "https://…" }`, which is the pill button under the words
 - anything else is a paragraph; `\n` makes a line break inside it
 
 text is escaped first, so a stray `<` or `&` can't break a page.
@@ -54,7 +58,7 @@ text is escaped first, so a stray `<` or `&` can't break a page.
 the site is lowercase on purpose, and since this round **nothing is forced to lowercase by css any more**: what you type is what shows. the rule i applied everywhere:
 
 - lowercase: everything, including the first word of a sentence, titles, headings, months, days, "i", and abbreviations of ordinary words (hiv, ai, cd, cv, pdf, mp3).
-- capitalised: names of people (Shradha Lakshman, Carabelli), places (Vancouver, Northern BC, Robson Square), organisations and brands (UBC, UNBC, ADEA, Union Gospel Mission, Figma, YouTube), languages and nationalities (French, Tamil, Indian), the names of other people's works inside running text, and a few proper-noun terms (Nazi, Soviet, the Cold War, the Anthropocene).
+- capitalised: names of people (Shradha Lakshman, Carabelli), places (Vancouver, Northern BC, Robson Square), organisations and brands (UBC, UNBC, ADEA, Union Gospel Mission, Figma, YouTube), languages and nationalities (French, Tamizh, Indian), the names of other people's works inside running text, and a few proper-noun terms (Nazi, Soviet, the Cold War, the Anthropocene).
 - your own titles (project names, case studies, pieces) stay lowercase, with only the names inside them capitalised.
 - dashes: em dash with no spaces for asides (`like this—like this`), en dash with no spaces for ranges (`2024–present`, `grades 4–12`), hyphens for compound words, straight quotes, and an oxford comma.
 
@@ -69,7 +73,8 @@ touch devices (coarse pointers) get a lighter site: no page-transition snapshots
 ## things to check / fill in
 
 - little town: the stamp "july 2026 · Robson Square, Vancouver" was inferred from your note; change `year` / `place` in `projects.ts` if it's wrong.
-- case studies, ephemera and trials are all drafts with a short placeholder. replace them as you write them.
+- case studies, ephemera and trials are mostly drafts with a short placeholder (sitarify and what species are you are written up now). replace the rest as you write them.
+- the experience page: a cv line links to its polaroid page by adding `href: "/projects/<slug>"` to its entry in `cv.ts` (done for the che role, the roadshow and the Canadian Oral Health Summit).
 - `lie` in `say-hi.astro` is `null` on purpose. set it to 0, 1 or 2 if you want the buttons to reveal the answer.
 - the molar is labelled fdi #26 (upper left first molar). universal numbering calls it #14, so double-check the label you want.
 - the old versions of the files that were replaced are in `_before-redesign/` (not committed to git). delete the folder whenever you're happy.

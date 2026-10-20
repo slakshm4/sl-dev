@@ -72,7 +72,7 @@ export const projects: Project[] = [
     written: true,
     story: [
       "eureka: questscapes is a gamified, web-based hiv education platform for youth ages 15–24 that weaves sexual-health and oral-health literacy together. interactive storytelling, immersive gameplay, and trivia-based combat inside a classic 2d platformer let players build health literacy, confront stigma, and practise preventive behaviours.",
-      "it grew out of a rapid scoping review of digital hiv interventions, which shaped both the content and the product design. i translate academic evidence into accessible, youth-facing learning content, with attention to stigma reduction and inclusive communication.",
+      "it grew out of a rapid scoping review of digital hiv interventions, which shaped both the content and the product design. i'm currently finalizing the manuscript for that review, which found that no online gamified hiv education platform touches on oral health at all—a glaring and significant gap, and the one eureka: questscapes sets out to fill. i translate academic evidence into accessible, youth-facing learning content, with attention to stigma reduction and inclusive communication.",
       "the project has secured more than $2,000 in seed funding and awards, including an $800 bursary from LetsStopAIDS.",
     ],
   },
