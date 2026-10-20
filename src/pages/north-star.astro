@@ -59,7 +59,7 @@ const lines = triangle(para);
     <header class="ns-head">
       <div class="ns-head-l">
         <SectionTitle text="north star" />
-        <p class="hand ns-aside">there isn't just one. <HandArrow shape="wave" size={50} class="ns-aside-arrow" /></p>
+        <p class="hand ns-aside">there isn't just one. <HandArrow shape="loop" size={64} class="ns-aside-arrow" /></p>
       </div>
       <ul class="ns-legend" aria-label="how to read the map">
         <li><span class="lg lg--0" aria-hidden="true"></span> macro: the big pulls</li>
@@ -140,9 +140,9 @@ const lines = triangle(para);
   .ns-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 470px); grid-template-rows: auto 1fr; grid-template-areas: "l tri" "leg tri"; gap: 0 2.5rem; align-items: start; margin-bottom: 2.5rem; }
   .ns-head-l { grid-area: l; }
   .tri-wrap { grid-area: tri; }
-  .ns-aside { margin: 0.2rem 0 1.4rem 0.4rem; display: flex; align-items: flex-end; gap: 0.5rem; }
-  /* the wave arrow's tip points down; turned so that on desktop it aims at the star beside the paragraph */
-  .ns-aside-arrow { transform: rotate(-88deg); transform-origin: 30% 60%; }
+  .ns-aside { margin: 0.2rem 0 1.4rem 0.4rem; display: flex; align-items: flex-end; gap: 1.6rem; }
+  /* the loop arrow's tip points down; turned so that on desktop it aims at the star beside the paragraph */
+  .ns-aside-arrow { transform: rotate(-40deg) translate(4px, 4px); transform-origin: 30% 60%; }
   .ns-legend { grid-area: leg; list-style: none; display: grid; gap: 0.5rem; font-size: 1rem; color: var(--ink-soft); margin: 0 0 0 0.4rem; }
   .ns-legend li { display: flex; align-items: center; gap: 0.7rem; }
   .lg { display: inline-block; flex: none; border: 2px solid var(--ink); background: var(--butter); }
