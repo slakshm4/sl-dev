@@ -5,16 +5,18 @@ import SectionTitle from "../components/SectionTitle.astro";
 import HandArrow from "../components/HandArrow.astro";
 import Sticker from "../components/Sticker.astro";
 import { projects, getProject } from "../data/projects";
+import PostLinks from "../components/PostLinks.astro";
+import { eportfolioHome } from "../data/eportfolio";
 
 const eureka = getProject("eureka-questscapes")!;
 const adea = getProject("adea-fellowship")!;
 
 // short entries from the field: only facts from the cv. swap in your own write-ups as they get written.
 const notes = [
-  { when: "may 2025", where: "Northern BC", tag: "outreach", title: "the travelling roadshow", body: "interactive oral-health workshops for students in grades 4–12, as the dental hygiene representative. the oral-systemic link, and hygiene as a primary care profession.", href: "/projects/roadshow", paper: "kraft", st: "butterfly" },
-  { when: "may–aug 2025", where: "UBC Health", tag: "curriculum", title: "making curricula accessible", body: "an accessibility audit and revision of materials used by 2,000+ learners across 14 health programs, plus a simplified, icon-based competency framework.", href: "/projects/che-project", paper: "newsprint", st: "heart" },
-  { when: "ADEA academic dental careers fellowship", where: "", tag: "teaching", title: "learning to teach", body: "co-facilitating motivational interviewing instruction and interprofessional orientation, and evaluating how novice educators actually develop.", href: "/projects/adea-fellowship", paper: "ruled", st: "sparkle" },
-  { when: "jan 2024–apr 2026", where: "Vancouver", tag: "community", title: "community placements", body: "oral-health assessments and education with Union Gospel Mission, Pioneer Community Living Association, and the Elizabeth Fry Society; free oral-cancer screenings and debridement (SRP).", paper: "gingham", st: "tooth" },
+  { when: "may 2025", where: "Northern BC", tag: "outreach", title: "the travelling roadshow", body: "interactive oral-health workshops for students in grades 4–12, as the dental hygiene representative. the oral-systemic link, and hygiene as a primary care profession.", posts: ["decolonizing-success"], href: "/projects/roadshow", paper: "kraft", st: "butterfly" },
+  { when: "may–aug 2025", where: "UBC Health", tag: "curriculum", title: "making curricula accessible", body: "an accessibility audit and revision of materials used by 2,000+ learners across 14 health programs, plus a simplified, icon-based competency framework.", posts: ["ipe-2023-2024-reflection"], href: "/projects/che-project", paper: "newsprint", st: "heart" },
+  { when: "ADEA academic dental careers fellowship", where: "", tag: "teaching", title: "learning to teach", body: "co-facilitating motivational interviewing instruction and interprofessional orientation, and evaluating how novice educators actually develop.", posts: ["adea-adcfp", "mi-evidence-informed-dh-cc"], href: "/projects/adea-fellowship", paper: "ruled", st: "sparkle" },
+  { when: "jan 2024–apr 2026", where: "Vancouver", tag: "community", title: "community placements", body: "oral-health assessments and education with Union Gospel Mission, Pioneer Community Living Association, and the Elizabeth Fry Society; free oral-cancer screenings and debridement (SRP).", posts: ["prevention-with-impact-ugm", "oral-cancer-screening-clinic"], paper: "gingham", st: "tooth" },
   { when: "UBC Faculty of Dentistry", where: "", tag: "mentoring", title: "peer mentor + panelist", body: "mentored 53 junior students on study strategies and academic readiness, and sat on the year 2 and year 3 mentorship panels.", paper: "butter", st: "star" },
   { when: "Pacific Dental Conference", where: "", tag: "advocacy", title: "the disability + oral health booth", body: "representing the Canadian Society for Disability and Oral Health, sharing accessibility and disability-inclusive care strategies.", paper: "grid", st: "eye" },
 ];
@@ -63,6 +65,7 @@ const tones = ["peri", "butter", "sage", "blush"];
                 <p class="fn-meta keep-case"><span>{n.when}</span>{n.where && <span> · {n.where}</span>}</p>
                 <h3>{n.href ? <a href={n.href}>{n.title}</a> : n.title}</h3>
                 <p>{n.body}</p>
+                {n.posts && <PostLinks keys={n.posts} class="posts--fn" />}
                 <span class={`chip chip--${tones[(i + 1) % 4]}`}>{n.tag}</span>
               </div>
               <Sticker name={n.st} size={44} class="fn-s" />
@@ -89,6 +92,7 @@ const tones = ["peri", "butter", "sage", "blush"];
       </ol>
       <p class="ex-more">
         <a class="cta cta--right" href="/experience"><span>the full cv lives here</span><svg class="cta-arrow" viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+        <a class="cta cta--right" href={eportfolioHome} target="_blank" rel="noopener"><span>the e-portfolio has the reflections</span><svg class="cta-arrow" viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span class="sr-only"> (opens in a new tab)</span></a>
         <a class="cta cta--right" href="/notebook"><span>the notebook has the odder stuff</span><svg class="cta-arrow" viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
       </p>
     </section>
@@ -118,6 +122,9 @@ const tones = ["peri", "butter", "sage", "blush"];
   .fn h3 { font-size: 1.35rem; margin-bottom: 0.4rem; }
   .fn h3 a { color: inherit; text-decoration-color: var(--peri-deep); }
   .fn p:not(.fn-meta) { font-size: 1rem; line-height: 1.45; margin-bottom: 0.7rem; color: #1f1b2e; }
+  .posts--fn { margin: 0 0 0.8rem; }
+  /* narrow phones: the taller cards tilt a little less so their corners stay on screen */
+  @media (max-width: 420px) { .fn { transform: rotate(calc(var(--tilt) * 0.5)); } }
   .fn-s { position: absolute; right: -10px; bottom: -14px; transform: rotate(8deg); }
 
   .ar-list { list-style: none; padding: 0.6rem 0.4rem; --scrap-bg: var(--paper); }

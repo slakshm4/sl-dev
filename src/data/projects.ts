@@ -26,6 +26,8 @@ export type Project = {
   badges?: string[];
   /** buttons under the story. a link that starts with "/" stays on this site; https:// opens in a new tab */
   links?: { label: string; href: string }[];
+  /** posts from the UBC e-portfolio that go with this project: keys from src/data/eportfolio.ts (they show up as little pills) */
+  posts?: string[];
   /** true once the full write-up exists */
   written?: boolean;
 };
@@ -69,6 +71,7 @@ export const projects: Project[] = [
     paper: "floral",
     sticker: "tooth",
     role: "founder",
+    posts: ["sel-hiv-oralhealth"],
     written: true,
     story: [
       "eureka: questscapes is a gamified, web-based hiv education platform for youth ages 15–24 that weaves sexual-health and oral-health literacy together. interactive storytelling, immersive gameplay, and trivia-based combat inside a classic 2d platformer let players build health literacy, confront stigma, and practise preventive behaviours.",
@@ -113,6 +116,7 @@ export const projects: Project[] = [
     paper: "ruled",
     sticker: "sparkle",
     role: "ADEA academic dental careers fellowship program fellow",
+    posts: ["adea-adcfp", "mi-evidence-informed-dh-cc"],
     written: true,
     story: [
       "an evaluation of a dental fellowship, looking at how novice educators develop through delivering curriculum in preclinical dentistry.",
@@ -130,6 +134,7 @@ export const projects: Project[] = [
     paper: "kraft",
     sticker: "butterfly",
     role: "dental hygiene representative",
+    posts: ["decolonizing-success"],
     written: true,
     story: [
       "as the dental hygiene representative for UNBC's 2025 North Coast healthcare travelling roadshow, i delivered interactive oral-health workshops to students in grades 4–12 across Northern BC, representing the dental hygiene profession and the UBC Faculty of Dentistry.",
@@ -149,6 +154,7 @@ export const projects: Project[] = [
     paper: "check",
     sticker: "heart",
     role: "collaborative health education project assistant",
+    posts: ["ipe-2023-2024-reflection", "y2-patchwork-summary"],
     written: true,
     story: [
       "at UBC Health i audited accessibility and revised curriculum materials for clarity, usability, and consistency across 2,000+ learners in 14 health programs.",

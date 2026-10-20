@@ -20,7 +20,7 @@ export const strengths = [
   "documentation, coordination, and stakeholder communication",
 ];
 
-export type Job = { role: string; org: string; when: string; status?: "current" | "completed"; bullets: string[]; /** the role links to its polaroid project page */ href?: string; /** underline the role in lilac (no link) */ underline?: boolean };
+export type Job = { role: string; org: string; when: string; status?: "current" | "completed"; bullets: string[]; /** the role links to its polaroid project page */ href?: string; /** underline the role in lilac (no link) */ underline?: boolean; /** e-portfolio posts that go with this role (keys from eportfolio.ts) */ posts?: string[] };
 
 export const jobs: Job[] = [
   {
@@ -40,6 +40,7 @@ export const jobs: Job[] = [
     org: "Vancouver Coworking Atelier Society (nonprofit)",
     when: "sep 2025–present",
     status: "current",
+    posts: ["oralhealth-in-unexpected-spaces"],
     bullets: [
       "coordinate event logistics and documentation, including venues, schedules, merchandise, and program materials.",
       "contribute to inclusive, steam-focused networking events aligned with community and organizational goals.",
@@ -50,6 +51,7 @@ export const jobs: Job[] = [
     org: "independent project",
     when: "may 2024–present",
     status: "current",
+    posts: ["sel-hiv-oralhealth"],
     bullets: [
       "developing a gamified, evidence-informed hiv education platform for youth ages 15–24, integrating sexual-health and oral-health literacy.",
       "secured more than $2,000 in seed funding and awards to advance the project.",
@@ -75,6 +77,7 @@ export const jobs: Job[] = [
     org: "UBC · Union Gospel Mission · Pioneer Community Living Association · Elizabeth Fry Society",
     when: "jan 2024–apr 2026",
     status: "completed",
+    posts: ["prevention-with-impact-ugm", "de-escalation-in-patient-care", "redefining-courage"],
     bullets: [
       "completed structured oral-health assessments and documentation with people experiencing social and structural barriers to care, following standardized protocols.",
       "communicated complex health information in trauma-informed, culturally responsive settings.",
@@ -86,6 +89,7 @@ export const jobs: Job[] = [
     org: "UBC · Skwo:wech Elementary School · S.U.C.C.E.S.S. Simon Ky Lee Care Home · Union Gospel Mission · Pioneer Community Living Association · Elizabeth Fry Society",
     when: "jan 2024–apr 2026",
     status: "completed",
+    posts: ["ltc-raisingthebar", "oral-cancer-screening-clinic"],
     bullets: [
       "delivered evidence-informed oral-health education, adapting explanations and activities for different audiences while maintaining guideline fidelity.",
       "supported preventive outreach initiatives, including clinics and free oral-cancer screenings, by sharing clear, actionable information.",
@@ -97,6 +101,8 @@ export const education = {
   degree: "bachelor of dental sciences (dental hygiene)",
   school: "University of British Columbia, Faculty of Dentistry",
   when: "sep 2022–may 2026 · graduated",
+  /** reflections written for coursework (e-portfolio posts) */
+  posts: ["dh-chx-prescription-rights", "dh-epinephrine-prescription-rights", "my-first-ever-digital-scan", "ipe-2023-2024-reflection", "y2-patchwork-summary"],
   coursework: ["oral epidemiology", "health policy and advocacy", "preventive and community health", "professionalism", "statistics"],
   awards: [
     {
@@ -111,21 +117,21 @@ export const education = {
 };
 
 export const leadership = [
-  { role: "academic dental careers fellowship program fellow", org: "American Dental Education Association (ADEA)", body: "co-facilitated motivational interviewing instruction and interprofessional orientation." },
-  { role: "dental hygiene representative", org: "2025 healthcare travelling roadshow · Northern BC", href: "/projects/roadshow", body: "represented dental hygiene and shared career pathways and oral-health education with youth across Northern BC." },
-  { role: "inaugural dental hygiene representative", org: "Student Professionalism & Ethics Association in Dentistry, UBC", body: "contributed to equity-driven, ethics-informed student leadership." },
+  { role: "academic dental careers fellowship program fellow", org: "American Dental Education Association (ADEA)", posts: ["adea-adcfp", "mi-evidence-informed-dh-cc"], body: "co-facilitated motivational interviewing instruction and interprofessional orientation." },
+  { role: "dental hygiene representative", org: "2025 healthcare travelling roadshow · Northern BC", href: "/projects/roadshow", posts: ["decolonizing-success"], body: "represented dental hygiene and shared career pathways and oral-health education with youth across Northern BC." },
+  { role: "inaugural dental hygiene representative", org: "Student Professionalism & Ethics Association in Dentistry, UBC", posts: ["ubc-spea-inaugural-dh-rep", "carrying-confidentiality-forward"], body: "contributed to equity-driven, ethics-informed student leadership." },
   { role: "peer mentor", org: "UBC Faculty of Dentistry", body: "mentored 53 junior students on study strategies and academic readiness." },
   { role: "booth representative", org: "Canadian Society for Disability and Oral Health · Pacific Dental Conference", body: "shared accessibility and disability-inclusive care strategies." },
 ];
 
 export const talks = [
-  { title: "Canadian Oral Health Summit", href: "/projects/adea-fellowship", role: "poster and oral presenter", body: "presented work evaluating fellowship activities and learner outcomes." },
+  { title: "Canadian Oral Health Summit", href: "/projects/adea-fellowship", posts: ["adea-adcfp"], role: "poster and oral presenter", body: "presented work evaluating fellowship activities and learner outcomes." },
   { title: "Pacific Dental Conference", role: "booth representative, Canadian Society for Disability and Oral Health", body: "shared accessibility and disability-inclusive care strategies." },
   { title: "mentorship panels", role: "panelist, year 2 and year 3 panels", body: "senior student mentorship panels at the UBC Faculty of Dentistry." },
 ];
 
 /** formal citations, in the site's voice: lowercase titles and roles; names and acronyms keep their capitals */
-export const publications: { group: string; items: string[] }[] = [
+export const publications: { group: string; items: string[]; posts?: string[] }[] = [
   {
     group: "interprofessional education resources",
     items: [
@@ -153,6 +159,7 @@ export const publications: { group: string; items: string[] }[] = [
   },
   {
     group: "teaching",
+    posts: ["mi-evidence-informed-dh-cc"],
     items: [
       "Lakshman S, lecturer. interprofessional education & integrated curriculum orientation [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2025.",
       "Lakshman S, lecturer. compassionate conversations… (motivational interviewing) [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2026.",

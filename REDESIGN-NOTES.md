@@ -86,6 +86,17 @@ the round person button at the top-left of the nav switches the whole site into 
 
 it is built toward WCAG 2.0 level AA and was checked with axe-core (colour contrast, labels, landmarks, headings, language) on every page in light and dark, with and without accessible mode. that is a strong start, not a certified audit: a real screen reader pass (VoiceOver / NVDA) and a manual keyboard pass are still worth doing.
 
+## e-portfolio links
+
+every post on the UBC e-portfolio lives in one list: `src/data/eportfolio.ts` (key, link, short lowercase label). anywhere on the site a post fits, you point at it by key and a little "e-portfolio ↗" pill (`src/components/PostLinks.astro`, opens in a new tab) appears:
+
+- projects (`posts: [...]` in `projects.ts`): eureka, fellowship evaluation, roadshow, accessible interprofessional curricula
+- explore field notes (`posts: [...]` in the `notes` list in `explore.astro`)
+- the cv page (`posts: [...]` on jobs, leadership, talks, a publications group, and on `education`)
+- plus a "the full e-portfolio" button on the experience page and a link in the explore page footer row
+
+to add a new post: add one line to `eportfolio.ts`, then add its key to whichever entries it belongs with.
+
 ## things to check / fill in
 
 - little town: the stamp "july 2026 · Robson Square, Vancouver" was inferred from your note; change `year` / `place` in `projects.ts` if it's wrong.

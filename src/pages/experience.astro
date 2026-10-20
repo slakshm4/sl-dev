@@ -4,6 +4,8 @@ import Layout from "../layouts/Layout.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import Sticker from "../components/Sticker.astro";
 import HandArrow from "../components/HandArrow.astro";
+import PostLinks from "../components/PostLinks.astro";
+import { eportfolioHome } from "../data/eportfolio";
 import { cvHref, profile, strengths, jobs, education, leadership, talks, publications, skills } from "../data/cv";
 
 const sections = [
@@ -30,6 +32,7 @@ const sections = [
         <svg class="cta-arrow" viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true"><path d="M12 3v14M5 11l7 7 7-7M4 21h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </a>
       <p class="hand cv-hint">(pdf · everything below is in it, folded up neatly) <HandArrow shape="arc" size={44} /></p>
+      <a class="btn cv-eport" href={eportfolioHome} target="_blank" rel="noopener">the full e-portfolio<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span class="sr-only"> (opens in a new tab)</span></a>
       <button class="btn cv-expand" type="button" data-expand aria-pressed="false">open all sections</button>
     </div>
 
@@ -62,6 +65,8 @@ const sections = [
                     <p class="job-org">{education.school}</p>
                     <h4 class="cv-h">selected coursework</h4>
                     <p class="chips">{education.coursework.map((c, i) => <span class={`chip chip--${["peri", "butter", "sage", "blush"][i % 4]}`}>{c}</span>)}</p>
+                    <h4 class="cv-h">reflections from coursework</h4>
+                    <PostLinks keys={education.posts} class="posts--cv" />
                     <h4 class="cv-h">awards + funding</h4>
                     <ul class="awards">
                       {education.awards.map((a) => (
@@ -80,6 +85,7 @@ const sections = [
                   <h3>{j.href ? <a class="cv-link" href={j.href}>{j.role}</a> : j.underline ? <span class="cv-ul">{j.role}</span> : j.role} <span class={`stamp job-stamp job-stamp--${j.status} keep-case`}>{j.status}</span></h3>
                   <p class="job-org">{j.org}</p>
                   <ul class="bullets">{j.bullets.map((b) => <li>{b}</li>)}</ul>
+                  {j.posts && <PostLinks keys={j.posts} class="posts--cv" />}
                 </div>
               </article>
             ))}
@@ -89,7 +95,7 @@ const sections = [
                 <h3 class="cv-h">talks, posters + panels</h3>
                 <ol class="talks">
                   {talks.map((t, i) => (
-                    <li><span class="talk-no keep-case">{i + 1}</span><div><strong>{t.href ? <a class="cv-link" href={t.href}>{t.title}</a> : t.title}</strong><em>{t.role}</em><span>{t.body}</span></div></li>
+                    <li><span class="talk-no keep-case">{i + 1}</span><div><strong>{t.href ? <a class="cv-link" href={t.href}>{t.title}</a> : t.title}</strong><em>{t.role}</em><span>{t.body}</span>{t.posts && <PostLinks keys={t.posts} class="posts--cv" />}</div></li>
                   ))}
                 </ol>
                 <h3 class="cv-h">resources, frameworks + publications</h3>
@@ -97,6 +103,7 @@ const sections = [
                   <div class="pubs">
                     <h4>{g.group}</h4>
                     <ul>{g.items.map((it) => <li class="keep-case">{it}</li>)}</ul>
+                    {g.posts && <PostLinks keys={g.posts} class="posts--cv" />}
                   </div>
                 ))}
               </>
@@ -105,7 +112,7 @@ const sections = [
             {s.id === "leadership" && (
               <ul class="lead">
                 {leadership.map((l) => (
-                  <li><strong>{l.role}</strong><em>{l.href ? <a class="cv-link" href={l.href}>{l.org}</a> : l.org}</em><span>{l.body}</span></li>
+                  <li><strong>{l.role}</strong><em>{l.href ? <a class="cv-link" href={l.href}>{l.org}</a> : l.org}</em><span>{l.body}</span>{l.posts && <PostLinks keys={l.posts} class="posts--cv" />}</li>
                 ))}
               </ul>
             )}
@@ -134,6 +141,8 @@ const sections = [
   .cv-dl:hover .seal, .cv-dl:focus-visible .seal { transform: rotate(10deg) scale(1.12); }
   .cv-hint { margin: 0; font-size: 1.4rem; display: flex; align-items: flex-end; gap: 0.2rem; }
   .cv-expand { margin-left: auto; font-size: 0.95rem; }
+  .cv-eport { font-size: 0.95rem; }
+  .posts--cv { margin-top: 0.6rem; }
 
   .cv-list { display: grid; gap: 1.6rem; }
   .cv-sec { transform: rotate(var(--tilt)); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); interpolate-size: allow-keywords; color: var(--ink); }

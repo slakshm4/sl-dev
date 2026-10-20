@@ -7,6 +7,7 @@ import HandArrow from "../../components/HandArrow.astro";
 import Blocks from "../../components/Blocks.astro";
 import { plain } from "../../lib/text";
 import { projects } from "../../data/projects";
+import PostLinks from "../../components/PostLinks.astro";
 
 export function getStaticPaths() {
   return projects.map((project, i) => ({
@@ -46,6 +47,8 @@ const ext = (h: string) => /^https?:/.test(h);
             </p>
           )}
         </div>
+
+        {project.posts && <PostLinks keys={project.posts} class="pj-posts" />}
 
         {project.links && (
           <ul class="pj-links">
@@ -90,6 +93,7 @@ const ext = (h: string) => /^https?:/.test(h);
   .pj-lede { font-size: 1.9rem; line-height: 1.02; margin: 0 0 1.2rem; color: var(--ink); }
   .pj-wip { display: flex; align-items: center; gap: 1.1rem; padding: 1.1rem 1.3rem; margin-top: 1.4rem; --scrap-bg: var(--paper); font-size: 1.05rem; line-height: 1.45; }
   .pj-wip .stamp { flex: none; }
+  .pj-posts { margin: 1.6rem 0 0 0.3rem; }
   .pj-links { list-style: none; display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.8rem 0 0 0.3rem; }
   .pj-aside { position: relative; display: flex; flex-direction: column; align-items: center; }
   .pj-pol { position: relative; width: 100%; padding: 14px 14px 0; background: #fffdf3; border: 2px solid #1f1b2e; box-shadow: 6px 8px 0 var(--shadow); transform: rotate(3deg); }
