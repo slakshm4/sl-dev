@@ -20,11 +20,12 @@ export const strengths = [
   "documentation, coordination, and stakeholder communication",
 ];
 
-export type Job = { role: string; org: string; when: string; status?: "current" | "completed"; bullets: string[]; /** the role links to its polaroid project page */ href?: string };
+export type Job = { role: string; org: string; when: string; status?: "current" | "completed"; bullets: string[]; /** the role links to its polaroid project page */ href?: string; /** underline the role in lilac (no link) */ underline?: boolean };
 
 export const jobs: Job[] = [
   {
     role: "licensed dental hygienist (part-time)",
+    underline: true,
     org: "Joyce Wu Dental, Richmond, BC",
     when: "aug 2026–present",
     status: "current",
@@ -154,7 +155,7 @@ export const publications: { group: string; items: string[] }[] = [
     group: "teaching",
     items: [
       "Lakshman S, lecturer. interprofessional education & integrated curriculum orientation [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2025.",
-      "Lakshman S, lecturer. compassionate conversations… (motivational interviewing) [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2025.",
+      "Lakshman S, lecturer. compassionate conversations… (motivational interviewing) [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2026.",
     ],
   },
   {

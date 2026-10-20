@@ -166,20 +166,29 @@ async function main() {
     if (have && !FORCE && records[song.id]) continue;
     if (IF_MISSING && have && records[song.id]) continue;
     try {
-      const hit = await lookup(song);
-      if (!hit) { console.warn(`[records] no match for "${song.title}", skipping`); continue; }
-      const artUrl = hit.artworkUrl100.replace(/\/\d+x\d+bb\./, "/1000x1000bb.");
-      const img = Buffer.from(await (await fetch(artUrl, { signal: AbortSignal.timeout(20000) })).arrayBuffer());
+      // a cover you've saved yourself (scripts/covers/<id>.png|jpg|webp) wins over whatever itunes returns
+      let local = null;
+      for (const ext of ["png", "jpg", "jpeg", "webp"]) {
+        local = await fs.readFile(path.join(here, "covers", `${song.id}.${ext}`)).catch(() => null);
+        if (local) break;
+      }
+      const hit = await lookup(song).catch(() => null);
+      if (!hit && !local) { console.warn(`[records] no match for "${song.title}", skipping`); continue; }
+      let img = local;
+      if (!img) {
+        const artUrl = hit.artworkUrl100.replace(/\/\d+x\d+bb\./, "/1000x1000bb.");
+        img = Buffer.from(await (await fetch(artUrl, { signal: AbortSignal.timeout(20000) })).arrayBuffer());
+      }
       const webp = await pointillise(img, 640, hash(song.id));
       await fs.writeFile(file, webp);
       records[song.id] = {
         art: `/records/${song.id}.webp`,
-        appleUrl: (hit.trackViewUrl || "").replace(/&uo=\d+/, ""),
-        artist: hit.artistName,
-        matched: `${hit.trackName}: ${hit.artistName}`,
+        appleUrl: (hit?.trackViewUrl || "").replace(/&uo=\d+/, ""),
+        artist: hit?.artistName ?? song.artist,
+        matched: hit ? `${hit.trackName}: ${hit.artistName}` : "your own cover",
       };
       made++;
-      console.log(`[records] ${song.id}: ${hit.trackName} · ${hit.artistName}`);
+      console.log(`[records] ${song.id}: ${local ? "your own cover" : `${hit.trackName} · ${hit.artistName}`}`);
     } catch (e) {
       console.warn(`[records] "${song.title}" failed (${e.message}), skipping`);
     }

@@ -77,7 +77,7 @@ const sections = [
               <article class="job">
                 <p class="job-when keep-case">{j.when}</p>
                 <div>
-                  <h3>{j.href ? <a class="cv-link" href={j.href}>{j.role}</a> : j.role} <span class={`stamp job-stamp job-stamp--${j.status} keep-case`}>{j.status}</span></h3>
+                  <h3>{j.href ? <a class="cv-link" href={j.href}>{j.role}</a> : j.underline ? <span class="cv-ul">{j.role}</span> : j.role} <span class={`stamp job-stamp job-stamp--${j.status} keep-case`}>{j.status}</span></h3>
                   <p class="job-org">{j.org}</p>
                   <ul class="bullets">{j.bullets.map((b) => <li>{b}</li>)}</ul>
                 </div>
@@ -192,6 +192,7 @@ const sections = [
   .lead { list-style: none; display: grid; gap: 1.1rem; }
   .lead li { padding-left: 1rem; border-left: 4px solid var(--blush); }
   /* a cv line that links to its polaroid project page */
+  .cv-ul { text-decoration: underline; text-decoration-color: var(--peri); text-decoration-thickness: 2.5px; text-underline-offset: 0.22em; }
   .cv-link { color: inherit; text-decoration: underline; text-decoration-color: var(--peri); text-decoration-thickness: 2.5px; text-underline-offset: 0.22em; }
   .cv-link:hover, .cv-link:focus-visible { text-decoration-color: var(--ink); background: color-mix(in srgb, var(--butter) 70%, transparent); }
   .certs { display: flex; gap: 1rem; flex-wrap: wrap; margin: 0.4rem 0 0; }
