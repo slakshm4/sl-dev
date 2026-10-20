@@ -8,7 +8,8 @@ import { clamp, motionOff } from "./util";
 let cur = 1, raf = 0, wired = false, first = true;
 
 const isHome = () => document.body?.dataset.page === "home";
-const target = () => (isHome() ? clamp(window.scrollY / (window.innerHeight * 0.62), 0, 1) : 1);
+// with the phone menu open the tooth always docks, so the big hero tooth never sits over the menu
+const target = () => (isHome() && !document.body.classList.contains("menu-open") ? clamp(window.scrollY / (window.innerHeight * 0.62), 0, 1) : 1);
 
 type Els = { tooth: HTMLElement | null; shadow: HTMLElement | null; stage: HTMLElement | null; scroll: HTMLElement | null; intro: HTMLElement | null };
 let els: Els = { tooth: null, shadow: null, stage: null, scroll: null, intro: null };
@@ -59,8 +60,11 @@ export function initTooth() {
     wired = true;
     addEventListener("scroll", kick, { passive: true });
     addEventListener("resize", kick);
+    const watch = () => mo.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    const mo = new MutationObserver(kick);
+    watch();
     // a new page has just been swapped in: put the right opacities on it before it is painted
-    document.addEventListener("astro:after-swap", () => { last = -1; els.tooth = null; paint(); });
+    document.addEventListener("astro:after-swap", () => { mo.disconnect(); watch(); last = -1; els.tooth = null; paint(); });
   }
   kick();
 }
