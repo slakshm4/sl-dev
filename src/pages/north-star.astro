@@ -216,8 +216,8 @@ const lines = triangle(para);
   /* outline */
   .ns-outline { margin-top: 2.6rem; padding: 1rem 1.3rem 1.2rem; --scrap-bg: var(--paper); }
   /* the box is a pastel orange in light mode (same orange as the herringbone card in reflections) and a lighter kraft in dark mode, with ink text on it */
-  .ns-outline.scrap--kraft::after { background: var(--orange-pastel); }
-  :root[data-theme="dark"]:not([data-a11y="on"]) .ns-outline.scrap--kraft::after { background: var(--tile-kraft); filter: url(#rip-fine) brightness(1.08) saturate(0.95); }
+  .ns-outline.scrap--kraft::after { background: var(--pink-pastel); }
+  :root[data-theme="dark"]:not([data-a11y="on"]) .ns-outline.scrap--kraft::after { background: #fbe9a6; filter: url(#rip-fine) brightness(1.12); }
   :root[data-theme="dark"]:not([data-a11y="on"]) .ns-outline > summary { color: #1f1b2e; }
   :root[data-theme="dark"]:not([data-a11y="on"]) .ns-outline > summary::before { background: #1f1b2e; }
   .ns-outline summary { cursor: pointer; font: italic 600 1.25rem/1.2 var(--f-display); list-style: none; display: flex; align-items: center; gap: 0.6rem; }
