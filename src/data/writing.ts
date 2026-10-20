@@ -4,8 +4,8 @@
 //  /notebook/<drawer>            → the drawer: a grid of boxes, one per piece
 //  /notebook/<drawer>/<piece>    → one piece, set on its own paper
 //
-//  to add a piece: copy one of the sample objects below, give it a new `slug` (this becomes the url),
-//  write your words in `body`, and delete `sample: true` (that removes the little "sample" stamp).
+//  to add a piece: copy any piece object (see annotations on life below), give it a new `slug` (this becomes the url)
+//  and write your words in `body`. a drawer with no pieces (reflections, for now) just shows "the next one is still on the desk."
 //
 //  body       an array of blocks. each string is one paragraph (prose), one stanza (poems) or one section (songs).
 //             inside a stanza / section use "\n" for a line break. songs: start a section with a label line
@@ -42,35 +42,7 @@ const words: Drawer[] = [
     paper: "ruled",
     style: "prose",
     stickers: ["leaf", "sun", "pencil", "butterfly"],
-    pieces: [
-      {
-        slug: "first-sample",
-        title: "a sample reflection",
-        date: "month year",
-        kicker: "learnings",
-        blurb: "a placeholder to show how a reflection sits on the page.",
-        sample: true,
-        note: "(sample! swap me out.)",
-        body: [
-          "this is a sample box. it shows the shape of a reflection: a title, a date, and a few paragraphs of thinking out loud.",
-          "write the way you'd tell a friend what you learned. keep the paragraphs short and they stay easy to read, even on a phone.",
-          "when the real words are in, delete the line that says sample: true and the little stamp disappears.",
-        ],
-      },
-      {
-        slug: "second-sample",
-        title: "another sample reflection",
-        date: "month year",
-        kicker: "clinic",
-        blurb: "a second placeholder, with different stickers.",
-        sample: true,
-        stickers: ["tooth", "heart", "sparkle"],
-        body: [
-          "a second sample, so the drawer has more than one box in it.",
-          "stickers are set per piece: pick up to four from the list at the top of src/data/writing.ts.",
-        ],
-      },
-    ],
+    pieces: [],
   },
   {
     slug: "prose",
@@ -253,31 +225,7 @@ const words: Drawer[] = [
     paper: "butter",
     style: "verse",
     stickers: ["flower", "moon", "butterfly", "heart"],
-    pieces: [
-      ...poemPieces,
-      {
-        slug: "first-sample",
-        title: "untitled (sample)",
-        date: "month year",
-        kicker: "poem",
-        blurb: "a placeholder poem: two short stanzas.",
-        sample: true,
-        body: [
-          "the first line sits alone\nand waits for the second.",
-          "stanzas breathe\nbetween the lines.",
-        ],
-      },
-      {
-        slug: "second-sample",
-        title: "another sample poem",
-        date: "month year",
-        kicker: "poem",
-        blurb: "a second placeholder, three stanzas.",
-        sample: true,
-        stickers: ["moon", "sparkle", "flower"],
-        body: ["line breaks are kept\nexactly where you put them.", "a blank line starts a new stanza.", "that's all there is to it."],
-      },
-    ],
+    pieces: poemPieces,
   },
   {
     slug: "songs",

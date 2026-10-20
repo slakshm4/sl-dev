@@ -129,8 +129,8 @@ const ext = (h) => /^https?:/.test(h);
     {parts.length > 0 && (
       <section class="pc-parts" aria-labelledby="pc-parts-h">
         <h2 id="pc-parts-h" class="hand pc-parts-h">inside</h2>
-        <ul class="wl-grid" role="list">
-          {parts.map((p, n) => <WriteCard drawer={drawer} piece={p} n={n} i={di} href={pieceHref(drawer, p)} />)}
+        <ul class="wl-grid wl-grid--stagger" role="list">
+          {parts.map((p, n) => <WriteCard drawer={drawer} piece={p} n={n} i={di} tilt={[-3.2, 2.4, -1.8, 3, -2.4][n % 5]} href={pieceHref(drawer, p)} />)}
         </ul>
       </section>
     )}
@@ -251,6 +251,17 @@ const ext = (h) => /^https?:/.test(h);
 
   .pc-parts { margin-top: 3.4rem; }
   .pc-parts-h { margin: 0; font-size: 2.2rem; font-weight: 400; color: var(--ink-soft); }
+  /* the cards inside an anthology: crooked, staggered, and the last row sits in the middle */
+  .wl-grid--stagger { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 2.6rem 2.2rem; }
+  .wl-grid--stagger > .wlc { width: min(100%, 300px); }
+  .wl-grid--stagger > .wlc:nth-child(even) { margin-top: 2.6rem; }
+  @media (max-width: 680px) {
+    .wl-grid--stagger { gap: 2.2rem 0; }
+    .wl-grid--stagger > .wlc { width: min(86%, 320px); margin-top: 0 !important; }
+    .wl-grid--stagger > .wlc:nth-child(odd) { margin-right: auto; }
+    .wl-grid--stagger > .wlc:nth-child(even) { margin-left: auto; }
+    .wl-grid--stagger > .wlc:last-child { margin-inline: auto; }
+  }
   .pc-link { margin: 2.4rem 0 0; text-align: center; }
   .pc-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 4rem; padding-top: 1.4rem; border-top: 2.5px dashed color-mix(in srgb, var(--ink) 30%, transparent); }
   .pc-nav-a { display: grid; gap: 0.2rem; color: var(--ink); text-decoration: none; max-width: 48%; }

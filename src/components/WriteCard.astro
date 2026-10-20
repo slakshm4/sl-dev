@@ -3,14 +3,14 @@
 import Sticker from "./Sticker.astro";
 import { readTime, plain } from "../lib/text";
 
-const { drawer, piece, n = 0, i = 0, href, tag = "" } = Astro.props;
+const { drawer, piece, n = 0, i = 0, href, tag = "", tilt } = Astro.props;
 const tilts = [-1.6, 1.2, -0.8, 1.7, -1.2, 0.9];
 const tapes = ["peri", "butter", "blush", "sage"];
 const pills: string[] = piece.tags ?? (piece.kicker ? [piece.kicker] : []);
 const words = piece.body.join(" ").split(/\s+/).filter(Boolean).length;
 const foot = piece.date ?? (piece.parts ? `${piece.parts.length} ${drawer.slug === "poems" ? "poems" : "pieces"}` : words >= 400 ? readTime(piece.body) : "");
 ---
-<li class={`wlc wlc--${drawer.style}${piece.pinned ? " wlc--pinned" : ""}`} style={`--tilt:${tilts[(n + i) % tilts.length]}deg`} data-reveal>
+<li class={`wlc wlc--${drawer.style}${piece.pinned ? " wlc--pinned" : ""}`} style={`--tilt:${tilt ?? tilts[(n + i) % tilts.length]}deg`} data-reveal>
   <span class={`tape tape--${tapes[(n + i) % 4]}`} style="top:-13px;left:50%;margin-left:-44px;--r:-3deg"></span>
   <a class="wlc-in" href={href} rel={tag || undefined}>
     <span class={`wlc-pic paper--${drawer.paper}`} aria-hidden="true">

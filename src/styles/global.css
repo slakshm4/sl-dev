@@ -236,6 +236,8 @@ input[type="text"], textarea { cursor: text; }
 .strip--seg + .strip--seg { font-size: clamp(1.3rem, 3.2vw, 2rem); }
 .strip--hand { font-family: var(--f-hand); font-weight: 400; font-size: clamp(2.6rem, 7vw, 5rem); letter-spacing: 0; padding-top: 0.05em; }
 .strip--type { font-family: var(--f-type); font-weight: 400; letter-spacing: -0.04em; font-size: clamp(2.2rem, 6vw, 4.4rem); }
+/* very small phones (320px): keep the longest one-word titles inside the screen */
+@media (max-width: 349px) { .strip:not(.strip--seg) { font-size: 2.1rem; } }
 
 /* ── handwriting, stamps, chips, highlighter ────────────────── */
 .hand { font-family: var(--f-hand); font-weight: 400; font-size: 1.55em; line-height: 1.02; letter-spacing: 0.01em; }

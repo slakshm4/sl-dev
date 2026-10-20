@@ -66,6 +66,10 @@ the site is lowercase on purpose, and since this round **nothing is forced to lo
 
 after someone taps "that's the lie", each note shows how many people guessed it ("guessed by 91% of people"). it is an anonymous tally of three numbers kept by [abacus](https://abacus.jasoncameron.dev), a free counting service that needs no account. nothing about the visitor is sent, and each browser counts once (remembered in localstorage). percentages only appear after 5 guesses. to turn it off, set `TALLY = ""` in `src/scripts/records.ts`; to switch to your own counter later, change `TALLY` / `NS` and the two `fetch`es there.
 
+## the tooth
+
+the tooth docked in the nav is a link home on every page: the tooth itself is a floating picture that can't take clicks, so an invisible link (`.tooth-link` in `src/components/Nav.astro`) sits right under it. the "home" word in the nav stays the keyboard route.
+
 ## phones: lighter animations
 
 touch devices (coarse pointers) get a lighter site: no page-transition snapshots (pages simply load), simpler torn paper edges, no grain layer, and no endless looping animations. the play/pause button in the nav pauses or resumes all animation on any device; it's remembered, and defaults to paused if the device asks for reduced motion.

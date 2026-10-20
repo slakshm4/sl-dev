@@ -17,6 +17,8 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
 ---
 <header class="nav-bar">
   <div class="nav-paper" aria-hidden="true"></div>
+  <!-- the docked tooth is a picture floating above the nav (it can't take clicks), so this invisible link sits right under it: tap the tooth, go home. the "home" word in the nav is the keyboard / screen-reader route. -->
+  <a class="tooth-link" href="/" tabindex="-1" aria-hidden="true"></a>
 
   <nav class="nav" id="site-nav" aria-label="main">
     <ul class="nav-group">
@@ -54,6 +56,10 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
   .nav-paper::before { content: ""; position: absolute; inset: -30px -30px -5px -30px; background: var(--chalk); filter: url(#rip); }
   .nav-paper::after  { content: ""; position: absolute; inset: -30px -30px 0 -30px; background: var(--paper); filter: url(#rip-fine); }
 
+  .tooth-link { position: absolute; z-index: 2; top: 0; left: 50%; width: min(calc(var(--tw) * 0.2), 96px); height: var(--header-h); transform: translateX(-50%); -webkit-tap-highlight-color: transparent; }
+  /* the tooth gives a little wiggle when the pointer is over it */
+  .tooth-3d { transition: transform 0.35s cubic-bezier(0.34, 1.7, 0.5, 1); }
+  @media (hover: hover) { :root:has(.tooth-link:hover) .tooth-3d { transform: rotate(-7deg) scale(1.12); } }
   .nav { position: relative; z-index: 1; height: 100%; display: flex; align-items: center; justify-content: center; gap: clamp(0.75rem, 2.4vw, 2.6rem); padding-inline: 0.5rem; }
   .nav-group { list-style: none; display: flex; align-items: center; gap: clamp(1rem, 2.6vw, 2.6rem); margin: 0; padding: 0; }
   .nav-gap { width: clamp(70px, 8vw, 110px); }

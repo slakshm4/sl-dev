@@ -32,9 +32,8 @@ export const poemPieces: Piece[] = [
     kicker: "poem a",
     tags: ["free verse"],
     partOf: "degenerescence",
-    stickers: ["moon", "sparkle", "ghost"],
+    stickers: ["eye", "sparkle", "ghost"],
     noteBox: {
-      title: "a note on the title",
       body: [
         "the direct translation of _corps témoin_ is \"control group\", or, if you want to be literal about it, \"control body\".",
         "but _corps_ means body, and _témoin_ means witness. so the title is a play on words: it sits between the clinical, hard, cold, detached language of science and the rawer, more vulgar, more vulnerable meaning of the poem.",
@@ -74,8 +73,13 @@ export const poemPieces: Piece[] = [
     kicker: "poem b",
     tags: ["free verse"],
     partOf: "degenerescence",
-    stickers: ["moon", "sparkle", "ghost"],
-    note: "translation—imprint or impression",
+    stickers: ["envelope", "moon", "sparkle"],
+    noteBox: {
+      body: [
+        "_empreinte_ means \"imprint\" or \"trace.\"",
+        "the title frames the poem around an involuntary mark left by a brief, almost imperceptible contact: like wax retaining the shape of what touched it. it suggests that presence can alter someone permanently without intention, while the one who caused the mark may never know it existed. the poem's central paradox—being changed by someone who has forgotten having known you—makes the title both literal and emotional.",
+      ],
+    },
     body: [],
     stereo: {
       pairs: [
@@ -110,8 +114,13 @@ export const poemPieces: Piece[] = [
     kicker: "poem c",
     tags: ["free verse"],
     partOf: "degenerescence",
-    stickers: ["moon", "sparkle", "ghost"],
-    note: "translation—fallow land",
+    stickers: ["leaf", "flower", "sun"],
+    noteBox: {
+      body: [
+        "_la jachère_ means \"fallow land\"—a field left unplanted so it may recover.",
+        "the title makes the poem's garden imagery a metaphor for a possibility that was sensed but never allowed to grow: a relationship, name, or future returned to winter before it could become spring. it carries the quiet grief of potential rather than loss alone; what is left fallow is not dead, but it may never be cultivated again. the title therefore names the space between what might have been and what was deliberately left unmade.",
+      ],
+    },
     body: [],
     stereo: {
       pairs: [
@@ -146,8 +155,13 @@ export const poemPieces: Piece[] = [
     kicker: "poem d",
     tags: ["free verse"],
     partOf: "degenerescence",
-    stickers: ["moon", "sparkle", "ghost"],
-    note: "translation—the castaways, the stranded",
+    stickers: ["fish", "cloud", "moon"],
+    noteBox: {
+      body: [
+        "_les écartés_ means \"the ones set aside,\" \"the excluded,\" or \"the cast-offs.\"",
+        "the title identifies the poem's subject not as charity itself, but as those judged unworthy of it—the shipwrecked returned to the sea because their suffering does not fit a respectable image. it exposes the selectivity hidden inside compassion: mercy can become another form of sorting. the plural title also turns individual abandonment into a social condition, giving the poem its bitter, accusatory force.",
+      ],
+    },
     body: [],
     stereo: {
       pairs: [
@@ -182,8 +196,13 @@ export const poemPieces: Piece[] = [
     kicker: "poem e",
     tags: ["free verse"],
     partOf: "degenerescence",
-    stickers: ["moon", "sparkle", "ghost"],
-    note: "translation: that within me which cannot be redeemed",
+    stickers: ["heart", "ghost", "sparkle"],
+    noteBox: {
+      body: [
+        "_l'irréparable en moi_ means \"the irreparable within me.\"",
+        "the title locates damage not in a single event but in the self's own making: a collapse that occurred before the clay could be fired, before the self could become whole. it frames identity as something shaped, cracked, and remade without a stable original form. the title's gravity lies in its refusal of repair—not because healing is impossible, but because what was lost may no longer be recoverable in the form one once intended.",
+      ],
+    },
     body: [],
     stereo: {
       pairs: [

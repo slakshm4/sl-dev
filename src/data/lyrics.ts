@@ -12,7 +12,7 @@ import type { Piece } from "./writing-types";
 export const lyricPieces: Piece[] = [
   {
     slug: "churches",
-    title: "churches",
+    title: "churches.",
     kicker: "songwriting",
     blurb: "i skinned my knees in the rain…",
     stickers: ["cloud", "heart", "music", "moon"],
@@ -35,7 +35,7 @@ export const lyricPieces: Piece[] = [
   },
   {
     slug: "the-trees-know-your-name",
-    title: "the trees know your name",
+    title: "the trees know your name.",
     kicker: "songwriting",
     blurb: "quake like a leaf, my heart beats like a damaged machine…",
     pinned: true,
@@ -67,7 +67,7 @@ export const lyricPieces: Piece[] = [
   },
   {
     slug: "the-book-of-nots",
-    title: "the book of nots",
+    title: "the book of nots.",
     kicker: "songwriting",
     blurb: "not who i held in my cup of palms…",
     stickers: ["pencil", "key", "music", "envelope"],
@@ -86,7 +86,7 @@ export const lyricPieces: Piece[] = [
   },
   {
     slug: "lily-of-the-valley",
-    title: "lily of the valley",
+    title: "lily of the valley.",
     kicker: "songwriting",
     blurb: "what grew beneath the old elm…",
     stickers: ["flower", "music", "butterfly", "sparkle"],
@@ -116,7 +116,7 @@ export const lyricPieces: Piece[] = [
   },
   {
     slug: "falling-apart",
-    title: "falling apart",
+    title: "falling apart.",
     kicker: "songwriting",
     blurb: "your hands taste like copper pennies in the rain…",
     stickers: ["sparkle", "music", "moon", "star-paper"],
@@ -140,7 +140,7 @@ export const lyricPieces: Piece[] = [
   },
   {
     slug: "i-wish-i-had-a-green-thumb",
-    title: "i wish i had a green thumb",
+    title: "i wish i had a green thumb.",
     kicker: "songwriting",
     blurb: "stuck inside myself…",
     stickers: ["sun", "butterfly", "music", "flower"],
