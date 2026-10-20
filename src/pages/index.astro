@@ -1,109 +1,143 @@
 ---
+// index.astro  ·  home: the big tooth, the typed hello, the polaroids.
 import Layout from "../layouts/Layout.astro";
+import Sticker from "../components/Sticker.astro";
+import HandArrow from "../components/HandArrow.astro";
+import Polaroid from "../components/Polaroid.astro";
+import Burst from "../components/Burst.astro";
+import Eyes from "../components/Eyes.astro";
+import { projects } from "../data/projects";
 ---
-
-<Layout>
-
-  <!-- HERO -->
-  <section class="hero">
-
-    <img
-      src="/spine.png"
-      class="spine"
-      alt=""
-    />
-
-    <div class="hero-text">
-      <h2>hi, i'm</h2>
-      <h1>shradha<br />lakshman.</h1>
+<Layout page="home" title="shradha lakshman · dental hygienist, health educator, curious human">
+  <!-- 1 · hero: just the tooth, turning in place. scroll and it flies up into the nav. -->
+  <section class="hero" aria-label="welcome">
+    <div class="hero-stage" aria-hidden="true">
+      <Burst size={700} points={16} inner={0.82} fill="floral" class="hero-burst" />
+      <span class="hero-scrap hero-scrap--a scrap scrap--floral"></span>
+      <span class="hero-scrap hero-scrap--b scrap scrap--news"></span>
+      <Eyes size={132} class="hero-eyes float" />
+      <Sticker name="ghost" size={74} class="hero-s hero-ghost float" />
+      <Sticker name="star-paper" size={58} class="hero-s hero-star float" />
+      <Sticker name="sparkle" size={52} class="hero-s hero-sparkle float" />
+      <Sticker name="butterfly" size={70} class="hero-s hero-bfly float" />
+      <Sticker name="moon" size={50} class="hero-s hero-moon float" />
+      <p class="hero-label scrap scrap--dots keep-case"><span class="tape tape--blush" style="top:-15px;right:22px;--r:5deg"></span>no. 26 · upper left first molar</p>
+      <p class="hero-note hand scrap scrap--grid">
+        <span>the little extra bump? that's the cusp of carabelli.</span>
+        <HandArrow shape="arc" size={190} class="hero-note-arrow" />
+      </p>
+      <span class="stamp hero-stamp keep-case">BDSc dental hygiene · ubc · 2026</span>
     </div>
-
+    <p class="hero-scroll hand" aria-hidden="true"><span>scroll</span><HandArrow shape="spiral" size={46} /></p>
   </section>
 
-  <!-- SCROLL SECTION -->
-  <section class="content">
-
-    <div class="panel"></div>
-
-    <img
-      src="/jaw.png"
-      class="jaw"
-      alt=""
-    />
-
+  <!-- 2 · the hello -->
+  <section class="intro wrap" aria-labelledby="hello">
+    <h1 id="hello" class="sr-only">hi, my name is shradha lakshman</h1>
+    <div class="intro-type" data-typewriter aria-hidden="true">
+      <span class="tw-greet"><span class="tw-text" lang="en">hi, my name is</span><span class="tw-cursor"></span></span>
+      <span class="tw-name">shradha<br class="tw-br" /> lakshman</span>
+      <svg class="tw-underline" data-reveal viewBox="0 0 520 26" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 16C60 6 120 22 190 12S330 4 400 14S490 18 516 8" /></svg>
+    </div>
+    <p class="tagline"><span class="hl">a seeker of knowledge, perspective, and possibility.</span></p>
+    <a class="cta cta--down" href="#up-to">
+      <span>see what i've been up to</span>
+      <svg class="cta-arrow" viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true"><path d="M12 3v17M5 13l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </a>
   </section>
 
+  <!-- 3 · the polaroids -->
+  <section id="up-to" class="gallery wrap" aria-labelledby="gal-h">
+    <h2 id="gal-h" class="sr-only">what i've been up to</h2>
+    <div class="pols">
+      {projects.map((p, i) => <Polaroid project={p} index={i} />)}
+    </div>
+    <Sticker name="flower" size={64} class="gal-s gal-s--a float" />
+    <Sticker name="fish" size={78} class="gal-s gal-s--b float" />
+  </section>
+
+  <!-- 4 · on to the archives -->
+  <section class="archives wrap">
+    <a class="cta cta--big cta--right" href="/explore">
+      <span>intrigued? take a deep dive into the archives</span>
+      <svg class="cta-arrow" viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </a>
+  </section>
 </Layout>
 
-<style>
+<style is:global>
+  /* ── hero ── */
+  .hero { position: relative; height: 100svh; min-height: 560px; }
+  .hero-stage { --bsc: min(96vw, 700px); position: absolute; inset: 0; overflow: hidden; opacity: calc(1 - var(--p) * 2.4); }
+  .hero-burst { left: 50%; top: calc(50svh - 2.25rem + 4px); width: var(--bsc); height: var(--bsc); transform: translate(-50%, -50%); }
+  .hero-burst.burst--spin { animation-name: burst-spin-c; }
+  @keyframes burst-spin-c { from { transform: translate(-50%, -50%) rotate(0); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+  .hero-scrap { position: absolute; display: block; }
+  .hero-scrap--a { left: -6%; top: 68%; width: 24%; height: 14%; --scrap-bg: var(--tile-floral); transform: rotate(-6deg); }
+  .hero-scrap--b { right: -5%; bottom: 20%; width: 22%; height: 16%; transform: rotate(7deg); }
+  .hero-s { position: absolute; }
+  .hero-eyes { position: absolute; right: 12%; top: 20%; }
+  .hero-ghost { left: 12%; bottom: 22%; --r0: -8deg; --r1: 6deg; }
+  .hero-star { left: 22%; top: 12%; --r0: 0deg; --r1: 40deg; }
+  .hero-sparkle { right: 22%; bottom: 14%; --r0: -10deg; --r1: 18deg; }
+  .hero-bfly { right: 7%; top: 46%; --r0: 8deg; --r1: -10deg; }
+  .hero-moon { left: 8%; top: 52%; --r0: -12deg; --r1: 10deg; }
+  .hero-label {
+    position: absolute; left: 50%; top: calc(50svh - 2.25rem + 4px + var(--tw) * 0.5 + 0.9rem); margin: 0; padding: 1.05rem 1.2rem 0.6rem;
+    font: 400 0.92rem/1.1 var(--f-type); letter-spacing: 0.03em; transform: translateX(-50%) rotate(-1.6deg); white-space: nowrap;
+  }
+  .hero-note {
+    position: absolute; left: clamp(1rem, 5.5vw, 6.5rem); top: calc(50svh - 2.25rem - var(--tw) * 0.56); margin: 0; width: 14.5rem; padding: 0.7rem 1rem 0.8rem;
+    font-size: 1.45rem; line-height: 1.15; transform: rotate(-3.5deg);
+  }
+  .hero-note-arrow { position: absolute; left: calc(100% - 0.8rem); top: 62%; transform: rotate(-24deg); transform-origin: 0 0; }
+  .hero-note .hero-note-arrow path { stroke-width: 1.7; }
+  .hero-stamp { position: absolute; right: 7%; top: 14%; --stamp: var(--peri-deep); --r: 7deg; }
+  .hero-scroll { position: absolute; left: 50%; bottom: 2.2rem; transform: translateX(-50%); margin: 0; display: flex; align-items: flex-end; gap: 0.3rem; font-size: 1.9rem; opacity: calc(1 - var(--p) * 3); animation: nudge 2.2s ease-in-out infinite; }
+  @keyframes nudge { 50% { transform: translate(-50%, 8px); } }
+  .hero-eyes.float { --r0: -3deg; --r1: 3deg; --d: 5s; }
 
-.hero {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-}
+  /* ── the hello ── */
+  .intro { position: relative; text-align: center; padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); opacity: calc((var(--p) - 0.32) * 1.9); }
+  .intro-type { position: relative; display: inline-flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .tw-greet { display: inline-flex; align-items: center; min-height: 2.6rem; font: 400 clamp(1.3rem, 3.4vw, 2rem)/1.2 var(--f-type); color: var(--ink-soft); }
+  .tw-text { white-space: pre; }
+  .tw-cursor { display: inline-block; width: 0.12em; height: 1.15em; margin-left: 0.18em; background: var(--ink); animation: blink 0.95s steps(1) infinite; }
+  .intro-type:not(.is-resting) .tw-cursor { animation: none; }
+  .intro-type.is-static .tw-cursor { display: none; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .tw-name { font: 600 italic clamp(3.1rem, 11.5vw, 8.6rem)/0.92 var(--f-display); letter-spacing: -0.035em; }
+  .tw-br { display: none; }
+  .tw-underline { width: min(100%, 520px); height: 22px; margin-top: 0.2rem; overflow: visible; }
+  .tw-underline path { fill: none; stroke: var(--peri-deep); stroke-width: 4.5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s cubic-bezier(0.5, 0.1, 0.3, 1) 0.3s; }
+  html.js .tw-underline:not(.is-in) path { stroke-dashoffset: 1; }
+  .tagline { margin: 1.6rem auto 1.7rem; max-width: 30ch; font: italic 400 clamp(1.35rem, 3vw, 1.85rem)/1.35 var(--f-body); }
 
-/* SECOND SECTION */
-.content {
-  position: relative;
-  min-height: 140vh;
-  background: #d9d9d9;
-}
+  /* ── polaroids ── */
+  .gallery { position: relative; padding-block: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem); }
+  .pols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.2rem 1.4rem; align-items: start; }
+  .gal-s { position: absolute; }
+  .gal-s--a { left: -2%; top: 46%; --r0: -6deg; --r1: 12deg; }
+  .gal-s--b { right: -3%; top: 10%; --r0: 4deg; --r1: -8deg; --d: 7.5s; }
+  .archives { padding: clamp(2.5rem, 6vw, 4.5rem) 0 1rem; text-align: center; }
 
-/* LEFT SPINE IMAGE */
-.spine {
-  position: absolute;
-  left: -3%;
-  top: 0;
-
-  height: 100%;
-  object-fit: contain;
-
-  z-index: 3;
-}
-
-/* MAIN TEXT */
-.hero-text {
-  position: absolute;
-
-  top: 18%;
-  left: 42%;
-
-  color: #a2cba1;
-
-  z-index: 5;
-}
-
-.hero-text h1 {
-  font-size: 9rem;
-  line-height: 0.9;
-}
-
-.hero-text h2 {
-  font-size: 4rem;
-}
-
-/* RIGHT PANEL */
-.panel {
-  position: absolute;
-
-  right: 8%;
-  top: -120px;
-
-  width: 300px;
-  height: 900px;
-
-  background: #5d7d61;
-}
-
-/* JAW */
-.jaw {
-  position: absolute;
-
-  right: 4%;
-  bottom: 10%;
-
-  width: 260px;
-}
-
+  @media (max-width: 1040px) { .pols { grid-template-columns: repeat(2, 1fr); gap: 3rem 1.2rem; } .gal-s { display: none; } }
+  @media (max-width: 760px) {
+    .hero-eyes { right: 6%; top: 15%; width: 96px; height: auto; }
+    .hero-stamp { display: none; }
+    .hero-note { left: 0.9rem; top: calc(50svh - 2.25rem - var(--bsc) * 0.5 - 5.2rem); width: 12.2rem; font-size: 1.22rem; padding: 0.5rem 0.8rem 0.6rem; }
+    .hero-note-arrow { left: 56%; top: 96%; width: 84px; height: auto; transform: rotate(-4deg); transform-origin: 0 0; }
+    .hero-note .hero-note-arrow path { stroke-width: 2.4; }
+    .hero-star { display: none; }
+    .hero-label { font-size: 0.78rem; }
+    .hero-scrap--a, .hero-scrap--b { display: none; }
+    .tw-br { display: inline; }
+    .tw-name { font-size: clamp(3.4rem, 17vw, 5.2rem); }
+  }
+  @media (max-width: 520px) {
+    .pols { grid-template-columns: 1fr; gap: 3rem; }
+    .pol:nth-child(even) .pol-card, .pol:nth-child(odd) .pol-card { width: min(100%, 290px); }
+    .pol:nth-child(even) { align-self: flex-end; }
+    .hero-ghost, .hero-moon { display: none; }
+  }
 </style>

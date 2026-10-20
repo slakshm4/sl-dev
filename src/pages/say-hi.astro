@@ -1,0 +1,285 @@
+---
+// say-hi.astro  ·  an id card, a turntable with ten songs (links out only), two truths and a lie, and ways to reach me.
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Sticker from "../components/Sticker.astro";
+import HandArrow from "../components/HandArrow.astro";
+import Eyes from "../components/Eyes.astro";
+import songs from "../data/songs.json";
+
+// ── things to edit ───────────────────────────────────────────
+const email = "shradhamhdvn@gmail.com";
+const phoneShown = "(613) 850-9228";
+const phoneHref = "+16138509228";
+const instagram = "iamshrub";
+const linkedin = "https://www.linkedin.com/in/shradha-lakshman";
+/** which of the three facts is the lie? 0, 1 or 2. leave null to keep it a mystery (people have to ask you). */
+const lie: number | null = null;
+
+// optional file written by `npm run records`: pointillist cover art + exact apple music links
+const found = import.meta.glob("../data/records.json", { eager: true }) as Record<string, any>;
+const records: Record<string, { art?: string; appleUrl?: string; artist?: string }> = Object.values(found)[0]?.default ?? {};
+
+const tones = ["#aab4ea", "#f4d777", "#a2cba1", "#f2b1c6"];
+const list = songs.map((s, i) => {
+  const rec = records[s.id] ?? {};
+  const artist = s.artist || rec.artist || "";
+  const q = encodeURIComponent([s.title, artist].filter(Boolean).join(" "));
+  return {
+    ...s, artist, n: String(i + 1).padStart(2, "0"), tone: tones[i % 4],
+    art: rec.art ?? `/records/${s.id}.webp`,
+    yt: `https://www.youtube.com/results?search_query=${q}`,
+    sp: `https://open.spotify.com/search/${q}`,
+    am: rec.appleUrl ?? `https://music.apple.com/search?term=${q}`,
+  };
+});
+
+// a real code 128-b barcode (start code, data, checksum, stop). it's drawn as svg bars, one rect per bar.
+const C128 = "212222 222122 222221 121223 121322 131222 122213 122312 132212 221213 221312 231212 112232 122132 122231 113222 123122 123221 223211 221132 221231 213212 223112 312131 311222 321122 321221 312212 322112 322211 212123 212321 232121 111323 131123 131321 112313 132113 132311 211313 231113 231311 112133 112331 132131 113123 113321 133121 313121 211331 231131 213113 213311 213131 311123 311321 331121 312113 312311 332111 314111 221411 431111 111224 111422 121124 121421 141122 141221 112214 112412 122114 122411 142112 142211 241211 221114 413111 241112 134111 111242 121142 121241 114212 124112 124211 411212 421112 421211 212141 214121 412121 111143 111341 131141 114113 114311 411113 411311 113141 114131 311141 411131 211412 211214 211232 2331112".split(" ");
+const barcodeText = "SL-0026";
+const codes = [104, ...[...barcodeText].map((c) => c.charCodeAt(0) - 32)];
+codes.push(codes.reduce((sum, v, i) => sum + v * (i === 0 ? 1 : i), 0) % 103, 106);
+let bx = 10; // quiet zone
+const bars: { x: number; w: number }[] = [];
+for (const v of codes) {
+  [...C128[v]].forEach((d, i) => {
+    const w = Number(d);
+    if (i % 2 === 0) bars.push({ x: bx, w });
+    bx += w;
+  });
+}
+const barcodeWidth = bx + 10;
+
+const facts = [
+  "i went to a francophone ib world school in ottawa… and i didn't actually speak french when i joined.",
+  "i can sing in 21 languages so far! mostly out of spite, because classical music institutions refuse to look outside of europe.",
+  "i am a chocolate fiend. i love chocolate so much, oh my gosh. cocoa is the most important discovery of the 20th century bc.",
+];
+const stats = [
+  ["personality", "infp-t"],
+  ["sign", "scorpio"],
+  ["pronouns", "she / her"],
+  ["based in", "vancouver, bc"],
+  ["day job", "licensed dental hygienist"],
+  ["sings in", "21 languages (so far)"],
+  ["runs on", "allen's fruit punch + spite"],
+];
+---
+<Layout page="say-hi" title="say hi! · shradha lakshman" description="contact shradha lakshman, and meet her: id card, ten songs on repeat, and a game of two truths and a lie.">
+  <div class="wrap page-section">
+    <SectionTitle text="say hi!" start={4} />
+
+    <!-- id card + turntable -->
+    <div class="hi-top">
+      <article class="idc" data-reveal aria-labelledby="idc-name">
+        <span class="idc-slot" aria-hidden="true"></span>
+        <div class="idc-clip" aria-hidden="true"><svg viewBox="0 0 60 70"><path d="M18 4h24a6 6 0 0 1 6 6v16H12V10a6 6 0 0 1 6-6Z" fill="#cfd3e6" stroke="#1f1b2e" stroke-width="2.6" stroke-linejoin="round" /><rect x="22" y="22" width="16" height="34" rx="4" fill="#9aa1c4" stroke="#1f1b2e" stroke-width="2.6" /></svg></div>
+        <p class="idc-org keep-case">shradha lakshman · identification</p>
+        <div class="idc-main">
+          <figure class="idc-photo">
+            <span class="tape tape--butter" style="top:-11px;left:50%;margin-left:-42px;--r:-4deg;width:84px"></span>
+            <img src="/images/shradha.webp" width="400" height="400" alt="shradha smiling softly at the camera: long dark wavy hair, a dark floral top, warm wood and white panelling behind her." />
+          </figure>
+          <div class="idc-name">
+            <h2 id="idc-name">shradha<br />lakshman</h2>
+            <span class="chip chip--blush keep-case">she / her</span>
+            <p class="idc-no keep-case">no. 26</p>
+          </div>
+        </div>
+        <dl class="idc-stats">
+          {stats.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+        </dl>
+        <figure class="idc-bar" aria-hidden="true">
+          <svg viewBox={`0 0 ${barcodeWidth} 40`} preserveAspectRatio="none" focusable="false">
+            {bars.map((b) => <rect x={b.x} y="0" width={b.w} height="40" />)}
+          </svg>
+          <figcaption class="keep-case">{barcodeText}</figcaption>
+        </figure>
+        <Eyes size={86} class="idc-eyes" />
+      </article>
+
+      <section class="deck" data-records aria-labelledby="deck-h">
+        <h2 id="deck-h" class="sr-only">ten songs on repeat</h2>
+        <p class="hand deck-lead">ten songs on repeat lately <HandArrow shape="spiral" size={44} flip /></p>
+        <div class="deck-stage">
+          <div class="turntable" aria-hidden="true">
+            <div class="tt-plinth"></div>
+            <div class="platter" data-disc>
+              <div class="spinner">
+                <img class="art" data-art hidden alt="" width="480" height="480" />
+                <span class="grooves"></span>
+                <span class="label"></span>
+                <span class="hole"></span>
+              </div>
+              <span class="sheen"></span>
+            </div>
+            <div class="arm" data-arm>
+              <svg viewBox="0 0 120 200" aria-hidden="true"><circle cx="92" cy="30" r="16" fill="#cfd3e6" stroke="#1f1b2e" stroke-width="3" /><circle cx="92" cy="30" r="5.5" fill="#1f1b2e" /><path d="M92 30L28 164" stroke="#1f1b2e" stroke-width="8" stroke-linecap="round" /><path d="M92 30L28 164" stroke="#e9e4f5" stroke-width="3.4" stroke-linecap="round" /><path d="M20 160l18 8l-8 18l-18-8Z" fill="#f2b1c6" stroke="#1f1b2e" stroke-width="3" stroke-linejoin="round" /></svg>
+            </div>
+            <Sticker name="star-paper" size={34} class="tt-s tt-s--a" />
+            <Sticker name="sparkle" size={30} class="tt-s tt-s--b" />
+          </div>
+
+          <div class="now" aria-live="polite">
+            {list.map((s) => (
+              <article class="panel" data-panel={s.id} id={`song-${s.id}`} style={`--tone:${s.tone}`}>
+                <p class="panel-meta keep-case"><span>{s.n} / 10</span><span class="chip chip--sage">{s.language}</span></p>
+                <h3>{s.title}</h3>
+                {s.artist && <p class="panel-by">{s.artist}</p>}
+                <blockquote class="panel-why">{s.why}</blockquote>
+                <p class="panel-links">
+                  <a class="plat" href={s.yt} target="_blank" rel="noopener" aria-label={`${s.title}: search on youtube (opens in a new tab)`}><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2" /><path d="M10 9.2l5 2.8-5 2.8Z" fill="currentColor" /></svg>youtube</a>
+                  <a class="plat" href={s.sp} target="_blank" rel="noopener" aria-label={`${s.title}: search on spotify (opens in a new tab)`}><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2" /><path d="M6.8 9.6c3.6-1.1 7.6-.8 10.6 1M7.4 12.7c3-.8 6.1-.5 8.6.9M8 15.6c2.4-.6 4.6-.4 6.6.7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" /></svg>spotify</a>
+                  <a class="plat" href={s.am} target="_blank" rel="noopener" aria-label={`${s.title}: listen on apple music (opens in a new tab)`}><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 18V6.5l10-2.2V16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" /><circle cx="6.6" cy="18" r="2.7" fill="currentColor" /><circle cx="16.6" cy="16" r="2.7" fill="currentColor" /></svg>apple music</a>
+                </p>
+              </article>
+            ))}
+            <button class="btn deck-shuffle" type="button" data-shuffle>drop the needle somewhere new</button>
+          </div>
+        </div>
+
+        <ol class="tracks" aria-label="tracklist">
+          {list.map((s) => (
+            <li>
+              <button type="button" data-song={s.id} data-art={s.art} data-tone={s.tone} aria-pressed="false" aria-controls={`song-${s.id}`}>
+                <span class="tr-n keep-case">{s.n}</span>
+                <span class="tr-t">{s.title}</span>
+                <span class="tr-a">{s.artist || s.language}</span>
+                <span class="tr-l keep-case">{s.language}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+
+    <!-- two truths and a lie -->
+    <section class="ttl" aria-labelledby="ttl-h" data-facts data-lie={lie ?? ""}>
+      <h2 id="ttl-h" class="ex-h"><span class="hand">two truths and a lie</span> <span class="hand ttl-sub">(which one's fibbing?)</span></h2>
+      <ul class="ttl-grid">
+        {facts.map((f, i) => (
+          <li class="ttl-note" style={`--tilt:${[-2, 1.2, -0.8][i]}deg`} data-fact={i} data-reveal data-delay={i * 120}>
+            <span class={`tape tape--${["peri", "blush", "butter"][i]}`} style="top:-12px;left:50%;margin-left:-48px;--r:-3deg"></span>
+            <p><span class="ttl-no keep-case">{i + 1}.</span> {f}</p>
+            <div class="ttl-pick">
+              <button type="button" class="chip chip--blush" data-guess={i} aria-pressed="false">that's the lie</button>
+              <span class="stamp ttl-stamp keep-case" hidden></span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="hand ttl-foot" data-foot>
+        guess, then ask me in person for the answer
+        <HandArrow shape="arc" size={38} />
+      </p>
+    </section>
+
+    <!-- socials -->
+    <section class="soc" aria-labelledby="soc-h">
+      <h2 id="soc-h" class="ex-h"><span class="hand">find me</span> <HandArrow shape="loop" size={44} /></h2>
+      <ul class="soc-grid">
+        <li><a class="soc-tile" style="--tc:#f2b1c6;--tilt:-1.6deg" href={`mailto:${email}`}><svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><rect x="5" y="10" width="38" height="28" rx="4" fill="#fffdf3" stroke="#1f1b2e" stroke-width="3" /><path d="M6 14l18 14 18-14" fill="none" stroke="#1f1b2e" stroke-width="3" stroke-linejoin="round" /></svg><span class="soc-k">email</span><span class="soc-v keep-case">{email}</span></a></li>
+        <li><a class="soc-tile" style="--tc:#aab4ea;--tilt:1.2deg" href={`https://www.instagram.com/${instagram}/`} target="_blank" rel="noopener"><svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><rect x="6" y="6" width="36" height="36" rx="10" fill="#fffdf3" stroke="#1f1b2e" stroke-width="3" /><circle cx="24" cy="24" r="8.5" fill="none" stroke="#1f1b2e" stroke-width="3" /><circle cx="34.5" cy="13.5" r="2.4" fill="#1f1b2e" /></svg><span class="soc-k">instagram</span><span class="soc-v keep-case">@{instagram}</span></a></li>
+        <li><a class="soc-tile" style="--tc:#a2cba1;--tilt:-0.9deg" href={linkedin} target="_blank" rel="noopener"><svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><rect x="6" y="6" width="36" height="36" rx="6" fill="#fffdf3" stroke="#1f1b2e" stroke-width="3" /><path d="M15 21v13M15 14v1.5M22 34V21m0 6c0-4 3-6 6-6s5 2 5 6v7" fill="none" stroke="#1f1b2e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span class="soc-k">linkedin</span><span class="soc-v keep-case">shradha lakshman</span></a></li>
+        <li><a class="soc-tile" style="--tc:#f4d777;--tilt:1.6deg" href={`tel:${phoneHref}`}><svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><rect x="13" y="5" width="22" height="38" rx="5" fill="#fffdf3" stroke="#1f1b2e" stroke-width="3" /><path d="M20 10h8" stroke="#1f1b2e" stroke-width="3" stroke-linecap="round" /><circle cx="24" cy="37" r="2.2" fill="#1f1b2e" /></svg><span class="soc-k">phone</span><span class="soc-v keep-case">{phoneShown}</span></a></li>
+      </ul>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  .hi-top { display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 2.6rem; align-items: start; margin-top: 0.6rem; }
+
+  /* ── id card ── */
+  .idc { position: relative; padding: 2.7rem 1.4rem 1.3rem; background: #fbf2d4; color: #1f1b2e; border: 2.5px solid #1f1b2e; border-radius: 18px; box-shadow: 6px 8px 0 var(--shadow); transform: rotate(-1.6deg); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .idc:hover { transform: rotate(0.6deg) translateY(-4px); }
+  .idc::before { content: ""; position: absolute; inset: 8px; border: 2px dashed rgba(31, 27, 46, 0.3); border-radius: 12px; pointer-events: none; }
+  .idc-slot { position: absolute; left: 50%; top: 13px; width: 58px; height: 12px; margin-left: -29px; background: var(--desk); border: 2.5px solid #1f1b2e; border-radius: 99px; }
+  .idc-clip { position: absolute; left: 50%; top: -42px; width: 42px; margin-left: -21px; z-index: 2; }
+  .idc-org { margin: 0 0 0.8rem; text-align: center; font: 400 0.74rem/1 var(--f-type); letter-spacing: 0.1em; text-transform: uppercase; color: #4c4666; }
+  .idc-main { display: grid; grid-template-columns: 138px 1fr; gap: 1rem; align-items: end; }
+  .idc-photo { position: relative; margin: 0; padding: 6px 6px 22px; background: #fffdf3; border: 2px solid #1f1b2e; transform: rotate(-3deg); box-shadow: 3px 4px 0 var(--shadow); }
+  .idc-photo img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border: 1.5px solid #1f1b2e; }
+  .idc-name h2 { margin: 0 0 0.5rem; font: 600 italic clamp(1.7rem, 4vw, 2.1rem)/0.95 var(--f-display); letter-spacing: -0.03em; }
+  .idc-no { margin: 0.5rem 0 0; font: 400 0.8rem/1 var(--f-type); color: #4c4666; }
+  .idc-stats { margin: 1.1rem 0 0.9rem; display: grid; gap: 0; }
+  .idc-stats div { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; padding: 0.38rem 0.2rem; border-bottom: 1.5px dotted rgba(31, 27, 46, 0.4); }
+  .idc-stats dt { font: 400 0.75rem/1.2 var(--f-type); letter-spacing: 0.08em; text-transform: uppercase; color: #4c4666; }
+  .idc-stats dd { margin: 0; text-align: right; font: 600 1.02rem/1.2 var(--f-body); }
+  .idc-bar { margin: 0.2rem 0 0; display: grid; justify-items: center; gap: 0.25rem; }
+  .idc-bar svg { display: block; width: 100%; height: 44px; fill: #1f1b2e; shape-rendering: crispEdges; }
+  .idc-bar figcaption { font: 400 0.72rem/1 var(--f-type); letter-spacing: 0.32em; color: #4c4666; }
+  .idc-eyes { position: absolute; right: 22px; top: -30px; transform: rotate(-5deg); }
+
+  /* ── record deck ── */
+  .deck-lead { margin: 0 0 0.6rem 0.4rem; font-size: 1.9rem; display: flex; align-items: flex-end; gap: 0.3rem; }
+  .deck-stage { display: grid; grid-template-columns: minmax(250px, 340px) minmax(0, 1fr); gap: 1.6rem 2rem; align-items: center; }
+  .turntable { position: relative; width: 100%; aspect-ratio: 1.04; max-width: 360px; justify-self: center; }
+  .tt-plinth { position: absolute; inset: 3% 0 0; border: 2.5px solid #1f1b2e; border-radius: 16px; background: var(--tile-kraft); box-shadow: 5px 7px 0 var(--shadow); transform: rotate(-1.4deg); }
+  .platter { position: absolute; left: 6%; top: 10%; width: 82%; aspect-ratio: 1; border-radius: 50%; background: #17141f; border: 2.5px solid #1f1b2e; box-shadow: 0 0 0 7px #2a2640, 0 0 0 9.5px #1f1b2e; transition: transform 0.5s cubic-bezier(0.5, 0, 0.3, 1), opacity 0.5s; }
+  .platter.is-swap { transform: translateY(-22px) rotate(14deg) scale(0.92); opacity: 0; }
+  .spinner { position: absolute; inset: 0; border-radius: 50%; animation: record-spin 9s linear infinite; }
+  @keyframes record-spin { to { transform: rotate(360deg); } }
+  .spinner .art { position: absolute; inset: 4%; width: 92%; height: 92%; border-radius: 50%; object-fit: cover; }
+  .spinner::before { content: ""; position: absolute; inset: 4%; border-radius: 50%; background: radial-gradient(circle at 30% 30%, var(--song-tone, #aab4ea), #17141f 75%); }
+  .grooves { position: absolute; inset: 3%; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 2.4px, rgba(0, 0, 0, 0.13) 2.4px 3.2px); }
+  .label { position: absolute; left: 50%; top: 50%; width: 15%; height: 15%; margin: -7.5% 0 0 -7.5%; border-radius: 50%; background: #fbf2d4; border: 2px solid #1f1b2e; }
+  .hole { position: absolute; left: 50%; top: 50%; width: 3.4%; height: 3.4%; margin: -1.7% 0 0 -1.7%; border-radius: 50%; background: var(--desk); border: 1.5px solid #1f1b2e; }
+  .sheen { position: absolute; inset: 0; border-radius: 50%; pointer-events: none; background: conic-gradient(from 30deg, transparent 0 18%, rgba(255, 255, 255, 0.26) 24%, transparent 30% 66%, rgba(255, 255, 255, 0.2) 72%, transparent 78%); }
+  .arm { position: absolute; right: 2%; top: 0; width: 34%; transform-origin: 77% 15%; transform: rotate(-4deg); transition: transform 0.55s cubic-bezier(0.5, 0, 0.3, 1); filter: drop-shadow(2px 3px 0 var(--shadow)); }
+  .arm.is-lift { transform: rotate(-26deg); }
+  .arm svg { display: block; width: 100%; height: auto; }
+  .tt-s { position: absolute; }
+  .tt-s--a { left: -3%; top: 0; transform: rotate(-14deg); }
+  .tt-s--b { right: 6%; bottom: -3%; transform: rotate(10deg); }
+
+  .now { position: relative; min-width: 0; }
+  .panel { --tone: #aab4ea; position: relative; padding: 1.2rem 1.3rem 1.3rem; background: color-mix(in srgb, var(--paper) 95%, transparent); border: 2px solid var(--ink); border-radius: 4px; box-shadow: 5px 5px 0 var(--tone), 5px 5px 0 2px var(--ink); animation: panel-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .panel[hidden] { display: none; }
+  @keyframes panel-in { from { opacity: 0; transform: translateY(12px) rotate(-0.6deg); } to { opacity: 1; transform: none; } }
+  .panel-meta { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.5rem; font: 400 0.78rem/1 var(--f-type); color: var(--ink-soft); }
+  .panel h3 { font: 600 italic clamp(1.55rem, 3vw, 2.1rem)/1.05 var(--f-display); margin-bottom: 0.2rem; }
+  .panel-by { margin: 0 0 0.7rem; font: 400 0.9rem/1.2 var(--f-type); color: var(--ink-soft); }
+  .panel-why { margin: 0 0 1rem; font: italic 400 1.08rem/1.5 var(--f-body); }
+  .panel-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; }
+  .plat { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 40px; padding: 0.35rem 0.9rem 0.4rem; background: var(--chalk); color: #1f1b2e; border: 2px solid #1f1b2e; border-radius: 99px; box-shadow: 2px 2px 0 #1f1b2e; font: 600 0.92rem/1 var(--f-body); text-decoration: none; transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s; }
+  .plat:hover, .plat:focus-visible { transform: translate(-1px, -3px) rotate(-2deg); background: var(--tone, #aab4ea); }
+  .deck-shuffle { margin-top: 1.1rem; font-size: 0.95rem; }
+  html:not(.js) .deck-shuffle { display: none; }
+  html:not(.js) .panel { margin-bottom: 1.2rem; }
+
+  .tracks { list-style: none; margin-top: 1.8rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 0.35rem 1.4rem; }
+  .tracks button { display: grid; grid-template-columns: 2rem 1fr auto; grid-template-areas: "n t l" "n a l"; align-items: baseline; column-gap: 0.7rem; width: 100%; padding: 0.6rem 0.8rem; text-align: left; background: transparent; border: 2px solid transparent; border-bottom: 2px dashed color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 6px; transition: background 0.2s, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .tracks button:hover { background: color-mix(in srgb, var(--butter) 36%, transparent); transform: translateX(4px); }
+  .tracks button.is-on { background: color-mix(in srgb, var(--song-tone, var(--blush)) 40%, var(--paper)); border: 2px solid var(--ink); border-radius: 6px; }
+  .tr-n { grid-area: n; font: 400 0.85rem/1 var(--f-type); color: var(--ink-soft); }
+  .tr-t { grid-area: t; font: 600 1.08rem/1.2 var(--f-display); }
+  .tr-a { grid-area: a; font-size: 0.88rem; color: var(--ink-soft); }
+  .tr-l { grid-area: l; font: 400 0.72rem/1 var(--f-type); letter-spacing: 0.06em; color: var(--ink-soft); }
+
+  /* ── two truths and a lie ── */
+  .ttl-sub { font-size: 1.7rem; color: var(--ink-soft); }
+  .ttl-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 2rem 1.8rem; }
+  .ttl-note { position: relative; padding: 1.4rem 1.3rem 1.2rem; background: #fffdf3; color: #1f1b2e; border: 2px solid #1f1b2e; box-shadow: 4px 5px 0 var(--shadow); transform: rotate(var(--tilt)); transition: transform 0.4s cubic-bezier(0.34, 1.7, 0.5, 1); background-image: linear-gradient(rgba(74, 88, 171, 0.22) 1px, transparent 1px); background-size: 100% 1.75rem; background-position: 0 1.2rem; }
+  .ttl-note:hover { transform: rotate(0deg) translateY(-4px); }
+  .ttl-note p { margin: 0 0 1rem; font: 400 1.5rem/1.75rem var(--f-hand); }
+  .ttl-no { font-weight: 700; }
+  .ttl-pick { display: flex; align-items: center; gap: 0.7rem; min-height: 2rem; }
+  .ttl-pick .chip { font-size: 0.85rem; padding: 0.45em 0.95em; }
+  .ttl-pick .chip[aria-pressed="true"] { background: #1f1b2e; color: #fbf2d4; }
+  .ttl-stamp { --stamp: #b6455e; font-size: 0.8rem; }
+  .ttl-foot { margin: 1.4rem 0 0 0.4rem; font-size: 1.6rem; display: flex; align-items: flex-end; gap: 0.3rem; }
+
+  /* ── socials ── */
+  .soc-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 1.6rem; }
+  .soc-tile { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; min-height: 100%; padding: 1.2rem 1.2rem 1.1rem; background: var(--tc); color: #1f1b2e; text-decoration: none; border: 2.5px solid #1f1b2e; border-radius: 22px; box-shadow: 4px 5px 0 #1f1b2e; transform: rotate(var(--tilt)); transition: transform 0.4s cubic-bezier(0.34, 1.7, 0.5, 1), box-shadow 0.3s; }
+  .soc-tile:hover, .soc-tile:focus-visible { transform: rotate(0deg) translate(-2px, -6px) scale(1.03); box-shadow: 7px 10px 0 #1f1b2e; }
+  .soc-tile svg { margin-bottom: 0.4rem; transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1); }
+  .soc-tile:hover svg { transform: rotate(-10deg) scale(1.12); }
+  .soc-k { font: 600 italic 1.45rem/1 var(--f-display); }
+  .soc-v { font: 400 0.95rem/1.3 var(--f-type); overflow-wrap: anywhere; }
+
+  @media (max-width: 1060px) { .hi-top { grid-template-columns: 1fr; } .idc { max-width: 420px; justify-self: center; margin-top: 1.6rem; } }
+  @media (max-width: 760px) { .deck-stage { grid-template-columns: 1fr; } .turntable { max-width: 300px; } }
+  @media (max-width: 420px) { .idc-main { grid-template-columns: 112px 1fr; } .tracks button { grid-template-columns: 1.8rem 1fr auto; } }
+</style>

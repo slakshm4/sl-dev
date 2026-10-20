@@ -1,0 +1,121 @@
+---
+// notebook.astro  ·  four drawers: words · case studies · ephemera · trials. (there is no "all" pile.)
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Sticker from "../components/Sticker.astro";
+import HandArrow from "../components/HandArrow.astro";
+import { notebook } from "../data/notebook";
+
+const papers: Record<string, string[]> = {
+  words: ["ruled"],
+  "case-studies": ["grid", "butter", "newsprint", "gingham", "kraft", "floral", "check", "ruled", "butter", "grid", "gingham", "newsprint"],
+  ephemera: ["floral", "newsprint", "kraft"],
+  trials: ["grid"],
+};
+const stickers = ["star", "sparkle", "ghost", "butterfly", "fish", "heart", "eye", "tooth", "moon", "flower", "star-paper", "cat"];
+const tilt = [-1.4, 1.1, -0.7, 1.6, -1.1, 0.8, -1.8, 1.3, -0.5, 1.5, -1.2, 0.6];
+let counter = 0;
+---
+<Layout page="notebook" title="notebook · shradha lakshman" description="writing, things i've made, things i've gathered, and things i've tried: a notebook of shradha lakshman's creative work.">
+  <div class="wrap page-section">
+    <SectionTitle text="notebook" start={3} />
+    <p class="hand nb-lead">four drawers. rummage. <HandArrow shape="loop" size={46} /></p>
+
+    <div class="nb" data-tabs>
+      <div class="nb-tabs" role="tablist" aria-label="notebook sections">
+        {notebook.map((s) => (
+          <button class={`nb-tab nb-tab--${s.tone}`} role="tab" id={`tab-${s.id}`} aria-controls={`panel-${s.id}`} aria-selected="false" tabindex="-1" data-tone={s.tone} type="button">
+            <span class="nb-tab-l">{s.label}</span>
+            <span class="nb-tab-n keep-case">{s.groups.reduce((n, g) => n + g.entries.length, 0)}</span>
+          </button>
+        ))}
+      </div>
+
+      {notebook.map((s) => (
+        <section class={`nb-panel nb-panel--${s.id} scrap scrap--dots`} role="tabpanel" id={`panel-${s.id}`} aria-labelledby={`tab-${s.id}`} tabindex="0">
+          <span class={`tape tape--${s.tone}`} style="top:-12px;left:6%;--r:-4deg"></span>
+          <p class="nb-hint hand">{s.hint}</p>
+          {s.groups.map((g) => (
+            <div class="nb-group">
+              {g.label && <h2 class="nb-gl"><span class="strip strip--small strip--hand" style="--r:-1.2deg">{g.label}</span></h2>}
+              <ul class="nb-cards" role="list">
+                {g.entries.map((e) => {
+                  const i = counter++;
+                  const paper = papers[s.id][i % papers[s.id].length] ?? "grid";
+                  const Tag = e.href ? "a" : "div";
+                  return (
+                    <li class={`nbc nbc--${s.id}`} style={`--tilt:${tilt[i % tilt.length]}deg`}>
+                      <Tag class="nbc-in" {...(e.href ? { href: e.href } : {})} {...(e.external ? { target: "_blank", rel: "noopener" } : {})}>
+                        <span class={`nbc-pic paper--${paper}`} aria-hidden="true">
+                          <Sticker name={stickers[(i * 5 + 3) % stickers.length]} size={s.id === "case-studies" ? 62 : 46} />
+                        </span>
+                        <span class="nbc-body">
+                          <span class={`chip chip--${s.tone} keep-case`}>{e.tag}</span>
+                          <span class="nbc-title">{e.title}</span>
+                          {e.blurb && <span class="nbc-blurb">{e.blurb}</span>}
+                          {e.status === "draft" && <span class="stamp nbc-stamp keep-case">in the drafts</span>}
+                          {e.external && <span class="nbc-out keep-case">opens in a new tab ↗</span>}
+                        </span>
+                      </Tag>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </section>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style is:global>
+  .nb-lead { margin: -0.4rem 0 1.2rem 0.4rem; display: flex; align-items: flex-end; gap: 0.3rem; font-size: 1.7rem; }
+  .nb { --tab: var(--peri); }
+  html:not(.js) .nb-tabs { display: none; }
+  html:not(.js) .nb-panel { margin-bottom: 2rem; }
+  .nb-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0 0.6rem; position: relative; z-index: 2; margin-bottom: -2px; }
+  .nb-tab {
+    display: inline-flex; align-items: baseline; gap: 0.55rem; padding: 0.7rem 1.4rem 0.8rem; min-height: 48px;
+    background: var(--tc, var(--peri)); color: #1f1b2e; border: 2px solid #1f1b2e; border-bottom: 0; border-radius: 16px 16px 0 0;
+    transform: translateY(6px) rotate(var(--r, 0deg)); transform-origin: bottom left; filter: saturate(0.72) brightness(0.97);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s;
+  }
+  .nb-tab--peri { --tc: #aab4ea; --r: -1deg; } .nb-tab--butter { --tc: #f4d777; --r: 0.8deg; } .nb-tab--sage { --tc: #a2cba1; --r: -0.6deg; } .nb-tab--blush { --tc: #f2b1c6; --r: 1deg; }
+  .nb-tab:hover { transform: translateY(2px) rotate(var(--r)); }
+  .nb-tab[aria-selected="true"] { transform: translateY(0) rotate(0deg); filter: none; z-index: 3; padding-bottom: 1rem; }
+  .nb-tab-l { font: 600 clamp(1.15rem, 2.4vw, 1.55rem)/1 var(--f-display); letter-spacing: -0.01em; }
+  .nb-tab-n { font: 400 0.78rem/1 var(--f-type); background: #fffdf3; border: 1.5px solid #1f1b2e; border-radius: 99px; padding: 0.22em 0.55em; }
+
+  .nb-panel { padding: clamp(1.3rem, 3vw, 2.2rem); --scrap-bg: var(--paper); border-top-left-radius: 0; }
+  html.js .nb-panel[hidden] { display: none; }
+  .nb-panel.is-flip { animation: page-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: top left; }
+  @keyframes page-in { from { opacity: 0; transform: perspective(1000px) rotateX(-5deg) translateY(16px); } to { opacity: 1; transform: none; } }
+  .nb-hint { margin: 0 0 0.8rem 0.2rem; font-size: 1.7rem; color: var(--ink-soft); }
+  .nb-group + .nb-group { margin-top: 2.2rem; }
+  .nb-gl { margin: 0 0 1.4rem; font-weight: 400; }
+  .strip--small { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+
+  .nb-cards { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 1.8rem 1.4rem; }
+  .nbc { transform: rotate(var(--tilt)); transition: transform 0.45s cubic-bezier(0.34, 1.7, 0.5, 1); }
+  .nbc:hover { transform: rotate(0deg) translateY(-6px) scale(1.03); z-index: 2; }
+  .nbc-in { display: flex; flex-direction: column; height: 100%; background: #fffdf3; color: #1f1b2e; text-decoration: none; border: 2px solid #1f1b2e; border-radius: 3px; box-shadow: 4px 5px 0 var(--shadow); overflow: hidden; }
+  .nbc-pic { display: grid; place-items: center; aspect-ratio: 16 / 8.5; border-bottom: 2px solid #1f1b2e; }
+  .nbc-pic .sticker { transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1); filter: drop-shadow(2px 3px 0 rgba(31, 27, 46, 0.3)); }
+  .nbc:hover .sticker { transform: rotate(-14deg) scale(1.2); }
+  .nbc-body { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.8rem 0.95rem 1rem; flex: 1; }
+  .nbc-title { font: 600 1.18rem/1.15 var(--f-display); letter-spacing: -0.01em; }
+  .nbc-blurb { font-size: 0.96rem; line-height: 1.4; color: #4c4666; }
+  .nbc-stamp { margin-top: auto; --stamp: #4a58ab; font-size: 0.7rem; }
+  .nbc-out { margin-top: auto; font: 400 0.74rem/1 var(--f-type); letter-spacing: 0.04em; color: #4a58ab; text-decoration: underline; text-underline-offset: 0.25em; }
+  .nbc:focus-within { transform: rotate(0deg) translateY(-4px); }
+  /* the words drawer is lined paper; the case studies are a junk journal; trials are lab pages */
+  .nbc--words .nbc-pic { aspect-ratio: 16 / 5.5; }
+  .nbc--words .nbc-title { font: 400 1.35rem/1.15 var(--f-type); }
+  .nbc--case-studies .nbc-pic { aspect-ratio: 4 / 3; }
+  .nbc--case-studies .nbc-title { font-size: 1.12rem; }
+  .nbc--trials .nbc-in { background: #fdf9e9; }
+  .nbc--trials .nbc-pic { aspect-ratio: 16 / 5; }
+  .nbc--trials .nbc-title::before { content: "trial"; display: block; margin-bottom: 0.25rem; font: 400 0.7rem/1 var(--f-type); letter-spacing: 0.1em; color: #4a58ab; }
+  .nbc--ephemera .nbc-pic { aspect-ratio: 4 / 3.2; }
+</style>

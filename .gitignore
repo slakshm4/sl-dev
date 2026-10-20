@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# backups of the files the redesign replaced (local only)
+_before-redesign/
+_tmp-origin-main.bundle

@@ -1,0 +1,13 @@
+---
+// SectionTitle.astro  ·  page titles as ransom-note strips: every word is its own torn scrap.
+// <SectionTitle text="north star" />   ·   <SectionTitle text="say hi!" as="h1" start={2} />
+const { text = "", as: Tag = "h1", start = 0, class: klass = "" } = Astro.props;
+const looks = ["strip--floral", "", "strip--peri strip--italic", "strip--news", "strip--blush", "strip--sage strip--italic", "strip--ink strip--italic"];
+const tilts = [-2.2, 1.4, -0.8, 2, -1.5, 0.9];
+const words = text.split(/\s+/).filter(Boolean);
+---
+<Tag class={`strip-title ${klass}`}>
+  {words.map((w, i) => (
+    <span class={`strip ${looks[(i + start) % looks.length]}`} style={`--r:${tilts[(i + start) % tilts.length]}deg`}>{w}</span>
+  ))}
+</Tag>

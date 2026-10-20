@@ -1,0 +1,249 @@
+---
+// north-star.astro  ·  a triangle of text, and a living map of what moves me.
+// the map is mermaid.js (see scripts/northstar.ts); the outline underneath is the same content as a plain list.
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import HandArrow from "../components/HandArrow.astro";
+import Sticker from "../components/Sticker.astro";
+import { branches, centre, flatten, buildMindmap, resolveLinks } from "../data/northstar";
+
+const nodes = flatten();
+const payload = { def: buildMindmap(nodes), nodes, links: resolveLinks(nodes) };
+const count = nodes.length - 1;
+// the dashed "these overlap" threads, written out for the outline (when both ends share a name, say which group each sits in)
+const overlaps = payload.links.map(([a, b]) => {
+  const A = nodes[a], B = nodes[b];
+  const same = A.label === B.label;
+  return { a: A.label, b: B.label, aIn: same ? nodes[A.parent].label : "", bIn: same ? nodes[B.parent].label : "" };
+});
+const total = (b: (typeof branches)[number]) => b.groups.reduce((n, g) => n + g.items.length, 0);
+
+// the paragraph is set as an upside-down right triangle: every line is a little shorter than the one above it (widest at the top,
+// narrowing to a point), and the lines are right-aligned, so the right edge is straight and the left edge slants. lines are cut here, at build time, by character count; font size scales with the box (cqw).
+const para = `i've come to question the idea of a single "north star." it suggests a clarity of purpose that doesn't match how most people actually operate—driven, more often, by an overlapping set of motivations, some of which remain unclear even to themselves (enter pluralism, human motivation theory, etc). so instead, i've diagrammed mine as a system of interconnected nodes, sized in proportion to their pull. depicted below is a smorgasbord of things that fuel me, that guide me, and that keep me grounded.`;
+function cut(words: string[], widest: number, narrowest: number, k: number) {
+  const lines: string[] = [];
+  let w = 0;
+  for (let i = 0; i < k && w < words.length; i++) {
+    const target = widest - ((widest - narrowest) * i) / (k - 1);
+    let line = words[w++];
+    while (w < words.length && (line + " " + words[w]).length <= target + 2) line += " " + words[w++];
+    lines.push(line);
+  }
+  if (w < words.length) lines[lines.length - 1] += " " + words.slice(w).join(" ");
+  return lines;
+}
+// try a few shapes and keep the most triangular one (lines only ever get shorter, ending on the shortest)
+function triangle(text: string) {
+  const words = text.split(/\s+/);
+  let best: string[] = [], bestScore = Infinity;
+  for (let widest = 48; widest <= 58; widest++) {
+    for (let narrowest = 8; narrowest <= 16; narrowest++) {
+      for (let k = 11; k <= 20; k++) {
+        const lines = cut(words, widest, narrowest, k);
+        const len = lines.map((l) => l.length);
+        let score = 0;
+        for (let i = 1; i < len.length; i++) score += Math.max(0, len[i] - len[i - 1]) * 2;
+        score += Math.abs(len[len.length - 1] - narrowest) + Math.abs(len[0] - widest) + Math.max(0, len.length - 17);
+        if (len[0] > 56) score += 50;
+        if (score < bestScore) { bestScore = score; best = lines; }
+      }
+    }
+  }
+  return best;
+}
+const lines = triangle(para);
+---
+<Layout page="north-star" title="north star · shradha lakshman" description="a map of what fuels, guides and grounds me: drawn as a system of interconnected nodes instead of a single north star.">
+  <div class="wrap page-section">
+    <header class="ns-head">
+      <div class="ns-head-l">
+        <SectionTitle text="north star" />
+        <p class="hand ns-aside">there isn't just one. <HandArrow shape="wave" size={50} class="ns-aside-arrow" /></p>
+        <ul class="ns-legend" aria-label="how to read the map">
+          <li><span class="lg lg--0" aria-hidden="true"></span> macro: the big pulls</li>
+          <li><span class="lg lg--1" aria-hidden="true"></span> meso: what they're made of</li>
+          <li><span class="lg lg--3" aria-hidden="true"></span> micro: the small, specific things</li>
+          <li><span class="lg lg--link" aria-hidden="true"></span> dashed thread: these overlap</li>
+        </ul>
+      </div>
+      <div class="tri-wrap">
+        <Sticker name="star" size={44} class="tri-star float" />
+        <div class="tri" role="group" aria-label="about this map">
+          <p>{lines.map((l) => <span class="tri-line">{l}{" "}</span>)}</p>
+        </div>
+      </div>
+    </header>
+
+    <section id="ns-map" class="ns-frame scrap scrap--dots" data-map={JSON.stringify(payload)} aria-labelledby="ns-h">
+      <span class="tape tape--peri" style="top:-12px;left:9%;--r:-5deg"></span>
+      <span class="tape tape--blush" style="top:-12px;right:9%;--r:4deg"></span>
+      <h2 id="ns-h" class="sr-only">the map: {count} things that move me</h2>
+      <div class="ns-bar">
+        <p class="hand ns-hint">poke a node. tug one. they won't budge (i checked).</p>
+        <div class="ns-zoom" role="group" aria-label="map zoom">
+          <button type="button" data-zoom="out" aria-label="zoom out"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg></button>
+          <button type="button" data-zoom="in" aria-label="zoom in"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M12 5v14" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg></button>
+          <button type="button" data-zoom="reset" class="ns-txt">centre</button>
+          <button type="button" data-zoom="fit" class="ns-txt">see it all</button>
+        </div>
+      </div>
+      <div class="ns-viewport" tabindex="0" role="region" aria-label="north star map. scrollable. the same content is available as an outline below.">
+        <p class="ns-loading hand">drawing the map…</p>
+      </div>
+      <p class="ns-caption hand" data-idle="hover a node to trace where it comes from." aria-hidden="true">hover a node to trace where it comes from.</p>
+      <p class="ns-fallback" hidden>the map couldn't load, but the outline below has everything in it.</p>
+      <noscript><p class="ns-fallback">the interactive map needs javascript. the outline below has everything in it.</p></noscript>
+    </section>
+
+    <details class="ns-outline scrap scrap--kraft">
+      <summary><span>prefer a list? read the map as an outline</span></summary>
+      <div class="ol-sheet">
+        <div class="ol-grid">
+          {branches.map((b, bi) => (
+            <section class={`ol ns-b${bi}`} aria-labelledby={`ol-h${bi}`}>
+              <header class="ol-head">
+                <h3 id={`ol-h${bi}`}>{b.label}</h3>
+                <span class="ol-n keep-case">{total(b)} things</span>
+              </header>
+              <div class="ol-body">
+                {b.groups.map((g) => (
+                  <div class="ol-group">
+                    <h4>{g.label}</h4>
+                    <ul class="ol-chips" role="list">
+                      {g.items.map((it) => <li>{it}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+        <aside class="ol-links" aria-labelledby="ol-links-h">
+          <h3 id="ol-links-h" class="hand">dashed threads: where these overlap</h3>
+          <ul class="ol-pairs" role="list">
+            {overlaps.map((o) => (
+              <li>
+                <span>{o.a}{o.aIn && <small> ({o.aIn})</small>}</span>
+                <span class="ol-x" aria-label="overlaps with">↔</span>
+                <span>{o.b}{o.bIn && <small> ({o.bIn})</small>}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </details>
+  </div>
+</Layout>
+
+<style is:global>
+  .ns-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 470px); gap: 1.5rem 2.5rem; align-items: start; margin-bottom: 2.5rem; }
+  .ns-aside { margin: 0.2rem 0 1.4rem 0.4rem; display: flex; align-items: flex-end; gap: 0.2rem; }
+  .ns-aside-arrow { transform: rotate(-70deg) translateY(10px); }
+  .ns-legend { list-style: none; display: grid; gap: 0.5rem; font-size: 1rem; color: var(--ink-soft); margin-left: 0.4rem; }
+  .ns-legend li { display: flex; align-items: center; gap: 0.7rem; }
+  .lg { display: inline-block; flex: none; border: 2px solid var(--ink); background: var(--butter); }
+  .lg--0 { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); }
+  .lg--1 { width: 28px; height: 20px; border-radius: 6px; background: var(--peri); }
+  .lg--3 { width: 18px; height: 11px; border-radius: 99px; background: var(--chalk); }
+  .lg--link { width: 30px; height: 0; border: 0; border-top: 2.5px dashed var(--ink-soft); background: none; }
+
+  /* the paragraph that is a triangle: one right-aligned line per span, each shorter than the last.
+     straight edge on the right, slanted edge on the left: an upside-down right triangle */
+  .tri-wrap { position: relative; justify-self: end; width: 100%; max-width: 470px; }
+  /* the star sits in the empty wedge to the left of the short lines */
+  .tri-star { position: absolute; left: 4%; bottom: 6%; --r0: -8deg; --r1: 38deg; }
+  .tri { container-type: inline-size; text-align: right; }
+  .tri p { margin: 0; font-size: clamp(0.78rem, 3.5cqw, 1.05rem); line-height: 1.5; }
+  .tri-line { display: block; white-space: nowrap; }
+
+  /* the map frame */
+  .ns-frame { padding: 0.9rem; margin-top: 0.5rem; color: var(--ink); }
+  .ns-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; padding: 0.2rem 0.4rem 0.7rem; }
+  .ns-hint { margin: 0; font-size: 1.35rem; }
+  .ns-zoom { display: flex; gap: 0.4rem; }
+  .ns-zoom button {
+    display: grid; place-items: center; min-width: 40px; height: 40px; padding: 0 0.7rem; background: var(--chalk); color: #1f1b2e;
+    border: 2px solid #1f1b2e; border-radius: 99px; font: 600 0.9rem/1 var(--f-body); box-shadow: 2px 2px 0 #1f1b2e;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .ns-zoom button:hover { transform: translateY(-2px) rotate(-3deg); }
+  #ns-map .ns-viewport {
+    position: relative; height: min(74svh, 720px); min-height: 380px; overflow: auto; border: 2px solid var(--ink); border-radius: 6px;
+    background: color-mix(in srgb, var(--paper) 70%, var(--chalk)); cursor: grab; overscroll-behavior: contain; scrollbar-width: thin;
+  }
+  #ns-map .ns-viewport.is-panning { cursor: grabbing; user-select: none; }
+  #ns-map .ns-viewport svg { display: block; max-width: none; }
+  .ns-loading { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font-size: 2rem; }
+  .ns-frame[data-state="ready"] .ns-loading { display: none; }
+  .ns-caption { margin: 0.6rem 0.4rem 0.1rem; min-height: 2.1rem; font-size: 1.5rem; color: var(--ink-soft); }
+  .ns-fallback { margin: 0.5rem 0.4rem; font-weight: 600; }
+
+  /* mermaid's svg, restyled as paper cut-outs */
+  #ns-map .ns-viewport .mindmap-node { cursor: grab; }
+  #ns-map .ns-viewport .mindmap-node rect, #ns-map .ns-viewport .mindmap-node circle, #ns-map .ns-viewport .mindmap-node path.label-container { stroke: #1f1b2e; stroke-width: 2.2px; }
+  #ns-map .ns-viewport .mindmap-node text, #ns-map .ns-viewport .mindmap-node tspan { fill: #1f1b2e; stroke: none; text-anchor: middle; text-transform: lowercase; }
+  #ns-map .ns-viewport .mindmap-node .background { display: none; }
+  #ns-map .ns-viewport .ns-t0 circle { fill: #1f1b2e; stroke: #fffdf3; stroke-width: 4px; filter: url(#rip-fine); }
+  #ns-map .ns-viewport .ns-t0 text, #ns-map .ns-viewport .ns-t0 tspan { fill: #fbf2d4; font: italic 600 34px/1 var(--f-display); }
+  #ns-map .ns-viewport .ns-t1 rect { filter: url(#rip-fine); }
+  #ns-map .ns-viewport .ns-t1 text, #ns-map .ns-viewport .ns-t1 tspan { font: 600 22px/1.1 var(--f-display); letter-spacing: -0.01em; }
+  #ns-map .ns-viewport .ns-t2 text, #ns-map .ns-viewport .ns-t2 tspan { font: italic 600 17px/1.1 var(--f-body); }
+  #ns-map .ns-viewport .ns-t3 text, #ns-map .ns-viewport .ns-t3 tspan { font: 400 15px/1.1 var(--f-body); }
+  #ns-map .ns-viewport .ns-t3 rect { stroke-width: 1.8px; }
+  .ns-b0 { --tone: #aab4ea; --tone-pale: #dfe3fa; }
+  .ns-b1 { --tone: #f4d777; --tone-pale: #fbefc4; }
+  .ns-b2 { --tone: #a2cba1; --tone-pale: #daecd9; }
+  .ns-b3 { --tone: #f2b1c6; --tone-pale: #fadce6; }
+  #ns-map .ns-viewport .ns-t1 rect { fill: var(--tone); }
+  #ns-map .ns-viewport .ns-t2 rect { fill: var(--tone-pale); }
+  #ns-map .ns-viewport .ns-t3 rect { fill: #fffdf3; }
+  #ns-map .ns-viewport path.edge { fill: none; stroke: var(--tone); stroke-linecap: round; opacity: 0.95; }
+  #ns-map .ns-viewport .ns-e1 { stroke-width: 7px; }
+  #ns-map .ns-viewport .ns-e2 { stroke-width: 4.2px; }
+  #ns-map .ns-viewport .ns-e3 { stroke-width: 2.4px; stroke: color-mix(in srgb, var(--tone) 70%, #1f1b2e); }
+  :root[data-theme="dark"] #ns-map .ns-viewport .ns-e3 { stroke: var(--tone); }
+  #ns-map .ns-viewport .ns-link { fill: none; stroke: var(--ink-soft); stroke-width: 2px; stroke-dasharray: 3 7; stroke-linecap: round; opacity: 0.55; transition: opacity 0.3s, stroke 0.3s; }
+  #ns-map .ns-viewport .ns-link.is-hot { stroke: var(--ink); stroke-width: 3.2px; opacity: 1; }
+  #ns-map .ns-viewport svg.has-hot .mindmap-node:not(.is-hot) { opacity: 0.32 !important; }
+  #ns-map .ns-viewport svg.has-hot path.edge:not(.is-hot) { opacity: 0.18; }
+  #ns-map .ns-viewport svg.has-hot .ns-link:not(.is-hot) { opacity: 0.12; }
+  #ns-map .ns-viewport .mindmap-node.is-hot rect, #ns-map .ns-viewport .mindmap-node.is-hot circle { stroke-width: 3px; }
+
+  /* outline */
+  .ns-outline { margin-top: 2.6rem; padding: 1rem 1.3rem 1.2rem; --scrap-bg: var(--paper); }
+  .ns-outline summary { cursor: pointer; font: italic 600 1.25rem/1.2 var(--f-display); list-style: none; display: flex; align-items: center; gap: 0.6rem; }
+  .ns-outline summary::-webkit-details-marker { display: none; }
+  .ns-outline summary::before { content: ""; width: 1.2rem; height: 1.2rem; background: var(--ink); -webkit-mask: var(--tooth-mask) center / contain no-repeat; mask: var(--tooth-mask) center / contain no-repeat; transition: transform 0.3s; }
+  .ns-outline[open] summary::before { transform: rotate(180deg); }
+  .ol-sheet { margin-top: 1.1rem; padding: clamp(1rem, 2.6vw, 1.7rem); background: var(--paper); border: 2px solid var(--ink); border-radius: 4px; }
+  .ol-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; align-items: start; }
+  .ol { background: var(--paper); border: 2px solid var(--ink); border-radius: 4px; box-shadow: 3px 4px 0 var(--shadow); overflow: hidden; }
+  .ol-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.3rem 0.8rem; padding: 0.75rem 1rem; background: var(--tone); color: #1f1b2e; border-bottom: 2px solid var(--ink); }
+  .ol-head h3 { margin: 0; font: 600 clamp(1.15rem, 2.2vw, 1.4rem)/1.1 var(--f-display); letter-spacing: -0.01em; }
+  .ol-n { font: 400 0.76rem/1 var(--f-type); padding: 0.28em 0.7em; background: #fffdf3; border: 1.5px solid #1f1b2e; border-radius: 99px; }
+  .ol-body { display: grid; gap: 1.1rem; padding: 1.05rem 1rem 1.2rem; }
+  .ol-group h4 { margin: 0 0 0.45rem; font: 400 0.82rem/1.2 var(--f-type); letter-spacing: 0.08em; color: var(--ink-soft); }
+  .ol-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem; margin: 0; padding: 0; }
+  .ol-chips li { padding: 0.22rem 0.7rem 0.28rem; font-size: 1rem; line-height: 1.3; color: #1f1b2e; background: var(--tone-pale); border: 1.5px solid #1f1b2e; border-radius: 99px; }
+  .ol-links { margin-top: 1.8rem; padding-top: 1.2rem; border-top: 2.5px dashed color-mix(in srgb, var(--ink) 35%, transparent); }
+  .ol-links h3 { margin: 0 0 0.8rem; font-size: 1.5rem; font-weight: 400; color: var(--ink-soft); }
+  .ol-pairs { list-style: none; display: flex; flex-wrap: wrap; gap: 0.55rem 0.8rem; margin: 0; padding: 0; }
+  .ol-pairs li { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.5rem; padding: 0.3rem 0.8rem 0.35rem; font-size: 1rem; line-height: 1.3; color: #1f1b2e; background: #fffdf3; border: 2px dashed #1f1b2e; border-radius: 1.2rem; }
+  .ol-pairs small { font-size: 0.8em; color: #4c4666; }
+  .ol-x { font: 600 1rem/1 var(--f-body); color: #4a58ab; }
+
+  @media (max-width: 880px) {
+    .ns-head { grid-template-columns: 1fr; }
+    .tri-wrap { justify-self: center; max-width: 470px; }
+    #ns-map .ns-viewport { height: 62svh; }
+  }
+  @media (max-width: 560px) { .tri-star { left: auto; right: -6px; top: -26px; bottom: auto; } }
+  @media (max-width: 760px) { .ol-grid { grid-template-columns: minmax(0, 1fr); } }
+  /* on phones the triangle would shrink to unreadable text, so it relaxes into a plain paragraph */
+  @media (max-width: 560px) {
+    .tri { container-type: normal; text-align: left; }
+    .tri p { font-size: 1.05rem; line-height: 1.55; }
+    .tri-line { display: inline; white-space: normal; }
+  }
+</style>

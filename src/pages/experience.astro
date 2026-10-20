@@ -1,0 +1,204 @@
+---
+// experience.astro  ·  the cv, as folded paper. every section starts closed.
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Sticker from "../components/Sticker.astro";
+import HandArrow from "../components/HandArrow.astro";
+import { cvHref, profile, strengths, jobs, education, leadership, talks, publications, skills } from "../data/cv";
+
+const sections = [
+  { id: "profile", title: "profile", note: "who's asking", sticker: "eye", kind: "dots" },
+  { id: "education", title: "education", note: "school, mostly", sticker: "star-paper", kind: "grid" },
+  { id: "work", title: "work + projects", note: "what i do with my hands", sticker: "tooth", kind: "floral" },
+  { id: "research", title: "research", note: "talks, panels, publications", sticker: "sparkle", kind: "news" },
+  { id: "leadership", title: "leadership + volunteering", note: "showing up", sticker: "heart", kind: "dots" },
+  { id: "skills", title: "skills", note: "tools + certificates", sticker: "butterfly", kind: "kraft" },
+];
+---
+<Layout page="experience" title="experience · shradha lakshman" description="shradha lakshman's cv: education, work, research, leadership and skills in health professions education and dental hygiene.">
+  <div class="wrap page-section">
+    <SectionTitle text="experience" start={2} />
+
+    <div class="cv-top">
+      <a class="cv-dl" href={cvHref} download>
+        <svg class="seal" viewBox="0 0 80 80" aria-hidden="true">
+          <path d="M40 4c6 0 8 6 14 7s11-1 14 5-3 10-1 16 8 8 6 14-9 7-11 13-1 12-8 12-10-5-16-5-9 6-16 5-6-7-8-12-9-7-11-13 4-9 6-14-3-10-1-16 8-5 14-5 8-7 14-7z" fill="#c24b6a" stroke="#1f1b2e" stroke-width="2.4" stroke-linejoin="round" />
+          <circle cx="40" cy="40" r="22" fill="none" stroke="#fbe0e8" stroke-width="2" opacity=".7" />
+          <path d="M26 38c6-12 22-12 28 0 0 8-4 10-6 18-2 4-4 2-5-4s-5-6-6 0-3 8-5 4c-2-8-6-10-6-18z" fill="#fbe0e8" opacity=".92" transform="translate(0 -3) scale(1)" />
+        </svg>
+        <span class="cv-dl-t">download my cv here</span>
+        <svg class="cta-arrow" viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true"><path d="M12 3v14M5 11l7 7 7-7M4 21h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </a>
+      <p class="hand cv-hint">(pdf · everything below is in it, folded up neatly) <HandArrow shape="arc" size={44} /></p>
+      <button class="btn cv-expand" type="button" data-expand aria-pressed="false">open all sections</button>
+    </div>
+
+    <div class="cv-list">
+      {sections.map((s, i) => (
+        <details class={`cv-sec scrap scrap--${s.kind}`} id={s.id} style={`--tilt:${[-0.5, 0.4, -0.3, 0.5, -0.4, 0.3][i]}deg`} data-reveal>
+          <summary>
+            <span class="cv-no keep-case">{String(i + 1).padStart(2, "0")}</span>
+            <span class="cv-t">{s.title}</span>
+            <span class="cv-n hand">{s.note}</span>
+            <Sticker name={s.sticker} size={40} class="cv-st" />
+            <span class="cv-plus" aria-hidden="true"></span>
+          </summary>
+
+          <div class="cv-body">
+            {s.id === "profile" && (
+              <>
+                <p class="cv-profile">{profile}</p>
+                <h3 class="cv-h">strengths</h3>
+                <ul class="bullets cv-two">{strengths.map((x) => <li>{x}</li>)}</ul>
+              </>
+            )}
+
+            {s.id === "education" && (
+              <>
+                <article class="job">
+                  <p class="job-when keep-case">{education.when}</p>
+                  <div>
+                    <h3>{education.degree}</h3>
+                    <p class="job-org">{education.school}</p>
+                    <h4 class="cv-h">selected coursework</h4>
+                    <p class="chips">{education.coursework.map((c, i) => <span class={`chip chip--${["peri", "butter", "sage", "blush"][i % 4]}`}>{c}</span>)}</p>
+                    <h4 class="cv-h">awards + funding</h4>
+                    <ul class="awards">
+                      {education.awards.map((a) => (
+                        <li><Sticker name="star" size={26} /><div><strong>{a.title}</strong><span>{a.body}</span></div></li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              </>
+            )}
+
+            {s.id === "work" && jobs.map((j) => (
+              <article class="job">
+                <p class="job-when keep-case">{j.when}</p>
+                <div>
+                  <h3>{j.role} <span class={`stamp job-stamp job-stamp--${j.status} keep-case`}>{j.status}</span></h3>
+                  <p class="job-org">{j.org}</p>
+                  <ul class="bullets">{j.bullets.map((b) => <li>{b}</li>)}</ul>
+                </div>
+              </article>
+            ))}
+
+            {s.id === "research" && (
+              <>
+                <h3 class="cv-h">talks, posters + panels</h3>
+                <ol class="talks">
+                  {talks.map((t, i) => (
+                    <li><span class="talk-no keep-case">{i + 1}</span><div><strong>{t.title}</strong><em>{t.role}</em><span>{t.body}</span></div></li>
+                  ))}
+                </ol>
+                <h3 class="cv-h">resources, frameworks + publications</h3>
+                {publications.map((g) => (
+                  <div class="pubs">
+                    <h4>{g.group}</h4>
+                    <ul>{g.items.map((it) => <li class="keep-case">{it}</li>)}</ul>
+                  </div>
+                ))}
+              </>
+            )}
+
+            {s.id === "leadership" && (
+              <ul class="lead">
+                {leadership.map((l) => (
+                  <li><strong>{l.role}</strong><em>{l.org}</em><span>{l.body}</span></li>
+                ))}
+              </ul>
+            )}
+
+            {s.id === "skills" && (
+              <>
+                <h3 class="cv-h">technical</h3>
+                <p class="chips">{skills.tools.map((c, i) => <span class={`chip chip--${["peri", "butter", "sage", "blush"][i % 4]}`}>{c}</span>)}</p>
+                <h3 class="cv-h">certifications</h3>
+                <p class="certs">{skills.certifications.map((c) => <span class="stamp cert keep-case">{c}</span>)}</p>
+              </>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style is:global>
+  .cv-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.6rem; margin: -0.4rem 0 2.4rem 0.3rem; }
+  .cv-dl { display: inline-flex; align-items: center; gap: 0.9rem; color: var(--ink); text-decoration: none; }
+  .cv-dl-t { font: italic 600 clamp(1.5rem, 3.4vw, 2.2rem)/1.1 var(--f-display); text-decoration: underline; text-decoration-thickness: 2.5px; text-underline-offset: 0.28em; text-decoration-color: var(--blush); }
+  .cv-dl:hover .cv-dl-t, .cv-dl:focus-visible .cv-dl-t { text-decoration-color: var(--ink); }
+  .seal { width: 64px; height: 64px; flex: none; filter: drop-shadow(2px 3px 0 var(--shadow)); transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1); transform: rotate(-8deg); }
+  .cv-dl:hover .seal, .cv-dl:focus-visible .seal { transform: rotate(10deg) scale(1.12); }
+  .cv-hint { margin: 0; font-size: 1.4rem; display: flex; align-items: flex-end; gap: 0.2rem; }
+  .cv-expand { margin-left: auto; font-size: 0.95rem; }
+
+  .cv-list { display: grid; gap: 1.6rem; }
+  .cv-sec { transform: rotate(var(--tilt)); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); interpolate-size: allow-keywords; color: var(--ink); }
+  .cv-sec[open] { transform: rotate(0deg); }
+  .cv-sec:hover { transform: rotate(0deg) translateY(-2px); }
+  .cv-sec summary { list-style: none; display: grid; grid-template-columns: auto 1fr auto auto auto; align-items: center; gap: 0.2rem 1rem; padding: 1.15rem clamp(1rem, 3vw, 1.8rem); }
+  .cv-sec summary::-webkit-details-marker { display: none; }
+  .cv-sec::details-content { block-size: 0; overflow: clip; transition: block-size 0.5s ease, content-visibility 0.5s allow-discrete; }
+  .cv-sec[open]::details-content { block-size: auto; }
+  .cv-no { font: 400 0.9rem/1 var(--f-type); color: var(--ink-soft); }
+  .cv-t { font: 600 clamp(1.5rem, 3.6vw, 2.5rem)/1.05 var(--f-display); letter-spacing: -0.02em; }
+  .cv-n { font-size: 1.45rem; color: var(--ink-soft); }
+  .cv-st { transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1); }
+  .cv-sec:hover .cv-st, .cv-sec[open] .cv-st { transform: rotate(18deg) scale(1.15); }
+  .cv-plus { position: relative; width: 28px; height: 28px; border: 2px solid var(--ink); border-radius: 50%; background: var(--chalk); flex: none; }
+  .cv-plus::before, .cv-plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 2.4px; margin: -1.2px 0 0 -6px; background: #1f1b2e; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .cv-plus::after { transform: rotate(90deg); }
+  .cv-sec[open] .cv-plus::after { transform: rotate(0deg); }
+  .cv-sec[open] .cv-plus::before { transform: rotate(180deg); }
+  .cv-body { padding: 0.4rem clamp(1rem, 3vw, 1.8rem) 1.7rem; }
+  .cv-body > * { max-width: 62rem; }
+  /* patterned papers: the words sit on a pasted-on cream plate so they stay readable */
+  .cv-sec.scrap--floral, .cv-sec.scrap--news, .cv-sec.scrap--kraft { padding: 0.7rem; }
+  .cv-sec.scrap--floral > summary, .cv-sec.scrap--news > summary, .cv-sec.scrap--kraft > summary,
+  .cv-sec.scrap--floral .cv-body, .cv-sec.scrap--news .cv-body, .cv-sec.scrap--kraft .cv-body { background: var(--paper); border: 2px solid var(--ink); }
+  .cv-sec.scrap--floral .cv-body, .cv-sec.scrap--news .cv-body, .cv-sec.scrap--kraft .cv-body { border-top: 0; padding-top: 0.9rem; }
+  .cv-sec.scrap--floral[open] > summary, .cv-sec.scrap--news[open] > summary, .cv-sec.scrap--kraft[open] > summary { border-bottom: 0; }
+  .cv-profile { font: 400 1.25rem/1.55 var(--f-body); max-width: 56ch; }
+  .cv-h { font: italic 600 1.3rem/1.2 var(--f-display); margin: 1.6rem 0 0.55rem; }
+  h4.cv-h { font-size: 1.1rem; }
+  .cv-two { columns: 2 280px; column-gap: 2rem; }
+  .cv-two li { break-inside: avoid; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 0.4rem; }
+  .chip { font-size: 0.92rem; }
+
+  .job { display: grid; grid-template-columns: minmax(9.5rem, 12rem) 1fr; gap: 0.2rem 1.6rem; padding: 1.1rem 0; border-top: 2px dashed color-mix(in srgb, var(--ink) 28%, transparent); }
+  .cv-body > .job:first-child { border-top: 0; padding-top: 0.3rem; }
+  .job-when { margin: 0.35rem 0 0; font: 400 0.85rem/1.4 var(--f-type); color: var(--ink-soft); }
+  .job h3 { font-size: clamp(1.25rem, 2.4vw, 1.6rem); margin-bottom: 0.2rem; line-height: 1.12; }
+  .job-org { margin: 0 0 0.5rem; font-style: italic; color: var(--ink-soft); }
+  .job-stamp { vertical-align: middle; margin-left: 0.5rem; font-size: 0.7rem; letter-spacing: 0.1em; }
+  .job-stamp--current { --stamp: var(--sage-deep); }
+  .job-stamp--completed { --stamp: var(--peri-deep); }
+  .awards { list-style: none; display: grid; gap: 0.8rem; }
+  .awards li { display: flex; gap: 0.8rem; align-items: flex-start; }
+  .awards strong, .talks strong, .lead strong { display: block; font: 600 1.12rem/1.25 var(--f-display); }
+  .awards span, .talks span, .lead span { display: block; font-size: 1rem; line-height: 1.45; }
+  .talks { list-style: none; display: grid; gap: 0.9rem; }
+  .talks li { display: grid; grid-template-columns: 2.1rem 1fr; gap: 0.8rem; align-items: start; }
+  .talk-no { display: grid; place-items: center; width: 2rem; height: 2rem; border: 2px solid var(--ink); border-radius: 50%; font: 400 0.9rem/1 var(--f-type); background: var(--butter); color: #1f1b2e; }
+  .talks em, .lead em { display: block; font-style: italic; color: var(--ink-soft); }
+  .pubs { margin-top: 1rem; padding: 0.9rem 1.1rem; background: color-mix(in srgb, var(--paper) 92%, transparent); border: 2px solid var(--ink); border-radius: 4px; box-shadow: 3px 3px 0 var(--ink); }
+  .pubs h4 { margin-bottom: 0.4rem; font: 600 1.05rem/1.2 var(--f-display); }
+  .pubs ul { list-style: none; display: grid; gap: 0.5rem; }
+  .pubs li { font-size: 0.95rem; line-height: 1.42; padding-left: 1rem; border-left: 3px solid var(--peri); overflow-wrap: anywhere; }
+  .lead { list-style: none; display: grid; gap: 1.1rem; }
+  .lead li { padding-left: 1rem; border-left: 4px solid var(--blush); }
+  .certs { display: flex; gap: 1rem; flex-wrap: wrap; margin: 0.4rem 0 0; }
+  .cert { font-size: 1.2rem; padding: 0.55em 1em; --stamp: var(--peri-deep); }
+
+  @media (max-width: 720px) {
+    .cv-sec summary { grid-template-columns: auto 1fr auto; }
+    .cv-n { grid-column: 2; grid-row: 2; font-size: 1.25rem; }
+    .cv-st { display: none; }
+    .job { grid-template-columns: 1fr; }
+    .cv-expand { margin-left: 0; }
+  }
+</style>

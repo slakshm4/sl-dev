@@ -1,0 +1,73 @@
+---
+// Polaroid.astro  ·  one crooked polaroid + its handwritten note and a hand-drawn arrow.
+// the whole polaroid is a link to the project's own page. add `image` in projects.ts to use a real photo.
+import HandArrow from "./HandArrow.astro";
+import Sticker from "./Sticker.astro";
+const { project, index = 0 } = Astro.props;
+const n = String(index + 1).padStart(2, "0");
+const tilts = [-3.4, 2.2, -1.6, 3.2, 2.6, -2.8, 1.8, -3];
+const tapes = ["tape--peri", "tape--butter", "tape--blush", "tape--sage"];
+const arrows = ["loop", "arc", "wave", "spiral"];
+const above = index % 2 === 0; // alternate: note above (arrow points down) / note below (arrow points up)
+---
+<article
+  class={`pol ${above ? "pol--above" : "pol--below"}`}
+  style={`--tilt:${tilts[index % tilts.length]}deg;--lift:${[0, 26, 8, 34, 14, 0, 30, 6][index % 8]}px`}
+  data-reveal
+>
+  <a class="pol-card" href={`/projects/${project.slug}`} aria-describedby={`pol-note-${project.slug}`}>
+    <span class={`tape ${tapes[index % tapes.length]}`} style="top:-13px;left:50%;margin-left:-48px;--r:-3deg"></span>
+    <span class={`pol-pic paper--${project.paper}`}>
+      {project.image ? (
+        <img src={project.image} alt="" loading="lazy" />
+      ) : (
+        <Sticker name={project.sticker} size={96} class="pol-sticker" />
+      )}
+      <span class="pol-no keep-case">no. {n}</span>
+      {project.written === false && <span class="stamp pol-stamp">sketching</span>}
+    </span>
+    <span class="pol-cap">
+      <span class="pol-title">{project.title}</span>
+      {(project.year || project.place) && <span class="pol-meta keep-case">{[project.year, project.place].filter(Boolean).join(" · ")}</span>}
+    </span>
+  </a>
+  <div class="pol-note">
+    <HandArrow shape={arrows[index % 4]} flip={above && index % 4 === 2} size={58} class="pol-arrow" />
+    <p class="hand" id={`pol-note-${project.slug}`}>{project.note}</p>
+  </div>
+</article>
+
+<style is:global>
+  .pol { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; margin-top: var(--lift); }
+  .pol--above { flex-direction: column-reverse; }
+  .pol-card {
+    position: relative; display: block; width: min(100%, 250px); padding: 12px 12px 0; text-decoration: none; color: #1f1b2e;
+    background: #fffdf3; border: 2px solid #1f1b2e; border-radius: 3px;
+    box-shadow: 4px 6px 0 var(--shadow);
+    transform: rotate(var(--tilt));
+    transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1), box-shadow 0.4s;
+    text-transform: lowercase;
+  }
+  .pol-card:hover, .pol-card:focus-visible { transform: rotate(0deg) scale(1.07) translateY(-6px); box-shadow: 9px 14px 0 var(--shadow); }
+  .pol-pic { position: relative; display: grid; place-items: center; aspect-ratio: 1; overflow: hidden; border: 2px solid #1f1b2e; }
+  .pol-pic img { width: 100%; height: 100%; object-fit: cover; }
+  .pol-sticker { transition: transform 0.6s cubic-bezier(0.34, 1.7, 0.5, 1); filter: drop-shadow(2px 3px 0 rgba(31, 27, 46, 0.3)); }
+  .pol-card:hover .pol-sticker, .pol-card:focus-visible .pol-sticker { transform: rotate(-12deg) scale(1.2); }
+  .pol-no { position: absolute; left: 7px; top: 6px; font: 400 0.72rem/1 var(--f-type); background: #fffdf3; padding: 3px 6px; border: 1.5px solid #1f1b2e; }
+  .pol-stamp { position: absolute; right: 6px; bottom: 8px; --stamp: #4a58ab; background: #fffdf3; }
+  .pol-cap { display: block; padding: 0.55rem 0.1rem 0.85rem; }
+  .pol-title { display: block; font: 600 1.02rem/1.15 var(--f-display); letter-spacing: -0.01em; }
+  .pol-meta { display: block; margin-top: 0.3rem; font: 400 0.7rem/1.2 var(--f-type); color: #4c4666; }
+
+  .pol-note { display: flex; flex-direction: column; align-items: flex-start; width: min(100%, 250px); color: var(--ink); }
+  .pol-note p { margin: 0; font-size: 1.32rem; transform: rotate(calc(var(--tilt) * -0.5)); }
+  .pol-arrow { stroke: var(--ink); margin-left: 1.2rem; }
+  .pol--above .pol-note { flex-direction: column-reverse; }
+  .pol--above .pol-arrow { margin-top: 0.1rem; }
+  .pol--below .pol-arrow { transform: rotate(180deg); align-self: flex-end; margin-right: 1.4rem; margin-left: 0; margin-bottom: 0.1rem; }
+
+  /* toss-in on scroll */
+  html.js .pol[data-reveal]:not(.is-in) .pol-card { opacity: 0; transform: translateY(46px) rotate(calc(var(--tilt) * 3.2)) scale(0.88); }
+  html.js .pol[data-reveal]:not(.is-in) .pol-note { opacity: 0; }
+  html.js .pol[data-reveal] .pol-note { transition: opacity 0.6s 0.35s; }
+</style>

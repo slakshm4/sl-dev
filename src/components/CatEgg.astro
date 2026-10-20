@@ -1,0 +1,18 @@
+---
+// CatEgg.astro  ·  the easter egg: a little ink cat peeking in from the corner of every page.
+// it links to the bongo cat "what was i made for" video. (swap the href if you find a favourite version.)
+import Sticker from "./Sticker.astro";
+const href = "https://www.youtube.com/watch?v=3-y0p0GL4TI";
+---
+<a class="cat-egg" href={href} target="_blank" rel="noopener" aria-label="a cat is peeking in. it links to a bongo cat video of what was i made for (opens youtube)">
+  <Sticker name="cat" size={64} />
+</a>
+
+<style is:global>
+  .cat-egg {
+    position: fixed; z-index: 95; right: clamp(0.6rem, 2vw, 1.5rem); bottom: -26px; width: 64px; height: 64px;
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); transform: translateY(0) rotate(-6deg);
+  }
+  .cat-egg:hover, .cat-egg:focus-visible { transform: translateY(-22px) rotate(4deg); }
+  .cat-egg .sticker { filter: drop-shadow(2px 2px 0 var(--shadow)); }
+</style>

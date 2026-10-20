@@ -1,47 +1,94 @@
 ---
+// Layout.astro  ·  wraps every page: fonts, filters, nav, the persistent tooth, footer, boot script.
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
 import Nav from "../components/Nav.astro";
+import Tooth from "../components/Tooth.astro";
+import Footer from "../components/Footer.astro";
+import CatEgg from "../components/CatEgg.astro";
+
+const {
+  title = "shradha lakshman · dental hygienist & health educator",
+  description = "shradha lakshman: licensed dental hygienist, health professions educator, and curious human. portfolio, cv and a few odd hobbies.",
+  page = "",
+} = Astro.props;
 ---
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ddd7ec" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Reenie+Beanie&family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        function apply() {
+          var t = "light", m = "on";
+          try {
+            t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            m = localStorage.getItem("motion") || (matchMedia("(prefers-reduced-motion: reduce)").matches ? "off" : "on");
+          } catch (e) {}
+          d.setAttribute("data-theme", t);
+          d.setAttribute("data-motion", m);
+          d.classList.add("js");
+        }
+        apply();
+        if (location.pathname === "/" || location.pathname === "/index.html") d.style.setProperty("--p", "0");
+        document.addEventListener("astro:after-swap", apply);
+      })();
+    </script>
+    <ClientRouter />
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#main">skip to content</a>
 
-<head>
-  <meta charset="UTF-8" />
+    <!-- svg filters that make paper edges torn and ink a little wobbly -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="rip" x="-6%" y="-12%" width="112%" height="124%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="5" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <filter id="rip-fine" x="-6%" y="-12%" width="112%" height="124%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.075" numOctaves="3" seed="9" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <filter id="stamp-rough" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="2" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <filter id="ink-wobble" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="3.5" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="grain" aria-hidden="true"></div>
 
-  <style>
+    <Nav />
+    <Tooth />
 
-    body {
-      margin: 0;
-      background: #d9d9d9;
-      overflow-x: hidden;
-    }
+    <main id="main">
+      <slot />
+    </main>
 
-    .hero-video {
-      position: absolute;
-      inset: 0;
-      z-index: -5;
-    }
+    <Footer />
+    <CatEgg />
 
-    .hero-video video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-  </style>
-</head>
-
-<body>
-
-  <Nav />
-
-  <div class="hero-video">
-    <video autoplay muted loop playsinline>
-      <source src="/background.mp4" type="video/mp4" />
-    </video>
-  </div>
-
-  <slot />
-
-</body>
+    <script>
+      import { boot } from "../scripts/boot";
+      boot();
+    </script>
+  </body>
 </html>

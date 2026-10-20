@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "records": "node scripts/make-records.mjs",
+    "predev": "node scripts/make-records.mjs --if-missing",
+    "prebuild": "node scripts/make-records.mjs --if-missing"
   },
   "dependencies": {
     "astro": "^6.3.2"

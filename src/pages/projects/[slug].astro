@@ -1,0 +1,99 @@
+---
+// projects/[slug].astro  ·  one page per polaroid. edit the words in src/data/projects.ts.
+import Layout from "../../layouts/Layout.astro";
+import SectionTitle from "../../components/SectionTitle.astro";
+import Sticker from "../../components/Sticker.astro";
+import HandArrow from "../../components/HandArrow.astro";
+import { projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, n: i + 1, prev: projects[(i + projects.length - 1) % projects.length], next: projects[(i + 1) % projects.length] },
+  }));
+}
+const { project, n, prev, next } = Astro.props;
+const num = String(n).padStart(2, "0");
+const tapes = ["peri", "butter", "blush", "sage"];
+---
+<Layout page="project" title={`${project.title} · shradha lakshman`} description={project.note}>
+  <article class="wrap page-section pj">
+    <p class="pj-back"><a href="/#up-to"><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M21 12H4M11 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg> back to the polaroids</a></p>
+
+    <div class="pj-grid">
+      <div class="pj-main">
+        <p class="pj-no keep-case">no. {num} / {String(projects.length).padStart(2, "0")}</p>
+        <SectionTitle text={project.title} as="h1" start={n} class="pj-title" />
+        <ul class="pj-meta keep-case" aria-label="project details">
+          {project.year && <li><span class="stamp" style="--r:-3deg">{project.year}</span></li>}
+          {project.place && <li><span class="stamp" style="--r:2deg;--stamp:var(--sage-deep)">{project.place}</span></li>}
+          {project.role && <li><span class="chip chip--blush">{project.role}</span></li>}
+        </ul>
+
+        <div class="pj-story">
+          <p class="pj-lede hand">{project.note}</p>
+          {project.story.length > 1 && project.story.slice(project.written ? 0 : 1).map((p) => <p>{p}</p>)}
+          {!project.written && (
+            <p class="pj-wip scrap scrap--dots">
+              <span class="stamp keep-case" style="--r:-5deg">in the drafts</span>
+              <span>the full write-up for this one is still being assembled: sketches, screenshots, the works. come back soon.</span>
+            </p>
+          )}
+        </div>
+
+        {project.links && (
+          <ul class="pj-links">
+            {project.links.map((l) => (
+              <li><a class="btn" href={l.href} target="_blank" rel="noopener">{l.label}<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <aside class="pj-aside" aria-hidden="true">
+        <div class={`pj-pol`}>
+          <span class={`tape tape--${tapes[n % 4]}`} style="top:-13px;left:50%;margin-left:-48px;--r:-4deg"></span>
+          <div class={`pj-pic paper--${project.paper}`}>
+            {project.image ? <img src={project.image} alt="" /> : <Sticker name={project.sticker} size={150} class="pj-sticker float" />}
+          </div>
+          <p class="pj-cap">{project.title}</p>
+        </div>
+        <HandArrow shape="spiral" size={58} class="pj-arrow" />
+      </aside>
+    </div>
+
+    <nav class="pj-next" aria-label="more projects">
+      <a href={`/projects/${prev.slug}`} rel="prev"><span class="hand">← before</span><span class="pj-next-t">{prev.title}</span></a>
+      <a href={`/projects/${next.slug}`} rel="next"><span class="hand">next →</span><span class="pj-next-t">{next.title}</span></a>
+    </nav>
+  </article>
+</Layout>
+
+<style is:global>
+  .pj-back { margin: 0 0 1.4rem 0.2rem; }
+  .pj-back a { display: inline-flex; align-items: center; gap: 0.4rem; font: italic 600 1.1rem/1 var(--f-display); color: var(--ink); text-decoration-color: var(--peri); }
+  .pj-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 340px); gap: 2.5rem 3.5rem; align-items: start; }
+  .pj-no { margin: 0 0 0.8rem 0.3rem; font: 400 0.85rem/1 var(--f-type); color: var(--ink-soft); }
+  .pj-title .strip { font-size: clamp(2rem, 5.2vw, 3.8rem); }
+  .pj-meta { list-style: none; display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 0 0 1.8rem 0.3rem; align-items: center; }
+  .pj-story { max-width: 40rem; font-size: 1.22rem; line-height: 1.62; margin-left: 0.3rem; }
+  .pj-lede { font-size: 1.9rem; line-height: 1.02; margin: 0 0 1.2rem; color: var(--ink); }
+  .pj-wip { display: flex; align-items: center; gap: 1.1rem; padding: 1.1rem 1.3rem; margin-top: 1.4rem; --scrap-bg: var(--paper); font-size: 1.05rem; line-height: 1.45; }
+  .pj-wip .stamp { flex: none; }
+  .pj-links { list-style: none; display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.8rem 0 0 0.3rem; }
+  .pj-aside { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .pj-pol { position: relative; width: 100%; padding: 14px 14px 0; background: #fffdf3; border: 2px solid #1f1b2e; box-shadow: 6px 8px 0 var(--shadow); transform: rotate(3deg); }
+  .pj-pic { display: grid; place-items: center; aspect-ratio: 1; border: 2px solid #1f1b2e; overflow: hidden; }
+  .pj-pic img { width: 100%; height: 100%; object-fit: cover; }
+  .pj-sticker { filter: drop-shadow(3px 4px 0 rgba(31, 27, 46, 0.3)); }
+  .pj-cap { margin: 0; padding: 0.8rem 0.2rem 1.1rem; font: 600 1.12rem/1.15 var(--f-display); color: #1f1b2e; }
+  .pj-arrow { margin: 1rem 0 0 40%; }
+  .pj-next { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: clamp(3rem, 7vw, 5rem); padding-top: 1.6rem; border-top: 3px dashed color-mix(in srgb, var(--ink) 30%, transparent); }
+  .pj-next a { display: flex; flex-direction: column; gap: 0.2rem; padding: 0.7rem 0.4rem; color: var(--ink); text-decoration: none; }
+  .pj-next a:last-child { text-align: right; align-items: flex-end; }
+  .pj-next .hand { font-size: 1.7rem; color: var(--ink-soft); transition: transform 0.3s; }
+  .pj-next a:hover .hand { transform: translateX(-6px); }
+  .pj-next a:last-child:hover .hand { transform: translateX(6px); }
+  .pj-next-t { font: 600 clamp(1.1rem, 2.4vw, 1.5rem)/1.15 var(--f-display); text-decoration: underline; text-decoration-color: var(--peri); text-underline-offset: 0.25em; }
+  @media (max-width: 860px) { .pj-grid { grid-template-columns: 1fr; } .pj-aside { order: -1; max-width: 300px; margin: 0 auto 0.5rem; } .pj-arrow { display: none; } .pj-next { grid-template-columns: 1fr; } .pj-next a:last-child { text-align: left; align-items: flex-start; } }
+</style>

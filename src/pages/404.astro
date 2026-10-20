@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Sticker from "../components/Sticker.astro";
+---
+<Layout page="404" title="lost page · shradha lakshman">
+  <div class="wrap page-section nf">
+    <SectionTitle text="oh no. a missing tooth." start={1} />
+    <p class="nf-p">this page has gone the way of the wisdom teeth. the rest of the site is intact, i promise.</p>
+    <p class="nf-p"><a class="btn" href="/">take me home</a></p>
+    <Sticker name="ghost" size={96} class="nf-s float" />
+  </div>
+</Layout>
+<style is:global>
+  .nf { position: relative; }
+  .nf-p { font-size: 1.3rem; max-width: 34rem; margin-left: 0.3rem; }
+  .nf-s { position: absolute; right: 6%; top: 40%; }
+</style>

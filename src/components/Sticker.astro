@@ -1,0 +1,94 @@
+---
+// Sticker.astro  ·  little ink-outlined cut-outs. all decorative (aria-hidden).
+// <Sticker name="star" size={56} class="..." />
+// names: star · star-paper · sparkle · ghost · butterfly · fish · heart · eye · tooth · moon · cat · flower
+//        pencil · cloud · key · envelope · music · cassette · leaf · sun
+const { name = "star", size = 56, class: klass = "", style = "" } = Astro.props;
+
+const star = (cx, cy, R, r, n = 5, rot = -90) => {
+  const pts = [];
+  for (let i = 0; i < n * 2; i++) {
+    const a = ((rot + (i * 180) / n) * Math.PI) / 180;
+    const rr = i % 2 === 0 ? R : r;
+    pts.push(`${(cx + rr * Math.cos(a)).toFixed(1)} ${(cy + rr * Math.sin(a)).toFixed(1)}`);
+  }
+  return `M${pts.join("L")}Z`;
+};
+
+const art = {
+  star: `<path d="${star(32, 33, 28, 12.5)}" fill="var(--st-ink,#1F1B2E)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+         <path d="${star(32, 33, 13, 5.6)}" fill="var(--st-chalk,#FFFDF3)"/>`,
+  "star-paper": `<path d="${star(32, 33, 28, 13)}" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+         <path d="${star(32, 33, 11, 5)}" fill="var(--st-peri,#8E9BDE)" opacity=".9"/>`,
+  sparkle: `<path d="M32 4C34 22 42 30 60 32C42 34 34 42 32 60C30 42 22 34 4 32C22 30 30 22 32 4Z" fill="var(--st-butter,#F4D777)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>`,
+  ghost: `<path d="M13 56V30C13 16 21 8 32 8S51 16 51 30V56L44.5 49.5L38 56L32 49.5L26 56L19.5 49.5Z" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+          <ellipse cx="25" cy="29" rx="3.3" ry="4.8" fill="var(--st-ink,#1F1B2E)"/><ellipse cx="39" cy="29" rx="3.3" ry="4.8" fill="var(--st-ink,#1F1B2E)"/>
+          <path d="M28 39q4 3.4 8 0" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="2" stroke-linecap="round"/>`,
+  butterfly: `<path d="M31 31C17 8 3 11 5 26C7 37 21 38 31 33Z" fill="var(--st-peri,#8E9BDE)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+              <path d="M33 31C47 8 61 11 59 26C57 37 43 38 33 33Z" fill="var(--st-peri,#8E9BDE)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+              <path d="M31 35C19 38 11 52 19 57C26 60 31 47 31 37Z" fill="var(--st-butter,#F4D777)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+              <path d="M33 35C45 38 53 52 45 57C38 60 33 47 33 37Z" fill="var(--st-butter,#F4D777)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+              <rect x="30" y="20" width="4" height="30" rx="2" fill="var(--st-ink,#1F1B2E)"/>
+              <path d="M31 20Q27 11 22 9M33 20Q37 11 42 9" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="16" cy="22" r="2.4" fill="var(--st-chalk,#FFFDF3)"/><circle cx="48" cy="22" r="2.4" fill="var(--st-chalk,#FFFDF3)"/>`,
+  fish: `<path d="M4 33C13 20 36 18 51 28L61 19L59 46L51 38C36 48 13 46 4 33Z" fill="#C7D3E6" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+         <path d="M14 27C26 25 38 27 47 31M12 39C24 41 36 40 47 36" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="1.8" stroke-linecap="round" opacity=".55"/>
+         <circle cx="15" cy="30.5" r="2.4" fill="var(--st-ink,#1F1B2E)"/><path d="M22 24q-3 9 0 18" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="1.8" stroke-linecap="round"/>`,
+  heart: `<path d="M32 57C10 41 5 27 13 18C20 11 29 15 32 22C35 15 44 11 51 18C59 27 54 41 32 57Z" fill="var(--st-blush,#F2B1C6)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M17 26q2-5 7-5" fill="none" stroke="var(--st-chalk,#FFFDF3)" stroke-width="2.4" stroke-linecap="round"/>`,
+  eye: `<path d="M3 32C15 12 49 12 61 32C49 52 15 52 3 32Z" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+        <circle cx="32" cy="32" r="12" fill="#8a7a55" stroke="var(--st-ink,#1F1B2E)" stroke-width="2"/><circle cx="32" cy="32" r="5.6" fill="var(--st-ink,#1F1B2E)"/><circle cx="36" cy="28" r="2.2" fill="var(--st-chalk,#FFFDF3)"/>
+        <path d="M10 22l-4-5M20 16l-2-6M32 14V7M44 16l2-6M54 22l4-5" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.2" stroke-linecap="round"/>`,
+  tooth: `<path d="M10 15C16 8 24 12 32 12S48 8 54 15C60 23 54 35 50 43C48 53 46 60 41 60C36 60 36 46 32 46S28 60 23 60C18 60 16 53 14 43C10 35 4 23 10 15Z" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+         <path d="M17 20q4-4 9-2" fill="none" stroke="var(--st-peri,#8E9BDE)" stroke-width="2.6" stroke-linecap="round"/>`,
+  moon: `<path d="M41 6C23 8 10 22 10 36C10 50 22 60 38 58C26 52 22 40 26 28C29 18 34 10 41 6Z" fill="var(--st-butter,#F4D777)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+         <circle cx="46" cy="22" r="1.8" fill="var(--st-ink,#1F1B2E)"/><circle cx="52" cy="38" r="1.4" fill="var(--st-ink,#1F1B2E)"/>`,
+  cat: `<path d="M9 58V26L8 6L25 17C29 16 35 16 39 17L56 6L55 26V58Z" fill="var(--st-ink,#1F1B2E)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+        <ellipse cx="24" cy="33" rx="5.2" ry="6" fill="var(--st-chalk,#FFFDF3)"/><ellipse cx="40" cy="33" rx="5.2" ry="6" fill="var(--st-chalk,#FFFDF3)"/>
+        <ellipse cx="24" cy="33.4" rx="1.6" ry="5" fill="var(--st-ink,#1F1B2E)"/><ellipse cx="40" cy="33.4" rx="1.6" ry="5" fill="var(--st-ink,#1F1B2E)"/>
+        <path d="M29.5 43l2.5 2.6l2.5-2.6Z" fill="var(--st-blush,#F2B1C6)"/>
+        <path d="M22 48q5 4 10-1q5 5 10 1M4 40l14 3M4 47l14-1M60 40l-14 3M60 47l-14-1" fill="none" stroke="var(--st-chalk,#FFFDF3)" stroke-width="1.6" stroke-linecap="round"/>`,
+  flower: `<g fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.2"><circle cx="32" cy="14" r="10"/><circle cx="50" cy="27" r="10"/><circle cx="43" cy="48" r="10"/><circle cx="21" cy="48" r="10"/><circle cx="14" cy="27" r="10"/></g>
+           <circle cx="32" cy="33" r="7" fill="var(--st-fish,#EE8F3F)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.2"/>`,
+  pencil: `<g transform="rotate(42 32 32)"><rect x="23" y="4" width="18" height="10" rx="3" fill="var(--st-blush,#F2B1C6)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+           <rect x="23" y="14" width="18" height="7" fill="#C7D3E6" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+           <rect x="23" y="21" width="18" height="27" fill="var(--st-butter,#F4D777)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+           <path d="M32 24V46" stroke="var(--st-ink,#1F1B2E)" stroke-width="1.8" opacity=".35"/>
+           <path d="M23 48L32 62L41 48Z" fill="#EBCFA6" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+           <path d="M29 56.4L32 62L35 56.4Z" fill="var(--st-ink,#1F1B2E)"/></g>`,
+  cloud: `<path d="M17 47C6 47 3 35 11 31C9 20 21 15 28 22C32 12 48 14 49 27C59 26 62 41 52 47Z" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M17 38q4-5 9-3M34 27q4-4 9-1" fill="none" stroke="var(--st-peri,#8E9BDE)" stroke-width="2.4" stroke-linecap="round"/>`,
+  key: `<g transform="rotate(-42 32 32)"><circle cx="13" cy="32" r="10.5" fill="var(--st-butter,#F4D777)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4"/>
+         <circle cx="13" cy="32" r="4" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2"/>
+         <path d="M23 29H58V35H53V42H47V35H42V40H37V35H23Z" fill="var(--st-butter,#F4D777)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/></g>`,
+  envelope: `<rect x="5" y="13" width="54" height="38" rx="3" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+             <path d="M5 16L32 37L59 16" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+             <path d="M5 49L24 31M59 49L40 31" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="1.8" stroke-linecap="round" opacity=".45"/>
+             <circle cx="32" cy="37" r="5.5" fill="var(--st-blush,#F2B1C6)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.2"/>`,
+  music: `<circle cx="32" cy="32" r="28" fill="var(--st-peri,#8E9BDE)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4"/>
+          <path d="M24 42V19L44 14V37" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M24 19L44 14V22L24 27Z" fill="var(--st-ink,#1F1B2E)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2" stroke-linejoin="round"/>
+          <ellipse cx="19" cy="43" rx="6.4" ry="5" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" transform="rotate(-18 19 43)"/>
+          <ellipse cx="39" cy="38" rx="6.4" ry="5" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" transform="rotate(-18 39 38)"/>`,
+  cassette: `<rect x="4" y="12" width="56" height="40" rx="5" fill="var(--st-blush,#F2B1C6)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+             <rect x="10" y="17" width="44" height="17" rx="3" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2"/>
+             <circle cx="22" cy="26" r="5" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="2"/><circle cx="42" cy="26" r="5" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="2"/>
+             <path d="M27 26h10" stroke="var(--st-ink,#1F1B2E)" stroke-width="2"/>
+             <path d="M16 52L21 41H43L48 52" fill="var(--st-chalk,#FFFDF3)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+             <circle cx="26" cy="46.5" r="1.8" fill="var(--st-ink,#1F1B2E)"/><circle cx="38" cy="46.5" r="1.8" fill="var(--st-ink,#1F1B2E)"/>`,
+  leaf: `<path d="M9 55C6 28 25 8 56 8C58 38 42 58 9 55Z" fill="#A2CBA1" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4" stroke-linejoin="round"/>
+         <path d="M10 54C25 40 38 27 51 12M28 40L28 28M38 31L47 33M22 46L12 42" fill="none" stroke="var(--st-ink,#1F1B2E)" stroke-width="2" stroke-linecap="round" opacity=".6"/>`,
+  sun: `<g stroke="var(--st-ink,#1F1B2E)" stroke-width="2.6" stroke-linecap="round"><path d="M32 4v8M32 52v8M4 32h8M52 32h8M12 12l5.6 5.6M46.4 46.4L52 52M52 12l-5.6 5.6M17.6 46.4L12 52"/></g>
+        <circle cx="32" cy="32" r="14" fill="var(--st-butter,#F4D777)" stroke="var(--st-ink,#1F1B2E)" stroke-width="2.4"/>
+        <path d="M24 29q2-4 6-4" fill="none" stroke="var(--st-chalk,#FFFDF3)" stroke-width="2.4" stroke-linecap="round"/>`,
+};
+const inner = art[name] ?? art.star;
+---
+<svg class={`sticker sticker--${name} ${klass}`} viewBox="0 0 64 64" width={size} height={size} aria-hidden="true" focusable="false" style={style}>
+  <Fragment set:html={inner} />
+</svg>
+
+<style is:global>
+  .sticker { display: block; overflow: visible; flex: none; }
+  .sticker--star, .sticker--star-paper, .sticker--ghost, .sticker--sparkle { filter: drop-shadow(1.5px 2px 0 rgba(31,27,46,.22)); }
+</style>

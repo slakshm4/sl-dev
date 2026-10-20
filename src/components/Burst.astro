@@ -1,0 +1,25 @@
+---
+// Burst.astro  ·  a die-cut starburst: ink outline, paper inside. spins very slowly.
+// <Burst size={420} points={14} fill="floral" />   fills: floral · peri · butter · blush · sage · chalk
+const { size = 360, points = 14, inner = 0.8, fill = "floral", spin = true, class: klass = "", style = "" } = Astro.props;
+const poly = Array.from({ length: points * 2 }, (_, i) => {
+  const a = (Math.PI * i) / points - Math.PI / 2;
+  const r = i % 2 === 0 ? 50 : 50 * inner;
+  return `${(50 + r * Math.cos(a)).toFixed(2)}% ${(50 + r * Math.sin(a)).toFixed(2)}%`;
+}).join(", ");
+---
+<div class={`burst burst--${fill} ${spin ? "burst--spin" : ""} ${klass}`} style={`--bs:${size}px;--poly:polygon(${poly});${style}`} aria-hidden="true"></div>
+
+<style is:global>
+  .burst { position: absolute; width: var(--bs); height: var(--bs); pointer-events: none; filter: drop-shadow(3px 5px 0 var(--shadow)); }
+  .burst::before, .burst::after { content: ""; position: absolute; clip-path: var(--poly); }
+  .burst::before { inset: 0; background: #1f1b2e; }
+  .burst::after { inset: 7px; background: var(--tile-floral); }
+  .burst--peri::after { background: #aab4ea; }
+  .burst--butter::after { background: #f4d777; }
+  .burst--blush::after { background: #f2b1c6; }
+  .burst--sage::after { background: #a2cba1; }
+  .burst--chalk::after { background: #fffdf3; }
+  .burst--spin { animation: burst-spin 120s linear infinite; }
+  @keyframes burst-spin { to { transform: rotate(360deg); } }
+</style>

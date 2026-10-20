@@ -1,0 +1,43 @@
+---
+// HandArrow.astro  ·  hand-drawn swirly arrows (4 shapes). tip is always at the bottom of the box.
+// <HandArrow shape="loop" flip />  ·  draws itself in once it scrolls into view (see boot.ts → [data-draw])
+const shapes = {
+  loop:   { d: "M8 10 C30 0 60 10 58 30 C56 48 32 48 32 32 C32 18 54 18 62 36 C67 47 71 56 74 64", head: "M75.1 52.1 L74 64 L65.3 55.7" },
+  arc:    { d: "M6 8 C34 0 70 8 72 34 C73 46 70 56 64 64", head: "M74.7 58.5 L64 64 L66.3 52.2" },
+  wave:   { d: "M6 10 C22 -2 34 26 48 16 C60 8 74 18 70 34 C68 44 62 50 58 60", head: "M66.9 51.9 L58 60 L57.1 48.0" },
+  spiral: { d: "M10 6 C24 10 40 20 40 34 C40 46 24 46 24 36 C24 28 36 26 44 34 C52 44 56 54 62 62", head: "M59.7 50.2 L62 62 L51.3 56.5" },
+};
+const { shape = "loop", flip = false, size = 64, class: klass = "" } = Astro.props;
+const s = shapes[shape] ?? shapes.loop;
+---
+<svg
+  class={`hand-arrow ${klass}`}
+  viewBox="-4 -4 88 76"
+  width={size}
+  height={size * 0.86}
+  aria-hidden="true"
+  focusable="false"
+  style={flip ? "transform:scaleX(-1)" : undefined}
+  data-draw
+>
+  <path pathLength="1" d={s.d} />
+  <path pathLength="1" class="hand-arrow__head" d={s.head} />
+</svg>
+
+<style is:global>
+  .hand-arrow { overflow: visible; flex: none; }
+  .hand-arrow path {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  /* once JS runs, arrows start undrawn and draw themselves when visible */
+  html.js .hand-arrow:not(.is-drawn) path { stroke-dashoffset: 1; }
+  html.js .hand-arrow path { transition: stroke-dashoffset .9s cubic-bezier(.5,.1,.3,1); }
+  html.js .hand-arrow.is-drawn .hand-arrow__head { transition-delay: .75s; }
+  html.js .hand-arrow:not(.is-drawn) .hand-arrow__head { transition-delay: 0s; }
+</style>

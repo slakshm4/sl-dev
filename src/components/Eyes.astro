@@ -1,0 +1,24 @@
+---
+// Eyes.astro  ·  a pair of cut-out eyes whose pupils follow the cursor (boot.ts → [data-eyes]).
+const { size = 120, class: klass = "" } = Astro.props;
+---
+<svg class={`eyes ${klass}`} data-eyes viewBox="0 0 150 64" width={size} height={size * 0.43} aria-hidden="true" focusable="false">
+  {[0, 1].map((i) => (
+    <g transform={`translate(${i * 78} 0)`}>
+      <g class="eye-lid"><path d="M3 32C14 11 56 11 69 32C56 53 14 53 3 32Z" fill="#fffdf3" stroke="#1f1b2e" stroke-width="3" stroke-linejoin="round" />
+      <g class="eyes-pupil">
+        <circle cx="36" cy="32" r="13" fill="#8a7a55" stroke="#1f1b2e" stroke-width="2.4" />
+        <circle cx="36" cy="32" r="6" fill="#1f1b2e" />
+        <circle cx="40.5" cy="27.5" r="2.6" fill="#fffdf3" />
+      </g></g>
+      <path d="M10 21l-4-6M22 14l-2-7M36 12V4M50 14l2-7M62 21l4-6" fill="none" stroke="#1f1b2e" stroke-width="2.6" stroke-linecap="round" />
+    </g>
+  ))}
+</svg>
+
+<style is:global>
+  .eyes { overflow: visible; filter: drop-shadow(2px 3px 0 var(--shadow)); }
+  .eyes-pupil { transition: transform 0.12s ease-out; }
+  .eye-lid { transform-box: fill-box; transform-origin: center; transition: transform 0.07s; }
+  .eyes.is-blink .eye-lid { transform: scaleY(0.08); }
+</style>
