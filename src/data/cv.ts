@@ -175,5 +175,5 @@ export const publications: { group: string; items: string[]; posts?: string[] }[
 
 export const skills = {
   tools: ["Microsoft Office", "Google Workspace", "Figma", "RStudio", "ai-assisted / agentic coding tools (self-directed, small-project prototyping)"],
-  certifications: ["cpr / bls"],
+  certifications: ["Basic Life Support (BLS) for health care professionals (CPR)"],
 };
