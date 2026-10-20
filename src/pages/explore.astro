@@ -124,6 +124,8 @@ const tones = ["peri", "butter", "sage", "blush"];
   .ar-list a { display: grid; grid-template-columns: 3rem 1fr auto 28px; align-items: baseline; gap: 0.2rem 1rem; padding: 0.85rem 1rem; color: var(--ink); text-decoration: none; border-bottom: 2px dashed color-mix(in srgb, var(--ink) 30%, transparent); transition: background 0.25s, padding 0.3s; }
   .ar-list li:last-child a { border-bottom: 0; }
   .ar-list a:hover, .ar-list a:focus-visible { background: color-mix(in srgb, var(--butter) 40%, transparent); padding-left: 1.5rem; }
+  /* the archive sits on the same butter-yellow paper as the top of the page (dots, like a bullet journal) */
+  .ar-list.scrap--kraft::after { background-color: var(--paper); background-image: radial-gradient(rgba(76, 70, 102, 0.26) 1.1px, transparent 1.5px); background-size: 18px 18px; }
   /* dark mode: a deep plum paper with faint lilac dots instead of the muddy darkened kraft */
   :root[data-theme="dark"] .ar-list.scrap--kraft::after { background-color: var(--paper-2); background-image: radial-gradient(rgba(182, 192, 246, 0.2) 1.1px, transparent 1.5px); background-size: 18px 18px; }
   :root[data-theme="dark"] .ar-list a:hover, :root[data-theme="dark"] .ar-list a:focus-visible { background: color-mix(in srgb, var(--peri) 22%, transparent); }
