@@ -103,7 +103,7 @@ const ext = (h) => /^https?:/.test(h);
                 {sections.map((b) => (
                   <section class="pc-blk">
                     {b.label && <h2 class="pc-sec keep-case">{b.label}</h2>}
-                    {drawer.style === "marginalia" ? <p><span class="hl" set:html={inline(b.text)} /></p>
+                    {drawer.style === "marginalia" ? <p set:html={b.text.includes("==") ? inline(b.text) : `<span class="hl">${inline(b.text)}</span>`} />
                       : drawer.style === "lyrics" ? <p class="pc-lines">{b.text.split("\n").map((l) => <span class="pc-ln" set:html={inline(l)} />)}</p>
                       : <Blocks items={[b.text]} />}
                   </section>
@@ -229,6 +229,10 @@ const ext = (h) => /^https?:/.test(h);
   .pc-scraps { display: grid; gap: 2.2rem; padding: 1rem 0 0.5rem; }
   .pc-scrap { position: relative; margin: 0; max-width: 30rem; padding: 1.2rem 1.5rem 1.3rem; font: 400 1.7rem/1.2 var(--f-hand); white-space: pre-line; transform: rotate(var(--rot)); color: #1f1b2e; --scrap-bg: #fbf0c4; }
   .pc-scrap p { margin: 0; }
+  /* the scraps sit on dark paper in dark mode, so the handwriting takes the lilac of the bullets */
+  :root[data-theme="dark"] .pc-scrap { color: var(--peri); }
+  :root[data-theme="dark"] .pc-scrap a { color: var(--peri-deep); }
+  :root[data-theme="dark"] .pc-scrap a:hover { color: var(--ink); }
   .pc-scrap:nth-child(even) { justify-self: end; }
   /* a list on one scrap: handwritten, with round bullets */
   .pc-scrap--list { max-width: 40rem; }

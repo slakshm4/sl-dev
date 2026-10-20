@@ -134,8 +134,8 @@ export const lyricPieces: Piece[] = [
       "living life in parallel\njohnnie walker lines the shelves",
       "swimming in the in-between\nyou are the bluest kind of green\nsomething sacred in the static, in the way you lean in",
       "bodies like a question mark\ncarving letters into bark\nsomething holy in the breaking, in the falling apart",
-      "(bg: how long can i keep treading water, treading\ndon't know how long i can keep treading water, treading)",
-      "(whisper song)\nin the falling apart",
+      "(how long can i keep treading water, treading\ndon't know how long i can keep treading water, treading)",
+      "in the falling apart",
     ],
   },
   {

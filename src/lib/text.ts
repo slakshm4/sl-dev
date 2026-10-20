@@ -2,6 +2,7 @@
 //
 //   _italic_  or  *italic*      → italic
 //   **bold**                    → bold
+//   ==highlight==               → a highlighter swipe that draws itself in as it scrolls into view
 //   [label](/some/page)         → link on this site;  [label](https://…) opens in a new tab
 //   word[^1]                    → a small footnote number (the notes themselves go in a piece's `footnotes` list)
 //
@@ -21,6 +22,7 @@ const safeHref = (h: string) => (/^(\/|#|https:\/\/|mailto:)/.test(h) ? h : "#")
 
 /** bold + italics only (also used inside link labels) */
 function emph(s: string): string {
+  s = s.replace(/==(?=\S)([^=\n]+?)(?<=\S)==/g, '<span class="hl">$1</span>');
   s = s.replace(/\*\*(?=\S)([^*\n]+?)(?<=\S)\*\*/g, "<strong>$1</strong>");
   s = s.replace(/(^|[\s(";'—-])_(?=\S)([^_\n]+?)(?<=\S)_(?=$|[\s.,;:!?)"'—-])/g, "$1<em>$2</em>");
   s = s.replace(/(^|[\s(";'—-])\*(?=\S)([^*\n]+?)(?<=\S)\*(?=$|[\s.,;:!?)"'—-])/g, "$1<em>$2</em>");
@@ -61,6 +63,7 @@ export function plain(src: string): string {
     .replace(/\[\^\d+\]/g, "")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/==(?=\S)([^=\n]+?)(?<=\S)==/g, "$1")
     .replace(/(^|[\s("'])_([^_\n]+)_(?=$|[\s.,;:!?)"'])/g, "$1$2")
     .replace(/\*([^*\n]+)\*/g, "$1");
 }

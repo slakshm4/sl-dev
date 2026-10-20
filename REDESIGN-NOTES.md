@@ -36,6 +36,7 @@ pushing to `main` deploys the site through `.github/workflows/deploy.yml` (githu
 every string in `body` (and every project `story`) is one block. inside a string:
 
 - `_italic_` or `*italic*`, `**bold**`
+- `==highlight==` draws a highlighter swipe over just those words as they scroll into view. in `annotations on life` (any `marginalia` drawer) a paragraph with no `==marks==` gets the swipe over the whole paragraph
 - `[a link](/somewhere-on-this-site)` stays on the site; `[a link](https://example.com)` opens in a new tab
 - a block that starts with `## ` is a heading, `### ` a smaller heading, `> ` a pull quote, `- ` a bullet list, `1. ` a numbered list
 - `![describe the picture](/images/file.webp "caption")` is a picture (put the file in `public/images/`)

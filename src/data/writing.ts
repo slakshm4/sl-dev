@@ -19,6 +19,8 @@
 //  pinned     true = the piece sits at the top of its drawer, always.
 //  the long pieces live in their own files: prose.ts (essays + stories), poems.ts ((dé)générescence), lyrics.ts (the songs, with footnotes), articles.ts (the three notebook tabs).
 //  every piece also accepts the mini-markup in src/lib/text.ts: _italic_, "## heading", "> pull quote", [links](/like/this).
+//  annotations on life (and any other `marginalia` drawer): wrap the part you want the highlighter to draw over in ==double equals==.
+//  a paragraph with no ==marks== gets the highlighter over the whole thing.
 //
 //  per drawer: `frame` is the patterned paper around the sheet (floral · news · kraft · dots · grid),
 //  `paper` is the paper the words are written on (ruled · grid · gingham · butter · newsprint),
@@ -73,9 +75,9 @@ const words: Drawer[] = [
         note: "margin note: grief has changed my definition of an ending.",
         stickers: ["moon", "eye", "star"],
         body: [
-          "i used to think death was the worst thing that could happen because it makes a person unavailable to you. i still think absence is brutal. but i have trouble with the concept of brutal and bad as synonyms of one another.",
-          "i was raised with the idea that life is part of a much larger cycle: karma, return, release. i don't pretend to know what happens next. but the image that stays with me is the closing of a loop. something completed, even if i was not ready to stop holding its hand. there's an episode, [Chapter 7: Four Souls](https://open.spotify.com/episode/1cfQ6nXr2kCqBpeF5Bch7U?si=597ee447d62d4207), of _Midnight Burger_, a fictional podcast about a transdimensional diner (don't ask), that explores a similar concept.",
-          "loss has not made death feel neat. it has made me less interested in calling it a failure.",
+          "i used to think death was the worst thing that could happen because it makes a person unavailable to you. i still think absence is brutal. but i have trouble with the concept of ==brutal and bad as synonyms of one another==.",
+          "i was raised with the idea that life is part of a much larger cycle: karma, return, release. i don't pretend to know what happens next. but the image that stays with me is ==the closing of a loop==. something completed, even if i was not ready to stop holding its hand. there's an episode, [Chapter 7: Four Souls](https://open.spotify.com/episode/1cfQ6nXr2kCqBpeF5Bch7U?si=597ee447d62d4207), of _Midnight Burger_, a fictional podcast about a transdimensional diner (don't ask), that explores a similar concept.",
+          "loss has not made death feel neat. it has made me ==less interested in calling it a failure==.",
         ],
       },
       {
@@ -86,8 +88,8 @@ const words: Drawer[] = [
         note: "correction to a previous belief: closure is not a door.",
         stickers: ["key", "pencil", "star"],
         body: [
-          "i thought closure was an event: one conversation, one realization, one very cinematic final scene.",
-          "now i think it is more like moving house with too many boxes. years later, you find one in a closet. you open it. it is still yours, but it is no longer the centrepiece. it no longer seeks attention. it no longer lives in the middle of the room.",
+          "i thought ==closure was an event==: one conversation, one realization, one very cinematic final scene.",
+          "now i think it is more like moving house with too many boxes. years later, you find one in a closet. you open it. ==it is still yours, but it is no longer the centrepiece==. it no longer seeks attention. it no longer lives in the middle of the room.",
         ],
       },
       {
@@ -98,8 +100,8 @@ const words: Drawer[] = [
         note: "margin note: perhaps this is why i over-explain.",
         stickers: ["eye", "cloud", "sparkle"],
         body: [
-          "being understood is lovely, but it is not the price of admission for being real.",
-          "some things in me will remain poorly captioned. some things will be misread. i am trying to let that be an ordinary sadness instead of evidence that i have failed to communicate.",
+          "being understood is lovely, but ==it is not the price of admission for being real==.",
+          "some things in me will remain poorly captioned. some things will be misread. i am trying to let that be ==an ordinary sadness== instead of evidence that i have failed to communicate.",
         ],
       },
       {
@@ -110,8 +112,8 @@ const words: Drawer[] = [
         note: "revision: not every hour needs a destiny.",
         stickers: ["leaf", "sun", "pencil"],
         body: [
-          "i used to think a good day was one i could account for.",
-          "now i think a good day can include staring at (or hugging, or communicating with using dowsing sticks cuz apparently that actually works quite well) a tree (be careful, kind, and patient, because they're actually quite prideful beings), sending one email (yippee!), eating something beige (a donut? a singular noodle?), and briefly becoming obsessed with a niche question (which i tend to do… a lot). productivity has a place (sort of). it just… doesn't need to be the landlord.",
+          "i used to think a good day was ==one i could account for==.",
+          "now i think a good day can include staring at (or hugging, or communicating with using dowsing sticks cuz apparently that actually works quite well) a tree (be careful, kind, and patient, because they're actually quite prideful beings), sending one email (yippee!), eating something beige (a donut? a singular noodle?), and briefly becoming obsessed with a niche question (which i tend to do… a lot). productivity has a place (sort of). it just… ==doesn't need to be the landlord==.",
         ],
       },
     ],
