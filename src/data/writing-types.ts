@@ -50,6 +50,8 @@ export type Drawer = {
   frame: "floral" | "news" | "kraft" | "dots" | "grid";
   paper: "ruled" | "grid" | "gingham" | "butter" | "newsprint";
   style: "prose" | "marginalia" | "scraps" | "verse" | "lyrics";
+  /** the paper on the cards in this drawer's grid (the sheet the words are written on is `paper`) */
+  card?: "butter-pale" | "gingham-pale" | "chevron" | "houndstooth" | "herringbone";
   stickers: StickerName[];
   pieces: Piece[];
   /** set for the three notebook tabs (case studies, ephemera, trials): their cards link straight to the pieces, there is no separate drawer page */

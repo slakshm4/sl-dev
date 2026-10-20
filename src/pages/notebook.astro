@@ -1,8 +1,12 @@
 ---
-// notebook.astro  ·  four drawers: words · case studies · ephemera · trials. (there is no "all" pile.)
+// notebook.astro  ·  four manila folders: words · case studies · ephemera · trials. (there is no "all" pile.)
+// closed: the folders sit stacked in a drawer, tabs staggered. pick one and it opens: the other tabs line up above it and the cards
+// shake out of its pocket onto the page, scattered, with doodles and clips stuck on top. (script: src/scripts/tabs.ts)
 import Layout from "../layouts/Layout.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import Sticker from "../components/Sticker.astro";
+import Sprite from "../components/Sprite.astro";
+import Clip from "../components/Clip.astro";
 import HandArrow from "../components/HandArrow.astro";
 import { notebook } from "../data/notebook";
 
@@ -13,7 +17,15 @@ const papers: Record<string, string[]> = {
   trials: ["grid"],
 };
 const stickers = ["star", "sparkle", "ghost", "butterfly", "fish", "heart", "eye", "tooth", "moon", "flower", "star-paper", "cat"];
-const tilt = [-1.4, 1.1, -0.7, 1.6, -1.1, 0.8, -1.8, 1.3, -0.5, 1.5, -1.2, 0.6];
+// the doodles and clips stuck on top of the cards that shake out (each card gets one kind of "asset", cycling)
+const assetSprites = ["pencil", "key", "sun", "envelope", "cloud", "leaf", "music", "cassette", "star-paper", "flower", "heart", "sparkle"];
+const tilt = [-3.4, 2.6, -1.8, 3.8, -2.6, 1.6, -4.2, 3.1, -1.2, 4, -3, 1.4];
+const jx = [-10, 8, -6, 12, -12, 6, 10, -8, 4, -4, 12, -10];
+const jy = [0, 12, 4, -8, 14, 2, 16, -4, 8, 0, -10, 12];
+const zi = [1, 3, 2, 1, 3, 2, 3, 1, 2, 3, 1, 2];
+const tabsAt = [0, 0.3333, 0.6667, 1];
+const short = (h: string) => h.split(":")[0];
+const count = (s: (typeof notebook)[number]) => s.groups.reduce((n, g) => n + g.entries.length, 0);
 let counter = 0;
 ---
 <Layout page="notebook" title="notebook · Shradha Lakshman" description="writing, things i've made, things i've gathered, and things i've tried: a notebook of Shradha Lakshman's creative work.">
@@ -21,48 +33,89 @@ let counter = 0;
     <SectionTitle text="notebook" start={3} />
     <p class="hand nb-lead">four drawers. rummage. <HandArrow shape="loop" size={46} /></p>
 
-    <div class="nb" data-tabs>
-      <div class="nb-tabs" role="tablist" aria-label="notebook sections">
-        {notebook.map((s) => (
-          <button class={`nb-tab nb-tab--${s.tone}`} role="tab" id={`tab-${s.id}`} aria-controls={`panel-${s.id}`} aria-selected="false" tabindex="-1" data-tone={s.tone} type="button">
-            <span class="nb-tab-l">{s.label}</span>
-            <span class="nb-tab-n keep-case">{s.groups.reduce((n, g) => n + g.entries.length, 0)}</span>
+    <div class="nb" data-nb>
+      <!-- closed: the drawer. every folder is a button that opens its own panel -->
+      <div class="nb-stack" data-stack>
+        {notebook.map((s, i) => (
+          <button type="button" class={`nbf nbf--${s.tone} nbf--${i < 2 ? "l" : "r"}`} style={`--i3:${tabsAt[i]};--z:${i + 1};--r:${[-0.4, 0.5, -0.3, 0.4][i]}deg`} aria-controls={`panel-${s.id}`} aria-expanded="false" data-folder={s.id}>
+            <span class="nbf-pk" aria-hidden="true">
+              <span class={`nbf-sheet paper--${["ruled", "grid", "newsprint", "butter"][i]}`}></span>
+              <Clip kind="paper" size={20} class="nbf-clip" />
+              <Sticker name={["pencil", "tooth", "cassette", "sparkle"][i]} size={40} class="nbf-st" />
+            </span>
+            <span class="nbf-art" aria-hidden="true"><span class="nbf-shape"></span></span>
+            <span class="nbf-label"><span class="nbf-l">{s.label}</span><span class="nbf-n keep-case">{count(s)}</span></span>
+            <span class="nbf-hint hand">{short(s.hint)}</span>
+            <span class="nbf-open hand" aria-hidden="true">open it</span>
           </button>
         ))}
       </div>
 
-      {notebook.map((s) => (
-        <section class={`nb-panel nb-panel--${s.id} scrap scrap--dots`} role="tabpanel" id={`panel-${s.id}`} aria-labelledby={`tab-${s.id}`} tabindex="0">
-          <span class={`tape tape--${s.tone}`} style="top:-12px;left:6%;--r:-4deg"></span>
-          <p class="nb-hint hand">{s.hint}</p>
-          {s.groups.map((g) => (
-            <div class="nb-group">
-              {g.label && <h2 class="nb-gl"><span class="strip strip--small strip--hand" style="--r:-1.2deg">{g.label}</span></h2>}
-              <ul class="nb-cards" role="list">
-                {g.entries.map((e) => {
-                  const i = counter++;
-                  const paper = papers[s.id][i % papers[s.id].length] ?? "grid";
-                  const Tag = e.href ? "a" : "div";
-                  return (
-                    <li class={`nbc nbc--${s.id}`} style={`--tilt:${tilt[i % tilt.length]}deg`}>
-                      <Tag class="nbc-in" {...(e.href ? { href: e.href } : {})} {...(e.external ? { target: "_blank", rel: "noopener" } : {})}>
-                        <span class={`nbc-pic paper--${paper}`} aria-hidden="true">
-                          <Sticker name={stickers[(i * 5 + 3) % stickers.length]} size={s.id === "case-studies" ? 62 : 46} />
-                        </span>
-                        <span class="nbc-body">
-                          <span class={`chip chip--${s.tone} keep-case`}>{e.tag}</span>
-                          <span class="nbc-title">{e.title}</span>
-                          {e.blurb && <span class="nbc-blurb">{e.blurb}</span>}
-                          {e.status === "draft" && <span class="stamp nbc-stamp keep-case">in the drafts</span>}
-                          {e.external && <span class="nbc-out keep-case">opens in a new tab ↗</span>}
-                        </span>
-                      </Tag>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
+      <!-- open: the other folders become tabs, the chosen one is the panel below -->
+      <div class="nb-tabs" role="tablist" aria-label="notebook sections" hidden data-tabs-row>
+        {notebook.map((s) => (
+          <button class={`nb-tab nb-tab--${s.tone}`} role="tab" id={`tab-${s.id}`} aria-controls={`panel-${s.id}`} aria-selected="false" tabindex="-1" type="button">
+            <span class="nb-tab-l">{s.label}</span>
+            <span class="nb-tab-n keep-case">{count(s)}</span>
+          </button>
+        ))}
+      </div>
+
+      {notebook.map((s, si) => (
+        <section class={`nb-panel nb-panel--${s.id} nbf--${s.tone}`} role="tabpanel" id={`panel-${s.id}`} aria-labelledby={`tab-${s.id}`} tabindex="0">
+          <button class="nb-close btn" type="button" data-close>put it back</button>
+
+          <!-- the folder itself: back + papers inside (behind the cards), pocket lip + clips (in front of them) -->
+          <div class="of of--back" aria-hidden="true">
+            <span class="of-art"><span class="of-back-shape"></span></span>
+            <span class={`of-sheet of-sheet--a paper--${["ruled", "grid", "newsprint", "butter"][si]}`}></span>
+            <span class="of-sheet of-sheet--b paper--ruled"></span>
+            <Sprite name={["pencil", "tooth", "cassette", "sparkle"][si]} size={64} rot={-8} class="of-in-sprite" />
+          </div>
+
+          <div class="nb-spill">
+            <p class="nb-hint hand">{s.hint}</p>
+            {s.groups.map((g) => (
+              <div class="nb-group">
+                {g.label && <h2 class="nb-gl"><span class="strip strip--small strip--hand" style="--r:-1.2deg">{g.label}</span></h2>}
+                <ul class="nb-cards" role="list">
+                  {g.entries.map((e) => {
+                    const i = counter++;
+                    const paper = papers[s.id][i % papers[s.id].length] ?? "grid";
+                    const Tag = e.href ? "a" : "div";
+                    const asset = i % 4;
+                    return (
+                      <li class={`nbc nbc--${s.id}`} style={`--tilt:${tilt[i % tilt.length]}deg;--jx:${jx[i % 12]}px;--jy:${jy[i % 12]}px;--zi:${zi[i % 12]};--k:${i % 12}`}>
+                        <Tag class="nbc-in" {...(e.href ? { href: e.href } : {})} {...(e.external ? { target: "_blank", rel: "noopener" } : {})}>
+                          <span class={`nbc-pic paper--${paper}`} aria-hidden="true">
+                            <Sticker name={stickers[(i * 5 + 3) % stickers.length]} size={s.id === "case-studies" ? 62 : 46} />
+                          </span>
+                          <span class="nbc-body">
+                            <span class={`chip chip--${s.tone} keep-case`}>{e.tag}</span>
+                            <span class="nbc-title">{e.title}</span>
+                            {e.blurb && <span class="nbc-blurb">{e.blurb}</span>}
+                            {e.status === "draft" && <span class="stamp nbc-stamp keep-case">in the drafts</span>}
+                            {e.external && <span class="nbc-out keep-case">opens in a new tab ↗</span>}
+                          </span>
+                        </Tag>
+                        {asset === 0 && <span class="nbc-asset nbc-asset--clip" aria-hidden="true"><Clip kind="paper" size={24} /></span>}
+                        {asset === 1 && <span class="nbc-asset nbc-asset--sprite" aria-hidden="true"><Sprite name={assetSprites[i % assetSprites.length]} size={54} rot={10} /></span>}
+                        {asset === 2 && <span class={`tape tape--${["peri", "butter", "blush", "sage"][i % 4]} nbc-asset nbc-asset--tape`} aria-hidden="true"></span>}
+                        {asset === 3 && <span class="nbc-asset nbc-asset--binder" aria-hidden="true"><Clip kind="binder" size={40} /></span>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div class="of of--front" aria-hidden="true">
+            <span class="of-art"><span class="of-lip-shape"></span></span>
+            <span class="of-clip of-clip--a"><Clip kind="binder" size={54} /></span>
+            <span class={`tape tape--${["peri", "butter", "sage", "blush"][si]} of-tape`}></span>
+            <span class="of-label keep-case"><span>{s.label}</span><span>{count(s)}</span></span>
+          </div>
         </section>
       ))}
     </div>
@@ -71,34 +124,117 @@ let counter = 0;
 
 <style is:global>
   .nb-lead { margin: -0.4rem 0 1.2rem 0.4rem; display: flex; align-items: flex-end; gap: 0.3rem; font-size: 1.7rem; }
-  .nb { --tab: var(--peri); }
-  html:not(.js) .nb-tabs { display: none; }
-  html:not(.js) .nb-panel { margin-bottom: 2rem; }
-  .nb-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0 0.6rem; position: relative; z-index: 2; margin-bottom: -2px; }
-  .nb-tab {
-    display: inline-flex; align-items: baseline; gap: 0.55rem; padding: 0.7rem 1.4rem 0.8rem; min-height: 48px;
-    background: var(--tc, var(--peri)); color: #1f1b2e; border: 2px solid #1f1b2e; border-bottom: 0; border-radius: 16px 16px 0 0;
-    transform: translateY(6px) rotate(var(--r, 0deg)); transform-origin: bottom left; filter: saturate(0.72) brightness(0.97);
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s;
+  /* the four folder colours (pastel manila) */
+  .nbf--peri { --fc: #b4bdee; } .nbf--butter { --fc: #f6df93; } .nbf--sage { --fc: #b2d6b0; } .nbf--blush { --fc: #f4bfd0; }
+  html:not(.js) .nb-stack, html:not(.js) .nb-tabs, html:not(.js) .nb-close { display: none; }
+  html:not(.js) .nb-panel { margin-bottom: 2.4rem; }
+
+  /* ── closed: the stack ─────────────────────────────────────── */
+  .nb-stack { display: flex; flex-direction: column; padding-top: 1.6rem; }
+  .nb-stack[hidden] { display: none; }
+  .nbf {
+    --th: 40px; --c: 10px; --fh: 158px; --ov: 88px;
+    --tw: clamp(150px, 27%, 250px);
+    --tx: calc(14px + (100% - var(--tw) - 28px) * var(--i3));
+    position: relative; display: block; width: 100%; height: var(--fh); margin: calc(var(--ov) * -1) 0 0; padding: 0; border: 0; background: none;
+    color: #1f1b2e; text-align: left; cursor: pointer; z-index: var(--z);
+    transform: rotate(var(--r, 0deg)); transform-origin: 50% 100%;
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .nb-tab--peri { --tc: #aab4ea; --r: -1deg; } .nb-tab--butter { --tc: #f4d777; --r: 0.8deg; } .nb-tab--sage { --tc: #a2cba1; --r: -0.6deg; } .nb-tab--blush { --tc: #f2b1c6; --r: 1deg; }
-  .nb-tab:hover { transform: translateY(2px) rotate(var(--r)); }
-  .nb-tab[aria-selected="true"] { transform: translateY(0) rotate(0deg); filter: none; z-index: 3; padding-bottom: 1rem; }
-  .nb-tab-l { font: 600 clamp(1.15rem, 2.4vw, 1.55rem)/1 var(--f-display); letter-spacing: -0.01em; }
-  .nb-tab-n { font: 400 0.78rem/1 var(--f-type); background: #fffdf3; border: 1.5px solid #1f1b2e; border-radius: 99px; padding: 0.22em 0.55em; }
+  .nb-stack > .nbf:first-child { margin-top: 0; }
+  .nbf:hover, .nbf:focus-visible { transform: translateY(-10px) rotate(var(--r, 0deg)); }
+  .nbf-art { position: absolute; inset: 0; pointer-events: none; filter: drop-shadow(2px 0 0 #1f1b2e) drop-shadow(-2px 0 0 #1f1b2e) drop-shadow(0 2px 0 #1f1b2e) drop-shadow(0 -2px 0 #1f1b2e) drop-shadow(4px 5px 0 var(--shadow)); }
+  .nbf-shape {
+    position: absolute; inset: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0) 55%), var(--fc);
+    clip-path: polygon(0 calc(var(--th) + var(--c)), var(--c) var(--th), var(--tx) var(--th), calc(var(--tx) + 16px) 0, calc(var(--tx) + var(--tw) - 16px) 0, calc(var(--tx) + var(--tw)) var(--th), calc(100% - var(--c)) var(--th), 100% calc(var(--th) + var(--c)), 100% 100%, 0 100%);
+  }
+  /* the stitched seam along the top of the pocket */
+  .nbf-shape::after { content: ""; position: absolute; left: 12px; right: 12px; top: calc(var(--th) + 9px); border-top: 2px dashed rgba(31, 27, 46, 0.26); }
+  .nbf-label {
+    position: absolute; left: calc(var(--tx) + 18px); top: 8px; width: calc(var(--tw) - 36px); height: 25px; display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; padding: 0 0.5rem;
+    background: #fffdf3; border: 1.5px solid #1f1b2e; border-radius: 2px; transform: rotate(-1.2deg); font: 400 0.84rem/1 var(--f-type); letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .nbf-n { font: 400 0.7rem/1 var(--f-type); background: var(--fc); border: 1.2px solid #1f1b2e; border-radius: 99px; padding: 0.2em 0.5em; }
+  .nbf-hint { position: absolute; left: 24px; top: calc(var(--th) + 18px); font-size: 1.55rem; line-height: 1; color: #1f1b2e; }
+    .nbf-open { position: absolute; right: 26px; bottom: 18px; font-size: 1.35rem; line-height: 1; color: #1f1b2e; opacity: 0; transition: opacity 0.3s; }
+  .nbf--r .nbf-open { right: auto; left: 26px; }
+  .nbf:hover .nbf-open, .nbf:focus-visible .nbf-open, .nbf:last-child .nbf-open { opacity: 0.8; }
+  /* things sticking up out of the pocket, behind the folder's front: a sheet, a clip, a doodle */
+  .nbf-pk { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .nbf-sheet { position: absolute; top: 4px; width: min(36%, 230px); height: 110px; border: 2px solid #1f1b2e; border-radius: 2px; box-shadow: 3px 3px 0 var(--shadow); }
+  .nbf--l .nbf-sheet { right: 9%; transform: rotate(2.5deg); } .nbf--r .nbf-sheet { left: 27%; width: min(22%, 230px); transform: rotate(-2.5deg); }
+  .nbf-clip { position: absolute; top: -8px; }
+  .nbf--l .nbf-clip { right: calc(9% + 36px); transform: rotate(8deg); } .nbf--r .nbf-clip { left: calc(27% + 36px); transform: rotate(-8deg); }
+  .nbf-st { position: absolute; top: -22px; filter: drop-shadow(2px 3px 0 rgba(31, 27, 46, 0.28)); }
+  .nbf--l .nbf-st { right: calc(9% + 120px); transform: rotate(10deg); } .nbf--r .nbf-st { left: calc(27% + 120px); transform: rotate(-10deg); }
 
-  .nb-panel { padding: clamp(1.3rem, 3vw, 2.2rem); --scrap-bg: var(--paper); border-top-left-radius: 0; }
+  .nb-stack.is-leaving .nbf { animation: nbf-away 0.42s ease-in both; animation-delay: calc(var(--z) * 45ms); }
+  .nb-stack.is-entering .nbf { animation: nbf-in 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.15) both; animation-delay: calc(var(--z) * 60ms); }
+  @keyframes nbf-away { to { transform: translateY(46px) rotate(2deg); opacity: 0; } }
+  @keyframes nbf-in { from { transform: translateY(-34px) rotate(-2deg); opacity: 0; } }
+
+  /* ── open: the folders turn into tabs above the panel ───────── */
+  .nb-tabs { display: flex; flex-wrap: wrap; gap: 0.2rem; padding: 0.8rem 1rem 0; position: relative; z-index: 6; margin-bottom: -3px; }
+  .nb-tabs[hidden] { display: none; }
+  .nb-tab {
+    position: relative; isolation: isolate; display: inline-flex; align-items: baseline; gap: 0.55rem; min-height: 46px; padding: 0.74rem 1.7rem 0.6rem; border: 0; background: none; color: #1f1b2e; cursor: pointer;
+    transform: translateY(5px); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .nb-tab::before { content: ""; position: absolute; inset: 0; z-index: -2; background: #1f1b2e; clip-path: polygon(0 100%, 12px 0, calc(100% - 12px) 0, 100% 100%); }
+  .nb-tab::after { content: ""; position: absolute; inset: 2px 0 0 0; z-index: -1; background: var(--tc); filter: saturate(0.78) brightness(0.96); clip-path: polygon(1.4px 100%, 13px 0, calc(100% - 13px) 0, calc(100% - 1.4px) 100%); }
+  .nb-tab--peri { --tc: #b4bdee; } .nb-tab--butter { --tc: #f6df93; } .nb-tab--sage { --tc: #b2d6b0; } .nb-tab--blush { --tc: #f4bfd0; }
+  .nb-tab:hover { transform: translateY(1px); }
+  .nb-tab[aria-selected="true"] { transform: none; padding-bottom: 0.95rem; z-index: 2; }
+  .nb-tab[aria-selected="true"]::after { filter: none; inset: 2px 0 -5px 0; }
+  .nb-tab-l { font: 600 clamp(1.1rem, 2.4vw, 1.5rem)/1 var(--f-display); letter-spacing: -0.01em; }
+  .nb-tab-n { font: 400 0.76rem/1 var(--f-type); background: #fffdf3; border: 1.5px solid #1f1b2e; border-radius: 99px; padding: 0.22em 0.55em; }
+
+  /* ── the open folder ───────────────────────────────────────── */
+  .nb-panel { --ofh: 224px; --lip: 74px; position: relative; padding: 0 0 1rem; }
   html.js .nb-panel[hidden] { display: none; }
-  .nb-panel.is-flip { animation: page-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: top left; }
-  @keyframes page-in { from { opacity: 0; transform: perspective(1000px) rotateX(-5deg) translateY(16px); } to { opacity: 1; transform: none; } }
-  .nb-hint { margin: 0 0 0.8rem 0.2rem; font-size: 1.7rem; color: var(--ink-soft); }
-  .nb-group + .nb-group { margin-top: 2.2rem; }
-  .nb-gl { margin: 0 0 1.4rem; font-weight: 400; }
-  .strip--small { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  .of { position: absolute; left: 0; right: 0; pointer-events: none; }
+  .of--back { top: 0; height: var(--ofh); z-index: 1; }
+  .of--front { top: calc(var(--ofh) - var(--lip)); height: var(--lip); z-index: 4; }
+  .of-art { position: absolute; inset: 0; filter: drop-shadow(2px 0 0 #1f1b2e) drop-shadow(-2px 0 0 #1f1b2e) drop-shadow(0 2px 0 #1f1b2e) drop-shadow(0 -2px 0 #1f1b2e) drop-shadow(4px 6px 0 var(--shadow)); }
+  .of-back-shape, .of-lip-shape { position: absolute; inset: 0; clip-path: polygon(0 14px, 14px 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%); }
+  .of-back-shape { background: linear-gradient(var(--fc), color-mix(in srgb, var(--fc) 80%, #8a6a3a)); }
+  .of-lip-shape { background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), var(--fc); clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); }
+  .of-lip-shape::after { content: ""; position: absolute; left: 14px; right: 14px; top: 14px; border-top: 2px dashed rgba(31, 27, 46, 0.28); }
+  /* papers inside the folder */
+  .of-sheet { position: absolute; top: 26px; width: min(34%, 330px); height: 190px; border: 2px solid #1f1b2e; border-radius: 2px; box-shadow: 3px 4px 0 var(--shadow); }
+  .of-sheet--a { left: 7%; transform: rotate(-2.4deg); }
+  .of-sheet--b { left: 14%; top: 18px; transform: rotate(1.8deg); z-index: -1; }
+  .of-in-sprite { position: absolute; right: 9%; top: 34px; }
+  .of-clip { position: absolute; z-index: 3; }
+  .of-clip--a { left: 16%; top: -34px; transform: rotate(-6deg); }
+  .of-tape { top: -12px; right: 14%; --r: 6deg; z-index: 3; }
+  .of-label { position: absolute; right: 7%; top: 22px; display: inline-flex; gap: 0.8rem; align-items: center; padding: 0.3rem 0.8rem; background: #fffdf3; border: 1.5px solid #1f1b2e; border-radius: 2px; transform: rotate(1.5deg); font: 400 0.84rem/1 var(--f-type); color: #1f1b2e; letter-spacing: 0.04em; }
+  .of-label span + span { padding-left: 0.8rem; border-left: 1.5px solid #1f1b2e; }
+  .nb-close { position: absolute; z-index: 6; left: 1.4rem; top: calc(var(--ofh) - var(--lip) + 22px); font-size: 0.9rem; padding: 0.45rem 1.1rem; }
 
-  .nb-cards { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 1.8rem 1.4rem; }
-  .nbc { transform: rotate(var(--tilt)); transition: transform 0.45s cubic-bezier(0.34, 1.7, 0.5, 1); }
-  .nbc:hover { transform: rotate(0deg) translateY(-6px) scale(1.03); z-index: 2; }
+  /* ── the cards shake out and scatter ────────────────────────── */
+  .nb-spill { position: relative; z-index: 2; padding: calc(var(--ofh) + 6px) 0 0.5rem; }
+  .nb-hint { margin: 0 0 0.6rem 0.4rem; font-size: 1.7rem; color: var(--ink-soft); }
+  .nb-group { margin-top: 1.6rem; }
+  .nb-gl { margin: 0 0 1.5rem 0.4rem; font-weight: 400; }
+  .strip--small { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  .nb-cards { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 2.4rem 1.9rem; padding: 0.8rem 0.9rem 1rem; }
+  .nbc { position: relative; z-index: var(--zi, 1); transform: translate(var(--jx, 0px), var(--jy, 0px)) rotate(var(--tilt, 0deg)); transition: transform 0.45s cubic-bezier(0.34, 1.7, 0.5, 1); }
+  .nbc:hover, .nbc:focus-within { transform: translate(var(--jx, 0px), calc(var(--jy, 0px) - 6px)) rotate(0deg) scale(1.03); z-index: 6; }
+  html.js .nb-panel.is-open .nbc { animation: nb-shake-out 1.05s cubic-bezier(0.22, 0.7, 0.3, 1) backwards; animation-delay: calc(var(--k, 0) * 75ms + 220ms); }
+  html.js .nb-panel.is-open .of--back { animation: of-shake 0.8s ease-out; transform-origin: 50% 100%; }
+  @keyframes of-shake { 12% { transform: rotate(-0.5deg) translateY(-3px); } 30% { transform: rotate(0.5deg) translateY(2px); } 48% { transform: rotate(-0.3deg); } 66% { transform: rotate(0.25deg); } }
+  /* from a spot in the folder's pocket (--fx, --fy, set per card by tabs.ts) out to where it lands, with a little wobble on the way */
+  @keyframes nb-shake-out {
+    0%   { opacity: 0; transform: translate(var(--fx, 0px), var(--fy, 0px)) rotate(var(--fr, 0deg)) scale(0.6); }
+    8%   { opacity: 1; }
+    58%  { transform: translate(var(--jx, 0px), calc(var(--jy, 0px) + 14px)) rotate(calc(var(--tilt, 0deg) + 6deg)) scale(1.03); }
+    74%  { transform: translate(var(--jx, 0px), calc(var(--jy, 0px) - 5px)) rotate(calc(var(--tilt, 0deg) - 4deg)) scale(1); }
+    88%  { transform: translate(var(--jx, 0px), var(--jy, 0px)) rotate(calc(var(--tilt, 0deg) + 1.5deg)); }
+    100% { opacity: 1; transform: translate(var(--jx, 0px), var(--jy, 0px)) rotate(var(--tilt, 0deg)); }
+  }
+
   .nbc-in { display: flex; flex-direction: column; height: 100%; background: #fffdf3; color: #1f1b2e; text-decoration: none; border: 2px solid #1f1b2e; border-radius: 3px; box-shadow: 4px 5px 0 var(--shadow); overflow: hidden; }
   .nbc-pic { display: grid; place-items: center; aspect-ratio: 16 / 8.5; border-bottom: 2px solid #1f1b2e; }
   .nbc-pic .sticker { transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1); filter: drop-shadow(2px 3px 0 rgba(31, 27, 46, 0.3)); }
@@ -108,7 +244,6 @@ let counter = 0;
   .nbc-blurb { font-size: 0.96rem; line-height: 1.4; color: #4c4666; }
   .nbc-stamp { margin-top: auto; --stamp: #4a58ab; font-size: 0.7rem; }
   .nbc-out { margin-top: auto; font: 400 0.74rem/1 var(--f-type); letter-spacing: 0.04em; color: #4a58ab; text-decoration: underline; text-underline-offset: 0.25em; }
-  .nbc:focus-within { transform: rotate(0deg) translateY(-4px); }
   /* the words drawer is lined paper; the case studies are a junk journal; trials are lab pages */
   .nbc--words .nbc-pic { aspect-ratio: 16 / 5.5; }
   .nbc--words .nbc-title { font: 400 1.35rem/1.15 var(--f-type); }
@@ -118,4 +253,28 @@ let counter = 0;
   .nbc--trials .nbc-pic { aspect-ratio: 16 / 5; }
   .nbc--trials .nbc-title::before { content: "trial"; display: block; margin-bottom: 0.25rem; font: 400 0.7rem/1 var(--f-type); letter-spacing: 0.1em; color: #4a58ab; }
   .nbc--ephemera .nbc-pic { aspect-ratio: 4 / 3.2; }
+  /* doodles, clips and tape stuck on top of the cards */
+  .nbc-asset { position: absolute; z-index: 3; pointer-events: none; }
+  .nbc-asset--clip { top: -18px; left: 14%; transform: rotate(-8deg); }
+  .nbc-asset--sprite { top: -26px; right: -14px; }
+  .nbc-asset--tape { top: -12px; left: 50%; margin-left: -48px; --r: -3deg; }
+  .nbc-asset--binder { top: -16px; right: 12%; transform: rotate(6deg); }
+
+  @media (max-width: 640px) {
+    .nbf { --fh: 138px; --ov: 78px; --th: 38px; }
+    .nbf-hint { font-size: 1.35rem; }
+    .nb-panel { --ofh: 190px; --lip: 62px; }
+    .of-sheet { height: 150px; width: 44%; }
+    .of-in-sprite { display: none; }
+    .nb-cards { grid-template-columns: 1fr; gap: 2.2rem; padding-inline: 0.4rem; }
+    .nbc { --jx: 0px !important; }
+    .nb-close { left: 0.8rem; }
+    .of-label { display: none; }
+    .nbc-asset--sprite { right: 2px; }
+  }
+
+  html[data-motion="off"] .nbc, html[data-motion="off"] .of--back, html[data-motion="off"] .nbf, html[data-motion="off"] .nb-stack .nbf { animation: none !important; transition: none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    .nbc, .of--back, .nbf, .nb-stack .nbf { animation: none !important; transition: none !important; }
+  }
 </style>

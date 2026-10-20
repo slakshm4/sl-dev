@@ -1,0 +1,45 @@
+---
+// Sprite.astro  ·  a sticker that lives on the page as a little doodle. decorative only (aria-hidden).
+// <Sprite name="star" size={52} rot={-8} />
+// on load a script gives each sprite one of two lives, by coin flip (see src/scripts/sprites.ts):
+//   · quiver:   it jitters like stop-motion, a few frames a second, with the outline boiling a little
+//   · scribble: it is drawn in with a thin marker (outline first, then loose marker hatching) as it scrolls into view
+// with motion paused (or reduced) it stays a plain, still sticker.
+import Sticker from "./Sticker.astro";
+const { name = "star", size = 56, rot = 0, class: klass = "", style = "" } = Astro.props;
+---
+<span class={`sprite ${klass}`} style={`--sr:${rot}deg;${style}`} data-sprite data-reveal aria-hidden="true"><Sticker name={name} size={size} /></span>
+
+<style is:global>
+  .sprite { display: inline-block; flex: none; line-height: 0; pointer-events: none; transform: rotate(var(--sr, 0deg)); }
+
+  /* ── quiver: stop-motion, ~4 frames a second ── */
+  .sprite--quiver { animation: sprite-quiver var(--qs, 0.9s) step-end var(--qd, 0s) infinite; }
+  @keyframes sprite-quiver {
+    0%   { transform: rotate(calc(var(--sr, 0deg) - 1.8deg)) translate(0, 0); filter: url(#boil-1); }
+    25%  { transform: rotate(calc(var(--sr, 0deg) + 1.4deg)) translate(1px, -1px); filter: url(#boil-2); }
+    50%  { transform: rotate(calc(var(--sr, 0deg) - 0.6deg)) translate(-1px, 1px); filter: url(#boil-3); }
+    75%  { transform: rotate(calc(var(--sr, 0deg) + 2deg)) translate(1px, 1px); filter: url(#boil-2); }
+  }
+  .lite .sprite--quiver { animation-name: sprite-quiver-lite; }
+  @keyframes sprite-quiver-lite {
+    0%   { transform: rotate(calc(var(--sr, 0deg) - 1.8deg)) translate(0, 0); }
+    25%  { transform: rotate(calc(var(--sr, 0deg) + 1.4deg)) translate(1px, -1px); }
+    50%  { transform: rotate(calc(var(--sr, 0deg) - 0.6deg)) translate(-1px, 1px); }
+    75%  { transform: rotate(calc(var(--sr, 0deg) + 2deg)) translate(1px, 1px); }
+  }
+
+  /* ── scribble: thin marker outline, drawn fast, then loose hatching ── */
+  .sprite--scribble .sticker { filter: url(#ink-wobble); }
+  .lite .sprite--scribble .sticker { filter: none; }
+  .sprite--scribble .sk { stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .sprite--scribble .sk-ink { stroke: var(--ink); stroke-width: 1.5px; stroke-linecap: round; stroke-linejoin: round; }
+  html.js .sprite--scribble:not(.is-in) .sk { stroke-dashoffset: 1; fill-opacity: 0; }
+  html.js .sprite--scribble.is-in .sk { animation: sprite-draw 0.42s ease-out var(--d, 0s) both, sprite-fill 0.3s steps(3) calc(var(--d, 0s) + 0.28s) both; }
+  @keyframes sprite-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes sprite-fill { from { fill-opacity: 0; } to { fill-opacity: 1; } }
+
+  /* paused or reduced motion: a plain still sticker, nothing quivers */
+  :root[data-motion="off"] .sprite { animation: none !important; }
+  @media (prefers-reduced-motion: reduce) { :root:not([data-motion="on"]) .sprite { animation: none !important; } }
+</style>

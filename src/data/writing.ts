@@ -5,7 +5,7 @@
 //  /notebook/<drawer>/<piece>    → one piece, set on its own paper
 //
 //  to add a piece: copy any piece object (see annotations on life below), give it a new `slug` (this becomes the url)
-//  and write your words in `body`. a drawer with no pieces (reflections, for now) just shows "the next one is still on the desk."
+//  and write your words in `body`. a drawer with no pieces just shows "the next one is still on the desk."
 //
 //  body       an array of blocks. each string is one paragraph (prose), one stanza (poems) or one section (songs).
 //             inside a stanza / section use "\n" for a line break. songs: start a section with a label line
@@ -43,8 +43,22 @@ const words: Drawer[] = [
     frame: "floral",
     paper: "ruled",
     style: "prose",
+    card: "herringbone",
     stickers: ["leaf", "sun", "pencil", "butterfly"],
-    pieces: [],
+    pieces: [
+      {
+        slug: "the-dilemma-does-not-announce-itself",
+        title: "the dilemma does not announce itself",
+        tags: ["reflection", "clinic"],
+        blurb: "school hands you an ethical dilemma with a label. clinic hands it to you mid-sentence.",
+        stickers: ["pencil", "sun", "leaf"],
+        body: [
+          "in school, an ethical dilemma comes labelled. there is a case, a cast of characters, every relevant fact, and a framework waiting in the margin: autonomy, beneficence, nonmaleficence, justice. you get a week to think it over, and nobody in the scenario is sitting in the chair, waiting.",
+          "in clinic, it arrives mid-sentence. a patient declines radiographs you are fairly sure they need. what they want, what you would recommend, what the appointment time allows, and what you can chart honestly are four different things. nobody says _and this is the ethics part._ you just notice, halfway through a sentence, that you are already in it.",
+          "the frameworks did not stop being useful. they just stopped arriving in order. school gave me the vocabulary. clinic is teaching me the timing.",
+        ],
+      },
+    ],
   },
   {
     slug: "prose",
@@ -126,6 +140,7 @@ const words: Drawer[] = [
     frame: "grid",
     paper: "gingham",
     style: "prose",
+    card: "gingham-pale",
     stickers: ["cloud", "butterfly", "key", "fish"],
     pieces: [
       {
@@ -178,6 +193,7 @@ const words: Drawer[] = [
     frame: "kraft",
     paper: "butter",
     style: "scraps",
+    card: "houndstooth",
     stickers: ["ghost", "fish", "star", "cat"],
     pieces: [
       {
@@ -226,6 +242,7 @@ const words: Drawer[] = [
     frame: "floral",
     paper: "butter",
     style: "verse",
+    card: "butter-pale",
     stickers: ["flower", "moon", "butterfly", "heart"],
     pieces: poemPieces,
   },
@@ -237,6 +254,7 @@ const words: Drawer[] = [
     frame: "grid",
     paper: "butter",
     style: "lyrics",
+    card: "chevron",
     stickers: ["music", "cassette", "star-paper", "sparkle"],
     pieces: lyricPieces,
   },

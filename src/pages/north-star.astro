@@ -20,7 +20,7 @@ const total = (b: (typeof branches)[number]) => b.groups.reduce((n, g) => n + g.
 
 // the paragraph is set as an upside-down right triangle: every line is a little shorter than the one above it (widest at the top,
 // narrowing to a point), and the lines are right-aligned, so the right edge is straight and the left edge slants. lines are cut here, at build time, by character count; font size scales with the box (cqw).
-const para = `i've come to question the idea of a single "north star." it suggests a clarity of purpose that doesn't match how most people actually operate—driven, more often, by an overlapping set of motivations, some of which remain unclear even to themselves (enter pluralism, human motivation theory, etc.). so instead, i've diagrammed mine as a system of interconnected nodes, sized in proportion to their pull. depicted below is a smorgasbord of things that fuel me, that guide me, and that keep me grounded.`;
+const para = `i've come to question the idea of a single "north star." it suggests a clarity of purpose that doesn't match how most people actually operate— driven, more often, by an overlapping set of motivations, some of which remain unclear even to themselves (enter pluralism, human motivation theory, etc.). so instead, i've diagrammed mine as a system of interconnected nodes, sized in proportion to their pull. depicted below is a smorgasbord of things that fuel me, that guide me, and that keep me grounded.`;
 function cut(words: string[], widest: number, narrowest: number, k: number) {
   const lines: string[] = [];
   let w = 0;
@@ -215,6 +215,11 @@ const lines = triangle(para);
 
   /* outline */
   .ns-outline { margin-top: 2.6rem; padding: 1rem 1.3rem 1.2rem; --scrap-bg: var(--paper); }
+  /* the box is a pastel orange in light mode (same orange as the herringbone card in reflections) and a lighter kraft in dark mode, with ink text on it */
+  .ns-outline.scrap--kraft::after { background: var(--orange-pastel); }
+  :root[data-theme="dark"]:not([data-a11y="on"]) .ns-outline.scrap--kraft::after { background: var(--tile-kraft); filter: url(#rip-fine) brightness(1.08) saturate(0.95); }
+  :root[data-theme="dark"]:not([data-a11y="on"]) .ns-outline > summary { color: #1f1b2e; }
+  :root[data-theme="dark"]:not([data-a11y="on"]) .ns-outline > summary::before { background: #1f1b2e; }
   .ns-outline summary { cursor: pointer; font: italic 600 1.25rem/1.2 var(--f-display); list-style: none; display: flex; align-items: center; gap: 0.6rem; }
   .ns-outline summary::-webkit-details-marker { display: none; }
   .ns-outline summary::before { content: ""; width: 1.2rem; height: 1.2rem; background: var(--ink); -webkit-mask: var(--tooth-mask) center / contain no-repeat; mask: var(--tooth-mask) center / contain no-repeat; transition: transform 0.3s; }

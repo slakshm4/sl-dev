@@ -23,7 +23,7 @@ export const poemPieces: Piece[] = [
     note: "i hope you'll listen with both earbuds in.",
     link: { label: "about the project", href: "/projects/bilingual-inquiry" },
     body: [
-      "there are five poems, each written in free verse because i'm too lazy to rhyme. also, i think it sounds better. they are in French, with an embedded English voice—a letter written in clandestine, a lost-then-found document, fragments of strings of words overheard from some undefined coordinate—that runs through each one in italics, split between the ears, answering the French obliquely rather than translating it. the French and the English never say the same thing. they mourn the same thing from different angles, and the stereo field is where the two accounts touch.",
+      "there are five poems, each written in free verse because i'm too lazy to rhyme. also, i think it sounds better. they are in French, with an embedded English voice— a letter written in clandestine, a lost-then-found document, fragments of strings of words overheard from some undefined coordinate— that runs through each one in italics, split between the ears, answering the French obliquely rather than translating it. the French and the English never say the same thing. they mourn the same thing from different angles, and the stereo field is where the two accounts touch.",
     ],
   },
   {
@@ -77,7 +77,7 @@ export const poemPieces: Piece[] = [
     noteBox: {
       body: [
         "_empreinte_ means \"imprint\" or \"trace.\"",
-        "the title frames the poem around an involuntary mark left by a brief, almost imperceptible contact: like wax retaining the shape of what touched it. it suggests that presence can alter someone permanently without intention, while the one who caused the mark may never know it existed. the poem's central paradox—being changed by someone who has forgotten having known you—makes the title both literal and emotional.",
+        "the title frames the poem around an involuntary mark left by a brief, almost imperceptible contact: like wax retaining the shape of what touched it. it suggests that presence can alter someone permanently without intention, while the one who caused the mark may never know it existed. the poem's central paradox— being changed by someone who has forgotten having known you— makes the title both literal and emotional.",
       ],
     },
     body: [],
@@ -117,7 +117,7 @@ export const poemPieces: Piece[] = [
     stickers: ["leaf", "flower", "sun"],
     noteBox: {
       body: [
-        "_la jachère_ means \"fallow land\"—a field left unplanted so it may recover.",
+        "_la jachère_ means \"fallow land\"— a field left unplanted so it may recover.",
         "the title makes the poem's garden imagery a metaphor for a possibility that was sensed but never allowed to grow: a relationship, name, or future returned to winter before it could become spring. it carries the quiet grief of potential rather than loss alone; what is left fallow is not dead, but it may never be cultivated again. the title therefore names the space between what might have been and what was deliberately left unmade.",
       ],
     },
@@ -159,7 +159,7 @@ export const poemPieces: Piece[] = [
     noteBox: {
       body: [
         "_les écartés_ means \"the ones set aside,\" \"the excluded,\" or \"the cast-offs.\"",
-        "the title identifies the poem's subject not as charity itself, but as those judged unworthy of it—the shipwrecked returned to the sea because their suffering does not fit a respectable image. it exposes the selectivity hidden inside compassion: mercy can become another form of sorting. the plural title also turns individual abandonment into a social condition, giving the poem its bitter, accusatory force.",
+        "the title identifies the poem's subject not as charity itself, but as those judged unworthy of it— the shipwrecked returned to the sea because their suffering does not fit a respectable image. it exposes the selectivity hidden inside compassion: mercy can become another form of sorting. the plural title also turns individual abandonment into a social condition, giving the poem its bitter, accusatory force.",
       ],
     },
     body: [],
@@ -200,7 +200,7 @@ export const poemPieces: Piece[] = [
     noteBox: {
       body: [
         "_l'irréparable en moi_ means \"the irreparable within me.\"",
-        "the title locates damage not in a single event but in the self's own making: a collapse that occurred before the clay could be fired, before the self could become whole. it frames identity as something shaped, cracked, and remade without a stable original form. the title's gravity lies in its refusal of repair—not because healing is impossible, but because what was lost may no longer be recoverable in the form one once intended.",
+        "the title locates damage not in a single event but in the self's own making: a collapse that occurred before the clay could be fired, before the self could become whole. it frames identity as something shaped, cracked, and remade without a stable original form. the title's gravity lies in its refusal of repair— not because healing is impossible, but because what was lost may no longer be recoverable in the form one once intended.",
       ],
     },
     body: [],

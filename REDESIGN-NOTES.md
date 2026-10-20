@@ -105,3 +105,11 @@ to add a new post: add one line to `eportfolio.ts`, then add its key to whicheve
 - `lie` in `say-hi.astro` is `null` on purpose. set it to 0, 1 or 2 if you want the buttons to reveal the answer.
 - the molar is labelled fdi #26 (upper left first molar). universal numbering calls it #14, so double-check the label you want.
 - the old versions of the files that were replaced are in `_before-redesign/` (not committed to git). delete the folder whenever you're happy.
+
+## 2026-10-20 · round of tweaks
+- copy: notebook/e-portfolio links on explore, "take a look at my e-portfolio!" pill (scribbled subtitle) on experience, "come back soon." is the only highlighted part of the "write-up still being assembled" line.
+- cards: pastel butter (poems), gingham (loose threads), chevron pink (songs), houndstooth blue (other brain debris), herringbone orange (reflections, new piece "the dilemma does not announce itself"). `--orange-pastel` also colours the north star outline box in light mode; dark mode uses a lighter kraft.
+- hero arrow is anchored to the carabelli bump (tooth-relative), fades with the scroll and with the 15s turn loop.
+- sprites (`Sprite.astro`, `sprites.ts`): stickers that either quiver (stop-motion boil) or get scribbled in, used beside page titles and in explore's field notes.
+- notebook: folders replace the tabs. closed = stacked pastel manila folders; open = other folders become tabs, cards shake out of the pocket (`tabs.ts` sets `--fx/--fy/--fr` per card). `Clip.astro` = paper/binder clips.
+- dashes: em dashes are written "word— word" (no space before, one after) per request; en dashes for ranges; hyphens for compounds. `text.ts` keeps a dash from starting a line.

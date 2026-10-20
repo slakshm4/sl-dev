@@ -47,7 +47,7 @@ export const jobs: Job[] = [
     ],
   },
   {
-    role: "founder, eureka: questscapes—youth digital health education project",
+    role: "founder, eureka: questscapes— youth digital health education project",
     org: "independent project",
     when: "may 2024–present",
     status: "current",
@@ -110,7 +110,7 @@ export const education = {
       body: "honours the memory of Marilyn Dionne Teed and is awarded to a graduating dental hygiene student who demonstrates outstanding integrity, dedication, loyalty, and perseverance during their undergraduate years.",
     },
     {
-      title: "eureka: questscapes—project funding",
+      title: "eureka: questscapes— project funding",
       body: "secured over $2,000 in combined seed funding and project support to develop the platform.",
     },
   ],
@@ -136,14 +136,14 @@ export const publications: { group: string; items: string[]; posts?: string[] }[
     group: "interprofessional education resources",
     items: [
       "Collaborative Health Education Enrichment Working Group (includes Lakshman S). interprofessional education (ipe) facilitator guide. 3rd ed. Vancouver (BC): University of British Columbia Health; 2025.",
-      "Lakshman S, editor. session zero—competency assessment of interprofessional teams. Vancouver (BC): UBC Health, University of British Columbia; forthcoming.",
+      "Lakshman S, editor. session zero— competency assessment of interprofessional teams. Vancouver (BC): UBC Health, University of British Columbia; forthcoming.",
     ],
   },
   {
     group: "national framework contributions (cihc)",
     items: [
       "Lakshman S, designer. Canadian Interprofessional Health Collaborative (CIHC). simplified competency framework for advancing collaboration [Internet]. Vancouver (BC): CIHC; 2025.",
-      "Lakshman S, designer. Canadian Interprofessional Health Collaborative (CIHC). référentiel de compétences du CPIS pour l'avancement de la collaboration en santé et services sociaux—version simplifiée [Internet]. Vancouver (BC): CIHC; 2025.",
+      "Lakshman S, designer. Canadian Interprofessional Health Collaborative (CIHC). référentiel de compétences du CPIS pour l'avancement de la collaboration en santé et services sociaux— version simplifiée [Internet]. Vancouver (BC): CIHC; 2025.",
     ],
   },
   {

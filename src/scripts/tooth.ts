@@ -11,8 +11,8 @@ const isHome = () => document.body?.dataset.page === "home";
 // with the phone menu open the tooth always docks, so the big hero tooth never sits over the menu
 const target = () => (isHome() && !document.body.classList.contains("menu-open") ? clamp(window.scrollY / (window.innerHeight * 0.62), 0, 1) : 1);
 
-type Els = { tooth: HTMLElement | null; shadow: HTMLElement | null; stage: HTMLElement | null; scroll: HTMLElement | null; intro: HTMLElement | null };
-let els: Els = { tooth: null, shadow: null, stage: null, scroll: null, intro: null };
+type Els = { tooth: HTMLElement | null; shadow: HTMLElement | null; stage: HTMLElement | null; scroll: HTMLElement | null; intro: HTMLElement | null; arrow: HTMLElement | null };
+let els: Els = { tooth: null, shadow: null, stage: null, scroll: null, intro: null, arrow: null };
 let last = -1;
 
 function find() {
@@ -23,6 +23,7 @@ function find() {
     stage: document.querySelector<HTMLElement>(".hero-stage"),
     scroll: document.querySelector<HTMLElement>(".hero-scroll"),
     intro: document.querySelector<HTMLElement>(".intro"),
+    arrow: document.querySelector<HTMLElement>(".hero-arrow"),
   };
   last = -1;
 }
@@ -38,7 +39,7 @@ function paint() {
   const p = Math.round(cur * 1000) / 1000;
   if (p === last) return;
   last = p;
-  const { tooth, shadow, stage, scroll, intro } = els;
+  const { tooth, shadow, stage, scroll, intro, arrow } = els;
   // the tooth: slides from the middle of the hero up to the nav while shrinking. (--y0 is set in Tooth.astro)
   // (it docks at a fixed, small size, whatever size the hero tooth is on this screen, so it sits neatly inside the nav strip)
   if (tooth) {
@@ -47,6 +48,8 @@ function paint() {
   }
   if (shadow) shadow.style.opacity = String(clamp(1 - p * 1.4, 0, 1));
   if (stage) stage.style.opacity = String(clamp(1 - p * 2.4, 0, 1));
+  // the cusp arrow points at the resting tooth, so it is gone within the first few px of scrolling
+  if (arrow) arrow.style.opacity = String(clamp(1 - p * 10, 0, 1));
   if (scroll) scroll.style.opacity = String(clamp(1 - p * 3, 0, 1));
   if (intro) intro.style.opacity = String(clamp((p - 0.32) * 1.9, 0, 1));
 }
@@ -62,7 +65,15 @@ function frame() {
 
 const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
 
+/** the cusp arrow shares the tooth's 15s turn: start it in the same phase as the (persistent) tooth, so it is only visible while the cusp faces front */
+function syncArrow() {
+  const a = document.querySelector<HTMLElement>(".hero-note-arrow");
+  const t = document.querySelector(".tooth-turn")?.getAnimations?.()[0];
+  if (a && t && t.currentTime != null) a.style.setProperty("--ad", `${-(Number(t.currentTime) % 15000)}ms`);
+}
+
 export function initTooth() {
+  syncArrow();
   if (first) { cur = target(); first = false; }
   last = -1;
   paint();

@@ -103,6 +103,20 @@ const preview = `${origin}/tooth-preview.png`;
           <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11" result="n" />
           <feDisplacementMap in="SourceGraphic" in2="n" scale="3.5" xChannelSelector="R" yChannelSelector="G" />
         </filter>
+        <!-- stop-motion "line boil" for the quivering sprites: three slightly different wobbles, swapped by css -->
+        <filter id="boil-1" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="1" seed="3" result="n" /><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" /></filter>
+        <filter id="boil-2" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="1" seed="14" result="n" /><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" /></filter>
+        <filter id="boil-3" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="1" seed="27" result="n" /><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" /></filter>
+        <!-- loose marker scribbles used to colour the sprites that draw themselves in -->
+        <pattern id="hatch-ink" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:var(--ink)" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
+        <pattern id="hatch-peri" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:#8e9bde" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
+        <pattern id="hatch-butter" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:#e9c34e" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
+        <pattern id="hatch-blush" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:#ec8fb0" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
+        <pattern id="hatch-fish" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:#ee8f3f" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
+        <pattern id="hatch-ice" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:#9db4d6" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
+        <pattern id="hatch-sage" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:#7fb07e" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
+        <pattern id="hatch-brown" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:#8a7a55" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
+        <pattern id="hatch-sand" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><path d="M-1 1L8 2.4L-1 4.2L8 5.8" fill="none" style="stroke:#d8b27a" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" /></pattern>
       </defs>
     </svg>
     <div class="grain" aria-hidden="true"></div>

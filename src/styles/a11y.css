@@ -74,7 +74,7 @@
 :root[data-a11y="on"] :is(.scrap--news, .scrap--floral, .scrap--kraft, .scrap--grid, .scrap--dots)::after {
   background-image: none !important; background-color: var(--paper) !important; filter: url(#rip-fine) !important;
 }
-:root[data-a11y="on"] :is(.paper--floral, .paper--newsprint, .paper--kraft, .paper--butter, .paper--grid, .paper--ruled, .paper--gingham) {
+:root[data-a11y="on"] :is(.paper--floral, .paper--newsprint, .paper--kraft, .paper--butter, .paper--grid, .paper--ruled, .paper--gingham, .paper--butter-pale, .paper--gingham-pale, .paper--chevron, .paper--houndstooth, .paper--herringbone) {
   background-image: none !important; background-color: var(--paper) !important;
 }
 :root[data-a11y="on"] .pc-plate { background-image: none !important; background-color: #fdf9e9 !important; outline: none !important; }

@@ -52,7 +52,7 @@ export function inline(src: string): string {
   s = s.replace(/\u0000(\d+)\u0000/g, (_m, i: string) => links[Number(i)]);
   s = s.replace(/\u0001(\d+)\u0001/g, (_m, i: string) => marks[Number(i)]);
   // an em dash never starts a line (word joiner before it) but the line may still break after it (zero-width space)
-  s = s.replace(/([^\s>])—(?=[^\s<])/g, "$1\u2060—\u200b");
+  s = s.replace(/([^\s>])—/g, "$1\u2060—");
   return s;
 }
 

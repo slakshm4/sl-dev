@@ -194,6 +194,12 @@ input[type="text"], textarea { cursor: text; }
 .paper--grid { background-color: #fdf9e9; background-image: linear-gradient(rgba(74,88,171,.28) 1px, transparent 1px), linear-gradient(90deg, rgba(74,88,171,.28) 1px, transparent 1px); background-size: 18px 18px; }
 .paper--ruled { background-color: #fdf9e9; background-image: linear-gradient(90deg, transparent 22px, rgba(228,87,61,.55) 22px 24px, transparent 24px), linear-gradient(rgba(74,88,171,.3) 1px, transparent 1px); background-size: 100% 100%, 100% 20px; }
 .paper--gingham { background-color: #eef4e8; background-image: linear-gradient(rgba(79,115,84,.42) 50%, transparent 50%), linear-gradient(90deg, rgba(79,115,84,.42) 50%, transparent 50%); background-size: 30px 30px; }
+/* pastel card papers: one per drawer in the notebook */
+.paper--butter-pale { background-color: #fcf2c9; background-image: radial-gradient(rgba(31,27,46,.13) 1.2px, transparent 1.6px); background-size: 16px 16px; }
+.paper--gingham-pale { background-color: #f6faf1; background-image: linear-gradient(rgba(150,200,150,.3) 50%, transparent 50%), linear-gradient(90deg, rgba(150,200,150,.3) 50%, transparent 50%); background-size: 30px 30px; }
+.paper--chevron { background: var(--tile-chevron); background-size: 36px 22.5px; }
+.paper--houndstooth { background: var(--tile-hound); background-size: 28px 28px; }
+.paper--herringbone { background: var(--tile-herring); background-size: 30px 15px; }
 .paper--check { background: conic-gradient(#1f1b2e 25%, #fffdf3 0 50%, #1f1b2e 0 75%, #fffdf3 0) 0 0 / 38px 38px; }
 
 /* ── washi tape ─────────────────────────────────────────────── */
@@ -338,5 +344,5 @@ html.js .hl:not(.is-in) { background-size: 0 100%; }
 .lite .float { animation: none; transform: rotate(var(--r0, -4deg)); }
 .lite .burst--spin, .lite .hero-scroll, .lite .cta--down .cta-arrow { animation: none; }
 .lite .pol[data-reveal]:not(.is-in) .pol-card { transform: none; }
-.lite .nb-panel.is-flip { animation: lite-fade 0.25s ease-out; }
+.lite .nb-panel.is-open { animation: lite-fade 0.25s ease-out; }
 @keyframes lite-fade { from { opacity: 0; } to { opacity: 1; } }

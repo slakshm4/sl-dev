@@ -13,7 +13,7 @@
 // ─────────────────────────────────────────────────────────────
 import type { Drawer, Piece } from "./writing-types";
 
-const soon = ["the full write-up for this one is still being assembled: sketches, screenshots, the works. come back soon."];
+const soon = ["the full write-up for this one is still being assembled: sketches, screenshots, the works. ==come back soon.=="];
 
 const caseStudies: Piece[] = [
   {
@@ -24,9 +24,9 @@ const caseStudies: Piece[] = [
     body: [
       "a personality quiz that sorts you into species based on your choices. i made it for [Atelier Town](/projects/little-town), alongside the world of _The Providence Duology_.",
       "_The Providence Duology_ began, for me, with a question: what happens when a society becomes so afraid of its own ending that it decides some lives are more worth saving than others?",
-      "it is a story about Elysia, an empire built on borrowed time, and Eden—known first only as 1415—an escaped experiment carrying the evidence of what the empire has done in the name of survival. around him is a world shaped by genetic control, inheritance, grief, and the quiet violence of progress when no one asks who pays for it.",
+      "it is a story about Elysia, an empire built on borrowed time, and Eden— known first only as 1415— an escaped experiment carrying the evidence of what the empire has done in the name of survival. around him is a world shaped by genetic control, inheritance, grief, and the quiet violence of progress when no one asks who pays for it.",
       "but it is also a story about learning how to see. about Nivara, who must confront the cruelty hidden inside her family's legacy. about the fragile work of trust after betrayal. about people from different worlds choosing, slowly and imperfectly, to build something beyond the systems that made them.",
-      "_Forsaken_ and _Redeemer_ are about rebellion. they are about what it means to refuse the future you were given—and to imagine a different one anyway.",
+      "_Forsaken_ and _Redeemer_ are about rebellion. they are about what it means to refuse the future you were given— and to imagine a different one anyway.",
       "~> an uprising is on the horizon. [which side are you on?](https://which-alien-species-are-you-quiz.vercel.app/)",
     ],
   },
@@ -42,7 +42,7 @@ const caseStudies: Piece[] = [
     blurb: "a visualizer of Karnatik and Hindustani music, making it accessible to everyone.",
     body: [
       "i built sitarify from a feeling i know well as an nri: being close to a culture, but often meeting it through fragments.",
-      "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back—a drone in the background, a raga name i half-recognize, the sense that there is a whole language of feeling i want to spend more time learning.",
+      "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back— a drone in the background, a raga name i half-recognize, the sense that there is a whole language of feeling i want to spend more time learning.",
       "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods, stories, and ways of moving. i wanted it to feel less like putting an \"Indian\" filter on music, and more like an invitation to listen differently.",
       "maybe it is also my own small way of making the distance feel a little more inhabitable.",
     ],
