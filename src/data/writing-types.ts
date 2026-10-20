@@ -20,7 +20,7 @@ export type Piece = {
   note?: string;
   /** a longer boxed note on the page (e.g. an explanation of the title) */
   noteBox?: { title?: string; body: string[] };
-  link?: { label: string; href: string; /** "string": a plucked-string text link with a handwritten line above it (for music things) */ style?: "string"; aside?: string };
+  link?: { label: string; href: string; /** "string": a plucked-string text link (music things). "ticket": an arcade-ticket link (games). both take a handwritten `aside` line above */ style?: "string" | "ticket"; aside?: string; meta?: string };
   /** numbered notes under the words. in the text, a [^1] after a word becomes a small number that jumps to note 1 (the first string here) */
   footnotes?: string[];
   /** little rubber stamps under the title ("cd in the works") */

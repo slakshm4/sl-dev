@@ -31,7 +31,18 @@ const caseStudies: Piece[] = [
     ],
     link: { label: "try it!", href: "https://slakshm4.github.io/contextomy/" },
   },
-  { slug: "sidequest-service", title: "sidequest service", kicker: "web", blurb: "indecisive? try your hand at slots!", body: soon },
+  {
+    slug: "sidequest-service",
+    title: "sidequest service",
+    kicker: "web",
+    blurb: "indecisive? try your hand at slots!",
+    body: [
+      "for the indecisive. pull the lever and the machine hands you a plan for Vancouver: an activity, a place, and how long to give it. every combination it can roll is one you can actually do.",
+      "go solo or bring friends. when a quest sounds right, print it as a ticket and send it to whoever you want to drag along.",
+      "it is dressed like an arcade cabinet because deciding what to do should feel like a game, not a group chat that goes quiet for three days. you can always ignore the machine. hate the result? blame the CPU.",
+    ],
+    link: { label: "pull the lever", href: "https://slakshm4.github.io/sidequest-service/", style: "ticket", aside: "feeling indecisive? hand it to the machine:", meta: "1 activity · 1 place · 1 duration" },
+  },
   {
     slug: "sitarify",
     title: "sitarify",
