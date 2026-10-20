@@ -12,9 +12,9 @@ const adea = getProject("adea-fellowship")!;
 // short entries from the field: only facts from the cv. swap in your own write-ups as they get written.
 const notes = [
   { when: "may 2025", where: "Northern BC", tag: "outreach", title: "the travelling roadshow", body: "interactive oral-health workshops for students in grades 4–12, as the dental hygiene representative. the oral-systemic link, and hygiene as a primary care profession.", href: "/projects/roadshow", paper: "kraft", st: "butterfly" },
-  { when: "may–aug 2025", where: "UBC Health", tag: "curriculum", title: "making curricula legible", body: "an accessibility audit and revision of materials used by 2,000+ learners across 14 health programs, plus a simplified, icon-based competency framework.", href: "/projects/che-project", paper: "newsprint", st: "heart" },
+  { when: "may–aug 2025", where: "UBC Health", tag: "curriculum", title: "making curricula accessible", body: "an accessibility audit and revision of materials used by 2,000+ learners across 14 health programs, plus a simplified, icon-based competency framework.", href: "/projects/che-project", paper: "newsprint", st: "heart" },
   { when: "ADEA academic dental careers fellowship", where: "", tag: "teaching", title: "learning to teach", body: "co-facilitating motivational interviewing instruction and interprofessional orientation, and evaluating how novice educators actually develop.", href: "/projects/adea-fellowship", paper: "ruled", st: "sparkle" },
-  { when: "jan 2024–apr 2026", where: "Vancouver", tag: "community", title: "community placements", body: "oral-health assessments and education with Union Gospel Mission, Pioneer Community Living Association, and the Elizabeth Fry Society; free oral-cancer screenings.", paper: "gingham", st: "tooth" },
+  { when: "jan 2024–apr 2026", where: "Vancouver", tag: "community", title: "community placements", body: "oral-health assessments and education with Union Gospel Mission, Pioneer Community Living Association, and the Elizabeth Fry Society; free oral-cancer screenings and debridement (SRP).", paper: "gingham", st: "tooth" },
   { when: "UBC Faculty of Dentistry", where: "", tag: "mentoring", title: "peer mentor + panelist", body: "mentored 53 junior students on study strategies and academic readiness, and sat on the year 2 and year 3 mentorship panels.", paper: "butter", st: "star" },
   { when: "Pacific Dental Conference", where: "", tag: "advocacy", title: "the disability + oral health booth", body: "representing the Canadian Society for Disability and Oral Health, sharing accessibility and disability-inclusive care strategies.", paper: "grid", st: "eye" },
 ];
@@ -124,6 +124,9 @@ const tones = ["peri", "butter", "sage", "blush"];
   .ar-list a { display: grid; grid-template-columns: 3rem 1fr auto 28px; align-items: baseline; gap: 0.2rem 1rem; padding: 0.85rem 1rem; color: var(--ink); text-decoration: none; border-bottom: 2px dashed color-mix(in srgb, var(--ink) 30%, transparent); transition: background 0.25s, padding 0.3s; }
   .ar-list li:last-child a { border-bottom: 0; }
   .ar-list a:hover, .ar-list a:focus-visible { background: color-mix(in srgb, var(--butter) 40%, transparent); padding-left: 1.5rem; }
+  /* dark mode: a deep plum paper with faint lilac dots instead of the muddy darkened kraft */
+  :root[data-theme="dark"] .ar-list.scrap--kraft::after { background-color: var(--paper-2); background-image: radial-gradient(rgba(182, 192, 246, 0.2) 1.1px, transparent 1.5px); background-size: 18px 18px; }
+  :root[data-theme="dark"] .ar-list a:hover, :root[data-theme="dark"] .ar-list a:focus-visible { background: color-mix(in srgb, var(--peri) 22%, transparent); }
   .ar-no { font: 400 0.9rem/1 var(--f-type); color: var(--ink-soft); }
   .ar-title { font: 600 clamp(1.15rem, 2.4vw, 1.5rem)/1.15 var(--f-display); letter-spacing: -0.01em; }
   .ar-meta { font: 400 0.78rem/1.2 var(--f-type); color: var(--ink-soft); }
