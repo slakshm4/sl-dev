@@ -12,6 +12,10 @@ const {
   description = "Shradha Lakshman: licensed dental hygienist, health professions educator, and curious human. portfolio, cv, and a few odd hobbies.",
   page = "",
 } = Astro.props;
+// absolute urls for link previews (imessage, email, teams, slack…): they can't read relative paths
+const origin = (Astro.site ?? new URL("https://www.shradhalakshman.com")).origin;
+const pageUrl = new URL(Astro.url.pathname, origin).href;
+const preview = `${origin}/tooth-preview.png`;
 ---
 <!doctype html>
 <html lang="en">
@@ -21,9 +25,26 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ddd7ec" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shradha Lakshman" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={preview} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="a little tooth logo and the name shradha lakshman" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={preview} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
