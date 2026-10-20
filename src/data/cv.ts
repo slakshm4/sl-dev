@@ -25,8 +25,8 @@ export type Job = { role: string; org: string; when: string; status?: "current" 
 export const jobs: Job[] = [
   {
     role: "licensed dental hygienist (part-time)",
-    org: "joyce wu dental, richmond, bc",
-    when: "aug 2026 – present",
+    org: "Joyce Wu Dental, Richmond, BC",
+    when: "aug 2026–present",
     status: "current",
     bullets: [
       "provide preventive oral healthcare and patient education in a clinical dental setting.",
@@ -36,8 +36,8 @@ export const jobs: Job[] = [
   },
   {
     role: "operations executive, programs & events",
-    org: "vancouver coworking atelier society (nonprofit)",
-    when: "sep 2025 – present",
+    org: "Vancouver Coworking Atelier Society (nonprofit)",
+    when: "sep 2025–present",
     status: "current",
     bullets: [
       "coordinate event logistics and documentation, including venues, schedules, merchandise, and program materials.",
@@ -45,9 +45,9 @@ export const jobs: Job[] = [
     ],
   },
   {
-    role: "founder, eureka: questscapes — youth digital health education project",
+    role: "founder, eureka: questscapes—youth digital health education project",
     org: "independent project",
-    when: "may 2024 – present",
+    when: "may 2024–present",
     status: "current",
     bullets: [
       "developing a gamified, evidence-informed hiv education platform for youth ages 15–24, integrating sexual-health and oral-health literacy.",
@@ -59,8 +59,8 @@ export const jobs: Job[] = [
   },
   {
     role: "collaborative health education (che) project assistant",
-    org: "ubc health, university of british columbia",
-    when: "may – aug 2025",
+    org: "UBC Health, University of British Columbia",
+    when: "may–aug 2025",
     status: "completed",
     bullets: [
       "audited accessibility and revised curriculum materials for clarity, usability, and consistency across 2,000+ learners in 14 health programs.",
@@ -70,8 +70,8 @@ export const jobs: Job[] = [
   },
   {
     role: "community-based dental hygiene practitioner (student)",
-    org: "ubc · union gospel mission · pioneer community living association · elizabeth fry society",
-    when: "jan 2024 – apr 2026",
+    org: "UBC · Union Gospel Mission · Pioneer Community Living Association · Elizabeth Fry Society",
+    when: "jan 2024–apr 2026",
     status: "completed",
     bullets: [
       "completed structured oral-health assessments and documentation with people experiencing social and structural barriers to care, following standardized protocols.",
@@ -81,8 +81,8 @@ export const jobs: Job[] = [
   },
   {
     role: "oral health educator",
-    org: "ubc · skwo:wech elementary school · s.u.c.c.e.s.s. simon ky lee care home · union gospel mission · pioneer community living association · elizabeth fry society",
-    when: "jan 2024 – apr 2026",
+    org: "UBC · Skwo:wech Elementary School · S.U.C.C.E.S.S. Simon Ky Lee Care Home · Union Gospel Mission · Pioneer Community Living Association · Elizabeth Fry Society",
+    when: "jan 2024–apr 2026",
     status: "completed",
     bullets: [
       "delivered evidence-informed oral-health education, adapting explanations and activities for different audiences while maintaining guideline fidelity.",
@@ -93,80 +93,80 @@ export const jobs: Job[] = [
 
 export const education = {
   degree: "bachelor of dental sciences (dental hygiene)",
-  school: "university of british columbia, faculty of dentistry",
-  when: "sep 2022 – may 2026 · graduated",
+  school: "University of British Columbia, Faculty of Dentistry",
+  when: "sep 2022–may 2026 · graduated",
   coursework: ["oral epidemiology", "health policy and advocacy", "preventive and community health", "professionalism", "statistics"],
   awards: [
     {
-      title: "marilyn dionne teed memorial award",
-      body: "honours the memory of marilyn dionne teed and is awarded to a graduating dental hygiene student who demonstrates outstanding integrity, dedication, loyalty, and perseverance during their undergraduate years.",
+      title: "Marilyn Dionne Teed Memorial Award",
+      body: "honours the memory of Marilyn Dionne Teed and is awarded to a graduating dental hygiene student who demonstrates outstanding integrity, dedication, loyalty, and perseverance during their undergraduate years.",
     },
     {
-      title: "eureka: questscapes — project funding",
+      title: "eureka: questscapes—project funding",
       body: "secured over $2,000 in combined seed funding and project support to develop the platform.",
     },
   ],
 };
 
 export const leadership = [
-  { role: "academic dental careers fellowship program fellow", org: "american dental education association (adea)", body: "co-facilitated motivational interviewing instruction and interprofessional orientation." },
-  { role: "dental hygiene representative", org: "2025 healthcare travelling roadshow · northern bc", body: "represented dental hygiene and shared career pathways and oral-health education with youth across northern bc." },
-  { role: "inaugural dental hygiene representative", org: "student professionalism & ethics association in dentistry, ubc", body: "contributed to equity-driven, ethics-informed student leadership." },
-  { role: "peer mentor", org: "ubc faculty of dentistry", body: "mentored 53 junior students on study strategies and academic readiness." },
-  { role: "booth representative", org: "canadian society for disability and oral health · pacific dental conference", body: "shared accessibility and disability-inclusive care strategies." },
+  { role: "academic dental careers fellowship program fellow", org: "American Dental Education Association (ADEA)", body: "co-facilitated motivational interviewing instruction and interprofessional orientation." },
+  { role: "dental hygiene representative", org: "2025 healthcare travelling roadshow · Northern BC", body: "represented dental hygiene and shared career pathways and oral-health education with youth across Northern BC." },
+  { role: "inaugural dental hygiene representative", org: "Student Professionalism & Ethics Association in Dentistry, UBC", body: "contributed to equity-driven, ethics-informed student leadership." },
+  { role: "peer mentor", org: "UBC Faculty of Dentistry", body: "mentored 53 junior students on study strategies and academic readiness." },
+  { role: "booth representative", org: "Canadian Society for Disability and Oral Health · Pacific Dental Conference", body: "shared accessibility and disability-inclusive care strategies." },
 ];
 
 export const talks = [
-  { title: "canadian oral health summit", role: "poster and oral presenter", body: "presented work evaluating fellowship activities and learner outcomes." },
-  { title: "pacific dental conference", role: "booth representative, canadian society for disability and oral health", body: "shared accessibility and disability-inclusive care strategies." },
-  { title: "mentorship panels", role: "panelist, year 2 and year 3 panels", body: "senior student mentorship panels at the ubc faculty of dentistry." },
+  { title: "Canadian Oral Health Summit", role: "poster and oral presenter", body: "presented work evaluating fellowship activities and learner outcomes." },
+  { title: "Pacific Dental Conference", role: "booth representative, Canadian Society for Disability and Oral Health", body: "shared accessibility and disability-inclusive care strategies." },
+  { title: "mentorship panels", role: "panelist, year 2 and year 3 panels", body: "senior student mentorship panels at the UBC Faculty of Dentistry." },
 ];
 
-/** formal citations keep their capitalisation on the page */
+/** formal citations, in the site's voice: lowercase titles and roles; names and acronyms keep their capitals */
 export const publications: { group: string; items: string[] }[] = [
   {
     group: "interprofessional education resources",
     items: [
-      "Collaborative Health Education Enrichment Working Group (includes Lakshman S). Interprofessional Education (IPE) Facilitator Guide. 3rd ed. Vancouver (BC): University of British Columbia Health; 2025.",
-      "Lakshman S, Editor. Session Zero – Competency Assessment of Interprofessional Teams. Vancouver (BC): UBC Health, University of British Columbia; Forthcoming.",
-      "Lakshman S, Editor. TBC on the Run – Relationship-Focused Care/Services [educational module]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
-      "Lakshman S, Editor. TBC on the Run – Collaborative Leadership for Shared Decision-Making [educational module]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
+      "Collaborative Health Education Enrichment Working Group (includes Lakshman S). interprofessional education (ipe) facilitator guide. 3rd ed. Vancouver (BC): University of British Columbia Health; 2025.",
+      "Lakshman S, editor. session zero—competency assessment of interprofessional teams. Vancouver (BC): UBC Health, University of British Columbia; forthcoming.",
+      "Lakshman S, editor. TBC on the run—relationship-focused care/services [educational module]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
+      "Lakshman S, editor. TBC on the run—collaborative leadership for shared decision-making [educational module]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
     ],
   },
   {
     group: "national framework contributions (cihc)",
     items: [
-      "Lakshman S, Designer. Canadian Interprofessional Health Collaborative (CIHC). Simplified Competency Framework for Advancing Collaboration [Internet]. Vancouver (BC): CIHC; 2025.",
-      "Lakshman S, Designer. Canadian Interprofessional Health Collaborative (CIHC). Référentiel de compétences du CPIS pour l'avancement de la collaboration en santé et services sociaux – version simplifiée [Internet]. Vancouver (BC): CIHC; 2025.",
-      "Lakshman S, French Language Editor. Canadian Interprofessional Health Collaborative (CIHC). Référentiel des compétences du CPIS pour l'avancement de la collaboration en santé et services sociaux [Internet]. Vancouver (BC): CIHC; Forthcoming.",
+      "Lakshman S, designer. Canadian Interprofessional Health Collaborative (CIHC). simplified competency framework for advancing collaboration [Internet]. Vancouver (BC): CIHC; 2025.",
+      "Lakshman S, designer. Canadian Interprofessional Health Collaborative (CIHC). référentiel de compétences du CPIS pour l'avancement de la collaboration en santé et services sociaux—version simplifiée [Internet]. Vancouver (BC): CIHC; 2025.",
+      "Lakshman S, French language editor. Canadian Interprofessional Health Collaborative (CIHC). référentiel des compétences du CPIS pour l'avancement de la collaboration en santé et services sociaux [Internet]. Vancouver (BC): CIHC; forthcoming.",
     ],
   },
   {
     group: "educational curriculum development",
     items: [
-      "Lakshman S, Designer. Collaborative Decision-Making: Interprofessional Workshop [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
-      "Lakshman S, Designer. Health Informatics: Interprofessional Workshop [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
-      "Lakshman S, Designer. iEthics Q1: Foundations of Ethical Practice [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
-      "Lakshman S, Designer. iEthics Q3: Interprofessional Ethical Decision-Making [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
-      "Lakshman S, Designer. Substance Use Education: Interprofessional Workshop [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
-      "Lakshman S, Designer. Professionalism: Interprofessional Workshop [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
+      "Lakshman S, designer. collaborative decision-making: interprofessional workshop [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
+      "Lakshman S, designer. health informatics: interprofessional workshop [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
+      "Lakshman S, designer. iEthics Q1: foundations of ethical practice [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
+      "Lakshman S, designer. iEthics Q3: interprofessional ethical decision-making [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
+      "Lakshman S, designer. substance use education: interprofessional workshop [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
+      "Lakshman S, designer. professionalism: interprofessional workshop [slide deck; internal educational resource]. Vancouver (BC): UBC Health, University of British Columbia; 2025.",
     ],
   },
   {
     group: "teaching",
     items: [
-      "Lakshman S, Lecturer. Interprofessional Education & Integrated Curriculum Orientation [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2025.",
+      "Lakshman S, lecturer. interprofessional education & integrated curriculum orientation [lecture and slides]. Vancouver (BC): UBC Faculty of Dentistry, University of British Columbia; 2025.",
     ],
   },
   {
     group: "media and knowledge translation",
     items: [
-      "Lakshman S, Student Contributor. University of British Columbia, UBC Health. 2025 UBC Health IPE Student Orientation Video [Internet]. Vancouver (BC): University of British Columbia; 2025. Available from: https://learning.media.ubc.ca/media/2025+UBC+Health+Student+Orientation+Video/0_jhxo7u68",
+      "Lakshman S, student contributor. University of British Columbia, UBC Health. 2025 UBC Health ipe student orientation video [Internet]. Vancouver (BC): University of British Columbia; 2025. available from: https://learning.media.ubc.ca/media/2025+UBC+Health+Student+Orientation+Video/0_jhxo7u68",
     ],
   },
 ];
 
 export const skills = {
-  tools: ["microsoft office", "google workspace", "figma", "rstudio", "ai-assisted / agentic coding tools (self-directed, small-project prototyping)"],
+  tools: ["Microsoft Office", "Google Workspace", "Figma", "RStudio", "ai-assisted / agentic coding tools (self-directed, small-project prototyping)"],
   certifications: ["cpr / bls"],
 };

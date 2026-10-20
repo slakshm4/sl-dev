@@ -15,47 +15,27 @@
 //             leave it out and the piece borrows its drawer's default stickers.
 //  note       a little handwritten note that sits next to the title (optional).
 //  link       a button under the piece, e.g. { label: "listen", href: "https://…" } (optional).
+//  tags       the little pills on the card and the page: ["essay"], ["short story", "free verse"]…
+//  pinned     true = the piece sits at the top of its drawer, always.
+//  the long pieces live in their own files: prose.ts (essays + stories), poems.ts ((dé)générescence), articles.ts (the three notebook tabs).
+//  every piece also accepts the mini-markup in src/lib/text.ts: _italic_, "## heading", "> pull quote", [links](/like/this).
 //
 //  per drawer: `frame` is the patterned paper around the sheet (floral · news · kraft · dots · grid),
 //  `paper` is the paper the words are written on (ruled · grid · gingham · butter · newsprint),
 //  `style` picks the typography (prose · marginalia · scraps · verse · lyrics).
 // ─────────────────────────────────────────────────────────────
 
-export type StickerName =
-  | "star" | "star-paper" | "sparkle" | "ghost" | "butterfly" | "fish" | "heart" | "eye" | "tooth" | "moon" | "cat" | "flower"
-  | "pencil" | "cloud" | "key" | "envelope" | "music" | "cassette" | "leaf" | "sun";
+export type { StickerName, Piece, Drawer } from "./writing-types";
+import type { Drawer, Piece } from "./writing-types";
+import { prosePieces } from "./prose";
+import { poemPieces } from "./poems";
+import { tabDrawers } from "./articles";
 
-export type Piece = {
-  slug: string;
-  title: string;
-  date?: string;
-  kicker?: string;
-  blurb?: string;
-  body: string[];
-  stickers?: StickerName[];
-  note?: string;
-  link?: { label: string; href: string };
-  sample?: boolean;
-};
-
-export type Drawer = {
-  slug: string;
-  title: string;
-  sub: string;
-  intro?: string;
-  tone: "peri" | "butter" | "sage" | "blush";
-  frame: "floral" | "news" | "kraft" | "dots" | "grid";
-  paper: "ruled" | "grid" | "gingham" | "butter" | "newsprint";
-  style: "prose" | "marginalia" | "scraps" | "verse" | "lyrics";
-  stickers: StickerName[];
-  pieces: Piece[];
-};
-
-export const writing: Drawer[] = [
+const words: Drawer[] = [
   {
     slug: "reflections",
     title: "reflections",
-    sub: "what school, clinic and community work have been teaching me.",
+    sub: "what school, clinic, and community work have been teaching me.",
     tone: "sage",
     frame: "floral",
     paper: "ruled",
@@ -100,34 +80,7 @@ export const writing: Drawer[] = [
     paper: "grid",
     style: "prose",
     stickers: ["pencil", "envelope", "moon", "key"],
-    pieces: [
-      {
-        slug: "first-sample",
-        title: "a sample essay",
-        date: "month year",
-        kicker: "essay",
-        blurb: "a placeholder essay: title, date, a few paragraphs.",
-        sample: true,
-        body: [
-          "the first paragraph of an essay is a promise. this one promises nothing, because it is a sample.",
-          "longer pieces work best in short paragraphs. the first letter of the opening paragraph gets a highlighter swipe automatically.",
-          "stickers sit around the edges of the page, never on the words.",
-        ],
-      },
-      {
-        slug: "second-sample",
-        title: "a sample short story",
-        date: "month year",
-        kicker: "short story",
-        blurb: "a placeholder story, to see fiction on the page.",
-        sample: true,
-        stickers: ["ghost", "moon", "key"],
-        body: [
-          "the kettle clicked off and nobody moved. (sample text: the real story starts here.)",
-          "dialogue, scene breaks and everything else work the same way: one string per paragraph.",
-        ],
-      },
-    ],
+    pieces: prosePieces,
   },
   {
     slug: "annotations-on-life",
@@ -241,6 +194,7 @@ export const writing: Drawer[] = [
     style: "verse",
     stickers: ["flower", "moon", "butterfly", "heart"],
     pieces: [
+      ...poemPieces,
       {
         slug: "first-sample",
         title: "untitled (sample)",
@@ -303,4 +257,13 @@ export const writing: Drawer[] = [
   },
 ];
 
+export const writing: Drawer[] = [...words, ...tabDrawers];
+
 export const getDrawer = (slug: string) => writing.find((d) => d.slug === slug);
+
+/** the pieces of a drawer as they appear in its grid: pinned first, anthology parts left out */
+export const shown = (d: Drawer): Piece[] => {
+  const top = d.pieces.filter((p) => !p.partOf);
+  return [...top.filter((p) => p.pinned), ...top.filter((p) => !p.pinned)];
+};
+export const pieceHref = (d: Drawer, p: Piece) => `/notebook/${d.slug}/${p.slug}`;

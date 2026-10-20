@@ -8,8 +8,8 @@ import Footer from "../components/Footer.astro";
 import CatEgg from "../components/CatEgg.astro";
 
 const {
-  title = "shradha lakshman · dental hygienist & health educator",
-  description = "shradha lakshman: licensed dental hygienist, health professions educator, and curious human. portfolio, cv and a few odd hobbies.",
+  title = "Shradha Lakshman · dental hygienist & health educator",
+  description = "Shradha Lakshman: licensed dental hygienist, health professions educator, and curious human. portfolio, cv, and a few odd hobbies.",
   page = "",
 } = Astro.props;
 ---
@@ -33,6 +33,11 @@ const {
     <script is:inline>
       (function () {
         var d = document.documentElement;
+        // "lite" = phones and tablets (coarse pointer). they skip the page-transition snapshots, the grain blend and the endless
+        // decorative loops: iOS Safari struggles with those. see the .lite rules in global.css.
+        var lite = false;
+        try { lite = matchMedia("(pointer: coarse)").matches; } catch (e) {}
+        if (lite) { try { document.startViewTransition = undefined; } catch (e) {} }
         function apply() {
           var t = "light", m = "on";
           try {
@@ -42,13 +47,14 @@ const {
           d.setAttribute("data-theme", t);
           d.setAttribute("data-motion", m);
           d.classList.add("js");
+          if (lite) d.classList.add("lite");
         }
         apply();
         if (location.pathname === "/" || location.pathname === "/index.html") d.style.setProperty("--p", "0");
         document.addEventListener("astro:after-swap", apply);
       })();
     </script>
-    <ClientRouter />
+    <ClientRouter fallback="none" />
   </head>
   <body data-page={page}>
     <a class="skip" href="#main">skip to content</a>

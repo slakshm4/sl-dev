@@ -1,0 +1,59 @@
+---
+// WriteCard.astro  ·  one box in a drawer's grid. also used for the poems inside an anthology.
+import Sticker from "./Sticker.astro";
+import { readTime, plain } from "../lib/text";
+
+const { drawer, piece, n = 0, i = 0, href, tag = "" } = Astro.props;
+const tilts = [-1.6, 1.2, -0.8, 1.7, -1.2, 0.9];
+const tapes = ["peri", "butter", "blush", "sage"];
+const pills: string[] = piece.tags ?? (piece.kicker ? [piece.kicker] : []);
+const words = piece.body.join(" ").split(/\s+/).filter(Boolean).length;
+const foot = piece.date ?? (piece.parts ? `${piece.parts.length} ${drawer.slug === "poems" ? "poems" : "pieces"}` : words >= 400 ? readTime(piece.body) : "");
+---
+<li class={`wlc wlc--${drawer.style}${piece.pinned ? " wlc--pinned" : ""}`} style={`--tilt:${tilts[(n + i) % tilts.length]}deg`} data-reveal>
+  <span class={`tape tape--${tapes[(n + i) % 4]}`} style="top:-13px;left:50%;margin-left:-44px;--r:-3deg"></span>
+  <a class="wlc-in" href={href} rel={tag || undefined}>
+    <span class={`wlc-pic paper--${drawer.paper}`} aria-hidden="true">
+      <Sticker name={(piece.stickers ?? drawer.stickers)[0]} size={58} class="wlc-st" />
+    </span>
+    <span class="wlc-body">
+      <span class="wlc-top keep-case">
+        {pills.map((t) => <span class={`chip chip--${drawer.tone}`}>{t}</span>)}
+        {piece.pinned && <span class="stamp wlc-stamp wlc-pin">pinned</span>}
+        {piece.sample && <span class="stamp wlc-stamp">sample</span>}
+        {piece.draft && <span class="stamp wlc-stamp">in the drafts</span>}
+      </span>
+      <span class="wlc-title">{piece.title}</span>
+      {piece.blurb && <span class="wlc-blurb" set:html={plain(piece.blurb)} />}
+      {foot && <span class="wlc-date keep-case">{foot}</span>}
+    </span>
+  </a>
+</li>
+
+<style is:global>
+  .wl-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 2.4rem 1.8rem; margin: 2.6rem 0 0; padding: 0; }
+  .wlc { position: relative; transform: rotate(var(--tilt)); transition: transform 0.45s cubic-bezier(0.34, 1.7, 0.5, 1); }
+  .wlc:hover, .wlc:focus-within { transform: rotate(0deg) translateY(-6px) scale(1.03); z-index: 2; }
+  .wlc-in { display: flex; flex-direction: column; height: 100%; background: #fffdf3; color: #1f1b2e; text-decoration: none; border: 2px solid #1f1b2e; border-radius: 3px; box-shadow: 4px 6px 0 var(--shadow); overflow: hidden; }
+  .wlc-pic { display: grid; place-items: center; aspect-ratio: 16 / 7; border-bottom: 2px solid #1f1b2e; }
+  .wlc-st { filter: drop-shadow(2px 3px 0 rgba(31, 27, 46, 0.28)); transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1); }
+  .wlc:hover .wlc-st, .wlc:focus-within .wlc-st { transform: rotate(-14deg) scale(1.2); }
+  .wlc-body { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.9rem 1rem 1.1rem; flex: 1; }
+  .wlc-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .wlc-stamp { --stamp: #4a58ab; --r: -3deg; font-size: 0.7rem; }
+  .wlc-pin { --stamp: #c0392b; }
+  .wlc--pinned .wlc-in { box-shadow: 5px 7px 0 var(--shadow), 0 0 0 3px #fffdf3, 0 0 0 5px #1f1b2e; }
+  .wlc-title { font: 600 1.35rem/1.15 var(--f-display); letter-spacing: -0.01em; overflow-wrap: anywhere; }
+  .wlc-blurb { font-size: 0.98rem; line-height: 1.4; color: #4c4666; }
+  .wlc-date { margin-top: auto; font: 400 0.72rem/1 var(--f-type); letter-spacing: 0.08em; color: #4c4666; }
+  /* each drawer sets its box a little differently */
+  .wlc--prose .wlc-title { font-weight: 600; }
+  .wlc--marginalia .wlc-title { font: 400 1.6rem/1.1 var(--f-hand); }
+  .wlc--marginalia .wlc-in { background: #fdf9e9; }
+  .wlc--scraps .wlc-title { font: italic 600 1.3rem/1.15 var(--f-body); }
+  .wlc--verse .wlc-title { font: italic 500 1.5rem/1.15 var(--f-display); }
+  .wlc--verse .wlc-body { align-items: center; text-align: center; }
+  .wlc--verse .wlc-top { justify-content: center; }
+  .wlc--lyrics .wlc-title { font: 400 1.2rem/1.2 var(--f-type); letter-spacing: 0; }
+  .wlc--lyrics .wlc-in { outline: 2px dashed rgba(31, 27, 46, 0.3); outline-offset: -9px; }
+</style>

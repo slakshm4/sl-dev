@@ -1,0 +1,65 @@
+---
+// StereoPoem.astro  ·  a poem split between the ears: the left-ear line and the right-ear line sit side by side.
+// the english voice (every line inside quote marks) is set in italics. the translation follows, smaller.
+import { voiceFlags, plain, esc } from "../lib/text";
+const { pairs = [], translation = [] } = Astro.props;
+const flat = (ps: [string, string][]) => ps.flat();
+const rows = (ps: [string, string][]) => {
+  const flags = voiceFlags(flat(ps));
+  return ps.map((p, i) => ({ l: p[0], r: p[1], lv: flags[i * 2], rv: flags[i * 2 + 1] }));
+};
+const main = rows(pairs);
+const tr = rows(translation);
+const line = (s: string) => esc(s);
+---
+<div class="st">
+  <div class="st-head" aria-hidden="true">
+    <span class="st-ear st-ear--l"><svg viewBox="0 0 24 24" width="1.1em" height="1.1em"><path d="M8 8a4 4 0 0 1 8 0c0 3-4 3-4 7a3 3 0 0 1-6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg> left ear</span>
+    <span class="st-ear st-ear--r">right ear <svg viewBox="0 0 24 24" width="1.1em" height="1.1em"><path d="M16 8a4 4 0 0 0-8 0c0 3 4 3 4 7a3 3 0 0 0 6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg></span>
+  </div>
+  <div class="st-rows">
+    {main.map((r) => (
+      <p class="st-row">
+        <span class={`st-l${r.lv ? " is-voice" : ""}`}><span class="sr-only">left ear: </span>{r.l}</span>
+        <span class={`st-r${r.rv ? " is-voice" : ""}`}><span class="sr-only">right ear: </span>{r.r}</span>
+      </p>
+    ))}
+  </div>
+  {tr.length > 0 && (
+    <section class="st-tr" aria-label="translation">
+      <h2 class="st-tr-h hand">translation</h2>
+      <div class="st-rows st-rows--tr">
+        {tr.map((r) => (
+          <p class="st-row">
+            <span class={`st-l${r.lv ? " is-voice" : ""}`}><span class="sr-only">left ear: </span>{r.l}</span>
+            <span class={`st-r${r.rv ? " is-voice" : ""}`}><span class="sr-only">right ear: </span>{r.r}</span>
+          </p>
+        ))}
+      </div>
+    </section>
+  )}
+</div>
+
+<style is:global>
+  .st { font: 400 1.3rem/1.5 var(--f-display); }
+  .st-head { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 0 0 1.4rem; font: 400 0.78rem/1 var(--f-type); letter-spacing: 0.12em; color: #4c4666; }
+  .st-ear { display: inline-flex; align-items: center; gap: 0.45rem; padding-bottom: 0.5rem; border-bottom: 2px dotted rgba(31, 27, 46, 0.35); }
+  .st-ear--r { justify-content: flex-end; text-align: right; }
+  .st-rows { display: grid; gap: 1.05rem; }
+  .st-row { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+  .st-r { text-align: right; }
+  .is-voice { font-style: italic; color: #3b4590; }
+  .st-tr { margin-top: 3.2rem; padding-top: 1.4rem; border-top: 2.5px dashed rgba(31, 27, 46, 0.3); }
+  .st-tr-h { margin: 0 0 1.1rem; font-size: 1.9rem; font-weight: 400; color: #4c4666; }
+  .st-rows--tr { font-size: 1.06rem; line-height: 1.45; gap: 0.7rem; color: #3a3552; }
+  @media (max-width: 640px) {
+    .st { font-size: 1.15rem; }
+    .st-head { grid-template-columns: 1fr; }
+    .st-ear--r { justify-content: flex-start; text-align: left; display: none; }
+    .st-row { grid-template-columns: 1fr; gap: 0.1rem; }
+    .st-l { padding-right: 1rem; }
+    .st-r { text-align: left; padding-left: 1.4rem; }
+    .st-rows { gap: 0.95rem; }
+    .st-rows--tr { font-size: 1rem; }
+  }
+</style>

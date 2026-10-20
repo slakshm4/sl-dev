@@ -5,9 +5,16 @@ const { text = "", as: Tag = "h1", start = 0, class: klass = "" } = Astro.props;
 const looks = ["strip--floral", "", "strip--peri strip--italic", "strip--news", "strip--blush", "strip--sage strip--italic", "strip--ink strip--italic"];
 const tilts = [-2.2, 1.4, -0.8, 2, -1.5, 0.9];
 const words = text.split(/\s+/).filter(Boolean);
+// long titles don't work as one scrap per word: break them at a colon (title / subtitle) and set each part as one strip
+const long = words.length > 5;
+const parts = long ? text.split(/(?<=:)\s+/).map((t: string) => t.trim()).filter(Boolean) : [];
 ---
-<Tag class={`strip-title ${klass}`}>
-  {words.map((w, i) => (
-    <span class={`strip ${looks[(i + start) % looks.length]}`} style={`--r:${tilts[(i + start) % tilts.length]}deg`}>{w}</span>
-  ))}
+<Tag class={`strip-title ${long ? "strip-title--long " : ""}${klass}`}>
+  {long
+    ? parts.map((t: string, i: number) => (
+        <span class={`strip strip--seg ${looks[(i * 2 + start + 1) % looks.length]}`} style={`--r:${tilts[(i + start) % tilts.length]}deg`}>{t}</span>
+      ))
+    : words.map((w: string, i: number) => (
+        <span class={`strip ${looks[(i + start) % looks.length]}`} style={`--r:${tilts[(i + start) % tilts.length]}deg`}>{w}</span>
+      ))}
 </Tag>

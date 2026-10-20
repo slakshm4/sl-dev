@@ -82,7 +82,6 @@ body {
   background-size: 28px 28px;
   color: var(--ink);
   font: 400 1.1875rem/1.62 var(--f-body);
-  text-transform: lowercase;
   transition: background-color 0.4s, color 0.4s;
 }
 .grain {
@@ -215,7 +214,7 @@ input[type="text"], textarea { cursor: text; }
   position: relative; display: inline-block; isolation: isolate;
   padding: 0.12em 0.5em 0.2em;
   font: 600 clamp(2.6rem, 7vw, 5.2rem)/1 var(--f-display);
-  letter-spacing: -0.03em; text-transform: lowercase;
+  letter-spacing: -0.03em;
   color: #1f1b2e;
   transform: rotate(var(--r, -1.5deg));
   filter: drop-shadow(2px 3px 0 var(--shadow));
@@ -231,6 +230,10 @@ input[type="text"], textarea { cursor: text; }
 .strip--sage { --strip-bg: #a2cba1; }
 .strip--blush { --strip-bg: #f2b1c6; }
 .strip--ink { --strip-bg: #1f1b2e; color: #fbf2d4; }
+/* long titles: one strip per part (title / subtitle) instead of one per word */
+.strip-title--long { display: grid; justify-items: start; gap: 0.8rem; }
+.strip--seg { display: block; max-width: 100%; text-align: left; font-size: clamp(1.8rem, 4.6vw, 3rem); line-height: 1.12; padding: 0.16em 0.55em 0.24em; overflow-wrap: anywhere; }
+.strip--seg + .strip--seg { font-size: clamp(1.3rem, 3.2vw, 2rem); }
 .strip--hand { font-family: var(--f-hand); font-weight: 400; font-size: clamp(2.6rem, 7vw, 5rem); letter-spacing: 0; padding-top: 0.05em; }
 .strip--type { font-family: var(--f-type); font-weight: 400; letter-spacing: -0.04em; font-size: clamp(2.2rem, 6vw, 4.4rem); }
 
@@ -307,3 +310,30 @@ html.js .hl:not(.is-in) { background-size: 0 100%; }
 }
 @media (pointer: coarse) { .click-star { display: none; } }
 @media (max-width: 720px) { body { font-size: 1.125rem; } }
+
+
+/* ── "lite": phones & tablets (class set by the head script in Layout.astro when the pointer is coarse) ──────────────
+   what iOS Safari struggles with, and what we do instead:
+   · svg turbulence filters (the torn paper edges) → the same look from a cheap jagged clip-path
+   · a full-screen blended grain layer          → off
+   · endless decorative loops (floating stickers, spinning burst, bobbing arrows) → still, but still tilted
+   · big toss-in reveals                         → a plain fade
+   the page-transition animation is also switched off on these devices (Layout.astro), so pages just load. */
+.lite {
+  --tear-a: polygon(0.0% 0.3%, 7.1% 0.7%, 14.3% 0.5%, 21.4% 0.8%, 28.6% 0.8%, 35.7% 0.1%, 42.9% 0.0%, 50.0% 1.1%, 57.1% 0.3%, 64.3% 0.3%, 71.4% 1.3%, 78.6% 0.6%, 85.7% 1.1%, 92.9% 0.6%, 99.0% 0.0%, 99.8% 10.0%, 99.0% 20.0%, 98.6% 30.0%, 99.2% 40.0%, 98.8% 50.0%, 98.9% 60.0%, 99.9% 70.0%, 98.8% 80.0%, 99.1% 90.0%, 100.0% 99.6%, 92.9% 100.0%, 85.7% 98.9%, 78.6% 99.4%, 71.4% 99.1%, 64.3% 98.9%, 57.1% 99.1%, 50.0% 98.8%, 42.9% 99.5%, 35.7% 99.0%, 28.6% 99.4%, 21.4% 98.8%, 14.3% 98.9%, 7.1% 99.9%, 0.2% 100.0%, 0.3% 90.0%, 1.5% 80.0%, 0.7% 70.0%, 1.0% 60.0%, 0.5% 50.0%, 0.8% 40.0%, 0.6% 30.0%, 0.6% 20.0%, 0.9% 10.0%);
+  --tear-b: polygon(0.0% 0.2%, 7.1% 0.9%, 14.3% 0.1%, 21.4% 0.6%, 28.6% 0.1%, 35.7% 0.2%, 42.9% 0.9%, 50.0% 0.2%, 57.1% 0.6%, 64.3% 0.4%, 71.4% 0.4%, 78.6% 0.4%, 85.7% 0.2%, 92.9% 0.7%, 99.9% 0.0%, 99.7% 10.0%, 100.0% 20.0%, 99.7% 30.0%, 99.6% 40.0%, 99.0% 50.0%, 99.6% 60.0%, 99.9% 70.0%, 99.7% 80.0%, 98.9% 90.0%, 100.0% 99.9%, 92.9% 99.4%, 85.7% 99.7%, 78.6% 99.4%, 71.4% 99.7%, 64.3% 99.4%, 57.1% 99.6%, 50.0% 99.4%, 42.9% 99.2%, 35.7% 99.5%, 28.6% 99.9%, 21.4% 99.9%, 14.3% 99.1%, 7.1% 99.6%, 0.2% 100.0%, 1.0% 90.0%, 0.6% 80.0%, 0.8% 70.0%, 1.0% 60.0%, 0.3% 50.0%, 0.4% 40.0%, 1.0% 30.0%, 0.1% 20.0%, 0.8% 10.0%);
+  --tear-nav: polygon(0.0% 8.7%, 5.6% 10.4%, 11.1% 11.1%, 16.7% 13.2%, 22.2% 10.4%, 27.8% 12.9%, 33.3% 0.4%, 38.9% 6.5%, 44.4% 13.2%, 50.0% 9.1%, 55.6% 12.6%, 61.1% 1.6%, 66.7% 6.6%, 72.2% 3.5%, 77.8% 7.6%, 83.3% 8.0%, 88.9% 0.2%, 94.4% 3.0%, 99.8% 0.0%, 99.5% 50.0%, 100.0% 89.3%, 94.4% 97.8%, 88.9% 88.8%, 83.3% 98.1%, 77.8% 91.4%, 72.2% 98.2%, 66.7% 100.0%, 61.1% 87.8%, 55.6% 97.1%, 50.0% 97.0%, 44.4% 86.2%, 38.9% 87.8%, 33.3% 95.9%, 27.8% 86.5%, 22.2% 92.5%, 16.7% 90.5%, 11.1% 97.1%, 5.6% 86.8%, 0.4% 100.0%, 0.6% 50.0%);
+}
+.lite .grain { display: none; }
+.lite .scrap::before, .lite .strip::before { filter: none; clip-path: var(--tear-a); }
+.lite .scrap::after, .lite .strip::after { filter: none; clip-path: var(--tear-b); }
+.lite .nav-paper::before, .lite .nav-paper::after { filter: none; clip-path: var(--tear-nav); }
+:root.lite[data-theme="dark"] .scrap--news::after { filter: brightness(0.55) saturate(0.7); }
+:root.lite[data-theme="dark"] .scrap--kraft::after { filter: brightness(0.7); }
+.lite .stamp { filter: none; }
+.lite #ns-map .ns-viewport .ns-t0 circle, .lite #ns-map .ns-viewport .ns-t1 rect { filter: none; }
+.lite .float { animation: none; transform: rotate(var(--r0, -4deg)); }
+.lite .burst--spin, .lite .hero-scroll, .lite .cta--down .cta-arrow { animation: none; }
+.lite .pol[data-reveal]:not(.is-in) .pol-card { transform: none; }
+.lite .nb-panel.is-flip { animation: lite-fade 0.25s ease-out; }
+@keyframes lite-fade { from { opacity: 0; } to { opacity: 1; } }

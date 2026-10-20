@@ -1,88 +1,133 @@
 ---
 // notebook/[drawer]/[piece].astro  ·  one piece of writing, set on its own paper with a few stickers.
-// the words live in src/data/writing.ts. the layout adapts to the drawer's `style`:
-// prose · marginalia · scraps · verse · lyrics.
+// the words live in src/data (writing.ts, prose.ts, poems.ts, articles.ts). the layout adapts to the drawer's `style`:
+// prose · marginalia · scraps · verse · lyrics. anthologies show their pieces as cards; stereo poems show both ears.
 import Layout from "../../../layouts/Layout.astro";
 import SectionTitle from "../../../components/SectionTitle.astro";
 import Sticker from "../../../components/Sticker.astro";
-import { writing } from "../../../data/writing";
+import Blocks from "../../../components/Blocks.astro";
+import WriteCard from "../../../components/WriteCard.astro";
+import StereoPoem from "../../../components/StereoPoem.astro";
+import { writing, shown, pieceHref } from "../../../data/writing";
+import { inline, plain, readTime } from "../../../lib/text";
 
 export function getStaticPaths() {
   const out = [];
   writing.forEach((drawer, di) => {
-    drawer.pieces.forEach((piece, pi) => {
+    const find = (slug) => drawer.pieces.find((x) => x.slug === slug);
+    drawer.pieces.forEach((piece) => {
+      const anthology = piece.partOf ? find(piece.partOf) : undefined;
+      const parts = (piece.parts ?? []).map(find).filter(Boolean);
+      const list = anthology ? anthology.parts.map(find).filter(Boolean) : shown(drawer);
+      const pi = list.findIndex((x) => x.slug === piece.slug);
       out.push({
         params: { drawer: drawer.slug, piece: piece.slug },
-        props: { drawer, piece, di, pi, prev: drawer.pieces[pi - 1], next: drawer.pieces[pi + 1] },
+        props: { drawer, piece, di, pi, prev: list[pi - 1], next: list[pi + 1], anthology, parts },
       });
     });
   });
   return out;
 }
-const { drawer, piece, di, pi, prev, next } = Astro.props;
+const { drawer, piece, di, pi, prev, next, anthology, parts } = Astro.props;
 const stickers = (piece.stickers ?? drawer.stickers).slice(0, 4);
 const sizes = [74, 60, 66, 54];
+const pills = piece.tags ?? (piece.kicker ? [piece.kicker] : []);
+const words = piece.body.join(" ").split(/\s+/).filter(Boolean).length;
+const read = words >= 400 ? readTime(piece.body) : "";
 // songs: a first line like "[chorus]" becomes a small heading
-const blocks = piece.body.map((b) => {
+const sections = piece.body.map((b) => {
   const lines = b.split("\n");
   const m = /^\[(.+)\]$/.exec(lines[0]);
   return m ? { label: m[1], text: lines.slice(1).join("\n") } : { label: null, text: b };
 });
 const scrapFrames = ["dots", "kraft", "grid", "dots"];
 const tapes = ["peri", "butter", "blush", "sage"];
+const back = anthology ? { href: pieceHref(drawer, anthology), label: anthology.title } : drawer.tab ? { href: `/notebook#${drawer.tab}`, label: drawer.title } : { href: `/notebook/${drawer.slug}`, label: drawer.title };
+const hasSheet = piece.stereo || piece.body.length > 0;
+const lead = (piece.blurb ?? piece.body[0] ?? drawer.sub).replace(/^#+\s*/, "");
+const desc = plain(lead).slice(0, 170);
+const ext = (h) => /^https?:/.test(h);
 ---
-<Layout page="notebook" title={`${piece.title} · ${drawer.title} · shradha lakshman`} description={piece.blurb ?? drawer.sub}>
+<Layout page="notebook" title={`${plain(piece.title)} · ${drawer.title} · Shradha Lakshman`} description={desc}>
   <article class={`wrap page-section pc pc--${drawer.style}`}>
-    <p class="pc-back"><a href={`/notebook/${drawer.slug}`}><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M21 12H4M11 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg> {drawer.title}</a></p>
+    <p class="pc-back"><a href={back.href}><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M21 12H4M11 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg> {back.label}</a></p>
 
     <header class="pc-head">
       <p class="pc-meta keep-case">
-        {piece.kicker && <span class={`chip chip--${drawer.tone}`}>{piece.kicker}</span>}
+        {pills.map((t) => <span class={`chip chip--${drawer.tone}`}>{t}</span>)}
         {piece.date && <span class="stamp" style="--r:-2deg">{piece.date}</span>}
+        {read && <span class="stamp" style="--r:2deg;--stamp:var(--sage-deep)">{read}</span>}
+        {(piece.stamps ?? []).map((t, k) => <span class="stamp" style={`--r:${k % 2 ? 3 : -2}deg;--stamp:#4a58ab`}>{t}</span>)}
         {piece.sample && <span class="stamp" style="--r:3deg;--stamp:#4a58ab">sample</span>}
+        {piece.draft && <span class="stamp" style="--r:3deg;--stamp:#4a58ab">in the drafts</span>}
       </p>
       <SectionTitle text={piece.title} as="h1" start={di + pi + 1} class="pc-title" />
-      {piece.note && <p class="pc-note hand scrap scrap--grid">{piece.note}</p>}
+      {piece.note && <p class="pc-note hand scrap scrap--grid" set:html={inline(piece.note)} />}
     </header>
 
+    {piece.noteBox && (
+      <aside class="pc-box scrap scrap--dots" aria-label={piece.noteBox.title ?? "a note"}>
+        <span class="tape tape--butter" style="top:-12px;left:12%;--r:-4deg"></span>
+        {piece.noteBox.title && <h2 class="pc-box-h hand">{piece.noteBox.title}</h2>}
+        {piece.noteBox.body.map((b) => <p class="hand" set:html={inline(b)} />)}
+      </aside>
+    )}
+
+    {hasSheet && (
     <div class="pc-wrap">
       {stickers.map((s, k) => (
         <span class={`pc-st pc-st--${k + 1}`} aria-hidden="true"><Sticker name={s} size={sizes[k]} class="float" style={`--r0:${k % 2 ? -8 : 6}deg;--r1:${k % 2 ? 10 : -12}deg;--d:${5 + k}s`} /></span>
       ))}
 
-      {drawer.style === "scraps" ? (
+      {drawer.style === "scraps" && !piece.stereo ? (
         <div class="pc-scraps">
-          {blocks.map((b, k) => (
+          {sections.map((b, k) => (
             <p class={`pc-scrap scrap scrap--${scrapFrames[(k + di) % 4]}`} style={`--rot:${[-2, 1.4, -0.8, 2][k % 4]}deg`}>
               <span class={`tape tape--${tapes[(k + 1) % 4]}`} style="top:-12px;left:42%;--r:3deg"></span>
-              {b.text}
+              <span set:html={inline(b.text)} />
             </p>
           ))}
         </div>
       ) : (
         <div class={`pc-sheet scrap scrap--${drawer.frame}`}>
           <div class={`pc-plate pc-plate--${drawer.paper}`}>
-            <div class={`pc-body pc-body--${drawer.style}`}>
-              {blocks.map((b) => (
-                <section class="pc-blk">
-                  {b.label && <h2 class="pc-sec keep-case">{b.label}</h2>}
-                  {drawer.style === "marginalia" ? <p><span class="hl">{b.text}</span></p> : <p>{b.text}</p>}
-                </section>
-              ))}
-            </div>
+            {piece.stereo ? (
+              <div class="pc-body pc-body--stereo">
+                <StereoPoem pairs={piece.stereo.pairs} translation={piece.stereo.translation} />
+              </div>
+            ) : (
+              <div class={`pc-body pc-body--${drawer.style}${piece.look === "stream" ? " pc-body--stream" : ""}`}>
+                {sections.map((b) => (
+                  <section class="pc-blk">
+                    {b.label && <h2 class="pc-sec keep-case">{b.label}</h2>}
+                    {drawer.style === "marginalia" ? <p><span class="hl" set:html={inline(b.text)} /></p> : <Blocks items={[b.text]} />}
+                  </section>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
     </div>
+    )}
+
+    {parts.length > 0 && (
+      <section class="pc-parts" aria-labelledby="pc-parts-h">
+        <h2 id="pc-parts-h" class="hand pc-parts-h">inside</h2>
+        <ul class="wl-grid" role="list">
+          {parts.map((p, n) => <WriteCard drawer={drawer} piece={p} n={n} i={di} href={pieceHref(drawer, p)} />)}
+        </ul>
+      </section>
+    )}
 
     {piece.link && (
-      <p class="pc-link"><a class="btn" href={piece.link.href} target="_blank" rel="noopener">{piece.link.label}<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg></a></p>
+      <p class="pc-link"><a class="btn" href={piece.link.href} {...(ext(piece.link.href) ? { target: "_blank", rel: "noopener" } : {})}>{piece.link.label}<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>{ext(piece.link.href) && <span class="sr-only"> (opens in a new tab)</span>}</a></p>
     )}
 
     {(prev || next) && (
-      <nav class="pc-nav" aria-label="more from this drawer">
-        {prev ? <a class="pc-nav-a" href={`/notebook/${drawer.slug}/${prev.slug}`}><span>← before</span><strong>{prev.title}</strong></a> : <span></span>}
-        {next ? <a class="pc-nav-a pc-nav-a--next" href={`/notebook/${drawer.slug}/${next.slug}`}><span>next →</span><strong>{next.title}</strong></a> : <span></span>}
+      <nav class="pc-nav" aria-label={anthology ? `more from ${anthology.title}` : "more from this drawer"}>
+        {prev ? <a class="pc-nav-a" href={pieceHref(drawer, prev)} rel="prev"><span>← before</span><strong>{prev.title}</strong></a> : <span></span>}
+        {next ? <a class="pc-nav-a pc-nav-a--next" href={pieceHref(drawer, next)} rel="next"><span>next →</span><strong>{next.title}</strong></a> : <span></span>}
       </nav>
     )}
   </article>
@@ -95,6 +140,13 @@ const tapes = ["peri", "butter", "blush", "sage"];
   .pc-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; margin: 0; }
   .pc-title { grid-column: 1; }
   .pc-note { grid-column: 2; margin: 0; max-width: 17rem; padding: 0.8rem 1.1rem 0.9rem; font-size: 1.45rem; line-height: 1.15; transform: rotate(3deg); --scrap-bg: #fdf9e9; }
+
+  /* a longer note on the page, taped on like a post-it */
+  .pc-box { position: relative; max-width: 46rem; margin: 0 auto 2.6rem; padding: 1.3rem 1.6rem 1.4rem; transform: rotate(-0.7deg); --scrap-bg: #fdf9e9; }
+  .pc-box-h { margin: 0 0 0.4rem; font-size: 2.1rem; font-weight: 400; line-height: 1; }
+  .pc-box p { margin: 0 0 0.6rem; font-size: 1.65rem; line-height: 1.12; }
+  .pc-box p:last-child { margin-bottom: 0; }
+  .pc-box em { font-style: normal; text-decoration: underline wavy var(--peri); text-underline-offset: 0.18em; }
 
   .pc-wrap { position: relative; max-width: 46rem; margin: 0 auto; }
   .pc-st { position: absolute; z-index: 3; pointer-events: none; }
@@ -125,10 +177,18 @@ const tapes = ["peri", "butter", "blush", "sage"];
   .pc-plate--butter { background-color: #fbf0c4; background-image: radial-gradient(rgba(31, 27, 46, 0.16) 1.2px, transparent 1.6px); background-size: 16px 16px; }
   .pc-plate--newsprint { background-image: linear-gradient(rgba(253, 249, 233, 0.88), rgba(253, 249, 233, 0.88)), var(--tile-newsprint); }
 
-  .pc-body { font: 400 1.22rem/2rem var(--f-body); }
+  .pc-body { font: 400 1.22rem/2rem var(--f-body); overflow-wrap: break-word; }
   .pc-blk + .pc-blk { margin-top: 2rem; }
   .pc-body p { margin: 0; white-space: pre-line; }
-  .pc-body--prose .pc-blk:first-child p::first-letter { float: left; margin: 0.1rem 0.5rem 0 0; padding: 0 0.15em; font: italic 600 3.6rem/0.95 var(--f-display); background: linear-gradient(transparent 55%, rgba(244, 215, 119, 0.85) 55%); }
+  .pc-body--prose .pc-blk:first-child .blk-p:first-child::first-letter { float: left; margin: 0.1rem 0.5rem 0 0; padding: 0 0.15em; font: italic 600 3.6rem/0.95 var(--f-display); background: linear-gradient(transparent 55%, rgba(244, 215, 119, 0.85) 55%); }
+  /* longer reading (essays, stories): a little tighter than the ruled-paper rhythm, easier on the eyes */
+  .pc-body--prose { font-size: 1.2rem; line-height: 1.78; }
+  .pc-body--prose .pc-blk + .pc-blk { margin-top: 1.15rem; }
+  .pc-body--prose .pc-blk:has(> .blk-h) { margin-top: 2.4rem; }
+  .pc-body--prose .pc-blk:has(> .blk-h) + .pc-blk { margin-top: 0.4rem; }
+  .pc-body--stream { font-size: 1.16rem; line-height: 1.8; letter-spacing: 0.005em; }
+  .pc-body--stream .pc-blk + .pc-blk { margin-top: 1.6rem; }
+  .pc-body--stream .pc-blk + .pc-blk::before { content: "~"; display: block; margin: 0 0 0.5rem; font: 400 1.4rem/1 var(--f-type); color: #4c4666; letter-spacing: 0.3em; }
 
   /* marginalia: a note under the headline, highlighted like a printed clipping */
   .pc-body--marginalia { font-size: 1.12rem; line-height: 1.75; }
@@ -139,22 +199,27 @@ const tapes = ["peri", "butter", "blush", "sage"];
   .pc-body--verse { text-align: center; font: italic 400 1.5rem/1.65 var(--f-display); }
   .pc-body--verse .pc-blk + .pc-blk { margin-top: 2.2rem; }
   .pc-body--verse .pc-blk + .pc-blk::before { content: "· · ·"; display: block; margin-bottom: 1.2rem; font: 400 0.9rem/1 var(--f-type); letter-spacing: 0.5em; color: #4c4666; }
+  .pc-body--stereo { font: inherit; text-align: left; }
+  .pc-plate:has(.pc-body--stereo) { --pad-x: clamp(1rem, 4vw, 2.6rem); }
 
   /* lyrics: typewritten lyric sheet with perforated edge */
   .pc-plate--butter:has(.pc-body--lyrics) { outline: 2px dashed rgba(31, 27, 46, 0.35); outline-offset: -11px; }
   .pc-body--lyrics { font: 400 1.05rem/1.9 var(--f-type); }
   .pc-body--lyrics .pc-blk + .pc-blk { margin-top: 1.6rem; }
-  .pc-sec { display: inline-block; margin: 0 0 0.4rem; padding: 0.15rem 0.7rem; font: 400 0.78rem/1.6 var(--f-type); letter-spacing: 0.14em; text-transform: uppercase; color: #fffdf3; background: #1f1b2e; border-radius: 2px; }
+  .pc-sec { display: inline-block; margin: 0 0 0.4rem; padding: 0.15rem 0.7rem; font: 400 0.78rem/1.6 var(--f-type); letter-spacing: 0.14em; color: #fffdf3; background: #1f1b2e; border-radius: 2px; }
 
   /* scraps: every paragraph is its own torn bit of paper */
   .pc-scraps { display: grid; gap: 2.2rem; padding: 1rem 0 0.5rem; }
   .pc-scrap { margin: 0; max-width: 30rem; padding: 1.2rem 1.5rem 1.3rem; font: 400 1.7rem/1.2 var(--f-hand); white-space: pre-line; transform: rotate(var(--rot)); color: #1f1b2e; --scrap-bg: #fbf0c4; }
   .pc-scrap:nth-child(even) { justify-self: end; }
+
+  .pc-parts { margin-top: 3.4rem; }
+  .pc-parts-h { margin: 0; font-size: 2.2rem; font-weight: 400; color: var(--ink-soft); }
   .pc-link { margin: 2.4rem 0 0; text-align: center; }
   .pc-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 4rem; padding-top: 1.4rem; border-top: 2.5px dashed color-mix(in srgb, var(--ink) 30%, transparent); }
   .pc-nav-a { display: grid; gap: 0.2rem; color: var(--ink); text-decoration: none; max-width: 48%; }
   .pc-nav-a span { font-size: 1.1rem; color: var(--ink-soft); }
-  .pc-nav-a strong { font: 600 1.15rem/1.2 var(--f-display); text-decoration: underline; text-decoration-color: var(--peri); text-decoration-thickness: 2px; text-underline-offset: 0.25em; }
+  .pc-nav-a strong { font: 600 1.15rem/1.2 var(--f-display); text-decoration: underline; text-decoration-color: var(--peri); text-decoration-thickness: 2px; text-underline-offset: 0.25em; overflow-wrap: anywhere; }
   .pc-nav-a--next { text-align: right; margin-left: auto; }
 
   @media (max-width: 900px) { .pc-st--2, .pc-st--4 { display: none; } .pc-st--1 { right: 2%; } .pc-st--3 { right: 4%; } }
@@ -162,8 +227,10 @@ const tapes = ["peri", "butter", "blush", "sage"];
     .pc-head { grid-template-columns: 1fr; }
     .pc-note { grid-column: 1; justify-self: start; transform: rotate(-1.5deg); }
     .pc-body { font-size: 1.1rem; }
+    .pc-body--prose { font-size: 1.12rem; line-height: 1.7; }
     .pc-body--verse { font-size: 1.3rem; }
     .pc-plate--ruled { padding-left: calc(var(--pad-x) + 0.8rem); }
     .pc-st--1 { top: -40px; } .pc-st--1 svg { width: 52px; height: 52px; } .pc-st--3 svg { width: 46px; height: 46px; }
+    .pc-box p { font-size: 1.45rem; }
   }
 </style>

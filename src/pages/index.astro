@@ -8,7 +8,7 @@ import Burst from "../components/Burst.astro";
 import Eyes from "../components/Eyes.astro";
 import { projects } from "../data/projects";
 ---
-<Layout page="home" title="shradha lakshman · dental hygienist, health educator, curious human">
+<Layout page="home" title="Shradha Lakshman · dental hygienist, health educator, curious human">
   <!-- 1 · hero: just the tooth, turning in place. scroll and it flies up into the nav. -->
   <section class="hero" aria-label="welcome">
     <div class="hero-stage" aria-hidden="true">
@@ -23,20 +23,20 @@ import { projects } from "../data/projects";
       <Sticker name="moon" size={50} class="hero-s hero-moon float" />
       <p class="hero-label scrap scrap--dots keep-case"><span class="tape tape--blush" style="top:-15px;right:22px;--r:5deg"></span>no. 26 · upper left first molar</p>
       <p class="hero-note hand scrap scrap--grid">
-        <span>the little extra bump? that's the cusp of carabelli.</span>
+        <span>the little extra bump? that's the cusp of Carabelli.</span>
         <HandArrow shape="arc" size={190} class="hero-note-arrow" />
       </p>
-      <span class="stamp hero-stamp keep-case">BDSc dental hygiene · ubc · 2026</span>
+      <span class="stamp hero-stamp keep-case">bdsc dental hygiene · UBC · 2026</span>
     </div>
     <p class="hero-scroll hand" aria-hidden="true"><span>scroll</span><HandArrow shape="spiral" size={46} /></p>
   </section>
 
   <!-- 2 · the hello -->
   <section class="intro wrap" aria-labelledby="hello">
-    <h1 id="hello" class="sr-only">hi, my name is shradha lakshman</h1>
+    <h1 id="hello" class="sr-only">hi, my name is Shradha Lakshman</h1>
     <div class="intro-type" data-typewriter aria-hidden="true">
       <span class="tw-greet"><span class="tw-text" lang="en">hi, my name is</span><span class="tw-cursor"></span></span>
-      <span class="tw-name">shradha<br class="tw-br" /> lakshman</span>
+      <span class="tw-name">Shradha<br class="tw-br" /> Lakshman</span>
       <svg class="tw-underline" data-reveal viewBox="0 0 520 26" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 16C60 6 120 22 190 12S330 4 400 14S490 18 516 8" /></svg>
     </div>
     <p class="tagline"><span class="hl">a seeker of knowledge, perspective, and possibility.</span></p>
@@ -125,7 +125,7 @@ import { projects } from "../data/projects";
   @media (max-width: 760px) {
     .hero-eyes { right: 6%; top: 15%; width: 96px; height: auto; }
     .hero-stamp { display: none; }
-    .hero-note { left: 0.9rem; top: calc(50svh - 2.25rem - var(--bsc) * 0.5 - 5.2rem); width: 12.2rem; font-size: 1.22rem; padding: 0.5rem 0.8rem 0.6rem; }
+    .hero-note { left: 0.9rem; top: max(5.4rem, calc(50svh - 2.25rem - var(--bsc) * 0.5 - 5.2rem)); width: 12.2rem; font-size: 1.22rem; padding: 0.5rem 0.8rem 0.6rem; }
     .hero-note-arrow { left: 56%; top: 96%; width: 84px; height: auto; transform: rotate(-4deg); transform-origin: 0 0; }
     .hero-note .hero-note-arrow path { stroke-width: 2.4; }
     .hero-star { display: none; }
@@ -134,6 +134,7 @@ import { projects } from "../data/projects";
     .tw-br { display: inline; }
     .tw-name { font-size: clamp(3.4rem, 17vw, 5.2rem); }
   }
+  @media (max-width: 760px) and (max-height: 640px) { .hero-note { width: 11.4rem; font-size: 1.08rem; } }
   @media (max-width: 520px) {
     .pols { grid-template-columns: 1fr; gap: 3rem; }
     .pol:nth-child(even) .pol-card, .pol:nth-child(odd) .pol-card { width: min(100%, 290px); }

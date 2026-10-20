@@ -1,5 +1,7 @@
 // records.ts · the turntable on /say-hi. there is no player: the record just spins (one turn every 9 seconds),
 // and picking a song swaps the pointillist cover on the platter + shows your note and the links out.
+import { store } from "./util";
+
 export function initRecords() {
   const root = document.querySelector<HTMLElement>("[data-records]");
   if (!root) return;
@@ -50,15 +52,85 @@ export function initRecords() {
 }
 
 /** two truths and a lie: tap a note to guess which one is fibbing. (set `lie` in say-hi.astro to enable a reveal) */
+// ── how many people guessed each one ─────────────────────────────────────────
+// an anonymous tally: three numbers (one per fact) kept by abacus (abacus.jasoncameron.dev), a free counting
+// service that needs no account. nothing about the visitor is sent. each browser is counted once.
+// to turn the stats off: set TALLY to "". to move to your own counter later: change TALLY / NS and the two fetches below.
+const TALLY = "https://abacus.jasoncameron.dev";
+const NS = "shradhalakshman-com";
+const MIN_GUESSES = 5; // percentages only show once this many people have guessed (a "91%" from 2 people means nothing)
+const factKey = (i: number) => `two-truths-${i + 1}`;
+
+async function tally(action: "hit" | "get", i: number): Promise<number | null> {
+  if (!TALLY) return null;
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 4500);
+  try {
+    const r = await fetch(`${TALLY}/${action}/${NS}/${factKey(i)}`, { signal: ctl.signal });
+    if (r.status === 404) return 0; // never guessed yet
+    if (!r.ok) return null;
+    const j = await r.json();
+    return typeof j.value === "number" ? j.value : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export function initFacts() {
   document.querySelectorAll<HTMLElement>("[data-facts]").forEach((root) => {
     const notes = [...root.querySelectorAll<HTMLElement>("[data-fact]")];
     const lie = root.dataset.lie === "" ? -1 : Number(root.dataset.lie);
     const foot = root.querySelector<HTMLElement>("[data-foot]");
     const stampFor = (n: HTMLElement) => n.querySelector<HTMLElement>(".ttl-stamp")!;
+    const tallyNote = root.querySelector<HTMLElement>("[data-tally]");
+    let counted = store.get("ttl-voted") !== null;
+
+    // fetch (and, for a first-time guesser, add to) the tally, then show "guessed by n% of people" on each note
+    const showStats = async (guess: number) => {
+      const first = !counted;
+      counted = true; // set straight away so a double tap can't count twice
+      let counts: (number | null)[];
+      if (first) {
+        const mine = await tally("hit", guess);
+        if (mine === null) counted = false; // the counter couldn't be reached: try again on the next guess
+        else store.set("ttl-voted", String(guess));
+        counts = await Promise.all(notes.map((_, j) => (j === guess ? Promise.resolve(mine) : tally("get", j))));
+      } else {
+        counts = await Promise.all(notes.map((_, j) => tally("get", j)));
+      }
+      const hide = () => {
+        notes.forEach((n) => { const el = n.querySelector<HTMLElement>("[data-stat]"); if (el) el.hidden = true; });
+        if (tallyNote) tallyNote.hidden = true;
+      };
+      if (counts.some((c) => c === null)) return hide();
+      const total = (counts as number[]).reduce((a, b) => a + b, 0);
+      if (total < MIN_GUESSES) {
+        hide();
+        if (tallyNote) {
+          tallyNote.textContent = "you're one of the first to guess. come back later to see how everyone else did.";
+          tallyNote.hidden = false;
+        }
+        return;
+      }
+      notes.forEach((n, j) => {
+        const el = n.querySelector<HTMLElement>("[data-stat]");
+        if (!el) return;
+        const pct = Math.round(((counts[j] as number) / total) * 100);
+        el.innerHTML = `guessed by <strong>${pct}%</strong> of people`;
+        el.hidden = false;
+      });
+      if (tallyNote) {
+        tallyNote.textContent = `based on ${total} guesses so far. the tally is anonymous: three numbers, no names.`;
+        tallyNote.hidden = false;
+      }
+    };
+
     notes.forEach((n, i) => {
       const btn = n.querySelector<HTMLButtonElement>("[data-guess]")!;
       btn.addEventListener("click", () => {
+        void showStats(i);
         notes.forEach((m, j) => {
           const b = m.querySelector<HTMLButtonElement>("[data-guess]")!;
           b.setAttribute("aria-pressed", String(i === j));

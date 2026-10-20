@@ -16,7 +16,7 @@ export const branches: Branch[] = [
     tone: "peri",
     groups: [
       { label: "identity", items: ["authenticity", "connection", "being", "inclusion", "autonomy", "curiosity"] },
-      { label: "social ecology", items: ["community", "my village", "kitty cats", "powerpoint nights", "themed parties", "atelier"] },
+      { label: "social ecology", items: ["community", "my village", "kitty cats", "PowerPoint nights", "themed parties", "atelier"] },
       { label: "systems", items: ["ideation", "catalysts", "innovation", "joy of creating", "self-expression", "iteration"] },
       { label: "dynamic affects", items: ["sparkle factor", "spite", "whimsy", "novelty", "nostalgia", "allegiance"] },
     ],
@@ -25,8 +25,8 @@ export const branches: Branch[] = [
     label: "personal interests",
     tone: "butter",
     groups: [
-      { label: "fandom / storytelling / lore", items: ["archive of our own", "speculative xenobiology", "making memes", "young justice + dc batfam dynamics"] },
-      { label: "visual", items: ["atelier", "graphic design + aesthetic curation", "painting", "iphone + digicam photography"] },
+      { label: "fandom / storytelling / lore", items: ["Archive of Our Own", "speculative xenobiology", "making memes", "Young Justice + DC batfam dynamics"] },
+      { label: "visual", items: ["atelier", "graphic design + aesthetic curation", "painting", "iPhone + digicam photography"] },
       { label: "adventures + competition", items: ["web-based games", "interactive narrative / tabletop games", "travel"] },
       { label: "auditory", items: ["musicianship", "opera", "raves", "consumption and critique of music"] },
       { label: "media + linguistics", items: ["audiobooks", "conlang development", "podcasts"] },
@@ -37,7 +37,7 @@ export const branches: Branch[] = [
     tone: "sage",
     groups: [
       { label: "atmospheric anchors", items: ["light rain against glass", "fresh laundry", "soft fabric", "sunlight", "sound of distant traffic", "waves washing ashore", "constellations", "cloud watching"] },
-      { label: "cuisines of the world", items: ["allen's fruit punch", "la québec butter chicken poutine", "dovetail sangria", "breka turkey provolone sandwich", "gisèle lalonde sachi's shawarma platter", "radiatori alla vodka", "jaeyook bokkeum", "brown sugar bubble tea oreos"] },
+      { label: "cuisines of the world", items: ["Allen's fruit punch", "la Québec butter chicken poutine", "Dovetail sangria", "Breka turkey provolone sandwich", "Gisèle Lalonde Sachi's shawarma platter", "radiatori alla vodka", "jaeyook bokkeum", "brown sugar bubble tea Oreos"] },
     ],
   },
   {

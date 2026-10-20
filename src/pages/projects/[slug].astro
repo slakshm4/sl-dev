@@ -4,6 +4,8 @@ import Layout from "../../layouts/Layout.astro";
 import SectionTitle from "../../components/SectionTitle.astro";
 import Sticker from "../../components/Sticker.astro";
 import HandArrow from "../../components/HandArrow.astro";
+import Blocks from "../../components/Blocks.astro";
+import { plain } from "../../lib/text";
 import { projects } from "../../data/projects";
 
 export function getStaticPaths() {
@@ -15,8 +17,11 @@ export function getStaticPaths() {
 const { project, n, prev, next } = Astro.props;
 const num = String(n).padStart(2, "0");
 const tapes = ["peri", "butter", "blush", "sage"];
+// unwritten projects keep their first line for the lede only; written ones show the whole story
+const paras = project.written ? project.story : project.story.slice(1);
+const ext = (h: string) => /^https?:/.test(h);
 ---
-<Layout page="project" title={`${project.title} · shradha lakshman`} description={project.note}>
+<Layout page="project" title={`${plain(project.title)} · Shradha Lakshman`} description={project.note}>
   <article class="wrap page-section pj">
     <p class="pj-back"><a href="/#up-to"><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M21 12H4M11 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg> back to the polaroids</a></p>
 
@@ -28,11 +33,12 @@ const tapes = ["peri", "butter", "blush", "sage"];
           {project.year && <li><span class="stamp" style="--r:-3deg">{project.year}</span></li>}
           {project.place && <li><span class="stamp" style="--r:2deg;--stamp:var(--sage-deep)">{project.place}</span></li>}
           {project.role && <li><span class="chip chip--blush">{project.role}</span></li>}
+          {(project.badges ?? []).map((b: string, k: number) => <li><span class="stamp" style={`--r:${k % 2 ? 3 : -2}deg;--stamp:#4a58ab`}>{b}</span></li>)}
         </ul>
 
         <div class="pj-story">
           <p class="pj-lede hand">{project.note}</p>
-          {project.story.length > 1 && project.story.slice(project.written ? 0 : 1).map((p) => <p>{p}</p>)}
+          <Blocks items={paras} />
           {!project.written && (
             <p class="pj-wip scrap scrap--dots">
               <span class="stamp keep-case" style="--r:-5deg">in the drafts</span>
@@ -44,7 +50,9 @@ const tapes = ["peri", "butter", "blush", "sage"];
         {project.links && (
           <ul class="pj-links">
             {project.links.map((l) => (
-              <li><a class="btn" href={l.href} target="_blank" rel="noopener">{l.label}<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+              <li><a class="btn" href={l.href} {...(ext(l.href) ? { target: "_blank", rel: "noopener" } : {})}>{l.label}{ext(l.href)
+                ? <svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                : <svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>}{ext(l.href) && <span class="sr-only"> (opens in a new tab)</span>}</a></li>
             ))}
           </ul>
         )}
@@ -77,6 +85,8 @@ const tapes = ["peri", "butter", "blush", "sage"];
   .pj-title .strip { font-size: clamp(2rem, 5.2vw, 3.8rem); }
   .pj-meta { list-style: none; display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 0 0 1.8rem 0.3rem; align-items: center; }
   .pj-story { max-width: 40rem; font-size: 1.22rem; line-height: 1.62; margin-left: 0.3rem; }
+  .pj-story .blk-p { margin: 0 0 1.15rem; }
+  .pj-story .blk-quote { margin: 1.8rem 0; }
   .pj-lede { font-size: 1.9rem; line-height: 1.02; margin: 0 0 1.2rem; color: var(--ink); }
   .pj-wip { display: flex; align-items: center; gap: 1.1rem; padding: 1.1rem 1.3rem; margin-top: 1.4rem; --scrap-bg: var(--paper); font-size: 1.05rem; line-height: 1.45; }
   .pj-wip .stamp { flex: none; }

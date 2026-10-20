@@ -1,0 +1,40 @@
+---
+// Blocks.astro  ·  turns a list of strings (the mini-markup from src/lib/text.ts) into headings, paragraphs, pull quotes,
+// lists and pictures. used for pieces of writing and for project write-ups.
+import { toBlocks } from "../lib/text";
+const { items = [], marks = false } = Astro.props;
+const blocks = toBlocks(items);
+---
+{blocks.map((b) => {
+  if (b.t === "h2") return <h2 class="blk-h" set:html={b.html} />;
+  if (b.t === "h3") return <h3 class="blk-h3" set:html={b.html} />;
+  if (b.t === "quote") return <blockquote class="blk-quote"><p set:html={b.html} /></blockquote>;
+  if (b.t === "ul") return <ul class="blk-list">{b.items.map((x) => <li set:html={x} />)}</ul>;
+  if (b.t === "ol") return <ol class="blk-list">{b.items.map((x) => <li set:html={x} />)}</ol>;
+  if (b.t === "img") return (
+    <figure class="blk-fig">
+      <a class="blk-fig-in" href={b.src} target="_blank" rel="noopener">
+        <img src={b.src} alt={b.alt} loading="lazy" decoding="async" />
+        <span class="sr-only"> (open the full-size picture in a new tab)</span>
+      </a>
+      {b.cap && <figcaption set:html={b.cap} />}
+    </figure>
+  );
+  return <p class="blk-p" set:html={b.html} />;
+})}
+
+<style is:global>
+  .blk-h { margin: 2.6rem 0 0.7rem; font: italic 600 clamp(1.5rem, 3.4vw, 1.95rem)/1.15 var(--f-display); letter-spacing: -0.01em; }
+  .blk-h > :first-child, .blk-h { background: linear-gradient(transparent 64%, rgba(244, 215, 119, 0.65) 64% 92%, transparent 92%) no-repeat 0 0 / 100% 100%; display: inline; padding: 0 0.15em 0 0; }
+  .blk-h3 { margin: 1.8rem 0 0.4rem; font: 600 1.25rem/1.2 var(--f-display); }
+  .blk-p { margin: 0; }
+  .blk-quote { margin: 2rem 0; padding: 0.3rem 0 0.3rem 1.3rem; border-left: 4px solid var(--peri); }
+  .blk-quote p { margin: 0; font: italic 500 clamp(1.3rem, 3vw, 1.6rem)/1.35 var(--f-display); }
+  .blk-list { margin: 0.9rem 0 0.9rem 1.5rem; padding: 0; }
+  .blk-list li { margin: 0.55rem 0; padding-left: 0.3rem; }
+  .blk-fig { margin: 2.2rem 0; text-align: center; }
+  .blk-fig-in { display: inline-block; max-width: 100%; padding: 0.55rem 0.55rem 0.4rem; background: #fffdf3; border: 2px solid #1f1b2e; box-shadow: 5px 6px 0 var(--shadow); transform: rotate(-0.8deg); }
+  .blk-fig:nth-of-type(even) .blk-fig-in { transform: rotate(0.9deg); }
+  .blk-fig img { display: block; max-width: 100%; max-height: min(78vh, 46rem); width: auto; height: auto; margin: 0 auto; border: 1.5px solid #1f1b2e; }
+  .blk-fig figcaption { margin: 0.75rem auto 0; max-width: 34rem; font: 400 0.82rem/1.4 var(--f-type); color: #4c4666; text-align: center; }
+</style>

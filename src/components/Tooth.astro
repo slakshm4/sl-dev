@@ -77,7 +77,7 @@ const tape = "M30 100L192 97L188 102L192 108L188 113L192 119L30 122L34 116L30 11
 </div>
 
 <style is:global>
-  /* big in the hero (--p: 0) → docked in the nav (--p: 1). --p is set on <html> by boot.ts */
+  /* big in the hero (--p: 0) → docked in the nav (--p: 1). tooth.ts writes the transform/opacity straight onto the elements as you scroll (--p only matters before scripts load) */
   :root { --p: 1; --tw: clamp(250px, min(46vw, 54svh), 500px); }
   .tooth-wrap {
     position: fixed; z-index: 110; top: 2px; left: 50%; width: var(--tw); height: var(--tw);

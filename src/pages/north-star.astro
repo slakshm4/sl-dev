@@ -20,7 +20,7 @@ const total = (b: (typeof branches)[number]) => b.groups.reduce((n, g) => n + g.
 
 // the paragraph is set as an upside-down right triangle: every line is a little shorter than the one above it (widest at the top,
 // narrowing to a point), and the lines are right-aligned, so the right edge is straight and the left edge slants. lines are cut here, at build time, by character count; font size scales with the box (cqw).
-const para = `i've come to question the idea of a single "north star." it suggests a clarity of purpose that doesn't match how most people actually operate—driven, more often, by an overlapping set of motivations, some of which remain unclear even to themselves (enter pluralism, human motivation theory, etc). so instead, i've diagrammed mine as a system of interconnected nodes, sized in proportion to their pull. depicted below is a smorgasbord of things that fuel me, that guide me, and that keep me grounded.`;
+const para = `i've come to question the idea of a single "north star." it suggests a clarity of purpose that doesn't match how most people actually operate—driven, more often, by an overlapping set of motivations, some of which remain unclear even to themselves (enter pluralism, human motivation theory, etc.). so instead, i've diagrammed mine as a system of interconnected nodes, sized in proportion to their pull. depicted below is a smorgasbord of things that fuel me, that guide me, and that keep me grounded.`;
 function cut(words: string[], widest: number, narrowest: number, k: number) {
   const lines: string[] = [];
   let w = 0;
@@ -54,19 +54,19 @@ function triangle(text: string) {
 }
 const lines = triangle(para);
 ---
-<Layout page="north-star" title="north star · shradha lakshman" description="a map of what fuels, guides and grounds me: drawn as a system of interconnected nodes instead of a single north star.">
+<Layout page="north-star" title="north star · Shradha Lakshman" description="a map of what fuels, guides, and grounds me: drawn as a system of interconnected nodes instead of a single north star.">
   <div class="wrap page-section">
     <header class="ns-head">
       <div class="ns-head-l">
         <SectionTitle text="north star" />
         <p class="hand ns-aside">there isn't just one. <HandArrow shape="wave" size={50} class="ns-aside-arrow" /></p>
-        <ul class="ns-legend" aria-label="how to read the map">
-          <li><span class="lg lg--0" aria-hidden="true"></span> macro: the big pulls</li>
-          <li><span class="lg lg--1" aria-hidden="true"></span> meso: what they're made of</li>
-          <li><span class="lg lg--3" aria-hidden="true"></span> micro: the small, specific things</li>
-          <li><span class="lg lg--link" aria-hidden="true"></span> dashed thread: these overlap</li>
-        </ul>
       </div>
+      <ul class="ns-legend" aria-label="how to read the map">
+        <li><span class="lg lg--0" aria-hidden="true"></span> macro: the big pulls</li>
+        <li><span class="lg lg--1" aria-hidden="true"></span> meso: what they're made of</li>
+        <li><span class="lg lg--3" aria-hidden="true"></span> micro: the small, specific things</li>
+        <li><span class="lg lg--link" aria-hidden="true"></span> dashed thread: these overlap</li>
+      </ul>
       <div class="tri-wrap">
         <Sticker name="star" size={44} class="tri-star float" />
         <div class="tri" role="group" aria-label="about this map">
@@ -137,10 +137,13 @@ const lines = triangle(para);
 </Layout>
 
 <style is:global>
-  .ns-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 470px); gap: 1.5rem 2.5rem; align-items: start; margin-bottom: 2.5rem; }
-  .ns-aside { margin: 0.2rem 0 1.4rem 0.4rem; display: flex; align-items: flex-end; gap: 0.2rem; }
-  .ns-aside-arrow { transform: rotate(-70deg) translateY(10px); }
-  .ns-legend { list-style: none; display: grid; gap: 0.5rem; font-size: 1rem; color: var(--ink-soft); margin-left: 0.4rem; }
+  .ns-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 470px); grid-template-rows: auto 1fr; grid-template-areas: "l tri" "leg tri"; gap: 0 2.5rem; align-items: start; margin-bottom: 2.5rem; }
+  .ns-head-l { grid-area: l; }
+  .tri-wrap { grid-area: tri; }
+  .ns-aside { margin: 0.2rem 0 1.4rem 0.4rem; display: flex; align-items: flex-end; gap: 0.5rem; }
+  /* the wave arrow's tip points down; turned so that on desktop it aims at the star beside the paragraph */
+  .ns-aside-arrow { transform: rotate(-88deg); transform-origin: 30% 60%; }
+  .ns-legend { grid-area: leg; list-style: none; display: grid; gap: 0.5rem; font-size: 1rem; color: var(--ink-soft); margin: 0 0 0 0.4rem; }
   .ns-legend li { display: flex; align-items: center; gap: 0.7rem; }
   .lg { display: inline-block; flex: none; border: 2px solid var(--ink); background: var(--butter); }
   .lg--0 { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); }
@@ -182,7 +185,7 @@ const lines = triangle(para);
   /* mermaid's svg, restyled as paper cut-outs */
   #ns-map .ns-viewport .mindmap-node { cursor: grab; }
   #ns-map .ns-viewport .mindmap-node rect, #ns-map .ns-viewport .mindmap-node circle, #ns-map .ns-viewport .mindmap-node path.label-container { stroke: #1f1b2e; stroke-width: 2.2px; }
-  #ns-map .ns-viewport .mindmap-node text, #ns-map .ns-viewport .mindmap-node tspan { fill: #1f1b2e; stroke: none; text-anchor: middle; text-transform: lowercase; }
+  #ns-map .ns-viewport .mindmap-node text, #ns-map .ns-viewport .mindmap-node tspan { fill: #1f1b2e; stroke: none; text-anchor: middle; }
   #ns-map .ns-viewport .mindmap-node .background { display: none; }
   #ns-map .ns-viewport .ns-t0 circle { fill: #1f1b2e; stroke: #fffdf3; stroke-width: 4px; filter: url(#rip-fine); }
   #ns-map .ns-viewport .ns-t0 text, #ns-map .ns-viewport .ns-t0 tspan { fill: #fbf2d4; font: italic 600 34px/1 var(--f-display); }
@@ -234,7 +237,10 @@ const lines = triangle(para);
   .ol-x { font: 600 1rem/1 var(--f-body); color: #4a58ab; }
 
   @media (max-width: 880px) {
-    .ns-head { grid-template-columns: 1fr; }
+    .ns-head { grid-template-columns: 1fr; grid-template-rows: auto; grid-template-areas: "l" "tri" "leg"; gap: 1.2rem 0; }
+    .ns-legend { margin-top: 0.8rem; }
+    /* single column: the paragraph sits right below, so the arrow points straight down at it */
+    .ns-aside-arrow { transform: rotate(-25deg); transform-origin: 50% 40%; }
     .tri-wrap { justify-self: center; max-width: 470px; }
     #ns-map .ns-viewport { height: 62svh; }
   }

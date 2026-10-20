@@ -1,20 +1,20 @@
 ---
 // notebook/[drawer]/index.astro  ·  one drawer of the words section: a grid of boxes, one per piece.
-// the drawers and their pieces live in src/data/writing.ts.
+// the drawers and their pieces live in src/data/writing.ts (and prose.ts, poems.ts). case studies, ephemera and trials
+// don't get a drawer page: their cards live on the notebook page and open the pieces directly.
 import Layout from "../../../layouts/Layout.astro";
 import SectionTitle from "../../../components/SectionTitle.astro";
-import Sticker from "../../../components/Sticker.astro";
 import HandArrow from "../../../components/HandArrow.astro";
-import { writing } from "../../../data/writing";
+import WriteCard from "../../../components/WriteCard.astro";
+import { writing, shown, pieceHref } from "../../../data/writing";
 
 export function getStaticPaths() {
-  return writing.map((drawer, i) => ({ params: { drawer: drawer.slug }, props: { drawer, i } }));
+  return writing.filter((d) => !d.tab).map((drawer, i) => ({ params: { drawer: drawer.slug }, props: { drawer, i } }));
 }
 const { drawer, i } = Astro.props;
-const tilts = [-1.6, 1.2, -0.8, 1.7, -1.2, 0.9];
-const tapes = ["peri", "butter", "blush", "sage"];
+const list = shown(drawer);
 ---
-<Layout page="notebook" title={`${drawer.title} · notebook · shradha lakshman`} description={drawer.sub}>
+<Layout page="notebook" title={`${drawer.title} · notebook · Shradha Lakshman`} description={drawer.sub}>
   <div class="wrap page-section wl">
     <p class="wl-back"><a href="/notebook#words"><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M21 12H4M11 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg> back to the notebook</a></p>
     <SectionTitle text={drawer.title} as="h1" start={i + 2} />
@@ -22,25 +22,7 @@ const tapes = ["peri", "butter", "blush", "sage"];
     {drawer.intro && <p class="wl-intro">{drawer.intro}</p>}
 
     <ul class={`wl-grid wl-grid--${drawer.style}`} role="list">
-      {drawer.pieces.map((p, n) => (
-        <li class={`wlc wlc--${drawer.style}`} style={`--tilt:${tilts[(n + i) % tilts.length]}deg`} data-reveal>
-          <span class={`tape tape--${tapes[(n + i) % 4]}`} style="top:-13px;left:50%;margin-left:-44px;--r:-3deg"></span>
-          <a class="wlc-in" href={`/notebook/${drawer.slug}/${p.slug}`}>
-            <span class={`wlc-pic paper--${drawer.paper}`} aria-hidden="true">
-              <Sticker name={(p.stickers ?? drawer.stickers)[0]} size={58} class="wlc-st" />
-            </span>
-            <span class="wlc-body">
-              <span class="wlc-top keep-case">
-                {p.kicker && <span class={`chip chip--${drawer.tone}`}>{p.kicker}</span>}
-                {p.sample && <span class="stamp wlc-stamp">sample</span>}
-              </span>
-              <span class="wlc-title">{p.title}</span>
-              {p.blurb && <span class="wlc-blurb">{p.blurb}</span>}
-              {p.date && <span class="wlc-date keep-case">{p.date}</span>}
-            </span>
-          </a>
-        </li>
-      ))}
+      {list.map((p, n) => <WriteCard drawer={drawer} piece={p} n={n} i={i} href={pieceHref(drawer, p)} />)}
       <li class="wlc-ghost" aria-hidden="true">
         <span class="hand">the next one is still on the desk.</span>
       </li>
@@ -53,27 +35,5 @@ const tapes = ["peri", "butter", "blush", "sage"];
   .wl-back a { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--ink); text-underline-offset: 0.25em; }
   .wl-sub { margin: -0.4rem 0 0.4rem 0.4rem; display: flex; align-items: flex-end; gap: 0.3rem; font-size: 1.7rem; color: var(--ink-soft); }
   .wl-intro { max-width: 52ch; margin: 0.6rem 0 0 0.4rem; font-size: 1.15rem; line-height: 1.55; }
-  .wl-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 2.4rem 1.8rem; margin: 2.6rem 0 0; padding: 0; }
-  .wlc { position: relative; transform: rotate(var(--tilt)); transition: transform 0.45s cubic-bezier(0.34, 1.7, 0.5, 1); }
-  .wlc:hover, .wlc:focus-within { transform: rotate(0deg) translateY(-6px) scale(1.03); z-index: 2; }
-  .wlc-in { display: flex; flex-direction: column; height: 100%; background: #fffdf3; color: #1f1b2e; text-decoration: none; border: 2px solid #1f1b2e; border-radius: 3px; box-shadow: 4px 6px 0 var(--shadow); overflow: hidden; }
-  .wlc-pic { display: grid; place-items: center; aspect-ratio: 16 / 7; border-bottom: 2px solid #1f1b2e; }
-  .wlc-st { filter: drop-shadow(2px 3px 0 rgba(31, 27, 46, 0.28)); transition: transform 0.5s cubic-bezier(0.34, 1.7, 0.5, 1); }
-  .wlc:hover .wlc-st, .wlc:focus-within .wlc-st { transform: rotate(-14deg) scale(1.2); }
-  .wlc-body { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.9rem 1rem 1.1rem; flex: 1; }
-  .wlc-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
-  .wlc-stamp { --stamp: #4a58ab; --r: -3deg; font-size: 0.7rem; }
-  .wlc-title { font: 600 1.35rem/1.15 var(--f-display); letter-spacing: -0.01em; }
-  .wlc-blurb { font-size: 0.98rem; line-height: 1.4; color: #4c4666; }
-  .wlc-date { margin-top: auto; font: 400 0.72rem/1 var(--f-type); letter-spacing: 0.08em; color: #4c4666; }
-  /* each drawer sets its box a little differently */
-  .wlc--prose .wlc-title { font-weight: 600; }
-  .wlc--marginalia .wlc-title { font: 400 1.6rem/1.1 var(--f-hand); }
-  .wlc--marginalia .wlc-in { background: #fdf9e9; }
-  .wlc--scraps .wlc-title { font: italic 600 1.3rem/1.15 var(--f-body); }
-  .wlc--verse .wlc-title { font: italic 500 1.5rem/1.15 var(--f-display); }
-  .wlc--verse .wlc-body { align-items: center; text-align: center; }
-  .wlc--lyrics .wlc-title { font: 400 1.2rem/1.2 var(--f-type); letter-spacing: 0; }
-  .wlc--lyrics .wlc-in { outline: 2px dashed rgba(31, 27, 46, 0.3); outline-offset: -9px; }
   .wlc-ghost { display: grid; place-items: center; min-height: 12rem; padding: 1rem; border: 2.5px dashed color-mix(in srgb, var(--ink) 40%, transparent); border-radius: 6px; color: var(--ink-soft); font-size: 1.6rem; text-align: center; transform: rotate(1deg); }
 </style>

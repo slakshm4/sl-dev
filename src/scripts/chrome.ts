@@ -10,10 +10,13 @@ function sync() {
   document.querySelectorAll<HTMLElement>('[data-toggle="theme"]').forEach((b) => {
     b.setAttribute("aria-pressed", String(dark));
     b.setAttribute("aria-label", dark ? "switch to light mode" : "switch to dark mode");
+    b.title = dark ? "switch to light mode" : "switch to dark mode";
   });
   document.querySelectorAll<HTMLElement>('[data-toggle="motion"]').forEach((b) => {
     b.setAttribute("aria-pressed", String(off));
-    b.setAttribute("aria-label", off ? "resume motion" : "pause motion");
+    const label = off ? "resume motion" : "pause motion";
+    b.setAttribute("aria-label", label);
+    b.title = off ? "animations are paused. tap to bring back the turning tooth, floating stickers, and page effects" : "pause the animations (turning tooth, floating stickers, page effects)";
   });
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#16132a" : "#ddd7ec");
 }

@@ -1,9 +1,12 @@
 // ─────────────────────────────────────────────────────────────
 //  notebook.ts  ·  the four sections of /notebook (there is no "all" tab)
-//  each entry is a card. add `href` once an entry has its own page (`external: true` for other websites).
+//  each entry is a card. `href` is the page it opens (`external: true` for other websites).
+//  case studies, ephemera and trials are built from articles.ts (one card = one article page): add cards there.
 //  the writing drawers (reflections, prose, poems…) live in writing.ts: that's where your pieces go.
 //  status: "draft" shows a "in the drafts" stamp. delete it when it's live.
 // ─────────────────────────────────────────────────────────────
+
+import { tabDrawers } from "./articles";
 
 export type Entry = { title: string; blurb?: string; tag: string; href?: string; external?: boolean; status?: "draft" };
 export type Section = {
@@ -12,6 +15,18 @@ export type Section = {
   hint: string;
   tone: "peri" | "butter" | "sage" | "blush";
   groups: { label?: string; entries: Entry[] }[];
+};
+
+// the cards in case studies / ephemera / trials come from articles.ts: each one is its own page
+const fromDrawer = (slug: string): Entry[] => {
+  const d = tabDrawers.find((x) => x.slug === slug)!;
+  return d.pieces.map((p) => ({
+    title: p.title,
+    blurb: p.blurb,
+    tag: p.kicker ?? slug,
+    href: `/notebook/${d.slug}/${p.slug}`,
+    ...(p.draft ? { status: "draft" as const } : {}),
+  }));
 };
 
 export const notebook: Section[] = [
@@ -24,7 +39,7 @@ export const notebook: Section[] = [
       {
         label: "learnings",
         entries: [
-          { title: "reflections", blurb: "what school, clinic and community work have been teaching me.", tag: "learnings", href: "/notebook/reflections" },
+          { title: "reflections", blurb: "what school, clinic, and community work have been teaching me.", tag: "learnings", href: "/notebook/reflections" },
           { title: "e-portfolio", blurb: "why do felines have canines? and further intellectual inquiry", tag: "e-portfolio", href: "https://blogs.ubc.ca/ydofelineshavecanines", external: true },
         ],
       },
@@ -49,56 +64,22 @@ export const notebook: Section[] = [
   {
     id: "case-studies",
     label: "case studies",
-    hint: "things i have made: a junk journal of projects, with sketches, screenshots and prototypes",
+    hint: "things i have made: a junk journal of projects, with sketches, screenshots, and prototypes",
     tone: "butter",
-    groups: [
-      {
-        entries: [
-          { title: "what species are you", tag: "quiz", status: "draft" },
-          { title: "wall of vinyls", tag: "web", status: "draft" },
-          { title: "melodious d20 for melody", tag: "tabletop", status: "draft" },
-          { title: "portable photo booth using raspberry pi", tag: "hardware", status: "draft" },
-          { title: "joeldi centre for human approximation", tag: "world-building", status: "draft" },
-          { title: "v2 appreciation digital mural", tag: "web", status: "draft" },
-          { title: "sitarify", blurb: "a visualizer of karnatik and hindustani music, making it accessible to everyone.", tag: "music", status: "draft" },
-          { title: "contextomy", blurb: "blackout poetry reimagined.", tag: "web", status: "draft" },
-          { title: "activity randomizer / slots", tag: "web", status: "draft" },
-          { title: "hydraulic press simulator with water bottles", tag: "simulation", status: "draft" },
-          { title: "vancouver clocks themed pomodoro", tag: "web", status: "draft" },
-          { title: "iq (ill-advised quackery) test", blurb: "the institute of quizzical inquiry, dept. of impractical intelligence and questionology.", tag: "quiz", status: "draft" },
-        ],
-      },
-    ],
+    groups: [{ entries: fromDrawer("case-studies") }],
   },
   {
     id: "ephemera",
     label: "ephemera",
     hint: "things i have gathered",
     tone: "sage",
-    groups: [
-      {
-        entries: [
-          { title: "scrapbook / moodboard", blurb: "pinterest-pilled.", tag: "moodboard", status: "draft" },
-          { title: "fan casts", tag: "fandom", status: "draft" },
-          { title: "powerpoint night presentations", blurb: "memories.", tag: "memories", status: "draft" },
-        ],
-      },
-    ],
+    groups: [{ entries: fromDrawer("ephemera") }],
   },
   {
     id: "trials",
     label: "trials",
-    hint: "things i have tried: trials, errors and investigations",
+    hint: "things i have tried: trials, errors, and investigations",
     tone: "blush",
-    groups: [
-      {
-        entries: [
-          { title: "oxford comma dilemma", blurb: "native vs ESL battle royale", tag: "investigation", status: "draft" },
-          { title: "tastebud tango travel test", blurb: "because apparently lemons and limes taste different.", tag: "taste test", status: "draft" },
-          { title: "where does substitution go too far?", blurb: "vegan cooking edition.", tag: "kitchen", status: "draft" },
-          { title: "sidequesting as a hobby in and of itself", tag: "field work", status: "draft" },
-        ],
-      },
-    ],
+    groups: [{ entries: fromDrawer("trials") }],
   },
 ];
