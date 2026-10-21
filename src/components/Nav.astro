@@ -58,8 +58,11 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
 
 <!-- a handwritten note under the accessibility button. it scrolls away with the page (not fixed). screen readers hear it as the button's description instead of as loose text on every page. -->
 <aside class="a11y-note" aria-hidden="true" data-no-gloss>
-  <HandArrow shape="arc" size={46} class="a11y-note-arrow" />
-  <p class="a11y-note-p" id="a11y-note-text">this site is mostly WCAG AA <span style="white-space:nowrap">compliant—</span> click the button for the OpenDyslexic font and screen-reader legibility. alt text is also available!</p>
+  <span class="a11y-note-paper"></span>
+  <div class="a11y-note-in">
+    <HandArrow shape="arc" size={46} class="a11y-note-arrow" />
+    <p class="a11y-note-p" id="a11y-note-text">this site is mostly WCAG AA compliant— click the button for the OpenDyslexic font and screen-reader legibility. alt text is also available!</p>
+  </div>
 </aside>
 
 <style is:global>
@@ -111,19 +114,22 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
   @media (min-width: 1680px) { .a11y-btn { padding: 0 1rem 0 0.7rem; } .a11y-btn-label { display: inline; } }
   @media (max-width: 880px) { .a11y-btn { left: 0.75rem; } }
 
-  /* the note under the accessibility button: a line of handwriting in a strip the page makes room for (see --note-h), so it never covers content. it scrolls away with the page. */
-  :root { --note-h: 4.3rem; }
-  .a11y-note {
-    position: absolute; z-index: 90; top: calc(var(--header-h) + 0.7rem); left: calc(var(--gutter) + 0.35rem); right: var(--gutter);
-    max-width: 33rem; display: flex; align-items: flex-start; gap: 0.5rem; pointer-events: none;
-    transform: rotate(-0.8deg); transform-origin: top left;
-  }
-  .a11y-note-arrow { flex: none; transform: rotate(180deg); margin-top: -0.4rem; }
-  .a11y-note-p { margin: 0.5rem 0 0; font: 400 1.5rem/1.05 var(--f-hand); color: var(--ink); letter-spacing: 0.01em; }
+  /* the note under the accessibility button: a torn paper strip taped under the nav (same paper as the nav, so the words always sit on a clean background).
+     the page makes room for it (--note-h, see global.css main padding + home hero), and it scrolls away with the page. */
+  :root { --note-h: 4.9rem; }
+  .a11y-note { position: absolute; z-index: 90; top: calc(var(--header-h) - 12px); left: 0; right: 0; height: calc(var(--note-h) + 12px); pointer-events: none; overflow-x: clip; }
+  .a11y-note-paper { position: absolute; inset: 0; filter: drop-shadow(0 3px 0 var(--shadow)); }
+  .a11y-note-paper::before { content: ""; position: absolute; inset: -10px -30px -3px -30px; background: var(--chalk); filter: url(#rip); }
+  .a11y-note-paper::after  { content: ""; position: absolute; inset: -10px -30px 0 -30px; background: var(--paper); filter: url(#rip-fine); }
+  .a11y-note-in { position: relative; display: flex; align-items: flex-start; gap: 0.5rem; max-width: 58rem; padding: 1.55rem var(--gutter) 0 calc(var(--gutter) + 0.35rem); }
+  .a11y-note-arrow { flex: none; transform: rotate(180deg); margin-top: -0.3rem; }
+  .a11y-note-p { margin: 0.2rem 0 0; font: 400 1.5rem/1.05 var(--f-hand); color: var(--ink); letter-spacing: 0.01em; transform: rotate(-0.6deg); }
   /* wide screens: the button grows a label, so push the arrow under the middle of it */
-  @media (min-width: 1680px) { .a11y-note { left: calc(var(--gutter) + 3.4rem); } }
-  /* phones and small tablets: the words wrap onto a few lines */
-  @media (max-width: 880px) { :root { --note-h: 4.9rem; } .a11y-note { left: 1.1rem; right: 1rem; } .a11y-note-p { font-size: 1.3rem; } }
+  @media (min-width: 1680px) { .a11y-note-in { padding-left: calc(var(--gutter) + 3.4rem); } }
+  @media (max-width: 1000px) { .a11y-note-p { font-size: 1.35rem; } }
+  /* phones: the words wrap onto four lines */
+  @media (max-width: 880px) { :root { --note-h: 6.2rem; } .a11y-note-in { padding-left: 1.1rem; padding-right: 1rem; } .a11y-note-p { font-size: 1.2rem; } }
+  @media (max-width: 340px) { :root { --note-h: 7rem; } .a11y-note-p { font-size: 1.1rem; } }
   @media print { .a11y-note { display: none; } }
   /* in accessible mode the motion switch is pointless (everything is already still) */
   :root[data-a11y="on"] .tool[data-toggle="motion"] { display: none; }

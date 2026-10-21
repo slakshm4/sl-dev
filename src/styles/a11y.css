@@ -164,8 +164,7 @@ html.js[data-a11y="on"] .hl { background-size: 100% 100% !important; }
 :root[data-a11y="on"] .gl-tape { display: none; }
 :root[data-a11y="on"] .gl-h { font-style: normal; font-weight: 700; }
 
-/* the handwritten note under the accessibility button: plain, upright, readable text in accessible mode */
-:root[data-a11y="on"] { --note-h: 6.4rem; }
-:root[data-a11y="on"] .a11y-note { transform: none; max-width: 36rem; }
-:root[data-a11y="on"] .a11y-note-arrow { transform: rotate(180deg); }
-:root[data-a11y="on"] .a11y-note-p { font: 400 0.95rem/1.4 var(--f-body); letter-spacing: 0; margin-top: 0.2rem; max-width: 29rem; background: var(--paper); border: 2px solid var(--ink); border-radius: 6px; padding: 0.3rem 0.6rem; }
+/* the note under the accessibility button invites people to switch accessible mode on, so once it is on the note (and the room the page made for it) goes away.
+   screen readers still get its words as the button's description. */
+:root[data-a11y="on"] { --note-h: 0px; }
+:root[data-a11y="on"] .a11y-note { display: none; }
