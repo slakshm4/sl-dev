@@ -19,7 +19,7 @@ const above = index % 2 === 0; // alternate: note above (arrow points down) / no
     <span class={`tape ${tapes[index % tapes.length]}`} style="top:-13px;left:50%;margin-left:-48px;--r:-3deg"></span>
     <span class={`pol-pic paper--${project.paper}`}>
       {project.image ? (
-        <img src={project.image} alt="" loading="lazy" />
+        <img src={project.image} alt={project.imageAlt ?? `cover picture for ${project.title}`} loading="lazy" />
       ) : (
         <Sticker name={project.sticker} size={96} class="pol-sticker" />
       )}

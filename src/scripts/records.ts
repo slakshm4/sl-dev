@@ -26,6 +26,7 @@ export function initRecords() {
     panels.forEach((p) => (p.hidden = p.dataset.panel !== id));
     const btn = buttons.find((b) => b.dataset.song === id)!;
     const src = btn.dataset.art || "";
+    if (art) art.alt = btn.dataset.alt || "album cover";
     root.style.setProperty("--song-tone", btn.dataset.tone || "var(--peri)");
     if (art && disc) {
       if (animate && document.documentElement.dataset.motion !== "off") {

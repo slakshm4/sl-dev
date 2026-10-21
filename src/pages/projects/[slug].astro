@@ -65,7 +65,7 @@ const ext = (h: string) => /^https?:/.test(h);
         <div class={`pj-pol`}>
           <span class={`tape tape--${tapes[n % 4]}`} style="top:-13px;left:50%;margin-left:-48px;--r:-4deg"></span>
           <div class={`pj-pic paper--${project.paper}`}>
-            {project.image ? <img src={project.image} alt="" /> : <Sticker name={project.sticker} size={150} class="pj-sticker float" />}
+            {project.image ? <img src={project.image} alt={project.imageAlt ?? `cover picture for ${project.title}`} /> : <Sticker name={project.sticker} size={150} class="pj-sticker float" />}
           </div>
           <p class="pj-cap">{project.title}</p>
         </div>

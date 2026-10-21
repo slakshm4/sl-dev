@@ -106,7 +106,7 @@ const stats = [
             <div class="tt-plinth"></div>
             <div class="platter" data-disc>
               <div class="spinner">
-                <img class="art" data-art hidden alt="" width="480" height="480" />
+                <img class="art" data-art hidden alt="album cover" width="480" height="480" />
                 <span class="grooves"></span>
                 <span class="label"></span>
                 <span class="hole"></span>
@@ -141,7 +141,7 @@ const stats = [
         <ol class="tracks" aria-label="tracklist">
           {list.map((s) => (
             <li>
-              <button type="button" data-song={s.id} data-art={s.art} data-tone={s.tone} aria-pressed="false" aria-controls={`song-${s.id}`}>
+              <button type="button" data-song={s.id} data-art={s.art} data-alt={`album cover for ${s.title}${s.artist ? ", " + s.artist : ""}, shown as a pointillist drawing on the spinning record`} data-tone={s.tone} aria-pressed="false" aria-controls={`song-${s.id}`}>
                 <span class="tr-n keep-case">{s.n}</span>
                 <span class="tr-t">{s.title}</span>
                 <span class="tr-a">{s.artist || s.language}</span>

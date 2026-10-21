@@ -18,6 +18,8 @@ export type Project = {
   paper: PaperKind;
   sticker: string;
   image?: string;
+  /** describe the picture for screen readers (used when `image` is set) */
+  imageAlt?: string;
   /** paragraphs shown on the project page. the mini-markup from src/lib/text.ts works here (_italic_, [links](/page), "## heading",
    *  "> pull quote", and pictures: '![alt text](/images/file.webp "caption")') */
   story: string[];
