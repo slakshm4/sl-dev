@@ -4,6 +4,7 @@ import { initChrome } from "./chrome";
 import { initTooth } from "./tooth";
 import { initReveal } from "./reveal";
 import { initSprites } from "./sprites";
+import { initGlossary } from "./glossary";
 import { initEyes } from "./eyes";
 import { initTypewriter } from "./typewriter";
 import { initTabs } from "./tabs";
@@ -31,6 +32,7 @@ function pageLoad() {
   safe(initFacts);
   safe(initSprites);
   safe(initReveal);
+  safe(initGlossary);
   // the north star map pulls in mermaid, so it is only fetched on that page
   if (document.querySelector("#ns-map")) {
     import("./northstar").then((m) => m.initNorthStar()).catch((e) => console.warn(e));

@@ -69,7 +69,7 @@ import { projects } from "../data/projects";
 
 <style is:global>
   /* ── hero ── */
-  .hero { position: relative; height: 100svh; min-height: 560px; }
+  .hero { position: relative; height: calc(100svh - var(--note-h, 0px)); min-height: 560px; }
   .hero-stage { --bsc: min(96vw, 700px); position: absolute; inset: 0; overflow: hidden; opacity: calc(1 - var(--p) * 2.4); }
   .hero-burst { left: 50%; top: calc(50svh - 2.25rem + 4px); width: var(--bsc); height: var(--bsc); transform: translate(-50%, -50%); }
   .hero-burst.burst--spin { animation-name: burst-spin-c; }

@@ -156,3 +156,16 @@ html.js[data-a11y="on"] .hl { background-size: 100% 100% !important; }
 /* e-portfolio note on experience: the crossed-out words stay readable */
 :root[data-a11y="on"] .scribble::after { display: none; }
 :root[data-a11y="on"] .scribble { text-decoration: line-through; text-decoration-thickness: 2px; }
+
+/* glossary words: a clear dotted underline that turns solid, definition note larger and instant */
+:root[data-a11y="on"] .gl { text-decoration: underline dotted !important; text-decoration-thickness: 2px !important; text-underline-offset: 0.22em !important; background: none; transition: none; }
+:root[data-a11y="on"] .gl:is(:hover, :focus-visible) { text-decoration-style: solid !important; }
+:root[data-a11y="on"] .gl-pop { transition: none !important; transform: none !important; border-radius: 6px; font-size: 1.05rem; }
+:root[data-a11y="on"] .gl-tape { display: none; }
+:root[data-a11y="on"] .gl-h { font-style: normal; font-weight: 700; }
+
+/* the handwritten note under the accessibility button: plain, upright, readable text in accessible mode */
+:root[data-a11y="on"] { --note-h: 6.4rem; }
+:root[data-a11y="on"] .a11y-note { transform: none; max-width: 36rem; }
+:root[data-a11y="on"] .a11y-note-arrow { transform: rotate(180deg); }
+:root[data-a11y="on"] .a11y-note-p { font: 400 0.95rem/1.4 var(--f-body); letter-spacing: 0; margin-top: 0.2rem; max-width: 29rem; background: var(--paper); border: 2px solid var(--ink); border-radius: 6px; padding: 0.3rem 0.6rem; }

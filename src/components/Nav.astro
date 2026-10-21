@@ -2,6 +2,7 @@
 // Nav.astro  ·  your original nav, grown up: same six links, same shimmer-on-hover (now a sweep of colour
 // through the word, because a white sheen disappears on paper), and the word gets slightly bigger.
 // the tooth sits in the gap in the middle (it's <Tooth />, fixed, persistent across pages).
+import HandArrow from "./HandArrow.astro";
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const left = [
   { label: "home", href: "/" },
@@ -21,7 +22,7 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
   <a class="tooth-link" href="/" tabindex="-1" aria-hidden="true"></a>
 
   <!-- accessible mode: first in the tab order (right after the skip link); sits on the left so the round tools on the right keep their room -->
-  <button class="a11y-btn" type="button" data-toggle="a11y" aria-pressed="false" aria-label="accessible mode" title="switch to accessible mode: easier-to-read font, no animation, plainer backgrounds, higher contrast">
+  <button class="a11y-btn" type="button" data-toggle="a11y" aria-pressed="false" aria-label="accessible mode" aria-describedby="a11y-note-text" title="switch to accessible mode: easier-to-read font, no animation, plainer backgrounds, higher contrast">
     <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7.2" r="1.7" fill="currentColor"/><path d="M6.4 10.2l5.6.9 5.6-.9M12 11.2v3.6M12 14.8l-2.6 4.4M12 14.8l2.6 4.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span class="a11y-btn-label">accessible mode</span>
   </button>
@@ -54,6 +55,12 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
     </button>
   </div>
 </header>
+
+<!-- a handwritten note under the accessibility button. it scrolls away with the page (not fixed). screen readers hear it as the button's description instead of as loose text on every page. -->
+<aside class="a11y-note" aria-hidden="true" data-no-gloss>
+  <HandArrow shape="arc" size={46} class="a11y-note-arrow" />
+  <p class="a11y-note-p" id="a11y-note-text">this site is mostly WCAG AA <span style="white-space:nowrap">compliant—</span> click the button for the OpenDyslexic font and screen-reader legibility. alt text is also available!</p>
+</aside>
 
 <style is:global>
   .nav-bar { position: fixed; inset: 0 0 auto 0; z-index: 100; height: var(--header-h); }
@@ -103,6 +110,21 @@ const current = (href) => (href === "/" ? path === "/" : path === href || path.s
   /* wide screens have room for the words */
   @media (min-width: 1680px) { .a11y-btn { padding: 0 1rem 0 0.7rem; } .a11y-btn-label { display: inline; } }
   @media (max-width: 880px) { .a11y-btn { left: 0.75rem; } }
+
+  /* the note under the accessibility button: a line of handwriting in a strip the page makes room for (see --note-h), so it never covers content. it scrolls away with the page. */
+  :root { --note-h: 4.3rem; }
+  .a11y-note {
+    position: absolute; z-index: 90; top: calc(var(--header-h) + 0.7rem); left: calc(var(--gutter) + 0.35rem); right: var(--gutter);
+    max-width: 33rem; display: flex; align-items: flex-start; gap: 0.5rem; pointer-events: none;
+    transform: rotate(-0.8deg); transform-origin: top left;
+  }
+  .a11y-note-arrow { flex: none; transform: rotate(180deg); margin-top: -0.4rem; }
+  .a11y-note-p { margin: 0.5rem 0 0; font: 400 1.5rem/1.05 var(--f-hand); color: var(--ink); letter-spacing: 0.01em; }
+  /* wide screens: the button grows a label, so push the arrow under the middle of it */
+  @media (min-width: 1680px) { .a11y-note { left: calc(var(--gutter) + 3.4rem); } }
+  /* phones and small tablets: the words wrap onto a few lines */
+  @media (max-width: 880px) { :root { --note-h: 4.9rem; } .a11y-note { left: 1.1rem; right: 1rem; } .a11y-note-p { font-size: 1.3rem; } }
+  @media print { .a11y-note { display: none; } }
   /* in accessible mode the motion switch is pointless (everything is already still) */
   :root[data-a11y="on"] .tool[data-toggle="motion"] { display: none; }
   .nav-tools { position: absolute; z-index: 2; right: var(--gutter); top: 50%; transform: translateY(-50%); display: flex; gap: 0.4rem; }

@@ -126,8 +126,8 @@ button { font: inherit; color: inherit; }
 }
 
 .wrap { width: min(var(--wrap), calc(100% - var(--gutter) * 2)); margin-inline: auto; }
-main { display: block; padding-top: calc(var(--header-h) + 1.25rem); min-height: 70vh; }
-body[data-page="home"] main { padding-top: 0; }
+main { display: block; padding-top: calc(var(--header-h) + var(--note-h, 0px) + 1.25rem); min-height: 70vh; }
+body[data-page="home"] main { padding-top: var(--note-h, 0px); }
 .page-section { padding-block: clamp(1.5rem, 4vw, 3rem) clamp(2.5rem, 6vw, 5rem); }
 
 /* ── custom cursors: a paper tooth. ink outline over a white halo so it shows on any colour ── */
@@ -347,3 +347,32 @@ html.js .hl:not(.is-in) { background-size: 0 100%; }
 .lite .nb-panel.is-open { animation: lite-fade 0.25s ease-out; }
 @keyframes lite-fade { from { opacity: 0; } to { opacity: 1; } }
 #main:focus, #main:focus-visible { outline: none !important; box-shadow: none !important; }
+
+/* ── glossary: hover-definitions (src/scripts/glossary.ts, words in src/data/glossary.ts) ───────────────────────────── */
+.gl {
+  --gl-wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5C7 1 11 7 17 4S27 1 32 4 43 7 49 3 56 3 59 5' fill='none' stroke='%234a58ab' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  cursor: help; border-radius: 2px;
+  text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: color-mix(in srgb, var(--ink) 38%, transparent);
+  background: var(--gl-wave) no-repeat 0 100% / 0% 0.3em; transition: background-size 0.55s cubic-bezier(0.3, 0.8, 0.3, 1);
+}
+:root[data-theme="dark"] .gl { --gl-wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5C7 1 11 7 17 4S27 1 32 4 43 7 49 3 56 3 59 5' fill='none' stroke='%23b6c0f6' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+.gl:is(:hover, :focus-visible) { background-size: 100% 0.3em; }
+.gl:focus-visible { outline: 2px solid var(--focus, var(--peri-deep)); outline-offset: 3px; }
+/* the cream cards stay cream in dark mode, so the pen stays dark on them */
+:root[data-theme="dark"] :is(.fn-in, .pc-plate, .pc-sheet, .pj-sheet) .gl { --gl-wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5C7 1 11 7 17 4S27 1 32 4 43 7 49 3 56 3 59 5' fill='none' stroke='%234a58ab' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+
+.gl-pop {
+  position: absolute; z-index: 1000; left: 0; top: 0; width: max-content; max-width: min(19rem, calc(100vw - 24px)); pointer-events: none;
+  padding: 1.05rem 1.15rem 1rem; color: #1f1b2e; background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0)), #fbf1c9;
+  border: 2px solid #1f1b2e; border-radius: 3px 12px 3px 12px; box-shadow: 4px 5px 0 rgba(31, 27, 46, 0.35);
+  display: grid; gap: 0.3rem; opacity: 0; transform: translateY(6px) rotate(-1deg);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.gl-pop[data-side="above"] { transform: translateY(-6px) rotate(-1deg); }
+.gl-pop.is-on { opacity: 1; transform: translateY(0) rotate(-0.8deg); transition: opacity 1.5s ease, transform 1.5s ease; }
+.gl-pop.is-on.is-still, .gl-pop.is-still { transition-duration: 0.01s; }
+.gl-tape { position: absolute; top: -11px; left: 50%; width: 64px; height: 20px; margin-left: -32px; transform: rotate(-3deg); background: repeating-linear-gradient(135deg, rgba(244, 215, 119, 0.85) 0 6px, rgba(244, 215, 119, 0.55) 6px 12px); box-shadow: 0 1px 0 rgba(31, 27, 46, 0.15); }
+.gl-h { font: italic 600 1.2rem/1.1 var(--f-display); letter-spacing: -0.01em; }
+.gl-d { font: 400 0.98rem/1.45 var(--f-body); color: #2f2a45; }
+html[data-motion="off"] .gl, html[data-motion="off"] .gl-pop { transition-duration: 0.01s !important; }
+@media (prefers-reduced-motion: reduce) { .gl, .gl-pop, .gl-pop.is-on { transition-duration: 0.01s !important; } }
