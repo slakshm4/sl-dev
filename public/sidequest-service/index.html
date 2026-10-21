@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#8e1c24" />
+    <meta
+      name="description"
+      content="A small, rather opinionated machine for choosing a decent Vancouver plan."
+    />
+    <title>Sidequest Service — Vancouver</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Press+Start+2P&family=Shrikhand&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="film-grain" aria-hidden="true"></div>
+    <div class="crt-lines" aria-hidden="true"></div>
+    <svg class="svg-defs" aria-hidden="true" focusable="false">
+      <!-- rubber-stamp ink: wobbly edges plus speckled gaps where the ink didn't take -->
+      <filter id="stamp-ink" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="wobble" />
+        <feDisplacementMap in="SourceGraphic" in2="wobble" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="rough" />
+        <feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" seed="11" result="grain" />
+        <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -3.2 0 0 0 2.75" result="ink" />
+        <feComposite in="rough" in2="ink" operator="in" />
+      </filter>
+    </svg>
+
+    <div class="topline">
+      <p class="sr-only">Player 1 ready. World: Vancouver, BC. High score: zero plans made since lunch. Free play.</p>
+      <div class="topline-track" aria-hidden="true">
+        <span>PLAYER 1 READY</span><span class="topline-star">✦</span>
+        <span>WORLD: VANCOUVER, BC</span><span class="topline-star">✦</span>
+        <span>HI-SCORE: 0 PLANS MADE SINCE LUNCH</span><span class="topline-star">✦</span>
+        <span>FREE PLAY</span><span class="topline-star">✦</span>
+        <span>NO SAVE POINTS REQUIRED</span><span class="topline-star">✦</span>
+        <span>PLAYER 1 READY</span><span class="topline-star">✦</span>
+        <span>WORLD: VANCOUVER, BC</span><span class="topline-star">✦</span>
+        <span>HI-SCORE: 0 PLANS MADE SINCE LUNCH</span><span class="topline-star">✦</span>
+        <span>FREE PLAY</span><span class="topline-star">✦</span>
+        <span>NO SAVE POINTS REQUIRED</span><span class="topline-star">✦</span>
+      </div>
+    </div>
+
+    <a class="home-sign" href="https://shradhalakshman.com" aria-label="Back to Shradha Lakshman's website">
+      <!-- vertical roadside sign: notched red bar with bulbs, a stacked-letter panel,
+           a crossbar, and an arrow at the foot that points left (toward the page edge) -->
+      <svg viewBox="0 0 136 262" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line class="sign-chain" x1="99" y1="0" x2="99" y2="18" />
+        <line class="sign-chain" x1="48" y1="0" x2="48" y2="30" />
+        <g transform="translate(5 5)">
+          <path class="home-sign-side" d="M86 12 L99 24 L112 12 V214 Q112 236 90 236 H34 V248 L6 222 L34 196 V208 H86 Z" />
+          <polygon class="home-sign-side" points="14,34 82,26 82,152 14,152" />
+          <rect class="home-sign-side" x="1" y="156" width="130" height="46" rx="3" />
+        </g>
+        <path class="arrow-body" d="M86 12 L99 24 L112 12 V214 Q112 236 90 236 H34 V248 L6 222 L34 196 V208 H86 Z" />
+        <g class="arrow-bulbs" data-x="99" data-y="40 58 76 94 112 130 148"></g>
+        <g class="arrow-bulbs" data-x="96 80 64 48" data-y="222"></g>
+        <polygon class="home-sign-letters-panel" points="14,34 82,26 82,152 14,152" />
+        <path class="home-sign-sparkle" d="M26 38 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2 l6 -2 z" />
+        <path class="home-sign-sparkle" d="M70 118 l1.5 4.5 l4.5 1.5 l-4.5 1.5 l-1.5 4.5 l-1.5 -4.5 l-4.5 -1.5 l4.5 -1.5 z" />
+        <text class="home-sign-letter" x="48" y="63" text-anchor="middle">B</text>
+        <text class="home-sign-letter" x="48" y="88" text-anchor="middle">A</text>
+        <text class="home-sign-letter" x="48" y="113" text-anchor="middle">C</text>
+        <text class="home-sign-letter" x="48" y="138" text-anchor="middle">K</text>
+        <rect class="home-sign-panel" x="1" y="156" width="130" height="46" rx="3" />
+        <text class="home-sign-kicker" x="66" y="172" text-anchor="middle">to</text>
+        <text class="home-sign-name" x="66" y="194" text-anchor="middle">Shradha's</text>
+      </svg>
+    </a>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="sky-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <button class="power-up" type="button"></button>
+        <button class="power-up" type="button"></button>
+        <button class="power-up" type="button"></button>
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="sparkle">✦</span> SHRADHA'S SIDEQUEST SERVICE PRESENTS <span class="sparkle">✦</span></p>
+          <h1 id="page-title">INSERT COIN<br /><em>TO CONTINUE</em></h1>
+          <p class="lede">
+            Your player has been idling on the menu screen since lunch. Every level looks a
+            little wrong and the controller is getting warm. Hand it to the
+            <a href="#machine">machine</a>: one pull, one random quest, no save file to worry about.
+            Hate it? Blame the CPU.
+          </p>
+          <p class="hero-hint">
+            <span class="blink" aria-hidden="true">▶</span>
+            <span class="hint-keys">PRESS SPACE TO START OR PULL THE LEVER</span>
+            <span class="hint-touch">TAP THE BIG YELLOW BUTTON TO START</span>
+          </p>
+        </div>
+
+        <div class="open-sign" aria-label="The sidequest service is open">
+          <span>OP<b class="flicker">E</b>N</span>
+          <small>FREE PLAY</small>
+        </div>
+      </section>
+
+      <section class="machine-area" id="machine" aria-labelledby="machine-title">
+        <div class="sunset" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="palm palm-left" data-sprite="palm" aria-hidden="true"></div>
+        <div class="palm palm-right" data-sprite="palm" aria-hidden="true"></div>
+        <div class="machine-shadow" aria-hidden="true"></div>
+
+        <div class="arrow-sign" aria-hidden="true">
+          <svg viewBox="0 0 196 112" xmlns="http://www.w3.org/2000/svg">
+            <line class="sign-chain" x1="46" y1="0" x2="46" y2="24" />
+            <line class="sign-chain" x1="108" y1="0" x2="108" y2="24" />
+            <path class="arrow-body" d="M8 24 H132 V8 L188 54 L132 100 V84 H8 Z" />
+            <g class="arrow-bulbs" data-x="20 36 52 68 84 100 116" data-y="34 74"></g>
+            <text class="arrow-text" x="70" y="66" text-anchor="middle">PLAY</text>
+          </svg>
+        </div>
+
+        <button class="machine-lever" id="lever" type="button" aria-label="Pull the lever to pick a sidequest">
+          <span class="lever-tag" aria-hidden="true">PULL!</span>
+          <span class="lever-handle"></span>
+          <span class="lever-arm"></span>
+          <span class="lever-base"></span>
+        </button>
+
+        <div class="slot-machine">
+          <div class="marquee-sign">
+            <div class="bulbs" data-bulbs="20" aria-hidden="true"></div>
+            <p class="marquee-kicker">★ 1 PLAYER · FREE PLAY ★</p>
+            <h2 id="machine-title">
+              <span class="neon">Sidequest</span>
+              <span class="neon-sub">MACHINE</span>
+            </h2>
+            <div class="bulbs" data-bulbs="20" aria-hidden="true"></div>
+          </div>
+
+          <div class="ticker" aria-hidden="true"><p class="ticker-text" id="ticker">INSERT COIN ✦ PRESS START</p></div>
+
+          <div class="machine-body">
+            <div class="lamp lamp-left" aria-hidden="true"></div>
+            <div class="lamp lamp-right" aria-hidden="true"></div>
+            <div class="slot-window">
+              <div class="reel-labels" aria-hidden="true">
+                <span>ACTIVITY</span>
+                <span>LOCATION</span>
+                <span>DURATION</span>
+              </div>
+              <div class="reels">
+                <div class="reel" data-reel="activity"><div class="reel-content">A BOOKSTORE CRAWL</div></div>
+                <div class="reel" data-reel="location"><div class="reel-content">MAIN STREET</div></div>
+                <div class="reel" data-reel="duration"><div class="reel-content">2 HOURS</div></div>
+                <div class="win-line" aria-hidden="true"></div>
+              </div>
+              <div class="reel-shine" aria-hidden="true"></div>
+            </div>
+
+            <div class="readouts">
+              <div class="readout">
+                <span class="readout-label">CREDITS</span>
+                <span class="readout-digits" id="credits">03</span>
+              </div>
+              <div class="coin-slot" aria-hidden="true">
+                <span class="coin"></span>
+                <small>25¢</small>
+              </div>
+              <div class="readout">
+                <span class="readout-label">PLAYS</span>
+                <span class="readout-digits" id="spins">00</span>
+              </div>
+            </div>
+            <p class="machine-motto">✦ UNLIMITED CONTINUES · THE CPU WON'T TAKE IT PERSONALLY ✦</p>
+          </div>
+
+          <div class="chrome-band" aria-hidden="true"></div>
+
+          <div class="control-deck">
+            <div class="companion-control">
+              <span class="control-label">SELECT PLAYERS</span>
+              <div class="segmented-control" role="group" aria-label="Choose how many players">
+                <button class="mode-option active" type="button" data-mode="surprise" aria-pressed="true">CPU PICKS</button>
+                <button class="mode-option" type="button" data-mode="solo" aria-pressed="false">1 PLAYER</button>
+                <button class="mode-option" type="button" data-mode="friends" aria-pressed="false">MULTIPLAYER</button>
+              </div>
+            </div>
+            <button class="spin-button" id="spin-button" type="button">
+              <span class="button-top">PLAYER 1</span>
+              <span class="button-bottom">PRESS START</span>
+            </button>
+            <div class="deck-footer">
+              <p class="tiny-print">NO CHEAT CODES REQUIRED. (THERE IS ONE, THOUGH.)</p>
+              <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="true">♪ SOUND ON</button>
+            </div>
+          </div>
+
+          <div class="payout" aria-hidden="true">
+            <span class="payout-slot"></span>
+            <span class="payout-label">LOOT DROPS HERE ↓</span>
+          </div>
+        </div>
+
+        <div class="result-wrap">
+          <div class="result-card" id="result-card">
+            <div class="check-head"><span>QUEST LOG</span><span>No. <b id="order-no">0427</b></span></div>
+            <div class="check-meta"><span>PLAYERS: <b id="check-table">1</b></span><span>GAME MASTER: THE CPU</span></div>
+            <div class="check-body">
+              <div aria-live="polite">
+                <p class="ticket-title">HERE'S A THOUGHT</p>
+                <p class="result-text" id="result-text">
+                  Try a <strong>bookstore crawl</strong> on <strong>Main Street</strong>. Give it <strong>2 hours</strong>, then go home if you want to.
+                </p>
+                <p class="result-note" id="result-note">Go alone. You do not need a committee for this.</p>
+              </div>
+              <p class="check-total"><span>REWARD</span><span class="dots"></span><span>+100 XP</span></p>
+              <p class="check-total check-bonus" id="check-bonus" hidden><span>BONUS</span><span class="dots"></span><span class="bonus-score" id="bonus-score">+00</span></p>
+              <div class="ticket-actions">
+                <button class="reroll" id="reroll" type="button">NOT QUITE. REROLL <span class="reroll-icon" aria-hidden="true">↻</span></button>
+                <button class="share-ticket" id="share-ticket" type="button"><span id="share-label" aria-live="polite">SEND TO A FRIEND</span> <span class="share-icon" aria-hidden="true">✉</span></button>
+              </div>
+            </div>
+            <span class="stamp is-stamped" id="stamp" aria-hidden="true">ORDER UP!</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="bottom-note">
+        <p id="footer-line">Most good days start with somebody saying, “fine, let’s just go.”</p>
+        <p class="credit">You can always ignore the machine.</p>
+        <p class="signature">
+          MADE WITH <span class="heart" aria-hidden="true">♥</span><span class="sr-only">love</span> &amp; TOO MANY QUARTERS BY
+          <span class="sig-name">Shradha</span>
+        </p>
+      </section>
+    </main>
+    <div class="road" aria-hidden="true"><div class="car" data-sprite="car"></div></div>
+    <div class="floor" aria-hidden="true"></div>
+    <script src="./script.js"></script>
+  </body>
+</html>
