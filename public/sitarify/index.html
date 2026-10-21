@@ -739,8 +739,8 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
       <div class="drones" role="group" aria-label="Accompaniment">
         <span class="acc-label">Accompaniment</span>
         <button class="dpill" id="dTan" aria-pressed="true">Tanpura <small id="dTanInfo"></small></button>
-        <button class="dpill" id="dShruti" aria-pressed="false">Shruti box <small id="dShrutiInfo"></small></button>
-        <button class="dpill" id="dHarm" aria-pressed="false">Harmonium <small id="dHarmInfo"></small></button>
+        <button class="dpill" id="dShruti" aria-pressed="true">Shruti box <small id="dShrutiInfo"></small></button>
+        <button class="dpill" id="dHarm" aria-pressed="true">Harmonium <small id="dHarmInfo"></small></button>
       </div>
     </div>
 
@@ -795,7 +795,7 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
         <circle id="finger" cx="1100" cy="190" r="16" fill="url(#gFinger)" opacity="0"/>
       </svg>
 
-      <svg id="harmonium" viewBox="0 0 1200 360" role="img" aria-label="Harmonium" hidden>
+      <svg id="harmonium" viewBox="0 0 1200 360" role="img" aria-label="Harmonium">
         <g filter="url(#wcSoft)"><ellipse cx="600" cy="340" rx="560" ry="12" fill="#000" opacity=".2"/>
         <g id="bellows">
           <rect x="60" y="22" width="1080" height="54" rx="8" style="fill:var(--wood-2)"/>
@@ -1002,9 +1002,9 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
       </div>
       <div class="sliders">
         <div class="sl"><label for="sTempo">Tempo <output id="oTempo">100 bpm</output></label><input id="sTempo" type="range" min="40" max="180" value="100"></div>
-        <div class="sl"><label for="sDrone">Drones <output id="oDrone">60%</output></label><input id="sDrone" type="range" min="0" max="100" value="60"></div>
-        <div class="sl"><label for="sTarab">Sympathetic strings <output id="oTarab">60%</output></label><input id="sTarab" type="range" min="0" max="100" value="60"></div>
-        <div class="sl"><label for="sVerb">Room <output id="oVerb">35%</output></label><input id="sVerb" type="range" min="0" max="100" value="35"></div>
+        <div class="sl"><label for="sDrone">Drones <output id="oDrone">80%</output></label><input id="sDrone" type="range" min="0" max="100" value="80"></div>
+        <div class="sl"><label for="sTarab">Sympathetic strings <output id="oTarab">100%</output></label><input id="sTarab" type="range" min="0" max="100" value="100"></div>
+        <div class="sl"><label for="sVerb">Room <output id="oVerb">100%</output></label><input id="sVerb" type="range" min="0" max="100" value="100"></div>
         <div class="sl"><label for="sVol">Volume <output id="oVol">80%</output></label><input id="sVol" type="range" min="0" max="100" value="80"></div>
       </div>
     </div>
@@ -2044,7 +2044,7 @@ const pulseEl = document.createElement('div'); pulseEl.className = 'pulse'; fxLa
 /* ---------------- Player state ---------------- */
 const S = {
   song: null, playing: false, idx: 0, tick: 0, anchorT: 0, anchorB: 0, spb: .6, timer: 0, ended: false,
-  harm: false, aIdx: 0, meend: true, chikari: true, tanpura: true, shruti: false, tanBeat: 0, events: [], onsets: new Set(), ready: false, pending: null
+  harm: true, aIdx: 0, meend: true, chikari: true, tanpura: true, shruti: true, tanBeat: 0, events: [], onsets: new Set(), ready: false, pending: null
 };
 function svgToStage(x, y, svg) {
   const r = (svg || $('#sitar')).getBoundingClientRect(), sr = stageEl.getBoundingClientRect();
