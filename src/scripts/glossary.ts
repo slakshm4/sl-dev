@@ -68,7 +68,16 @@ function hide(term?: HTMLElement) {
 }
 
 function wrap(root: HTMLElement) {
-  const done = new Set<number>();
+  // a word is marked once per page, but "page" means each collapsible part separately: if its first mention sits inside a closed section,
+  // tab, or drawer you have not opened yet, the later mentions you can actually see still get their definition.
+  const done = new Set<string>();
+  const scopes = new WeakMap<Element, number>();
+  const scopeOf = (n: Node) => {
+    const box = n.parentElement?.closest("details, [role='tabpanel'], .nb-panel, [hidden]");
+    if (!box) return 0;
+    if (!scopes.has(box)) scopes.set(box, scopes.size + 1);
+    return scopes.get(box)!;
+  };
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode(n) {
       const el = n.parentElement;
@@ -86,6 +95,7 @@ function wrap(root: HTMLElement) {
 
   for (const node of nodes) {
     const text = node.nodeValue!;
+    const sc = scopeOf(node);
     const hits: { i: number; len: number; idx: number; s: string }[] = [];
     for (const { re, map } of RULES) {
       if (!re) continue;
@@ -93,7 +103,7 @@ function wrap(root: HTMLElement) {
       let m: RegExpExecArray | null;
       while ((m = re.exec(text))) {
         const idx = map.get(re === RULES[0].re ? m[1].toLowerCase() : m[1]);
-        if (idx !== undefined && !done.has(idx)) hits.push({ i: m.index, len: m[1].length, idx, s: m[1] });
+        if (idx !== undefined && !done.has(`${sc}|${idx}`)) hits.push({ i: m.index, len: m[1].length, idx, s: m[1] });
       }
     }
     if (!hits.length) continue;
@@ -101,8 +111,8 @@ function wrap(root: HTMLElement) {
     const frag = document.createDocumentFragment();
     let at = 0;
     for (const h of hits) {
-      if (h.i < at || done.has(h.idx)) continue; // overlapping, or already marked on this page
-      done.add(h.idx);
+      if (h.i < at || done.has(`${sc}|${h.idx}`)) continue; // overlapping, or already marked in this part of the page
+      done.add(`${sc}|${h.idx}`);
       if (h.i > at) frag.append(text.slice(at, h.i));
       const span = document.createElement("span");
       span.className = "gl";

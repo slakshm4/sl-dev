@@ -90,8 +90,12 @@ import { projects } from "../data/projects";
   .hero-veil { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, rgba(31, 27, 46, 0.27) 0%, rgba(31, 27, 46, 0.27) 80%, rgba(31, 27, 46, 0) 100%); }
   :root[data-theme="dark"] .hero-veil { background: linear-gradient(to bottom, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0.36) 80%, rgba(0, 0, 0, 0) 100%); }
   :root[data-a11y="on"] .hero-veil { display: none; }
-  .hero-label { z-index: 2; }
+  .hero-label, .hero-note, .hero-arrow { z-index: 2; }
   .hero-stamp { z-index: 2; background: #fffdf3; box-shadow: 2px 3px 0 rgba(31, 27, 46, 0.3); }
+  :root[data-theme="dark"] .hero-stamp { background: var(--paper); box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.45); }
+  /* the scroll hint sits on its own little paper pill, above everything, so the spinning burst can never wash it out */
+  html.js .hero-scroll .hand-arrow path { stroke-dashoffset: 0; }
+  .hero-scroll { z-index: 3; padding: 0.05rem 0.85rem 0.1rem; background: var(--paper); border: 2px solid var(--ink); border-radius: 99px; }
   .hero-label {
     position: absolute; left: 50%; top: calc(50svh - 2.25rem + 4px + var(--tw) * 0.5 + 0.9rem); margin: 0; padding: 1.05rem 1.2rem 0.6rem;
     font: 400 0.92rem/1.1 var(--f-type); letter-spacing: 0.03em; transform: translateX(-50%) rotate(-1.6deg); white-space: nowrap;

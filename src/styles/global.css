@@ -265,6 +265,8 @@ input[type="text"], textarea { cursor: text; }
   transition: background-size 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s;
 }
 html.js .hl:not(.is-in) { background-size: 0 100%; }
+/* in dark mode the yellow highlighter is 25% less opaque (78% → about 58%) */
+:root[data-theme="dark"] .hl { background-image: linear-gradient(transparent 56%, color-mix(in srgb, var(--butter) 58%, transparent) 56% 92%, transparent 92%); }
 
 /* ── teeth for bullets: ink outline + a coloured fill ───────── */
 .bullets { list-style: none; }
