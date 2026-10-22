@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.shradhalakshman.com/contextomy/sitemap.xml

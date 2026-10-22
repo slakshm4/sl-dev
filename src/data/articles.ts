@@ -29,7 +29,7 @@ const caseStudies: Piece[] = [
       "i wanted it to feel like a desk, not a tool. it runs in your browser, no account, no upload. your poems stay with you. every export has a small \"made with contextomy\" mark, like signing the back of a finished page.",
       "so yes, kitschy. maybe. but so is most of what people love on purpose. i'd rather make the kitsch beautiful than pretend i don't love it.",
     ],
-    link: { label: "try it!", href: "https://slakshm4.github.io/contextomy/" },
+    link: { label: "try it!", href: "https://www.shradhalakshman.com/contextomy/" },
   },
   {
     slug: "sidequest-service",
@@ -41,7 +41,7 @@ const caseStudies: Piece[] = [
       "go solo or bring friends. when a quest sounds right, print it as a ticket and send it to whoever you want to drag along.",
       "it is dressed like an arcade cabinet because deciding what to do should feel like a game, not a group chat that goes quiet for three days. you can always ignore the machine. hate the result? blame the CPU.",
     ],
-    link: { label: "pull the lever", href: "https://slakshm4.github.io/sidequest-service/", style: "ticket", aside: "feeling indecisive? hand it to the machine:", meta: "1 activity · 1 place · 1 duration" },
+    link: { label: "pull the lever", href: "https://www.shradhalakshman.com/sidequest-service/", style: "ticket", aside: "feeling indecisive? hand it to the machine:", meta: "1 activity · 1 place · 1 duration" },
   },
   {
     slug: "sitarify",
@@ -54,7 +54,7 @@ const caseStudies: Piece[] = [
       "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods, stories, and ways of moving. i wanted it to feel less like putting an \"Indian\" filter on music, and more like an invitation to listen differently.",
       "maybe it is also my own small way of making the distance feel a little more inhabitable.",
     ],
-    link: { label: "hear a song on sitar", href: "https://slakshm4.github.io/sitarify/", style: "string", aside: "headphones on, then:" },
+    link: { label: "hear a song on sitar", href: "https://www.shradhalakshman.com/sitarify/", style: "string", aside: "headphones on, then:" },
   },
   {
     slug: "what-species-are-you",
