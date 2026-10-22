@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import "./paper.css";
 @import "./a11y.css";
 
@@ -89,9 +90,9 @@ body {
   position: fixed; inset: 0; z-index: 90; pointer-events: none;
   background-image: var(--tile-grain);
   opacity: 0.16;
-  mix-blend-mode: multiply;
+  /* plain alpha instead of a multiply blend: looks the same (the tile is neutral grey), but the browser no longer has to blend the whole screen on every scroll frame */
 }
-:root[data-theme="dark"] .grain { mix-blend-mode: screen; opacity: 0.08; }
+:root[data-theme="dark"] .grain { opacity: 0.06; }
 
 img, svg { max-width: 100%; }
 h1, h2, h3, h4 {
@@ -376,3 +377,13 @@ html.js .hl:not(.is-in) { background-size: 0 100%; }
 .gl-d { font: 400 0.98rem/1.45 var(--f-body); color: #2f2a45; }
 html[data-motion="off"] .gl, html[data-motion="off"] .gl-pop { transition-duration: 0.01s !important; }
 @media (prefers-reduced-motion: reduce) { .gl, .gl-pop, .gl-pop.is-on { transition-duration: 0.01s !important; } }
+
+/* cards for pieces that are still "in the drafts" (or "sketching") are dimmed so the live ones read as the things to click; the stamp itself stays bright */
+.is-draft { position: relative; }
+.is-draft::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; pointer-events: none; background: rgba(31, 27, 46, 0.36); transition: opacity 0.3s; }
+.is-draft .stamp { position: relative; z-index: 4; }
+.is-draft:hover::after, .is-draft:focus-visible::after { opacity: 0.55; }
+:root[data-a11y="on"] .is-draft::after { display: none; }
+
+/* paused by idle.ts while off screen */
+.is-idle { animation-play-state: paused !important; }

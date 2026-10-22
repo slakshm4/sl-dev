@@ -121,6 +121,13 @@ export function initChrome() {
       if ((e.target as Element).closest("input, textarea, select")) return;
       stars(e.clientX, e.clientY);
     });
+    // the note under the accessibility button fades once you scroll, so it is never left half-hidden under the nav
+    let away = false;
+    const noteWatch = () => {
+      const a = window.scrollY > 12;
+      if (a !== away) { away = a; document.documentElement.classList.toggle("note-away", a); }
+    };
+    window.addEventListener("scroll", noteWatch, { passive: true });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && document.body.classList.contains("menu-open")) {
         setMenu(false);
@@ -130,4 +137,5 @@ export function initChrome() {
   }
   setMenu(false);
   sync();
+  document.documentElement.classList.toggle("note-away", window.scrollY > 12);
 }

@@ -12,7 +12,7 @@ const foot = piece.date ?? (piece.parts ? `${piece.parts.length} ${drawer.slug =
 ---
 <li class={`wlc wlc--${drawer.style}${piece.pinned ? " wlc--pinned" : ""}`} style={`--tilt:${tilt ?? tilts[(n + i) % tilts.length]}deg`} data-reveal>
   <span class={`tape tape--${tapes[(n + i) % 4]}`} style="top:-13px;left:50%;margin-left:-44px;--r:-3deg"></span>
-  <a class="wlc-in" href={href} rel={tag || undefined}>
+  <a class={`wlc-in${piece.draft ? " is-draft" : ""}`} href={href} rel={tag || undefined}>
     <span class={`wlc-pic paper--${drawer.card ?? drawer.paper}`} aria-hidden="true">
       <Sticker name={(piece.stickers ?? drawer.stickers)[0]} size={58} class="wlc-st" />
     </span>

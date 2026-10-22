@@ -86,7 +86,7 @@ let counter = 0;
                     const asset = i % 4;
                     return (
                       <li class={`nbc nbc--${s.id}`} style={`--tilt:${tilt[i % tilt.length]}deg;--jx:${jx[i % 12]}px;--jy:${jy[i % 12]}px;--zi:${zi[i % 12]};--k:${i % 12}`}>
-                        <Tag class="nbc-in" {...(e.href ? { href: e.href } : {})} {...(e.external ? { target: "_blank", rel: "noopener" } : {})}>
+                        <Tag class={`nbc-in${e.status === "draft" ? " is-draft" : ""}`} {...(e.href ? { href: e.href } : {})} {...(e.external ? { target: "_blank", rel: "noopener" } : {})}>
                           <span class={`nbc-pic paper--${paper}`} aria-hidden="true">
                             <Sticker name={stickers[(i * 5 + 3) % stickers.length]} size={s.id === "case-studies" ? 62 : 46} />
                           </span>
@@ -269,6 +269,13 @@ let counter = 0;
     .nb-close { left: 0.8rem; }
     .of-label { display: none; }
     .nbc-asset--sprite { right: 2px; }
+    /* open drawer on a phone: four tidy equal tabs, shorter pictures on the cards, room under the folder for the hint */
+    .nb-tabs { gap: 0.3rem; padding-inline: 0.5rem; }
+    .nb-tab { flex: 1 1 calc(50% - 0.3rem); justify-content: center; align-items: center; padding-inline: 0.9rem; gap: 0.4rem; }
+    .nb-tab-l { font-size: 1.05rem; white-space: nowrap; }
+    .nb-hint { margin-top: 1.6rem; }
+    .nbc--case-studies .nbc-pic, .nbc--ephemera .nbc-pic { aspect-ratio: 16 / 6.5; }
+    .nbc--words .nbc-pic { aspect-ratio: 16 / 5; }
   }
 
   html[data-motion="off"] .nbc, html[data-motion="off"] .of--back, html[data-motion="off"] .nbf, html[data-motion="off"] .nb-stack .nbf { animation: none !important; transition: none !important; }

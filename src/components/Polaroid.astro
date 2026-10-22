@@ -15,7 +15,7 @@ const above = index % 2 === 0; // alternate: note above (arrow points down) / no
   style={`--tilt:${tilts[index % tilts.length]}deg;--lift:${[0, 26, 8, 34, 14, 0, 30, 6][index % 8]}px`}
   data-reveal
 >
-  <a class="pol-card" href={`/projects/${project.slug}`} aria-describedby={`pol-note-${project.slug}`}>
+  <a class={`pol-card${project.written === false ? " is-draft" : ""}`} href={`/projects/${project.slug}`} aria-describedby={`pol-note-${project.slug}`}>
     <span class={`tape ${tapes[index % tapes.length]}`} style="top:-13px;left:50%;margin-left:-48px;--r:-3deg"></span>
     <span class={`pol-pic paper--${project.paper}`}>
       {project.image ? (
