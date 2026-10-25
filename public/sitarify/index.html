@@ -179,7 +179,7 @@ a { color: var(--kumkum); text-underline-offset: 3px; }
 .night-art .tw { animation: twinkle 4s ease-in-out infinite; }
 @keyframes twinkle { 0%, 100% { opacity: .9; } 50% { opacity: .25; } }
 .water { position: absolute; left: 0; right: 0; bottom: 0; height: 52%; width: 100%; pointer-events: none; z-index: 0; }
-.stage > *:not(.water):not(.fx):not(.night-art) { position: relative; z-index: 2; }
+.stage > *:not(.water):not(.fx):not(.night-art):not(.halos) { position: relative; z-index: 2; }
 .stage-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
 .np { display: flex; gap: 14px; align-items: center; min-width: 0; flex: 1 1 0; }
 .np .art { width: 54px; height: 54px; border-radius: 50% 50% 6px 6px / 40% 40% 6px 6px; flex: none; background-size: cover; background-position: center; box-shadow: 0 0 0 2px rgba(217,173,90,.7), 0 10px 30px -12px rgba(0,0,0,.7); }
@@ -494,7 +494,7 @@ footer b { color: var(--ink); font-weight: 600; }
 .search-box.ask button:hover, .search-box.ask button:focus-visible { background: var(--kumkum); color: var(--paper); transform: translateX(2px); }
 .search-box.ask button svg { width: 18px; height: 18px; display: block; }
 @media (max-width: 560px) {
-  .scene { background-size: auto 114%; background-position: 26% 100%; }
+  .scene { background-size: auto 104%; background-position: 64% 100%; }
   .search-box.ask { padding: 16px 18px 18px; gap: 0 10px; }
   .search-box.ask::before { inset: -6% -3%; }
 }
@@ -580,6 +580,9 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 .copy { margin-top: 44px; }
 .copy span { margin-top: 16px; }
 
+/* "any song or raga" glows by day too: vermilion lit from behind by sunlight */
+.search-box.ask input { color: #a83a1f; font-weight: 600; text-shadow: 0 0 1px rgba(255, 250, 236, .9), 0 0 12px rgba(255, 232, 186, .95), 0 0 28px rgba(255, 206, 140, .75); }
+.search-box.ask input::placeholder { color: #a83a1f; opacity: 1; font-weight: 600; text-shadow: 0 0 1px rgba(255, 250, 236, .9), 0 0 12px rgba(255, 232, 186, .95), 0 0 28px rgba(255, 206, 140, .75); }
 /* ---------- v16 ---------- */
 /* the player rises beneath the hero painting and dissolves into it as uneven fog */
 :root { --fogx: clamp(150px, 15vw, 250px); --fogh: calc(var(--fogx) + clamp(170px, 17vw, 240px)); --mist: none; }
@@ -621,6 +624,107 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 .fmt p { margin: 0; flex: 1; font-size: 14.5px; line-height: 1.55; }
 .fmt .row { margin-top: 4px; }
 @media (max-width: 560px) { .fmt { padding-bottom: 12px; } }
+
+/* ---------- v17 ---------- */
+/* the tala strip: one dot per matra or akshara, grouped by vibhag / anga */
+.tala { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px 12px; margin-top: 10px; color: var(--s-muted); }
+.tala[hidden] { display: none; }
+.tl-name { font: italic 500 15px/1 var(--f-display); color: var(--s-ink); margin-right: 2px; }
+.tl-vib { display: inline-flex; align-items: flex-end; gap: 5px; position: relative; padding-top: 14px; }
+.tl-mark { position: absolute; left: 0; top: 0; font: 600 10.5px/1 var(--f-mono); color: #f3c46a; }
+.tl-d { width: 7px; height: 7px; border-radius: 50%; background: rgba(243, 196, 106, .22); transition: background .12s, box-shadow .12s, transform .12s; }
+.tl-vib .tl-d:first-of-type { width: 9px; height: 9px; background: rgba(243, 196, 106, .4); }
+.tl-d.on { background: #f3c46a; box-shadow: 0 0 9px 2px rgba(243, 196, 106, .6); transform: scale(1.25); }
+/* scales written out: Aarohanam / Aroh and Avarohanam / Avaroh */
+.scale sub, .sh-notes sub, .scales sub { font-size: .68em; vertical-align: -.28em; line-height: 0; }
+.ko { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+.rcard .scale { display: grid; gap: 2px; margin-top: 6px; font: 600 13px/1.45 var(--f-display); letter-spacing: .03em; color: #8e3b26; overflow-wrap: anywhere; }
+.rcard .scale i { display: block; font: italic 500 11.5px/1.2 var(--f-display); letter-spacing: 0; color: #6d5a4a; }
+.rcard[data-trad="k"] .scale { color: #2f5f5c; }
+.sh-notes .sb-name { font: 600 19px/1.3 var(--f-display); color: var(--ink); margin-bottom: 2px; }
+.sh-notes .ln { grid-template-columns: 172px minmax(0, 1fr); }
+.scales { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 28px; }
+.scales h4 { margin: 0 0 4px; }
+.scales .sc { display: grid; gap: 2px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.scales .sc b { font: 600 18px/1.3 var(--f-display); }
+.scales .sc span { font-size: 15px; }
+.scales .sc span i { color: var(--ink-soft); font-style: italic; margin-right: 6px; }
+.scales .sc span em { font: normal 600 16px/1.4 var(--f-display); letter-spacing: .04em; color: var(--kumkum); }
+@media (max-width: 760px) { .scales { grid-template-columns: minmax(0, 1fr); } .sh-notes .ln { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .rcard .scale { display: none; } }
+
+/* ---------- v18 ---------- */
+/* the torn edge: the painted layer rips away to show the paper's paler core underneath */
+.tear { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: #fbf6ea; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tear { background: rgba(226, 214, 192, .3); } }
+:root[data-theme="dark"] .tear { background: rgba(226, 214, 192, .3); }
+.scene { z-index: 1; }
+/* water: two slivers of the painting, banded and swaying, so the lake moves */
+.scene .wave { position: absolute; inset: 0; background: inherit; pointer-events: none; opacity: .6;
+  -webkit-mask: linear-gradient(transparent var(--hz, 60%), #000 calc(var(--hz, 60%) + 40px)), repeating-linear-gradient(180deg, transparent 0, #000 3px, #000 5px, transparent 9px);
+          mask: linear-gradient(transparent var(--hz, 60%), #000 calc(var(--hz, 60%) + 40px)), repeating-linear-gradient(180deg, transparent 0, #000 3px, #000 5px, transparent 9px);
+  -webkit-mask-composite: source-in; mask-composite: intersect; animation: sway 5.5s ease-in-out infinite; will-change: transform; }
+.scene .wave.w2 { opacity: .45; animation-duration: 7.8s; animation-delay: -2.4s;
+  -webkit-mask: linear-gradient(transparent calc(var(--hz, 60%) + 20px), #000 calc(var(--hz, 60%) + 90px)), repeating-linear-gradient(180deg, transparent 0, #000 5px, #000 8px, transparent 14px);
+          mask: linear-gradient(transparent calc(var(--hz, 60%) + 20px), #000 calc(var(--hz, 60%) + 90px)), repeating-linear-gradient(180deg, transparent 0, #000 5px, #000 8px, transparent 14px);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+@keyframes sway { 0%, 100% { transform: translate(-2.5px, 0); } 50% { transform: translate(2.5px, .8px); } }
+/* lamplight */
+.lamps { position: absolute; inset: 0; pointer-events: none; }
+.lamps span { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
+.lamp-halo { background: radial-gradient(closest-side, rgba(255, 226, 160, .75), rgba(255, 176, 80, .28) 45%, rgba(255, 150, 60, 0)); animation: flicker 2.3s infinite; }
+.lamp-core { background: radial-gradient(closest-side, rgba(255, 250, 225, .95), rgba(255, 214, 120, .5) 60%, rgba(255, 190, 90, 0)); animation: flicker 1.1s infinite; transform-origin: 50% 90%; }
+.lamp-refl { background: radial-gradient(closest-side, rgba(255, 214, 140, .55), rgba(255, 170, 80, 0)); border-radius: 40%; animation: shimmer 1.7s infinite; }
+.lotus-glow { background: radial-gradient(closest-side, rgba(255, 214, 220, .5), rgba(255, 190, 170, 0)); opacity: 0; animation: breathe2 5s ease-in-out infinite; }
+:root[data-theme="dark"] .lotus-glow { opacity: 1; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lotus-glow { opacity: 1; } }
+.lamps .lamp-halo, .lamps .lamp-refl { opacity: .55; }
+:root[data-theme="dark"] .lamps .lamp-halo, :root[data-theme="dark"] .lamps .lamp-refl { opacity: 1; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lamps .lamp-halo, :root:not([data-theme="light"]) .lamps .lamp-refl { opacity: 1; } }
+@keyframes flicker { 0% { opacity: .85; transform: scale(1); } 12% { opacity: .6; transform: scale(.94, .98); } 23% { opacity: .95; transform: scale(1.04, 1.02); } 41% { opacity: .7; transform: scale(.97); } 58% { opacity: 1; transform: scale(1.05, 1.03); } 74% { opacity: .66; transform: scale(.95, .99); } 88% { opacity: .9; transform: scale(1.02); } 100% { opacity: .85; transform: scale(1); } }
+@keyframes shimmer { 0%, 100% { opacity: .5; transform: scaleX(1) translateX(0); } 30% { opacity: .85; transform: scaleX(1.25) translateX(1px); } 60% { opacity: .4; transform: scaleX(.85) translateX(-1px); } }
+@keyframes breathe2 { 0%, 100% { transform: scale(.92); filter: brightness(.9); } 50% { transform: scale(1.08); filter: brightness(1.15); } }
+.birds { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.birds path { fill: rgba(46, 54, 74, .72); }
+:root[data-theme="dark"] .birds path { fill: rgba(24, 22, 48, .8); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .birds path { fill: rgba(24, 22, 48, .8); } }
+@media (prefers-reduced-motion: reduce) { .scene .wave, .lamps span { animation: none; } }
+/* the suggestions float in a pane of watery glass */
+.quick { width: fit-content; max-width: min(100%, 760px); margin-inline: auto; padding: 16px clamp(18px, 4vw, 38px) 18px; position: relative; isolation: isolate;
+  border-radius: 46% 54% 50% 50% / 60% 52% 48% 40%; animation: puddle 14s ease-in-out infinite; }
+.quick::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(120% 90% at 30% 10%, rgba(255, 255, 255, .42), rgba(255, 255, 255, .1) 55%, rgba(255, 255, 255, .04)), linear-gradient(180deg, rgba(214, 232, 236, .22), rgba(170, 205, 214, .12));
+  -webkit-backdrop-filter: blur(9px) saturate(1.35) brightness(1.04); backdrop-filter: blur(9px) saturate(1.35) brightness(1.04);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .7), inset 0 -8px 22px rgba(255, 255, 255, .12), inset 0 0 0 1px rgba(255, 255, 255, .28), 0 14px 34px -18px rgba(30, 50, 60, .35); }
+.quick::after { content: ""; position: absolute; inset: 8% 10% auto; height: 34%; z-index: -1; border-radius: 50%; pointer-events: none; opacity: .5;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0)); filter: blur(6px); animation: caustic 9s ease-in-out infinite; }
+@keyframes puddle { 0%, 100% { border-radius: 46% 54% 50% 50% / 60% 52% 48% 40%; } 50% { border-radius: 54% 46% 46% 54% / 48% 60% 40% 52%; } }
+@keyframes caustic { 0%, 100% { transform: translateX(-6%) scaleX(.95); opacity: .4; } 50% { transform: translateX(6%) scaleX(1.05); opacity: .6; } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .quick::before { background: radial-gradient(120% 90% at 30% 10%, rgba(200, 220, 255, .11), rgba(160, 190, 230, .035) 60%), linear-gradient(180deg, rgba(120, 150, 190, .07), rgba(60, 80, 120, .04)); box-shadow: inset 0 1px 1px rgba(255, 255, 255, .22), inset 0 0 0 1px rgba(255, 255, 255, .1), 0 14px 34px -18px rgba(0, 0, 0, .5); } :root:not([data-theme="light"]) .quick::after { opacity: .18; } }
+:root[data-theme="dark"] .quick::before { background: radial-gradient(120% 90% at 30% 10%, rgba(200, 220, 255, .11), rgba(160, 190, 230, .035) 60%), linear-gradient(180deg, rgba(120, 150, 190, .07), rgba(60, 80, 120, .04)); box-shadow: inset 0 1px 1px rgba(255, 255, 255, .22), inset 0 0 0 1px rgba(255, 255, 255, .1), 0 14px 34px -18px rgba(0, 0, 0, .5); }
+:root[data-theme="dark"] .quick::after { opacity: .18; }
+@media (prefers-reduced-motion: reduce) { .quick, .quick::after { animation: none; } }
+/* the moon's ripples */
+.halos { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+
+/* ---------- v19: the suggestions sit in the fog as before, seen through watery glass ---------- */
+.quick { width: auto; max-width: none; margin-inline: 0; padding: 22px 0 26px; border-radius: 0; animation: none; }
+.quick::before { inset: -34px -4% -40px; border-radius: 0; box-shadow: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='260'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.009 .03' numOctaves='2' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -3.2 0 0 0 0.55'/%3E%3CfeGaussianBlur stdDeviation='.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E") 0 0 / 520px 260px, linear-gradient(180deg, rgba(222, 236, 238, .16), rgba(190, 214, 220, .1));
+  -webkit-backdrop-filter: blur(7px) saturate(1.3) brightness(1.03); backdrop-filter: blur(7px) saturate(1.3) brightness(1.03);
+  -webkit-mask: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(transparent, #000 32%, #000 68%, transparent);
+          mask: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(transparent, #000 32%, #000 68%, transparent);
+  -webkit-mask-composite: source-in; mask-composite: intersect; animation: ripplelight 26s linear infinite; }
+.quick::after { display: none; }
+@keyframes ripplelight { from { background-position: 0 0, 0 0; } to { background-position: 520px 130px, 0 0; } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .quick::before { box-shadow: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='260'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.009 .03' numOctaves='2' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -3.2 0 0 0 0.24'/%3E%3CfeGaussianBlur stdDeviation='.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E") 0 0 / 520px 260px, linear-gradient(180deg, rgba(150, 175, 215, .07), rgba(90, 110, 150, .04)); } }
+:root[data-theme="dark"] .quick::before { box-shadow: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='260'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.009 .03' numOctaves='2' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -3.2 0 0 0 0.24'/%3E%3CfeGaussianBlur stdDeviation='.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E") 0 0 / 520px 260px, linear-gradient(180deg, rgba(150, 175, 215, .07), rgba(90, 110, 150, .04)); }
+@media (prefers-reduced-motion: reduce) { .quick::before { animation: none; } }
+/* night: a soft dark burn behind the song names, with a faint lamplight glow */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .quick .chip { color: #f7eedb; text-shadow: 0 1px 2px rgba(8, 8, 28, .9), 0 0 8px rgba(8, 8, 28, .75), 0 0 18px rgba(8, 8, 28, .5), 0 0 26px rgba(255, 210, 140, .22); } :root:not([data-theme="light"]) .quick span { color: #e6d9c0; text-shadow: 0 1px 2px rgba(8, 8, 28, .9), 0 0 8px rgba(8, 8, 28, .6); } :root:not([data-theme="light"]) .quick .chip:hover { color: #ffd9a3; } }
+:root[data-theme="dark"] .quick .chip { color: #f7eedb; text-shadow: 0 1px 2px rgba(8, 8, 28, .9), 0 0 8px rgba(8, 8, 28, .75), 0 0 18px rgba(8, 8, 28, .5), 0 0 26px rgba(255, 210, 140, .22); }
+:root[data-theme="dark"] .quick span { color: #e6d9c0; text-shadow: 0 1px 2px rgba(8, 8, 28, .9), 0 0 8px rgba(8, 8, 28, .6); }
+:root[data-theme="dark"] .quick .chip:hover { color: #ffd9a3; }
 </style>
 
 <svg class="defs" aria-hidden="true" focusable="false"><defs>
@@ -675,8 +779,11 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
   </filter>
 </defs></svg>
 <section class="hero" id="hero">
+  <div class="tear" id="tear" aria-hidden="true"></div>
   <div class="scene" aria-hidden="true">
-    
+    <div class="wave"></div><div class="wave w2"></div>
+    <div class="lamps" id="lamps"></div>
+    <svg class="birds" id="birds" preserveAspectRatio="none"></svg>
     <canvas id="embers"></canvas>
     <div class="veil"></div>
   </div>
@@ -719,6 +826,7 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
   <section class="stage" id="stage" aria-label="Player">
     
     <canvas class="water" id="water" aria-hidden="true"></canvas>
+    <canvas class="halos" id="halos" aria-hidden="true"></canvas>
     <div class="stage-top">
       <div class="np">
         <div class="art" id="npArt"></div>
@@ -741,7 +849,9 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
         <button class="dpill" id="dTan" aria-pressed="true">Tanpura <small id="dTanInfo"></small></button>
         <button class="dpill" id="dShruti" aria-pressed="true">Shruti box <small id="dShrutiInfo"></small></button>
         <button class="dpill" id="dHarm" aria-pressed="true">Harmonium <small id="dHarmInfo"></small></button>
+        <button class="dpill" id="dTala" aria-pressed="true">Thaalam <small id="dTalaInfo"></small></button>
       </div>
+      <div class="tala" id="tala" aria-label="Tala: where the cycle is" hidden></div>
     </div>
 
     <div class="inst-wrap" id="instWrap">
@@ -972,6 +1082,50 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
       </details>
 
       <details class="g">
+        <summary>Tala and thaalam: keeping time</summary>
+        <div class="g-body">
+          <p><i>Tala</i> (Tamil <i>thaalam</i>, Hindi <i>taal</i>) is the rhythmic cycle a piece lives in. The Sanskrit word means a clap or a tap of the hand, and that is still how it is kept: someone shows the cycle with their hand, beat by beat, while the drummer plays around it. The first beat of each cycle is the point everything returns to, called <b>sam</b> in the north and <b>samam</b> in the south.</p>
+          <div class="terms">
+            <div>
+              <h4><span class="trad h">Hindustani</span></h4>
+              <dl>
+                <dt>Matra and vibhag</dt><dd>A cycle is counted in beats (matras) grouped into sections (vibhags). Teental has 16 matras in four vibhags of 4.</dd>
+                <dt>Tali and khali</dt><dd>Each vibhag starts with a clap (tali) or a wave of the hand (khali, “empty”). Notation marks sam with X, khali with 0 and the other claps with numbers, so Teental reads X 2 0 3.</dd>
+                <dt>Theka</dt><dd>The tala’s basic pattern of tabla strokes, spoken as syllables called bols: <i>dha dhin dhin dha</i> for Teental’s first vibhag. In the khali section the strokes on the bass drum (bayan) mostly drop out, so you can hear where you are in the cycle.</dd>
+                <dt>Keherwa and Dadra</dt><dd>The light talas of film and folk songs: Keherwa has 8 matras (4+4, <i>dha ge na ti | na ka dhi na</i>) and Dadra 6 (3+3, <i>dha dhi na | dha ti na</i>).</dd>
+              </dl>
+            </div>
+            <div>
+              <h4><span class="trad k">Karnatik</span></h4>
+              <dl>
+                <dt>Akshara and anga</dt><dd>A cycle is counted in aksharas, grouped into parts (angas) shown with set hand movements called kriyas.</dd>
+                <dt>Laghu, drutam, anudrutam</dt><dd>A <b>laghu</b> is a clap followed by counting on the fingers, starting from the little finger. A <b>drutam</b> is two beats: a clap, then the hand turned over, palm up (often called a wave, <i>veechu</i>). An <b>anudrutam</b> is a single clap.</dd>
+                <dt>Adi tala</dt><dd>The most common tala, used for many kritis and about half of all varnams. Its 8 aksharas are a laghu of 4 and two drutams: clap, little finger, ring finger, middle finger | clap, wave | clap, wave. Its full name is chatusra-jati triputa tala.</dd>
+                <dt>35 talas</dt><dd>Seven families (the Suladi Sapta Talas) combine with five lengths of laghu (jati: 3, 4, 5, 7 or 9) to give 35 talas.</dd>
+              </dl>
+            </div>
+          </div>
+          <p class="muted">Sitarify’s thaalam is synthesized, not sampled: each stroke is a tuned drumhead modelled in your browser and tuned to the song’s Sa, as tabla and mridangam players tune theirs. Hindustani ragas get tabla in Teental, Karnatik ragas get a mridangam-like drum in Adi tala with the hand claps and finger counts you would see a singer keep, and songs get Keherwa or Dadra. In a raga sketch the drum stays silent through the alaap, enters with a short roll, adds a fill every fourth cycle and ends with a tihai that lands on sam. Real tabla and mridangam playing is an art of its own, far richer than this.</p>
+          <ul class="srcs">
+            <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Tala_(music)">Wikipedia, “Tala (music)”</a>: tali, khali and vibhag; kriyas, angas and the 35 talas</li>
+            <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Teental">Wikipedia, “Teental”</a> and <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Keherwa">“Keherwa”</a>: thekas and tali/khali marks</li>
+            <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Adi_tala">Wikipedia, “Adi tala”</a></li>
+            <li><a target="_blank" rel="noopener" href="https://archive.org/details/CosmicOrderCosmicPlayLudwigPesch">Ludwig Pesch, <i>Cosmic Order, Cosmic Play: An Indian Approach to Rhythmic Diversity</i> (Internet Archive)</a></li>
+            <li><a target="_blank" rel="noopener" href="https://www.swarganga.org/articles/icmconcepts/icm17.php">Swarganga, “Notation System”</a>: how X, 0 and tali numbers are written</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="g">
+        <summary>Every raga’s scale, side by side</summary>
+        <div class="g-body">
+          <p>Each raga below is written the same way, so the two traditions are easy to compare: its ascent (<b>aarohanam</b> in Karnatik, <b>aroh</b> in Hindustani) and its descent (<b>avarohanam</b> / <b>avaroh</b>), in sargam.</p>
+          <p class="muted">Both traditions are written here with the syllables Sa Ri Ga Ma Pa Da Ni; Hindustani musicians usually say Re and Dha for Ri and Da. Karnatik note variants carry numbers (Ri₁, Ri₂…). In Hindustani lines, an underlined note is komal (flat) and Ma′ is tivra (sharp). A dot above a note means the upper octave, a dot below the lower one.</p>
+          <div class="scales" id="allScales"></div>
+        </div>
+      </details>
+
+      <details class="g">
         <summary>Sources and further reading</summary>
         <div class="g-body">
           <ul class="srcs">
@@ -983,6 +1137,7 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
             <li><a target="_blank" rel="noopener" href="https://www.shanlaxjournals.in/journals/index.php/sijash/article/view/8123">“Korvais in Karnatak Music: Improvisation through Training”, Shanlax International Journal</a></li>
             <li><a target="_blank" rel="noopener" href="https://www.swarganga.org/articles/icmconcepts/icm17.php">Swarganga, “Notation System” (Bhatkhande notation)</a></li>
             <li>Wikipedia overviews: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hindustani_classical_music">Hindustani classical music</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Carnatic_music">Carnatic music</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Raga">Raga</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Thaat">Thaat</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Melakarta">Melakarta</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Alap">Alap</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Taan_(music)">Taan</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Tihai">Tihai</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Gamaka_(music)">Gamaka</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Sitar">Sitar</a></li>
+            <li>Online chord search: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2410.22046">Kantarelis et al., “Chordonomicon: A Dataset of 666,000 Songs and their Chord Progressions” (2024)</a>, <a target="_blank" rel="noopener" href="https://huggingface.co/datasets/ailsntua/Chordonomicon">dataset on Hugging Face</a> (CC BY-NC 4.0); Spotify IDs from <a target="_blank" rel="noopener" href="https://www.wikidata.org/wiki/Property:P2207">Wikidata</a>; previews from the iTunes Search API</li>
           </ul>
           <p class="muted">Book links open a library catalogue search so you can find a copy near you. Wikipedia is a starting point; the books above are the deeper, scholarly sources.</p>
         </div>
@@ -1002,16 +1157,17 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
       </div>
       <div class="sliders">
         <div class="sl"><label for="sTempo">Tempo <output id="oTempo">100 bpm</output></label><input id="sTempo" type="range" min="40" max="180" value="100"></div>
-        <div class="sl"><label for="sDrone">Drones <output id="oDrone">80%</output></label><input id="sDrone" type="range" min="0" max="100" value="80"></div>
-        <div class="sl"><label for="sTarab">Sympathetic strings <output id="oTarab">100%</output></label><input id="sTarab" type="range" min="0" max="100" value="100"></div>
-        <div class="sl"><label for="sVerb">Room <output id="oVerb">100%</output></label><input id="sVerb" type="range" min="0" max="100" value="100"></div>
+        <div class="sl"><label for="sDrone">Drones <output id="oDrone">60%</output></label><input id="sDrone" type="range" min="0" max="100" value="60"></div>
+        <div class="sl"><label for="sTala">Thaalam <output id="oTala">70%</output></label><input id="sTala" type="range" min="0" max="100" value="70"></div>
+        <div class="sl"><label for="sTarab">Sympathetic strings <output id="oTarab">60%</output></label><input id="sTarab" type="range" min="0" max="100" value="60"></div>
+        <div class="sl"><label for="sVerb">Room <output id="oVerb">35%</output></label><input id="sVerb" type="range" min="0" max="100" value="35"></div>
         <div class="sl"><label for="sVol">Volume <output id="oVol">80%</output></label><input id="sVol" type="range" min="0" max="100" value="80"></div>
       </div>
     </div>
 
     <div class="panel" id="notaPanel">
       <h2>Import a song</h2>
-      <p class="hint">Paste chords, tab or notes, paste a link to a chords page, or drop a file. You can also paste anywhere on this page and it starts playing.</p>
+      <p class="hint">Search for any song above, or paste a Spotify, YouTube or Apple Music link, and Sitarify finds the chords for you. Or paste chords, tab or notes yourself, or drop a file.</p>
       <div class="target" id="target" hidden></div>
       <div class="fields">
         <div class="field"><label for="fTitle">Song</label><input id="fTitle" type="text" placeholder="Song title"></div>
@@ -1039,7 +1195,7 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
   <footer>
     <div class="kolam" aria-hidden="true" style="width:min(100%,420px)"></div>
     <div><b>How the sound is made.</b> Each sitar pluck is a Karplus–Strong string with a one-sided jawari bridge, a sweeping overtone formant, a gourd body filter, eleven sympathetic strings tuned to the song's scale, and a room. The harmonium and shruti box are banks of detuned free reeds breathing through a bellows; the harmonium holds the song's chords or follows the sitar's phrase. The tanpura plucks on the song's beat.</div>
-    <div><b>About importing.</b> Tab apps don't offer a public way for other sites to fetch their sheets, and this page can't load other websites, so copy the chords from the app and paste them, or paste the page's link and Sitarify fills in the title and opens it for you. Songs you add stay in this browser.</div>
+    <div><b>About finding chords.</b> When you search for a song or paste a Spotify, YouTube or Apple Music link, Sitarify first looks for a chord chart in Chordonomicon, an open research dataset of 666,000 charts written by Ultimate Guitar users, matched through the song’s Spotify ID on Wikidata. If there isn’t one, it listens to the song’s 30-second Apple Music preview and works out the beat and chords right in your browser; nothing is uploaded. Tab apps like Chords &amp; Tabs don’t offer a public way to fetch their sheets, so for an exact chart you can still copy and paste it. Songs you add stay in this browser.</div>
     <div class="copy">© 2026 Shradha Lakshman<span lang="ta">மல்லிகைக் கனவு</span></div>
   </footer>
 </div>
@@ -1296,7 +1452,8 @@ function improviseRaga(rg, seed) {
   push(0, 2, null);
   const lowStarts = [0, -5, -1].filter(inScale);
   [4, 7, 9, 12, 14].forEach((hi, i) => { x = phrase(i < 2 ? pick(lowStarts) : x, 3 + Math.floor(R() * 3), -7, hi, [1, 1, 1.5, 2], 3); });
-  // pakad: the raga's fingerprint
+  // pakad: the raga's fingerprint; the drum joins from here
+  out.gatAt = out.length;
   rg.pakad.forEach((s, i) => push(s, i === rg.pakad.length - 1 ? 2 : 1, i > 0 && Math.abs(s - rg.pakad[i - 1]) <= 4 && R() < .5 ? 'm' : null));
   padToBeat();
   // gat: rhythmic phrases, faster
@@ -1335,6 +1492,10 @@ const LIBRARY = [
     text: 'C4 C4 G4 G4 A4 A4 G4/2 F4 F4 E4 E4 D4 D4 C4/2 G4 G4 F4 F4 E4 E4 D4/2 G4 G4 F4 F4 E4 E4 D4/2 C4 C4 G4 G4 A4 A4 G4/2 F4 F4 E4 E4 D4 D4 C4/2' }
 ];
 
+// beats to a bar and the pickup before the first downbeat, so the tabla lines up
+const METER = { greensleeves: [3, 1], elise: [1.5, 1], ode: [4, 0], grace: [3, 1], twinkle: [4, 0] };
+LIBRARY.forEach(s => { [s.meter, s.pickup] = METER[s.id] || [4, 0]; });
+
 function buildTabSample() {
   const s = (n, f) => '-' + f + '-'.repeat(n - 2);
   const d = n => '-'.repeat(n);
@@ -1352,7 +1513,7 @@ const SAMPLES = {
 /* ---------------- Text parsers ---------------- */
 function readDirectives(text) {
   const d = {};
-  for (const m of text.matchAll(/\{\s*(title|t|artist|subtitle|st|tempo|capo|key)\s*:\s*([^}]*)\}/gi)) {
+  for (const m of text.matchAll(/\{\s*(title|t|artist|subtitle|st|tempo|capo|key|comment)\s*:\s*([^}]*)\}/gi)) {
     const k = m[1].toLowerCase(), v = m[2].trim();
     if (k === 'title' || k === 't') d.title = v;
     else if (k === 'artist' || k === 'subtitle' || k === 'st') d.artist = d.artist || v;
@@ -1414,6 +1575,12 @@ function parseChordSheet(text, capo) {
     const ch = toks.filter(t => CHORD_RE.test(t));
     const filler = toks.filter(t => /^[|\/%.x\-–]+$|^\d+x$|^N\.?C\.?$/i.test(t));
     if (ch.length && ch.length >= (toks.length - filler.length) * .75) {
+      // slash notation: "| C / / / | G / Am / |", each chord or slash is one beat
+      if (toks.some(t => t === '/' || t === '.')) {
+        let lastC = null;
+        toks.forEach(t => { if (CHORD_RE.test(t)) { lastC = { c: chordTones(t, capo), b: 1 }; out.push(lastC); } else if ((t === '/' || t === '.') && lastC) lastC.b++; });
+        continue;
+      }
       const b = ch.length > 4 ? 2 : 4;
       ch.forEach(t => out.push({ c: chordTones(t, capo), b }));
     }
@@ -1728,11 +1895,170 @@ function buildSong(meta, text, pre) {
     }
   });
   const bpm = meta.bpm || (pre && pre.bpm) || dir.tempo || (fmt === 'chords' ? 92 : fmt === 'tab' ? 100 : 96);
-  return {
+  const song = {
     id: meta.id, title: meta.title || dir.title || 'Untitled', artist: meta.artist || dir.artist || '', art: meta.art || null,
     fmt, kind, notes, totalBeats: beat, sa, key, scale, acc: buildAccomp(notes, sa, beat), drone: meta.drone || 'Pa', raga: meta.raga || null, seed: meta.seed, trad: meta.trad || 'h',
-    bpm: Math.max(40, Math.min(180, Math.round(bpm))), capo, text: pre ? (meta.raga ? '' : notesToText(notes)) : src
+    bpm: Math.max(40, Math.min(180, Math.round(bpm))), capo, text: pre ? (meta.raga ? '' : notesToText(notes)) : src, credit: dir.comment || null
   };
+  song.tala = buildThaalam(song, meta);
+  return song;
+}
+
+
+/* ---------------- Thaalam: tabla, mridangam and the hand that keeps tala ---------------- */
+// each stroke is a few damped modes of a tuned membrane plus a short noise transient.
+// tabla and mridangam heads are loaded with a black paste (syahi, soru) that makes their
+// overtones close to harmonic, which is why they sound pitched and are tuned to Sa.
+// modes: [ratio, amp, t60]; glide: [amount, time] bends the pitch (the bayan's palm, the thoppi's sag);
+// hit: [amp, centre Hz, Q, decay s] for the noise of skin and fingers
+const STROKES = {
+  na:    { lvl: 1, head: 'r', modes: [[1, .2, .1], [2, 1, .55], [3, .55, .4], [4, .3, .3], [5, .15, .2]], hit: [.5, 4200, 1.2, .004] },
+  tin:   { lvl: 0.8, head: 'r', modes: [[1, .1, .05], [2, .35, .3], [3, .65, .32], [4, .35, .22]], hit: [.25, 3600, 1, .003] },
+  tun:   { lvl: 0.9, head: 'r', modes: [[1, 1, .9], [2, .3, .4], [3, .12, .2]], hit: [.2, 2500, 1, .003] },
+  ti:    { lvl: 0.55, head: 'r', modes: [[1, .35, .035], [2, .25, .03]], hit: [.6, 2800, .9, .018] },
+  ra:    { lvl: 0.45, head: 'r', modes: [[1, .25, .03], [2, .2, .025]], hit: [.5, 3200, .9, .014] },
+  ge:    { lvl: 0.9, head: 'l', modes: [[1, 1, .6], [2, .18, .25], [3, .06, .15]], glide: [.14, .09], hit: [.5, 320, .7, .02] },
+  ka:    { lvl: 0.55, head: 'l', modes: [[1, .3, .05]], hit: [.9, 520, .8, .03] },
+  nam:   { lvl: 1, head: 'r', modes: [[1, .25, .15], [2, 1, .6], [3, .6, .5], [4, .4, .35], [6, .12, .2]], hit: [.45, 4600, 1.2, .004] },
+  dhi:   { lvl: 0.85, head: 'r', modes: [[1, 1, .22], [2, .35, .12], [3, .15, .08]], hit: [.3, 2200, 1, .004] },
+  dheem: { lvl: 0.85, head: 'r', modes: [[1, 1, .6], [2, .3, .3], [3, .1, .15]], hit: [.25, 2200, 1, .004] },
+  tha:   { lvl: 0.6, head: 'r', modes: [[1, .45, .05], [2, .2, .04]], hit: [.6, 1800, .9, .022] },
+  thom:  { lvl: 0.95, head: 'l', modes: [[1, 1, .45], [1.5, .25, .2], [2.2, .1, .12]], glide: [-.06, .1], hit: [.7, 260, .7, .025] },
+  clap:  { lvl: 0.45, head: 'h', modes: [], hit: [1, 1300, 1.4, .016], claps: 4 },
+  palm:  { lvl: 0.28, head: 'h', modes: [], hit: [.55, 700, 1, .02], claps: 2 },
+  finger:{ lvl: 0.12, head: 'h', modes: [], hit: [.16, 1500, 1.2, .01], claps: 1 }
+};
+// a bol (spoken syllable) is one stroke or two struck together
+const BOLS = {
+  dha: [['na', 1], ['ge', .9]], dhin: [['tin', 1], ['ge', .8]], dhi: [['tin', 1], ['ge', .8]], ta: [['na', 1]], na: [['na', .9]], tin: [['tin', 1]],
+  tun: [['tun', 1]], ge: [['ge', .9]], ka: [['ka', .8]], ti: [['ti', .8]], ra: [['ra', .75]], ki: [['ka', .7]], te: [['ti', .7]],
+  tham: [['thom', 1], ['nam', .9]], thom: [['thom', 1]], nam: [['nam', 1]], mdhi: [['dhi', 1]], dheem: [['thom', .7], ['dheem', 1]], tha: [['tha', 1]], mki: [['tha', .6]], mta: [['ti', .65]],
+  clap: [['clap', 1]], palm: [['palm', 1]], finger: [['finger', 1]]
+};
+function renderStroke(sr, st, f0, seed) {
+  const R = rng(seed);
+  const long = Math.max(.08, ...st.modes.map(m => m[2] * 1.4), st.hit[3] * 8 + (st.claps || 1) * .012);
+  const len = Math.floor(long * sr), out = new Float32Array(len);
+  st.modes.forEach(([ratio, amp, t60]) => {
+    let ph = R() * 6.283; const det = 1 + (R() - .5) * .006;
+    const k = 6.91 / (t60 * sr);
+    for (let i = 0; i < len; i++) {
+      const t = i / sr;
+      // the struck head is stretched tighter for an instant, so its pitch starts a touch sharp
+      const bend = (st.glide ? 1 + st.glide[0] * (1 - Math.exp(-t / st.glide[1])) : 1) * (st.head === 'r' ? 1 + .02 * Math.exp(-t / .018) : 1);
+      ph += 6.2832 * f0 * ratio * det * bend / sr;
+      out[i] += amp * Math.sin(ph) * Math.exp(-k * i) * Math.min(1, i / (sr * .0015));
+    }
+  });
+  // noise transient through a resonant band-pass (several staggered bursts for a clap)
+  const [ha, hf, hq, hd] = st.hit, w = 6.2832 * hf / sr, al = Math.sin(w) / (2 * hq);
+  const b0 = al / (1 + al), a1 = -2 * Math.cos(w) / (1 + al), a2 = (1 - al) / (1 + al);
+  for (let c = 0; c < (st.claps || 1); c++) {
+    const off = Math.floor((c * (.007 + R() * .005)) * sr), g = ha * (c === (st.claps || 1) - 1 ? 1 : .55);
+    let x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+    for (let i = 0; off + i < len; i++) {
+      const x = (R() * 2 - 1) * Math.exp(-i / (hd * sr));
+      const y = b0 * x - b0 * x2 - a1 * y1 - a2 * y2;
+      x2 = x1; x1 = x; y2 = y1; y1 = y;
+      out[off + i] += g * y * 3;
+      if (i > hd * sr * 9) break;
+    }
+  }
+  let pk = 0; for (let i = 0; i < len; i++) pk = Math.max(pk, Math.abs(out[i]));
+  const sc = .9 * st.lvl / (pk || 1); for (let i = 0; i < len; i++) out[i] *= sc;
+  return out;
+}
+
+// tala definitions. marks follow Bhatkhande notation in the north (X sam, 0 khali, numbers for talis)
+// and the anga symbols in the south (| laghu, O drutam).
+const TALAS = {
+  teental: { name: 'Teental', n: 16, vib: [4, 4, 4, 4], marks: ['X', '2', '0', '3'], fam: 'tabla',
+    theka: 'dha dhin dhin dha dha dhin dhin dha dha tin tin ta ta dhin dhin dha' },
+  keherwa: { name: 'Keherwa', n: 8, vib: [4, 4], marks: ['X', '0'], fam: 'tabla', theka: 'dha ge na ti na ka dhi na' },
+  dadra:   { name: 'Dadra', n: 6, vib: [3, 3], marks: ['X', '0'], fam: 'tabla', theka: 'dha dhi na dha ti na' },
+  adi:     { name: 'Adi', n: 8, vib: [4, 2, 2], marks: ['|', 'O', 'O'], fam: 'mridangam',
+    // a simple sarvalaghu-style pattern, two strokes to an akshara ('-' lets the last stroke ring)
+    theka: 'tham - mki mta nam - mdhi - nam mki tha - mdhi mki nam -',
+    hand: ['clap', 'finger', 'finger', 'finger', 'clap', 'palm', 'clap', 'palm'] }
+};
+// build the percussion part for a song: which tala, where it starts, and every stroke
+function buildThaalam(song, meta) {
+  const notes = song.notes, last = notes.length ? notes[notes.length - 1].beat : 0;
+  let def, m, B0, from = 0;
+  if (song.raga) {
+    def = song.trad === 'k' ? TALAS.adi : TALAS.teental; m = 1;
+    from = Math.ceil(meta.talaFrom || 0);
+  } else {
+    const bar = meta.meter || 4;
+    def = bar === 3 || bar === 1.5 ? TALAS.dadra : TALAS.keherwa;
+    m = song.bpm > 140 ? 1 : .5;
+    from = meta.pickup || 0;
+  }
+  const cyc = def.n * m, sub = def.fam === 'mridangam' ? m / 2 : m;
+  // land the last note of a raga sketch on sam: count whole cycles back from it
+  if (song.raga) { const k = Math.floor((last - from) / cyc); if (k < 1) return null; B0 = last - k * cyc; }
+  else B0 = from;
+  const L = song.raga ? last : B0 + Math.max(0, Math.floor((last - B0) / ((meta.meter || 4))) * (meta.meter || 4));
+  const ev = [], R = rng(hash(song.title + def.name));
+  const hum = () => (R() - .5) * .012;
+  const add = (beat, bol, v, idx) => { if (beat >= 0 && beat <= L + 1e-6) ev.push({ beat: beat + (idx === undefined ? hum() * .5 : 0), bol, v: v * (.92 + R() * .12), idx }); };
+  const bols = def.theka.split(' ');
+  const tihai = (end) => {
+    // three times: ti ra ki ta then a ringing stroke, the last one landing on `end`
+    const unit = 3 * m, roll = def.fam === 'mridangam' ? ['mta', 'mki', 'mta', 'mki'] : ['ti', 'ra', 'ki', 'ta'], hitBol = def.fam === 'mridangam' ? 'tham' : 'dha';
+    for (let r = 0; r < 3; r++) {
+      const land = end - (2 - r) * unit;
+      roll.forEach((b, i) => add(land - 2 * m + i * m / 2, b, .7 + i * .05));
+      add(land, hitBol, r === 2 ? 1.15 : .95);
+    }
+    return end - 2 * unit - 2 * m;
+  };
+  const cycles = Math.floor((L - B0) / cyc + 1e-6);
+  const useTihai = cycles >= 2;
+  const stopAt = useTihai ? L - 2 * 3 * m - 2 * m : L;
+  // uthaan: a short roll that leads the drummer in to the first sam
+  if (B0 - 2 * m >= Math.max(0, song.raga ? from - 1 : 0)) (def.fam === 'mridangam' ? ['mta', 'mki', 'mta', 'mki'] : ['ti', 'ra', 'ki', 'ta']).forEach((b, i) => add(B0 - 2 * m + i * m / 2, b, .6 + i * .07));
+  for (let c = 0; B0 + c * cyc < stopAt - 1e-6; c++) {
+    const c0 = B0 + c * cyc, fill = c % 4 === 3 && c0 + cyc <= stopAt;
+    const lastVib = def.vib[def.vib.length - 1], fillFrom = def.n - lastVib;
+    if (def.fam === 'mridangam') {
+      for (let j = 0; j < def.n * 2; j++) {
+        const b = c0 + j * sub; if (b >= stopAt - 1e-6) break;
+        let bol = bols[j];
+        if (fill && j >= fillFrom * 2) bol = ['mta', 'mki', 'mta', 'mki', 'tham'][j - fillFrom * 2] || 'mki';
+        if (bol !== '-') add(b, bol, j === 0 ? 1 : j % 2 ? .62 : .8);
+      }
+      def.hand.forEach((h, a) => { const b = c0 + a * m; if (b < stopAt - 1e-6) add(b, h, h === 'clap' ? .55 : h === 'palm' ? .4 : .5, a); });
+    } else {
+      for (let j = 0; j < def.n; j++) {
+        const b = c0 + j * m; if (b >= stopAt - 1e-6) break;
+        let vib = 0, acc = 0; for (let v = 0; v < def.vib.length; v++) { if (j < acc + def.vib[v]) { vib = v; break; } acc += def.vib[v]; }
+        const v = j === 0 ? 1.05 : j === acc ? .88 : def.marks[vib] === '0' ? .62 : .74;
+        if (fill && j >= fillFrom && j < def.n - 1) { const k = (j - fillFrom) * 2; add(b, ['ti', 'ra', 'ki', 'ta', 'ta', 'ka'][k % 6], .7, j); add(b + m / 2, ['ti', 'ra', 'ki', 'ta', 'ta', 'ka'][(k + 1) % 6], .66); }
+        else if (fill && j === def.n - 1) add(b, 'dha', .95, j);
+        else add(b, bols[j], v, j);
+        // at a slow pulse, fill the space with a light ghost stroke, as tabla players do
+        if (!fill && 60 / song.bpm * m > .55 && (bols[j] === 'dhin' || bols[j] === 'tin') && R() < .5) add(b + m / 2, 'te', .35);
+      }
+    }
+  }
+  if (useTihai) tihai(L); else add(L, def.fam === 'mridangam' ? 'tham' : 'dha', 1.1, 0);
+  ev.sort((a, b) => a.beat - b.beat);
+  const strokes = new Set(); ev.forEach(e => BOLS[e.bol].forEach(([s]) => strokes.add(s)));
+  return { def, m, B0, L, events: ev, strokes: [...strokes], info: `${def.name} ${def.n}` };
+}
+function talaIndexAt(b) { const t = S.song && S.song.tala; if (!t) return 0; let i = 0; while (i < t.events.length && t.events[i].beat < b - 1e-6) i++; return i; }
+function drawTala(song) {
+  const el = $('#tala'), t = song && song.tala;
+  el.hidden = !t || !S.thaalam;
+  if (!t) { el.innerHTML = ''; return; }
+  let html = `<span class="tl-name">${t.def.name}</span>`, k = 0;
+  t.def.vib.forEach((n, v) => {
+    html += `<span class="tl-vib"><span class="tl-mark">${t.def.marks[v]}</span>`;
+    for (let j = 0; j < n; j++, k++) html += `<span class="tl-d" data-k="${k}"></span>`;
+    html += '</span>';
+  });
+  el.innerHTML = html;
 }
 
 /* ---------------- Sound engine ---------------- */
@@ -1846,6 +2172,11 @@ class Engine {
     this.harmOut.connect(this.master); this.harmOut.connect(this.verbSend);
     const lfo = ctx.createOscillator(); lfo.frequency.value = .21; const lfoG = ctx.createGain(); lfoG.gain.value = .07;
     lfo.connect(lfoG); lfoG.connect(this.harmOut.gain); lfo.start();
+    // thaalam: its own bus, a little room
+    this.drumBus = ctx.createGain(); this.drumBus.gain.value = .7 * .55;
+    const dVerb = ctx.createGain(); dVerb.gain.value = .35;
+    const dShelf = ctx.createBiquadFilter(); dShelf.type = 'highshelf'; dShelf.frequency.value = 6500; dShelf.gain.value = -4;
+    this.drumBus.connect(dShelf); dShelf.connect(this.master); dShelf.connect(dVerb); dVerb.connect(this.verbSend);
     this.reed = this.reedWave(.95, 1.15);
     this.reedDark = this.reedWave(1.35, 1.25);
     return ctx;
@@ -1894,6 +2225,16 @@ class Engine {
     this.cache.set(key, b);
     return b;
   }
+  drum(stroke, sa) {
+    const key = 'drum|' + stroke + '|' + sa;
+    let b = this.cache.get(key); if (b) return b;
+    const ctx = this.ensure(), st = STROKES[stroke];
+    const f0 = st.head === 'r' ? mtof(sa + 12) : st.head === 'l' ? mtof(sa - 7) * (stroke === 'thom' ? .82 : 1) : 0;
+    const data = renderStroke(ctx.sampleRate, st, f0, hash(key));
+    b = ctx.createBuffer(1, data.length, ctx.sampleRate); b.getChannelData(0).set(data);
+    this.cache.set(key, b);
+    return b;
+  }
   play(buf, when, gain, dest) {
     const src = this.ctx.createBufferSource(); src.buffer = buf;
     const g = this.ctx.createGain(); g.gain.value = gain;
@@ -1915,7 +2256,7 @@ class Engine {
   harmChord(ms, when, vel) {
     const ctx = this.ctx, t = Math.max(when, ctx.currentTime);
     this.harmRelease(t, .06);
-    const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.2 * vel / Math.sqrt(ms.length), t + .09);
+    const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.075 * vel / Math.sqrt(ms.length), t + .09);
     g.connect(this.harmBus);
     const oscs = [];
     // per key: two 8' reeds tuned a few cents apart for the musette beat
@@ -1937,9 +2278,9 @@ class Engine {
     const ctx = this.ctx;
     if (this.shruti) { this.shrutiTune(song); return; }
     const t = ctx.currentTime;
-    const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.16, t + 1.4);
+    const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.042, t + 1.4);
     // slow bellows breathing
-    const lfo = ctx.createOscillator(); lfo.frequency.value = .14; const lg = ctx.createGain(); lg.gain.value = .035;
+    const lfo = ctx.createOscillator(); lfo.frequency.value = .14; const lg = ctx.createGain(); lg.gain.value = .009;
     lfo.connect(lg); lg.connect(g.gain); lfo.start(t);
     g.connect(this.shrutiLevel);
     const set = SHRUTI_SET[song.drone] || SHRUTI_SET.Pa;
@@ -2044,7 +2385,7 @@ const pulseEl = document.createElement('div'); pulseEl.className = 'pulse'; fxLa
 /* ---------------- Player state ---------------- */
 const S = {
   song: null, playing: false, idx: 0, tick: 0, anchorT: 0, anchorB: 0, spb: .6, timer: 0, ended: false,
-  harm: true, aIdx: 0, meend: true, chikari: true, tanpura: true, shruti: true, tanBeat: 0, events: [], onsets: new Set(), ready: false, pending: null
+  harm: true, aIdx: 0, meend: true, chikari: true, tanpura: true, shruti: true, thaalam: true, pIdx: 0, tanBeat: 0, events: [], onsets: new Set(), ready: false, pending: null
 };
 function svgToStage(x, y, svg) {
   const r = (svg || $('#sitar')).getBoundingClientRect(), sr = stageEl.getBoundingClientRect();
@@ -2084,6 +2425,77 @@ function spawnNote(midi, strength, sx, sy, svg) {
     pulseEl.animate([{ transform: `translate(${px}px,${py}px) scale(.4)`, opacity: .9 * strength }, { transform: `translate(${px}px,${py}px) scale(1.6)`, opacity: 0 }], { duration: 700, easing: 'ease-out' });
   }
 }
+
+
+/* ---------------- Music as moonlight: rings that ripple out from the moon ---------------- */
+const haloCv = $('#halos'), hctx = haloCv.getContext('2d');
+let halos = [], moonGlow = 0, haloDPR = 1;
+function moonGeom() {
+  const W = stageEl.clientWidth, H = stageEl.clientHeight, vw = innerWidth / 100;
+  const clamp = (a, v, b) => Math.max(a, Math.min(b, v));
+  const fogx = clamp(150, 15 * vw, 250);
+  // these follow the .stage background rules: the painted moon sits at (0.677, 0.398) of panel.jpg, radius 0.17 of its width
+  if (innerWidth <= 760) {
+    const h = (H - fogx) * .62, iw = h * 1253 / 645, left = .58 * (W - iw), top = H - h;
+    return { x: left + .6768 * iw, y: top + .3984 * h, r: .1704 * iw };
+  }
+  return { x: .6 * W, y: fogx + clamp(150, 15 * vw, 210) + 255 + .1504 * W, r: .213 * W };
+}
+function sizeHalos() {
+  haloDPR = Math.min(2, devicePixelRatio || 1);
+  haloCv.width = stageEl.clientWidth * haloDPR; haloCv.height = stageEl.clientHeight * haloDPR;
+}
+// kinds: a sitar note, the tanpura's breath, a harmonium chord, the tala's sam
+function halo(kind, vel, m) {
+  if (halos.length > (RM ? 6 : 40)) halos.shift();
+  const hue = m == null ? 40 : NOTE_HUES[mod12(m)];
+  const spec = {
+    note: { life: 2900 + Math.random() * 700, grow: 1.75 + vel * .5, a: .5 * vel, w: 2.2 },
+    drone: { life: 4600, grow: 1.35, a: .1, w: 6 },
+    harm: { life: 3800, grow: 1.5, a: .12, w: 10 },
+    sam: { life: 2400, grow: 1.45, a: .32, w: 1.6 }
+  }[kind];
+  halos.push({ ...spec, kind, hue, t0: performance.now(), wob: Math.random() * 6.28 });
+  moonGlow = Math.min(1, moonGlow + (kind === 'note' ? .35 * vel : kind === 'sam' ? .25 : .08));
+}
+function drawHalos(now) {
+  const W = haloCv.width, H = haloCv.height;
+  if (!halos.length && moonGlow < .01) { if (haloCv._dirty) { hctx.clearRect(0, 0, W, H); haloCv._dirty = false; } return; }
+  haloCv._dirty = true;
+  const g = moonGeom(), d = haloDPR;
+  hctx.setTransform(d, 0, 0, d, 0, 0);
+  hctx.clearRect(0, 0, W / d, H / d);
+  hctx.globalCompositeOperation = 'lighter';
+  // the moon brightens a little with each note
+  if (moonGlow > .01) {
+    const rg = hctx.createRadialGradient(g.x, g.y, g.r * .7, g.x, g.y, g.r * 1.45);
+    rg.addColorStop(0, 'rgba(255,246,222,0)'); rg.addColorStop(.32, `rgba(255,240,210,${.16 * moonGlow})`); rg.addColorStop(1, 'rgba(255,230,190,0)');
+    hctx.fillStyle = rg; hctx.beginPath(); hctx.arc(g.x, g.y, g.r * 1.45, 0, 6.283); hctx.fill();
+    moonGlow *= .965;
+  }
+  halos = halos.filter(h => now - h.t0 < h.life);
+  halos.forEach(h => {
+    const p = (now - h.t0) / h.life, e = 1 - Math.pow(1 - p, 2.4);
+    const r = g.r * (1.0 + (h.grow - 1) * e), fade = Math.pow(1 - p, 1.6) * Math.min(1, p * 14);
+    const col = a => `hsla(${h.hue}, 70%, 88%, ${a})`;
+    // a soft wash behind, then the ring itself, drawn twice a hair apart like a brush that bled
+    hctx.lineWidth = h.w * 5 * (1 - p * .5); hctx.strokeStyle = col(h.a * .12 * fade);
+    hctx.beginPath(); hctx.arc(g.x, g.y, r, 0, 6.283); hctx.stroke();
+    for (let k = 0; k < 2; k++) {
+      hctx.lineWidth = Math.max(.4, h.w * (1 - p * .75)) * (k ? .55 : 1);
+      hctx.strokeStyle = col(h.a * fade * (k ? .5 : 1));
+      hctx.beginPath();
+      for (let i = 0; i <= 96; i++) {
+        const t = i / 96 * 6.283, wob = 1 + .006 * Math.sin(t * 3 + h.wob + k) + .004 * Math.sin(t * 7 - h.wob);
+        const x = g.x + Math.cos(t) * r * wob * (1 + k * .012), y = g.y + Math.sin(t) * r * wob * (1 + k * .012);
+        i ? hctx.lineTo(x, y) : hctx.moveTo(x, y);
+      }
+      hctx.stroke();
+    }
+  });
+  hctx.globalCompositeOperation = 'source-over';
+}
+new ResizeObserver(sizeHalos).observe(stageEl); sizeHalos();
 
 /* ---------------- Harmonium keyboard, keyed to the song ---------------- */
 let keyEls = {}, keyRange = [0, 0], activeKey = [];
@@ -2152,11 +2564,23 @@ function swara(sem, trad) {
   return oct < 0 ? base[0] + '\u0323' + base.slice(1) : oct > 0 ? base[0] + '\u0307' + base.slice(1) : base;
 }
 const swaraLine = (arr, trad) => arr.map(s => swara(s, trad)).join(' ');
+// written-out sargam for scales: the same syllables in both traditions, with each tradition's way of
+// marking variants (Karnatik numbers; Hindustani komal underlined, tivra Ma with ′)
+const SYL = { h: ['Sa', 'Ri', 'Ri', 'Ga', 'Ga', 'Ma', 'Ma′', 'Pa', 'Da', 'Da', 'Ni', 'Ni'], k: ['Sa', 'Ri₁', 'Ri₂', 'Ga₂', 'Ga₃', 'Ma₁', 'Ma₂', 'Pa', 'Da₁', 'Da₂', 'Ni₂', 'Ni₃'] };
+function syl(sem, trad) {
+  const pc = mod12(sem), oct = Math.floor(sem / 12), base = SYL[trad][pc];
+  const w = base[0] + (oct < 0 ? '\u0323' : oct > 0 ? '\u0307' : '') + base.slice(1);
+  const h = w.replace(/[₀-₉]/g, d => `<sub>${d.charCodeAt(0) - 8320}</sub>`);
+  return trad === 'h' && [1, 3, 8, 10].includes(pc) ? `<span class="ko" title="komal">${h}</span>` : h;
+}
+const sylLine = (arr, trad) => arr.map(x => syl(x, trad)).join(' ');
 function droneInfo() {
   const s = S.song; if (!s) return;
   $('#dTanInfo').textContent = `${s.drone} Sa · ${PCN[mod12(s.key.tonic)]}`;
   $('#dShrutiInfo').textContent = s.drone === 'Ni' ? 'Ni Sa' : `Sa ${s.drone}`;
   $('#dHarmInfo').textContent = s.acc.some(a => a.notes.length > 2) ? 'chords' : 'follows';
+  $('#dTalaInfo').textContent = s.tala ? s.tala.info : 'off';
+  drawTala(s);
 }
 async function loadSong(song, opts = {}) {
   stop(true);
@@ -2194,11 +2618,12 @@ async function prerender() {
   song.notes.forEach(n => { if (n.m === null) return; todo.push(['main', n.m, null, null]); if (n.orn) todo.push(['main', n.m, n.from, n.orn]); });
   todo.push(['chikari', song.sa + 12, null, null], ['chikari', song.sa + 24, null, null]);
   [song.sa + DRONE_SEMI[song.drone], song.sa, song.sa - 12].forEach(m => todo.push(['drone', m, null, null]));
+  if (song.tala) song.tala.strokes.forEach(st => todo.push(['drum', st, song.sa]));
   playBtn.disabled = true;
   let t = performance.now();
   for (let i = 0; i < todo.length; i++) {
     const [k, m, f, o] = todo[i];
-    eng.buffer(k, m, f, o);
+    if (k === 'drum') eng.drum(m, f); else eng.buffer(k, m, f, o);
     if (performance.now() - t > 30) { status(`Tuning strings… ${Math.round(i / todo.length * 100)}%`); await new Promise(r => setTimeout(r, 0)); t = performance.now(); if (S.song !== song) return; }
   }
   playBtn.disabled = false; S.ready = true;
@@ -2217,10 +2642,11 @@ async function play() {
   S.tick = Math.ceil(startBeat);
   S.aIdx = accIndexAt(startBeat);
   S.tanBeat = Math.ceil(startBeat / tanStep()) * tanStep();
+  S.pIdx = talaIndexAt(startBeat);
   S.playing = true; S.ended = false; S.events = [];
   if (S.shruti) eng.shrutiStart(S.song);
   $('#playIcon').innerHTML = ICON_PAUSE; playBtn.setAttribute('aria-label', 'Pause'); playBtn.classList.add('lit');
-  status(`Playing ${S.song.title}`);
+  status(`Playing ${S.song.title}${S.song.credit ? ' · ' + S.song.credit : ''}`);
   clearInterval(S.timer); S.timer = setInterval(schedule, 25); schedule();
 }
 function stop(reset) {
@@ -2282,6 +2708,17 @@ function schedule() {
       S.tanBeat += k;
     }
   }
+  const tl = song.tala;
+  if (tl) {
+    while (S.pIdx < tl.events.length && beatTime(tl.events[S.pIdx].beat) < ahead) {
+      const e = tl.events[S.pIdx], t = Math.max(ctx.currentTime, beatTime(e.beat));
+      if (S.thaalam) {
+        BOLS[e.bol].forEach(([st, g]) => eng.play(eng.drum(st, song.sa), t, e.v * g * 1.05, eng.drumBus));
+        if (e.idx !== undefined) S.events.push({ t, type: 'tala', k: e.idx });
+      }
+      S.pIdx++;
+    }
+  }
   if (S.idx >= song.notes.length && ctx.currentTime > beatTime(song.totalBeats) + 1.4) {
     stop(true); updateProgress(0); status('Finished. Press play to hear it again.');
     ribbon.querySelectorAll('.rb.on').forEach(c => c.classList.remove('on'));
@@ -2310,19 +2747,19 @@ function frame(now) {
         const n = S.song.notes[e.i];
         setNowNote(e.i);
         vib.amp[0] = 3.2 * e.vel; vib.t0[0] = now; vib.amp[1] = .8; vib.t0[1] = now;
-        spawnNote(n.m, e.vel, 320, 192);
-        if (!RM && Math.random() < .35) setTimeout(() => spawnNote(n.m + 12, .6, 320, 192), 120);
+        halo('note', e.vel, n.m); ripple(320, 192);
       } else if (e.type === 'acc') {
         const top = lightKeys(e.notes);
-        if (top && (e.first || Math.random() < .4)) spawnNote(top.k, .45, top.x, 160, $('#harmonium'));
+        if (top && (e.first || Math.random() < .4)) halo('harm', .5, top.k);
         if (!RM) $('#bellows').animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.9)' }, { transform: 'scaleY(1)' }], { duration: 700, easing: 'ease-in-out' });
       }
       else if (e.type === 'chik') { vib.chik[0] = 1.6; vib.chik[1] = 1.4; vib.ct0[0] = vib.ct0[1] = now; }
-      else if (e.type === 'drone') { vib.amp[3] = 1.2; vib.t0[3] = now; }
+      else if (e.type === 'drone') { vib.amp[3] = 1.2; vib.t0[3] = now; if (Math.random() < .5) halo('drone', .3); }
+      else if (e.type === 'tala') { const tEl = $('#tala'), on = tEl.querySelector('.tl-d.on'); if (on) on.classList.remove('on'); const d = tEl.querySelector(`[data-k="${e.k}"]`); if (d) d.classList.add('on'); if (e.k === 0) halo('sam', .6); }
     }
     updateProgress(Math.min(1, Math.max(0, curBeat() / S.song.totalBeats)));
   }
-  drawStrings(now);
+  drawStrings(now); drawHalos(now);
   requestAnimationFrame(frame);
 }
 function updateProgress(p) {
@@ -2337,7 +2774,7 @@ function seek(p) {
   if (S.playing) {
     eng.release(eng.ctx.currentTime, .05);
     S.idx = i; S.anchorB = S.song.notes[i].beat; S.anchorT = eng.ctx.currentTime + .06; S.tick = Math.ceil(S.anchorB); S.aIdx = accIndexAt(S.anchorB);
-    S.tanBeat = Math.ceil(S.anchorB / tanStep()) * tanStep(); S.events = []; S.ended = false;
+    S.tanBeat = Math.ceil(S.anchorB / tanStep()) * tanStep(); S.pIdx = talaIndexAt(S.anchorB); S.events = []; S.ended = false;
   } else { S.idx = i; updateProgress(S.song.notes[i].beat / S.song.totalBeats); }
 }
 function setTempo(bpm, fromSong) {
@@ -2355,6 +2792,7 @@ function applyMix() {
   eng.tarabOut.gain.setTargetAtTime(1.8 * $('#sTarab').value / 100, t, .05);
   eng.verbSend.gain.setTargetAtTime(.9 * $('#sVerb').value / 100, t, .05);
   eng.master.gain.setTargetAtTime($('#sVol').value / 100, t, .05);
+  eng.drumBus.gain.setTargetAtTime(.55 * $('#sTala').value / 100, t, .05);
   const dl = $('#sDrone').value / 60;
   eng.droneLevel.gain.setTargetAtTime(dl, t, .05);
   eng.shrutiLevel.gain.setTargetAtTime(dl, t, .05);
@@ -2398,13 +2836,17 @@ $('#dTan').addEventListener('click', e => {
   S.tanpura = !S.tanpura; e.currentTarget.setAttribute('aria-pressed', String(S.tanpura));
   if (S.tanpura && S.playing) S.tanBeat = Math.ceil(curBeat() / tanStep()) * tanStep();
 });
+$('#dTala').addEventListener('click', e => {
+  S.thaalam = !S.thaalam; e.currentTarget.setAttribute('aria-pressed', String(S.thaalam));
+  if (S.song) drawTala(S.song);
+});
 $('#dShruti').addEventListener('click', e => {
   S.shruti = !S.shruti; e.currentTarget.setAttribute('aria-pressed', String(S.shruti));
   if (!eng.ctx) return;
   if (S.shruti && S.playing) eng.shrutiStart(S.song); else if (!S.shruti) eng.shrutiStop();
 });
 $('#sTempo').addEventListener('input', e => setTempo(+e.target.value));
-[['sTarab', 'oTarab'], ['sVerb', 'oVerb'], ['sVol', 'oVol'], ['sDrone', 'oDrone']].forEach(([s, o]) => {
+[['sTarab', 'oTarab'], ['sVerb', 'oVerb'], ['sVol', 'oVol'], ['sDrone', 'oDrone'], ['sTala', 'oTala']].forEach(([s, o]) => {
   $('#' + s).addEventListener('input', e => { $('#' + o).textContent = e.target.value + '%'; applyMix(); });
 });
 let rsz = 0, lastNarrow = null;
@@ -2416,8 +2858,9 @@ PCN.forEach((n, i) => { const o = document.createElement('option'); o.value = i;
 raSa.value = '1';
 function ragaSong(rg, seed) {
   const tonic = +raSa.value, sa = saFor(tonic);
-  const notes = improviseRaga(rg, seed).map(n => ({ m: sa + 12 + n.m, b: n.b, flag: n.flag }));
-  return buildSong({ id: 'raga-' + rg.id, title: 'Raga ' + rg.name, artist: `${rg.trad === 'k' ? 'Karnatik' : 'Hindustani'} · ${rg.cls}`, bpm: 76, tonic, mode: 'major', scale: ragaScale(rg), drone: rg.drone, raga: rg.id, seed, trad: rg.trad, andolan: rg.andolan }, '', { notes, fmt: 'raga' });
+  const raw = improviseRaga(rg, seed), talaFrom = raw.slice(0, raw.gatAt).reduce((t, n) => t + n.b, 0);
+  const notes = raw.map(n => ({ m: sa + 12 + n.m, b: n.b, flag: n.flag }));
+  return buildSong({ id: 'raga-' + rg.id, title: 'Raga ' + rg.name, artist: `${rg.trad === 'k' ? 'Karnatik' : 'Hindustani'} · ${rg.cls}`, bpm: 76, tonic, mode: 'major', scale: ragaScale(rg), drone: rg.drone, raga: rg.id, seed, trad: rg.trad, andolan: rg.andolan, talaFrom }, '', { notes, fmt: 'raga' });
 }
 function playRaga(rg, fresh) {
   const same = S.song && S.song.raga === rg.id;
@@ -2689,11 +3132,24 @@ function startEmbers() {
   const cv = $('#embers'); if (!cv || RM) return;
   const ctx = cv.getContext('2d'); let W = 0, H = 0, parts = [];
   const size = () => { const r = cv.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0);
-    const n = W < 600 ? 26 : 48; parts = Array.from({ length: n }, (_, i) => spawn(i % 4 === 0 ? 'petal' : 'mote', true)); };
+    const n = W < 600 ? 26 : 48; parts = Array.from({ length: n }, (_, i) => spawn(i % 4 === 0 ? 'petal' : 'mote', true));
+    hm = heroMap(); glints = Array.from({ length: W < 600 ? 40 : 90 }, () => glint(true)); };
+  let hm = null, glints = [];
+  // sparkles of light on the lake, thicker in the moon's (or sun's) path
+  const glint = any => { const path = Math.random() < .45; const ix = path ? 760 + Math.random() * 260 : Math.random() * HERO_W; const iy = 470 + Math.pow(Math.random(), .8) * 290; return { x: hm.x(ix), y: hm.y(iy), len: (6 + Math.random() * 20) * hm.s * (iy / 600), t0: performance.now() - (any ? Math.random() * 3000 : 0), life: 1600 + Math.random() * 2400, dx: (Math.random() - .5) * .08 }; };
   const spawn = (kind, any) => ({ kind, x: Math.random() * W, y: any ? Math.random() * H : (kind === 'petal' ? -10 : H * (.6 + Math.random() * .4)), s: .6 + Math.random() * 1.2, ph: Math.random() * 6.28, rot: Math.random() * 6.28, v: .15 + Math.random() * .35 });
   addEventListener('resize', size); size();
   (function loop(t) {
     ctx.clearRect(0, 0, W, H);
+    const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over'; ctx.lineCap = 'round';
+    glints.forEach((g, i) => {
+      const p = (t - g.t0) / g.life; if (p >= 1) { glints[i] = glint(false); return; }
+      const a = Math.sin(p * Math.PI) ** 2 * (dark ? .55 : .7);
+      g.x += g.dx;
+      ctx.strokeStyle = dark ? `rgba(255,222,160,${a})` : `rgba(255,255,250,${a})`; ctx.lineWidth = 1.2 * Math.max(.7, hm.s);
+      ctx.beginPath(); ctx.moveTo(g.x - g.len / 2, g.y); ctx.lineTo(g.x + g.len / 2, g.y); ctx.stroke();
+    });
     parts.forEach((p, i) => {
       if (p.kind === 'mote') {
         p.y -= p.v * .6; p.x += Math.sin(t / 1400 + p.ph) * .25;
@@ -2711,7 +3167,80 @@ function startEmbers() {
     requestAnimationFrame(loop);
   })(performance.now());
 }
-paintHero(); paintNight(); startEmbers();
+
+/* ---------------- The hero painting, alive: torn edge, water, birds, lamplight ---------------- */
+// where a point of the 1376×768 painting lands in the scene, matching the CSS background rules
+const HERO_W = 1376, HERO_H = 768;
+function heroMap() {
+  const sc = $('.scene'), W = sc.clientWidth, H = sc.clientHeight;
+  let s, ox, oy;
+  if (matchMedia('(max-width: 560px)').matches) { s = 1.04 * H / HERO_H; ox = (W - HERO_W * s) * .64; oy = H - HERO_H * s; }
+  else { s = Math.max(W / HERO_W, H / HERO_H); ox = (W - HERO_W * s) * .5; oy = (H - HERO_H * s) * .72; }
+  return { W, H, s, x: x => ox + x * s, y: y => oy + y * s };
+}
+// lamps, their reflections and the lotuses, in painting coordinates
+const FLAMES = [[511, 680, 1], [729, 695, 1.1], [1219, 630, .85]];
+const LOTUS_GLOW = [[858, 690, 1], [938, 665, .9], [1031, 710, 1], [1026, 648, .8], [1081, 628, .7], [996, 608, .6], [956, 608, .6], [1036, 585, .5], [1066, 585, .5], [1121, 570, .45]];
+// the stretches of the bottom edge the tear must not bite into
+const KEEP = [[470, 560, 712], [680, 780, 742], [800, 1100, 756], [1190, 1260, 660]];
+function tornPath(m, seed, drop) {
+  const R = rng(seed), pts = [], step = 5;
+  const p1 = R() * 6.28, p2 = R() * 6.28, p3 = R() * 6.28;
+  let jag = 0;
+  for (let x = -20; x <= m.W + 20; x += step) {
+    const ix = (x - m.x(0)) / m.s;
+    // base line a little above the painting's bottom, dipping to just under the lamps and lotuses
+    let floor = HERO_H * .962;
+    KEEP.forEach(([a, b, need]) => { const d = Math.max(a - ix, ix - b, 0); const want = Math.max(need + 14, HERO_H * .99); const k = Math.exp(-(d * d) / (2 * 60 * 60)); floor = floor * (1 - k) + want * k; });
+    let y = m.y(floor);
+    y += Math.sin(x / 210 + p1) * 7 + Math.sin(x / 63 + p2) * 3.5 + Math.sin(x / 23 + p3) * 1.6;
+    jag = jag * .45 + (R() - .5) * 7; y += jag;
+    if (R() < .05) y -= 3 + R() * 7;           // a fibre pulled up out of the tear
+    pts.push([x, Math.min(m.H - 1.5, y + drop)]);
+  }
+  return `M-40 -40H${m.W + 40}V${pts[pts.length - 1][1].toFixed(1)}` + pts.reverse().map(([x, y]) => `L${x.toFixed(1)} ${y.toFixed(1)}`).join('') + 'Z';
+}
+function svgMask(m, d, rough) {
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${m.W}' height='${m.H}' viewBox='0 0 ${m.W} ${m.H}'><filter id='t' x='-2%' y='-2%' width='104%' height='104%'><feTurbulence type='fractalNoise' baseFrequency='.09 .35' numOctaves='3' seed='${rough}' result='n'/><feDisplacementMap in='SourceGraphic' in2='n' scale='${4 + rough % 3}' xChannelSelector='R' yChannelSelector='G' result='d'/><feGaussianBlur in='d' stdDeviation='.45'/></filter><path d='${d}' fill='black' filter='url(#t)'/></svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+function tearHero() {
+  const sc = $('.scene'), tear = $('#tear'); if (!sc.clientWidth) return;
+  const m = heroMap();
+  const main = svgMask(m, tornPath(m, 41, 0), 3), fringe = svgMask(m, tornPath(m, 77, 6), 5);
+  [['webkitMask', main], ['mask', main]].forEach(([k, v]) => { sc.style[k] = v + ' 0 0 / 100% 100% no-repeat'; });
+  [['webkitMask', fringe], ['mask', fringe]].forEach(([k, v]) => { tear.style[k] = v + ' 0 0 / 100% 100% no-repeat'; });
+  // the water starts at the far shore
+  sc.style.setProperty('--hz', m.y(452) + 'px');
+  // lamplight
+  const gl = $('#lamps'); gl.innerHTML = '';
+  const put = (x, y, w, h, cls, delay) => { const e = document.createElement('span'); e.className = cls; e.style.cssText = `left:${m.x(x) - w / 2}px;top:${m.y(y) - h / 2}px;width:${w}px;height:${h}px;animation-delay:${delay}s`; gl.appendChild(e); };
+  FLAMES.forEach(([x, y, k], i) => {
+    put(x, y - 4, 92 * m.s * k, 92 * m.s * k, 'lamp-halo', -i * .7);
+    put(x, y + 4, 10 * m.s * k, 18 * m.s * k, 'lamp-core', -i * .37);
+    put(x - 4, y + 58, 26 * m.s * k, 96 * m.s * k, 'lamp-refl', -i * .9);
+  });
+  LOTUS_GLOW.forEach(([x, y, k], i) => put(x, y, 70 * m.s * k, 52 * m.s * k, 'lotus-glow', -i * 1.3));
+  flyBirds(m);
+}
+// birds drawn like brush strokes, crossing the sky on long slow arcs
+const BIRD = { up: 'M-13 -2C-9 -9 -4 -8 0 0C4 -8 9 -9 13 -2C9 -5 4 -4 0 2.5C-4 -4 -9 -5 -13 -2Z', mid: 'M-13 1C-9 -3 -4 -3 0 0C4 -3 9 -3 13 1C9 -.5 4 0 0 2.5C-4 0 -9 -.5 -13 1Z', down: 'M-13 5C-9 2 -4 1 0 0C4 1 9 2 13 5C9 3.5 4 3 0 2.5C-4 3 -9 3.5 -13 5Z' };
+function flyBirds(m) {
+  const svg = $('#birds'); if (RM) { svg.innerHTML = ''; return; }
+  svg.setAttribute('viewBox', `0 0 ${m.W} ${m.H}`);
+  const R = rng(9);
+  const flock = [[.18, 46, 0, 1], [.24, 52, 9, 1.15], [.13, 58, 22, .85], [.3, 64, 31, .95], [.21, 70, 44, 1.05]];
+  svg.innerHTML = flock.map(([fy, dur, begin, sz], i) => {
+    const ltr = i % 2 === 0, y0 = m.y(HERO_H * fy) + R() * 30, x0 = ltr ? -60 : m.W + 60, x1 = ltr ? m.W + 60 : -60;
+    const path = `M${x0} ${y0} C${m.W * .3} ${y0 - 60 - R() * 40} ${m.W * .65} ${y0 + 50 + R() * 30} ${x1} ${y0 - 20}`;
+    const k = Math.max(.7, m.s) * sz, flap = (.7 + R() * .35).toFixed(2);
+    return `<g class="bird"><g transform="scale(${ltr ? k : -k} ${k})"><path d="${BIRD.mid}"><animate attributeName="d" dur="${flap}s" repeatCount="indefinite" begin="-${(R() * 2).toFixed(2)}s" values="${BIRD.up};${BIRD.mid};${BIRD.down};${BIRD.mid};${BIRD.up}" keyTimes="0;.3;.5;.7;1" calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1;.4 0 .6 1;.4 0 .6 1"/></path></g><animateMotion dur="${dur}s" begin="-${begin}s" repeatCount="indefinite" path="${path}"/></g>`;
+  }).join('');
+}
+let tearT = 0;
+addEventListener('resize', () => { clearTimeout(tearT); tearT = setTimeout(tearHero, 160); });
+
+paintHero(); paintNight(); startEmbers(); tearHero();
 
 (function chapters() {
   const guide = $('#guide'); if (!guide) return;
@@ -2745,6 +3274,8 @@ const TRAD = { h: 'Hindustani', k: 'Karnatik' };
 const pill = t => `<span class="trad ${t}">${TRAD[t]}</span>`;
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const rgrid = $('#rgrid');
+// the guide's side-by-side list of every raga's scale
+$('#allScales').innerHTML = ['h', 'k'].map(tr => `<div><h4><span class="trad ${tr}">${TRAD[tr]}</span></h4>${RAGAS.filter(r => r.trad === tr).map(r => `<div class="sc"><b>${esc(r.name)} (${TRAD[tr]})</b><span><i>Aarohanam / Aroh:</i><em>${sylLine(r.aroh, tr)}</em></span><span><i>Avarohanam / Avaroh:</i><em>${sylLine(r.avroh, tr)}</em></span></div>`).join('')}</div>`).join('');
 let rFilter = 'all';
 RAGAS.forEach(rg => {
   const c = document.createElement('article'); c.className = 'rcard'; c.dataset.id = rg.id; c.dataset.trad = rg.trad;
@@ -2754,7 +3285,7 @@ RAGAS.forEach(rg => {
       <span class="cap">
         <span class="nm">${esc(rg.name)}</span>
         <span class="th">${esc(rg.time)}</span>
-        <span class="ar">${swaraLine(rg.aroh, rg.trad)}</span>
+        <span class="scale"><span><i>Aarohanam / Aroh</i>${sylLine(rg.aroh, rg.trad)}</span><span><i>Avarohanam / Avaroh</i>${sylLine(rg.avroh, rg.trad)}</span></span>
         <span class="trad ${rg.trad}">${TRAD[rg.trad]}</span>
       </span>
     </button>
@@ -2799,9 +3330,10 @@ function openSheet(id) {
     </div>
     <dl class="sh-meta">${meta.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
     <div class="sh-notes">
-      <div class="ln"><span>${rg.trad === 'k' ? 'Arohanam' : 'Aroh'} ↑</span><span>${swaraLine(rg.aroh, rg.trad)}</span></div>
-      <div class="ln"><span>${rg.trad === 'k' ? 'Avarohanam' : 'Avroh'} ↓</span><span>${swaraLine(rg.avroh, rg.trad)}</span></div>
-      <div class="ln sm"><span>${TRAD[other]} names</span><span>${swaraLine(rg.aroh, other)}</span></div>
+      <div class="sb-name">${esc(rg.name)} (${TRAD[rg.trad]})</div>
+      <div class="ln"><span>Aarohanam / Aroh</span><span>${sylLine(rg.aroh, rg.trad)}</span></div>
+      <div class="ln"><span>Avarohanam / Avaroh</span><span>${sylLine(rg.avroh, rg.trad)}</span></div>
+      <div class="ln sm"><span>Same notes, ${TRAD[other]} way</span><span>${sylLine(rg.aroh, other)}</span></div>
       <div class="ln sm"><span>With Sa = ${PCN[tonic]}</span><span>${west(rg.aroh)}</span></div>
     </div>
     <div><h4>Story</h4>${rg.story.map(t => `<p>${esc(t)}</p>`).join('')}</div>
@@ -2810,7 +3342,7 @@ function openSheet(id) {
     ${twinHtml ? `<div class="twin">${twinHtml}</div>` : ''}
     ${rg.trad === 'k' ? '<p class="note">In a Karnatik concert you would usually hear this raga sung, or played on veena, violin or flute with mridangam. Sitarify plays it on a sitar, so treat it as a sketch of the raga’s shape; real gamakas are far richer.</p>' : ''}
     <div><h4>Sources</h4><ul class="srcs">${rg.src.map(([t, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${esc(t)}</a></li>`).join('')}</ul></div>
-    <div class="sh-foot"><span class="note">Notation key: lowercase = komal (flat), ′ = tivra (sharp), dot below = lower octave, dot above = upper octave. <a href="#guide" data-guide>Read the guide</a></span><button class="btn primary" data-play>Play ${esc(rg.name)}</button></div>
+    <div class="sh-foot"><span class="note">Notation key: Karnatik numbers mark note variants; in Hindustani lines, underlined = komal (flat) and ′ = tivra (sharp). Dot below = lower octave, dot above = upper octave. <a href="#guide" data-guide>Read the guide</a></span><button class="btn primary" data-play>Play ${esc(rg.name)}</button></div>
   </div>`;
   sheet.querySelector('[data-close]').addEventListener('click', () => closeSheet());
   sheet.querySelector('[data-play]').addEventListener('click', () => { closeSheet(); playRaga(rg, true); stageEl.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); });
@@ -2854,7 +3386,7 @@ function saveSong(song) {
 }
 function importText(text, opts = {}) {
   const trimmed = text.trim();
-  if (/^https?:\/\/\S+$/i.test(trimmed)) { const link = parseSongLink(trimmed); if (link) { startLink(link); return; } }
+  if (/^https?:\/\/\S+$/i.test(trimmed)) { const st = streamOf(trimmed); if (st) { findOnline({ kind: 'stream', stream: st, title: '', artist: '' }); return; } const link = parseSongLink(trimmed); if (link) { startLink(link); return; } }
   const dir = readDirectives(text);
   let title = $('#fTitle').value.trim(), artist = $('#fArtist').value.trim();
   if (S.pending) { title = title || S.pending.title; artist = artist || S.pending.artist; }
@@ -2917,8 +3449,254 @@ document.addEventListener('paste', e => {
 });
 $('#nota').addEventListener('paste', e => {
   const t = e.clipboardData && e.clipboardData.getData('text/plain');
-  if (t && /^https?:\/\/\S+$/i.test(t.trim())) { e.preventDefault(); const link = parseSongLink(t); if (link) startLink(link); }
+  if (t && /^https?:\/\/\S+$/i.test(t.trim())) { e.preventDefault(); const st = streamOf(t); if (st) { findOnline({ kind: 'stream', stream: st, title: '', artist: '' }); return; } const link = parseSongLink(t); if (link) startLink(link); }
 });
+
+
+/* ---------------- Finding chords online ---------------- */
+// Every service used here is free, needs no key and allows calls from a web page:
+// Apple's iTunes Search API (song lookup and 30-second previews), YouTube and Spotify oEmbed
+// (titles for pasted links), Wikidata (a song's Spotify ID) and the Hugging Face dataset viewer
+// (the Chordonomicon dataset of user-made chord charts, keyed by Spotify ID).
+const COUNTRY = ((navigator.language || '').split('-')[1] || 'US').slice(0, 2).toUpperCase();
+async function getJSON(url, ms = 9000) {
+  const c = new AbortController(), t = setTimeout(() => c.abort(), ms);
+  try { const r = await fetch(url, { signal: c.signal }); if (!r.ok) throw new Error('HTTP ' + r.status); return await r.json(); }
+  finally { clearTimeout(t); }
+}
+function streamOf(q) {
+  let u; try { u = new URL(q.trim()); } catch (e) { return null; }
+  const h = u.hostname.replace(/^(www|m)\./, '');
+  if (h === 'open.spotify.com') { const m = u.pathname.match(/\/track\/([A-Za-z0-9]{22})/); if (m) return { service: 'Spotify', id: m[1], url: 'https://open.spotify.com/track/' + m[1] }; }
+  if (/(^|\.)youtube\.com$/.test(h) || h === 'youtu.be') {
+    const v = h === 'youtu.be' ? u.pathname.slice(1, 12) : u.searchParams.get('v') || (u.pathname.match(/\/(?:shorts|embed|live)\/([\w-]{11})/) || [])[1];
+    if (v && /^[\w-]{11}$/.test(v)) return { service: 'YouTube', id: v, url: 'https://www.youtube.com/watch?v=' + v };
+  }
+  if (h === 'music.apple.com' || h === 'itunes.apple.com') {
+    const i = u.searchParams.get('i') || (/\/song\//.test(u.pathname) ? (u.pathname.match(/\/(\d+)\/?$/) || [])[1] : null);
+    if (i) return { service: 'Apple Music', id: i, url: u.href };
+  }
+  return null;
+}
+const itunesItem = x => ({ kind: 'cat', id: 'it-' + x.trackId, trackId: x.trackId, title: x.trackName, artist: x.artistName, art: x.artworkUrl100, preview: x.previewUrl || null });
+async function itunesFind(title, artist) {
+  const j = await getJSON(`https://itunes.apple.com/search?media=music&entity=song&limit=10&country=${COUNTRY}&term=${encodeURIComponent((title + ' ' + (artist || '')).trim())}`);
+  const nt = norm(title), na = norm(artist || '');
+  const scored = (j.results || []).filter(x => x.previewUrl).map(x => {
+    const t = norm(x.trackName), a = norm(x.artistName);
+    return { x, s: (t === nt ? 3 : t.startsWith(nt) || nt.startsWith(t) ? 2 : t.includes(nt) ? 1 : 0) + (na && (a.includes(na) || na.includes(a)) ? 3 : 0) - (/karaoke|tribute|instrumental|cover/i.test(x.trackName + x.collectionName) ? 2 : 0) };
+  }).sort((p, q) => q.s - p.s);
+  return scored.length ? itunesItem(scored[0].x) : null;
+}
+// turn a pasted Spotify, YouTube or Apple Music link into a title and artist
+async function resolveStream(s) {
+  if (s.service === 'Apple Music') {
+    const j = await getJSON(`https://itunes.apple.com/lookup?id=${s.id}&entity=song&country=${COUNTRY}`);
+    const x = (j.results || []).find(r => r.kind === 'song'); if (!x) throw new Error('notfound');
+    return itunesItem(x);
+  }
+  if (s.service === 'Spotify') {
+    const j = await getJSON(`https://open.spotify.com/oembed?url=${encodeURIComponent(s.url)}`);
+    return { title: j.title || 'Untitled', artist: '', spotifyId: s.id };
+  }
+  const j = await getJSON(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(s.url)}`);
+  let t = (j.title || '').replace(/\s*[(\[][^)\]]*(official|video|audio|lyric|visuali[sz]er|remaster|live|hd|4k|m\/?v)[^)\]]*[)\]]/gi, '').replace(/\s*[|｜].*$/, '').trim();
+  let artist = (j.author_name || '').replace(/\s*-\s*Topic$/i, '').replace(/VEVO$/i, '').replace(/\s*official$/i, '').trim();
+  const m = t.match(/^(.+?)\s+[-–—]\s+(.+)$/); if (m) { artist = m[1].trim(); t = m[2].trim(); }
+  t = t.replace(/\s+(ft\.?|feat\.?|featuring)\s.*$/i, '').replace(/["“”]/g, '').trim();
+  return { title: t || 'Untitled', artist };
+}
+// Wikidata records Spotify track IDs (property P2207) for many well-known songs
+async function spotifyIdFor(title, artist) {
+  const q = `SELECT ?sp ?pl WHERE { SERVICE wikibase:mwapi { bd:serviceParam wikibase:api "EntitySearch"; wikibase:endpoint "www.wikidata.org"; mwapi:search ${JSON.stringify(title)}; mwapi:language "en". ?item wikibase:apiOutputItem mwapi:item. } ?item wdt:P2207 ?sp. OPTIONAL { ?item wdt:P175 ?p. ?p rdfs:label ?pl. FILTER(lang(?pl) = "en") } } LIMIT 40`;
+  const j = await getJSON('https://query.wikidata.org/sparql?format=json&query=' + encodeURIComponent(q), 8000);
+  const rows = (j.results && j.results.bindings) || [];
+  const na = norm(artist || '');
+  const hit = rows.find(r => r.pl && na && (norm(r.pl.value).includes(na) || na.includes(norm(r.pl.value))));
+  return hit ? hit.sp.value : (!na && rows.length === 1 ? rows[0].sp.value : null);
+}
+async function chordonomicon(id) {
+  if (!/^[A-Za-z0-9]{22}$/.test(id)) return null;
+  const j = await getJSON('https://datasets-server.huggingface.co/filter?dataset=ailsntua/Chordonomicon&config=default&split=train&length=1&where=' + encodeURIComponent(`"spotify_song_id"='${id}'`), 7000);
+  const r = j.rows && j.rows[0] && j.rows[0].row; return r && r.chords ? r.chords : null;
+}
+// Chordonomicon writes chords like "Fsmin7" and "D/Fs" and tags sections like <verse_1>.
+// Keep the first verse, chorus, bridge and so on, one chord to a bar.
+function chordonomiconSheet(str) {
+  const parts = []; let cur = null;
+  const fix = t => t.replace(/^([A-G])s/, '$1#').replace(/\/([A-G])s$/, '/$1#').replace('min', 'm');
+  str.split(/\s+/).forEach(t => {
+    const m = t.match(/^<([a-z]+)(?:_\d+)?>$/i);
+    if (m) { cur = { name: m[1].toLowerCase(), chords: [] }; parts.push(cur); return; }
+    if (!cur) { cur = { name: 'intro', chords: [] }; parts.push(cur); }
+    const c = fix(t); if (CHORD_RE.test(c)) cur.chords.push(c);
+  });
+  const seen = new Set(), lines = []; let bars = 0;
+  for (const p of parts) {
+    if (seen.has(p.name) || !p.chords.length) continue;
+    seen.add(p.name);
+    lines.push(`[${p.name[0].toUpperCase() + p.name.slice(1)}]`);
+    for (let i = 0; i < p.chords.length; i += 4) lines.push('| ' + p.chords.slice(i, i + 4).map(c => c + ' / / /').join(' | ') + ' |');
+    bars += p.chords.length; if (bars >= 40) break;
+  }
+  return bars >= 4 ? lines.join('\n') : null;
+}
+
+// ---- listening: tempo, beats and chords from a 30-second preview, all in the browser ----
+function makeFFT(N) {
+  const lev = Math.log2(N), rev = new Uint32Array(N), cs = new Float32Array(N / 2), sn = new Float32Array(N / 2), win = new Float32Array(N);
+  for (let i = 0; i < N; i++) { let r = 0; for (let b = 0; b < lev; b++) r = (r << 1) | ((i >> b) & 1); rev[i] = r; win[i] = .5 - .5 * Math.cos(2 * Math.PI * i / (N - 1)); }
+  for (let i = 0; i < N / 2; i++) { cs[i] = Math.cos(2 * Math.PI * i / N); sn[i] = -Math.sin(2 * Math.PI * i / N); }
+  const re = new Float32Array(N), im = new Float32Array(N);
+  return (x, off, out) => {
+    for (let i = 0; i < N; i++) { re[rev[i]] = (x[off + i] || 0) * win[i]; im[rev[i]] = 0; }
+    for (let size = 2; size <= N; size <<= 1) {
+      const half = size >> 1, step = N / size;
+      for (let i = 0; i < N; i += size) for (let j = 0, k = 0; j < half; j++, k += step) {
+        const a = i + j, b = a + half, tr = re[b] * cs[k] - im[b] * sn[k], ti = re[b] * sn[k] + im[b] * cs[k];
+        re[b] = re[a] - tr; im[b] = im[a] - ti; re[a] += tr; im[a] += ti;
+      }
+    }
+    for (let i = 0; i < N / 2; i++) out[i] = Math.hypot(re[i], im[i]);
+  };
+}
+async function decodePreview(url) {
+  const c = new AbortController(), to = setTimeout(() => c.abort(), 15000);
+  const ab = await (await fetch(url, { signal: c.signal })).arrayBuffer(); clearTimeout(to);
+  const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  const dec = await new Promise((res, rej) => { const p = new OAC(1, 2, 44100).decodeAudioData(ab, res, rej); if (p && p.then) p.then(res, rej); });
+  const SR = 11025, oc = new OAC(1, Math.ceil(dec.duration * SR), SR);
+  const src = oc.createBufferSource(); src.buffer = dec; src.connect(oc.destination); src.start();
+  const rb = await new Promise(res => { oc.oncomplete = e => res(e.renderedBuffer); const p = oc.startRendering(); if (p && p.then) p.then(res); });
+  return { x: rb.getChannelData(0), SR };
+}
+async function analyseAudio(x, SR) {
+  const tick = () => new Promise(r => setTimeout(r, 0));
+  // onset strength: rises in log spectrum, frame by frame
+  const N1 = 1024, H1 = 128, fft1 = makeFFT(N1), mag = new Float32Array(N1 / 2), prev = new Float32Array(N1 / 2);
+  const nF = Math.max(0, Math.floor((x.length - N1) / H1)), env = new Float32Array(nF);
+  for (let i = 0; i < nF; i++) {
+    fft1(x, i * H1, mag); let s = 0;
+    for (let k = 2; k < N1 / 2; k++) { const l = Math.log(1 + 1000 * mag[k]); const d = l - prev[k]; if (d > 0) s += d; prev[k] = l; }
+    env[i] = i ? s : 0; if (i % 500 === 0) await tick();
+  }
+  const e = new Float32Array(nF), W = 30;
+  for (let i = 0; i < nF; i++) { let s = 0, n = 0; for (let j = Math.max(0, i - W); j < Math.min(nF, i + W); j++) { s += env[j]; n++; } e[i] = Math.max(0, env[i] - s / n); }
+  const fps = SR / H1, lmin = Math.floor(fps * 60 / 190), lmax = Math.ceil(fps * 60 / 55);
+  const ac = new Float32Array(2 * lmax + 4);
+  for (let l = lmin; l < ac.length; l++) { let s = 0; for (let i = 0; i + l < nF; i++) s += e[i] * e[i + l]; ac[l] = s / Math.max(1, nF - l); }
+  let bestL = lmin, bestS = -1;
+  for (let l = lmin; l <= lmax; l++) {
+    const bpm = 60 * fps / l, w = Math.exp(-.5 * (Math.log2(bpm / 100) / .75) ** 2);
+    const s = w * (ac[l] + .5 * ac[2 * l] + .25 * (ac[Math.round(l / 2)] || 0));
+    if (s > bestS) { bestS = s; bestL = l; }
+  }
+  const y0 = ac[bestL - 1], y1 = ac[bestL], y2 = ac[bestL + 1], dl = (y0 - y2) / (2 * (y0 - 2 * y1 + y2) || 1);
+  let P = bestL + (Math.abs(dl) < 1 ? dl : 0), bpm = 60 * fps / P;
+  while (bpm < 66) { bpm *= 2; P /= 2; } while (bpm > 142) { bpm /= 2; P *= 2; }
+  let ph = 0, phS = -1;
+  for (let p = 0; p < P; p++) { let s = 0; for (let t = p; t < nF; t += P) { const i = Math.round(t); s += Math.max(e[i - 1] || 0, e[i] || 0, e[i + 1] || 0); } if (s > phS) { phS = s; ph = p; } }
+  const beats = []; for (let t = ph; t < nF; t += P) beats.push((t * H1 + N1 / 2) / SR);
+  await tick();
+  // chroma: energy folded onto the 12 pitch classes, treble and bass kept apart
+  const N2 = 4096, H2 = 1024, fft2 = makeFFT(N2), m2 = new Float32Array(N2 / 2), map = [];
+  for (let k = 1; k < N2 / 2; k++) {
+    const f = k * SR / N2; if (f < 40 || f > 1800) continue;
+    const midi = 69 + 12 * Math.log2(f / 440), n = Math.round(midi), w = Math.max(0, 1 - Math.abs(midi - n) * 2);
+    if (w > 0) map.push([k, mod12(n), w, f < 250 ? 1 : 0, f > 90 ? 1 : 0]);
+  }
+  const nC = Math.max(0, Math.floor((x.length - N2) / H2)), tre = [], bas = [];
+  for (let i = 0; i < nC; i++) {
+    fft2(x, i * H2, m2); const c = new Float32Array(12), b = new Float32Array(12);
+    for (const [k, pc, w, isB, isT] of map) { const v = w * m2[k]; if (isT) c[pc] += v; if (isB) b[pc] += v; }
+    tre.push(c); bas.push(b); if (i % 60 === 0) await tick();
+  }
+  const frameT = i => (i * H2 + N2 / 2) / SR;
+  // average chroma over each beat
+  const segC = [], segB = [];
+  for (let j = 0; j + 1 < beats.length; j++) {
+    const c = new Float32Array(12), b = new Float32Array(12);
+    for (let i = 0; i < nC; i++) { const t = frameT(i); if (t >= beats[j] && t < beats[j + 1]) for (let p = 0; p < 12; p++) { c[p] += tre[i][p]; b[p] += bas[i][p]; } }
+    segC.push(c); segB.push(b);
+  }
+  // score 24 major and minor triads by correlation with the beat's chroma, helped by the bass note
+  const TPL = []; for (let r = 0; r < 12; r++) for (const minor of [0, 1]) { const t = new Float32Array(12); t[r] = 1; t[(r + (minor ? 3 : 4)) % 12] = .8; t[(r + 7) % 12] = .85; TPL.push({ r, minor, t }); }
+  const pear = (a, b) => { let ma = 0, mb = 0; for (let i = 0; i < 12; i++) { ma += a[i]; mb += b[i]; } ma /= 12; mb /= 12; let n = 0, da = 0, db = 0; for (let i = 0; i < 12; i++) { n += (a[i] - ma) * (b[i] - mb); da += (a[i] - ma) ** 2; db += (b[i] - mb) ** 2; } return n / Math.sqrt(da * db || 1); };
+  const em = segC.map((c, j) => { const b = segB[j], bm = Math.max(...b) || 1; return TPL.map(T => pear(c, T.t) + .3 * b[T.r] / bm); });
+  // Viterbi: chords tend to last, so changing costs a little
+  const nS = TPL.length, nB = em.length; if (nB < 8) throw new Error('short');
+  let dp = em[0].map(v => v * 5); const back = [];
+  for (let j = 1; j < nB; j++) {
+    let bi = 0; for (let s = 1; s < nS; s++) if (dp[s] > dp[bi]) bi = s;
+    const nd = new Array(nS), bk = new Array(nS);
+    for (let s = 0; s < nS; s++) { const stay = dp[s], move = dp[bi] - 1.1; if (stay >= move) { nd[s] = stay + em[j][s] * 5; bk[s] = s; } else { nd[s] = move + em[j][s] * 5; bk[s] = bi; } }
+    dp = nd; back.push(bk);
+  }
+  let s = 0; for (let k = 1; k < nS; k++) if (dp[k] > dp[s]) s = k;
+  const path = [s]; for (let j = back.length - 1; j >= 0; j--) { s = back[j][s]; path.unshift(s); }
+  // the downbeat: the phase where chord changes most often fall
+  let bar0 = 0, barS = -1e9;
+  for (let p = 0; p < 4; p++) { let sc = 0; for (let j = 1; j < nB; j++) if (path[j] !== path[j - 1]) sc += (j - p) % 4 === 0 ? 1 : (j - p + 4) % 4 === 2 ? .3 : -.4; if (sc > barS) { barS = sc; bar0 = p; } }
+  const name = i => PCN[TPL[i].r] + (TPL[i].minor ? 'm' : '');
+  const half = j => { const a = path[j], b = path[j + 1]; if (a === b || b === undefined) return a; return em[j][a] + em[j + 1][a] >= em[j][b] + em[j + 1][b] ? a : b; };
+  const bars = [];
+  for (let j = bar0; j + 3 < nB; j += 4) { const h1 = half(j), h2 = half(j + 2); bars.push(h1 === h2 ? [name(h1)] : [name(h1), name(h2)]); }
+  const conf = path.reduce((a, st, j) => a + em[j][st], 0) / nB;
+  return { bpm: Math.round(bpm), bars, rough: conf < .45 };
+}
+function barsToSheet(bars) {
+  const fmt = b => b.length === 1 ? `${b[0]} / / /` : `${b[0]} / ${b[1]} /`, lines = [];
+  for (const label of ['[Heard in the preview]', '[Again]']) {
+    lines.push(label);
+    for (let i = 0; i < bars.length; i += 4) lines.push('| ' + bars.slice(i, i + 4).map(fmt).join(' | ') + ' |');
+  }
+  return lines.join('\n');
+}
+let onlineSeq = 0;
+async function findOnline(it) {
+  const seq = ++onlineSeq, live = () => seq === onlineSeq;
+  // wake the audio while we still have the tap, so the song can start when it's ready
+  try { const ctx = eng.ensure(); if (ctx.state !== 'running') ctx.resume(); } catch (e) {}
+  stop(false);
+  stageEl.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
+  const step = t => { if (live()) status(t); };
+  let meta = { ...it }, reached = false;
+  try {
+    if (it.stream) { step(`Reading the ${it.stream.service} link…`); meta = { ...(await resolveStream(it.stream)), stream: it.stream }; reached = true; }
+    if (!meta.preview) {
+      step(`Looking up “${meta.title}”…`);
+      const f = await itunesFind(meta.title, meta.artist); reached = true;
+      if (f) meta = { ...f, spotifyId: meta.spotifyId, title: meta.artist ? meta.title : f.title, artist: meta.artist || f.artist };
+    }
+    reached = true;
+    // look for a written chart and listen to the preview at the same time
+    step(meta.preview ? `Looking for a chord chart and listening to “${meta.title}”…` : `Looking for a chord chart for “${meta.title}”…`);
+    const chartP = (async () => { try { const sid = meta.spotifyId || await spotifyIdFor(meta.title, meta.artist); if (sid) { const c = await chordonomicon(sid); if (c) return chordonomiconSheet(c); } } catch (e) {} return null; })();
+    const heardP = (async () => { if (!meta.preview) return null; try { const a = await decodePreview(meta.preview); step('Listening… finding the beat and the chords'); return await analyseAudio(a.x, a.SR); } catch (e) { return null; } })();
+    const [chart, heard] = await Promise.all([chartP, heardP]);
+    if (!live()) return;
+    if (!chart && !(heard && heard.bars.length >= 4)) throw new Error('nochords');
+    const credit = chart ? 'chords from the Chordonomicon dataset' : 'chords worked out by ear from the Apple Music preview' + (heard.rough ? ', a rough guess' : '');
+    const text = `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${heard ? heard.bpm : 96}}\n{comment: ${credit}}\n${chart || barsToSheet(heard.bars)}`;
+    const song = buildSong({ id: 'net-' + (meta.trackId || hash(norm(meta.title + '|' + meta.artist))), title: meta.title, artist: meta.artist, art: meta.art || null }, text);
+    saveSong(song);
+    say(chart
+      ? `Found a chord chart for ${meta.title} in Chordonomicon, a research dataset of charts written by Ultimate Guitar users (CC BY-NC 4.0). Tempo from the Apple Music preview. Saved to your songs.`
+      : `Worked out ${heard.bars.length} bars of chords by listening to the 30-second Apple Music preview, right in your browser. ${heard.rough ? 'It was hard to hear, so treat it as a sketch. ' : ''}Saved to your songs; edit the chords below if you like.`);
+    await loadSong(song, { autoplay: true });
+  } catch (e) {
+    if (!live()) return;
+    S.pending = { id: meta.trackId ? 'it-' + meta.trackId : null, title: meta.title || it.title, artist: meta.artist || '', art: meta.art || null };
+    $('#fTitle').value = S.pending.title; $('#fArtist').value = S.pending.artist; $('#nota').value = '';
+    renderTarget();
+    const offline = !reached;
+    status(offline ? 'Couldn’t reach the music services from here.' : 'Couldn’t find chords for this one online.');
+    say(offline
+      ? 'This copy of Sitarify can’t reach the internet, so online search is off. Paste the chords or tab instead, or use Sitarify at shradhalakshman.com/sitarify.'
+      : `Couldn’t find chords for ${S.pending.title} online. Paste them from your tab app and Sitarify will play them.`, !offline);
+    $('#notaPanel').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
+  }
+}
 
 /* ---------------- Search ---------------- */
 const qEl = $('#q'), resEl = $('#results');
@@ -2937,11 +3715,11 @@ async function catalogSearch(q) {
   if (catalogOff || q.length < 2) return [];
   try {
     const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 4000);
-    const r = await fetch(`https://itunes.apple.com/search?media=music&entity=song&limit=8&term=${encodeURIComponent(q)}`, { signal: ctl.signal });
+    const r = await fetch(`https://itunes.apple.com/search?media=music&entity=song&limit=8&country=${COUNTRY}&term=${encodeURIComponent(q)}`, { signal: ctl.signal });
     clearTimeout(to);
     const j = await r.json();
     const seen = new Set();
-    return (j.results || []).map(x => ({ kind: 'cat', id: 'it-' + x.trackId, title: x.trackName, artist: x.artistName, art: x.artworkUrl100 }))
+    return (j.results || []).map(itunesItem)
       .filter(x => { const k = songKey(x.title, x.artist); if (seen.has(k)) return false; seen.add(k); return true; });
   } catch (e) { catalogOff = true; return []; }
 }
@@ -2949,14 +3727,16 @@ function renderResults(q) {
   items = [];
   let html = '';
   const row = (it, tag, cls) => { items.push(it); const i = items.length - 1; return `<button class="res" role="option" data-i="${i}" id="res${i}"><span class="art" style="background:${artFor(it).replace(/"/g, '&quot;')}"></span><span class="meta"><span class="t"></span><span class="a"></span></span><span class="tag ${cls}">${tag}</span></button>`; };
-  const link = /^https?:\/\//i.test(q) ? parseSongLink(q) : null;
-  if (link) html += '<h4>From a link</h4>' + row({ kind: 'link', link, title: link.title, artist: link.artist || link.host }, 'Import', 'ready');
+  const stream = /^https?:\/\//i.test(q) ? streamOf(q) : null;
+  const link = !stream && /^https?:\/\//i.test(q) ? parseSongLink(q) : null;
+  if (stream) html += '<h4>From a link</h4>' + row({ kind: 'stream', stream, title: `A song on ${stream.service}`, artist: 'Sitarify looks up its chords' }, 'Find chords', 'ready');
+  else if (link) html += '<h4>From a link</h4>' + row({ kind: 'link', link, title: link.title, artist: link.artist || link.host }, 'Import', 'ready');
   else {
     const local = localMatches(q);
     const have = new Set([...savedSongs(), ...LIBRARY].map(x => songKey(x.title, x.artist)));
     const cat = catalog.filter(c => !have.has(songKey(c.title, c.artist)));
     if (local.length) html += '<h4>Ready to play</h4>' + local.map(it => row(it, it.kind === 'saved' ? 'Your song' : it.kind === 'raga' ? 'Raga' : 'Built in', 'ready')).join('');
-    if (cat.length) html += '<h4>Song catalog</h4>' + cat.map(it => row(it, 'Add chords', '')).join('');
+    if (cat.length) html += '<h4>Find the chords online</h4>' + cat.map(it => row(it, 'Find chords', '')).join('');
     if (q) html += '<h4>Any song</h4>' + row({ kind: 'new', title: q, artist: '' }, 'Paste chords or tab', '');
   }
   resEl.innerHTML = html;
@@ -2991,7 +3771,7 @@ $('#searchForm').addEventListener('submit', e => {
   const opts = resEl.querySelectorAll('.res');
   if (sel >= 0 && opts[sel]) { opts[sel].click(); return; }
   const q = qEl.value.trim(); if (!q) return;
-  if (/^https?:\/\//i.test(q)) { const l = parseSongLink(q); if (l) { pick({ kind: 'link', link: l }); return; } }
+  if (/^https?:\/\//i.test(q)) { const st = streamOf(q); if (st) { pick({ kind: 'stream', stream: st, title: '', artist: '' }); return; } const l = parseSongLink(q); if (l) { pick({ kind: 'link', link: l }); return; } }
   const local = localMatches(q);
   if (local.length) pick(local[0]); else if (catalog.length) pick(catalog[0]); else pick({ kind: 'new', title: q, artist: '' });
 });
@@ -3004,6 +3784,7 @@ function pick(it) {
   if (it.kind === 'raga') { playRaga(it.r, false); stageEl.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); return; }
   if (it.kind === 'saved') { try { loadSong(buildSong(it, it.text), { autoplay: true }); } catch (e) { status(e.message); } return; }
   if (it.kind === 'link') { startLink(it.link); return; }
+  if (it.kind === 'stream' || (it.kind === 'cat' && !catalogOff)) { findOnline(it); return; }
   S.pending = { id: it.kind === 'cat' ? it.id : null, title: it.title, artist: it.artist, art: it.art || null };
   $('#fTitle').value = it.title; $('#fArtist').value = it.artist; $('#nota').value = '';
   say('');
@@ -3083,7 +3864,7 @@ addEventListener('resize', sizeWater); sizeWater();
 lastNarrow = stageEl.clientWidth < 620;
 loadSong(ragaSong(RAGAS[0], 20261019));
 requestAnimationFrame(frame);
-window.__sitarify = { buildSong, parseTab, parseChordSheet, parseNoteList, parseMidi, parseMusicXML, parseSongLink, readDirectives, improviseRaga, RAGAS, SAMPLES, renderString, S, eng, setHarm, buildAccomp, ragaSong, importText, curBeat: () => curBeat() };
+window.__sitarify = { ragaSong, RAGAS, LIBRARY, S, eng, analyseAudio, decodePreview, findOnline, chordonomicon, chordonomiconSheet, spotifyIdFor, itunesFind, resolveStream, streamOf, barsToSheet, buildSong, parseTab, parseChordSheet, parseNoteList, parseMidi, parseMusicXML, parseSongLink, readDirectives, improviseRaga, RAGAS, SAMPLES, renderString, S, eng, setHarm, buildAccomp, ragaSong, importText, curBeat: () => curBeat() };
 })();
 </script>
 
