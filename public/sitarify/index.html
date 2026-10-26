@@ -17,16 +17,16 @@
    panels are manuscript folios. Light = dusk on handmade paper, dark = the same paintings by moonlight. */
 :root {
   color-scheme: light;
-  --deckle-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.06' numOctaves='3' seed='2' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='5' y='5' width='390' height='390' fill='%23000' filter='url(%23d)'/%3E%3C/svg%3E");
+  --deckle-mask: url("art/tex/t0.webp");
   --paper: #ece3cf;  --paper-2: #e2d5ba;  --folio: #f4ecdc;
   --ink: #23201c;    --ink-soft: #625a4e; --rule: #c8b796;
   --kumkum: #9c3b26; --leaf: #3e6a5c;     --indigo: #3d5a85; --gold: #a8853e; --lotus: #c47f86;
   --hind: #9c3b26;   --karn: #2f6b66;
   --brass: #9c3b26;  --brass-ink: #fbeed4;
   --grain-blend: multiply; --grain-op: .2;
-  --wash-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='xMidYMid slice'%3E%3Cfilter id='w' x='-20%25' y='-20%25' width='140%25' height='140%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='150' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='9' result='b1'/%3E%3CfeGaussianBlur in='d' stdDeviation='30' result='b2'/%3E%3CfeComposite in='b1' in2='b2' operator='arithmetic' k2='1.45' k3='-0.45' result='e'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' seed='7' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.7 1.2' result='ga'/%3E%3CfeComposite in='e' in2='ga' operator='in'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cellipse cx='120' cy='160' rx='460' ry='280' fill='%239fb6d0' opacity='0.28'/%3E%3Cellipse cx='1480' cy='140' rx='500' ry='260' fill='%23e3c08a' opacity='0.24'/%3E%3Cellipse cx='1320' cy='880' rx='560' ry='320' fill='%23a9c3bd' opacity='0.26'/%3E%3Cellipse cx='220' cy='900' rx='520' ry='280' fill='%23d9a07e' opacity='0.24'/%3E%3Cellipse cx='820' cy='520' rx='640' ry='340' fill='%23efe3cc' opacity='0.2'/%3E%3Cellipse cx='760' cy='40' rx='360' ry='140' fill='%23d7a7a8' opacity='0.2'/%3E%3C/g%3E%3C/svg%3E");
-  --wash-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='none'%3E%3Cfilter id='w' x='-20%25' y='-20%25' width='140%25' height='140%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='120' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='9' result='b1'/%3E%3CfeGaussianBlur in='d' stdDeviation='30' result='b2'/%3E%3CfeComposite in='b1' in2='b2' operator='arithmetic' k2='1.45' k3='-0.45' result='e'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' seed='7' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.7 1.2' result='ga'/%3E%3CfeComposite in='e' in2='ga' operator='in'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cellipse cx='200' cy='500' rx='520' ry='330' fill='%23bccbdc' opacity='0.36'/%3E%3Cellipse cx='800' cy='460' rx='620' ry='300' fill='%23e6c6ae' opacity='0.3'/%3E%3Cellipse cx='1400' cy='520' rx='520' ry='330' fill='%23b7cfc8' opacity='0.34'/%3E%3Cellipse cx='800' cy='600' rx='700' ry='200' fill='%23efe0c4' opacity='0.26'/%3E%3C/g%3E%3C/svg%3E");
-  --mist: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 700' preserveAspectRatio='none'%3E%3Cfilter id='m' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='3' seed='5' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='90' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='26'/%3E%3C/filter%3E%3Cg filter='url(%23m)'%3E%3Cellipse cx='500' cy='350' rx='420' ry='270' fill='%23efe6d4' opacity='0.46'/%3E%3Cellipse cx='500' cy='300' rx='330' ry='200' fill='%23efe6d4' opacity='0.46'/%3E%3C/g%3E%3C/svg%3E");
+  --wash-bg: url("art/tex/t1.webp");
+  --wash-band: url("art/tex/t2.webp");
+  --mist: url("art/tex/t3.webp");
   /* the hero painting's pigments */
   --sky3: #9db6d4; --sky2: #dfe5ea; --sky1: #f0e4cc; --sunglow: #fff0c8; --cloud: #5b7cb2;
   --hill: #a08fae; --hill-2: #8a7a98; --temple: #8e5240; --temple-lit: #e19a5c; --ink-deep: #2a1520;
@@ -54,7 +54,7 @@
     --kumkum: #e08a6a; --leaf: #82b8a4; --indigo: #a3b4f0; --gold: #e2bb6c; --lotus: #e0a0a8;
     --hind: #e8916e; --karn: #7fc4ba; --brass: #e6b65e; --brass-ink: #1a1408;
     --grain-blend: overlay; --grain-op: .26;
-    --wash-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='xMidYMid slice'%3E%3Cfilter id='w' x='-20%25' y='-20%25' width='140%25' height='140%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='150' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='9' result='b1'/%3E%3CfeGaussianBlur in='d' stdDeviation='30' result='b2'/%3E%3CfeComposite in='b1' in2='b2' operator='arithmetic' k2='1.45' k3='-0.45' result='e'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' seed='7' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.7 1.2' result='ga'/%3E%3CfeComposite in='e' in2='ga' operator='in'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cellipse cx='120' cy='160' rx='460' ry='280' fill='%23223250' opacity='0.58'/%3E%3Cellipse cx='1480' cy='140' rx='500' ry='260' fill='%234a3040' opacity='0.5'/%3E%3Cellipse cx='1320' cy='880' rx='560' ry='320' fill='%231c3a3a' opacity='0.58'/%3E%3Cellipse cx='220' cy='900' rx='520' ry='280' fill='%2340302a' opacity='0.45'/%3E%3Cellipse cx='820' cy='520' rx='640' ry='340' fill='%231f2440' opacity='0.4'/%3E%3Cellipse cx='760' cy='40' rx='360' ry='140' fill='%232f2a4a' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E"); --wash-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='none'%3E%3Cfilter id='w' x='-20%25' y='-20%25' width='140%25' height='140%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='120' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='9' result='b1'/%3E%3CfeGaussianBlur in='d' stdDeviation='30' result='b2'/%3E%3CfeComposite in='b1' in2='b2' operator='arithmetic' k2='1.45' k3='-0.45' result='e'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' seed='7' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.7 1.2' result='ga'/%3E%3CfeComposite in='e' in2='ga' operator='in'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cellipse cx='200' cy='500' rx='520' ry='330' fill='%2322304e' opacity='0.62'/%3E%3Cellipse cx='800' cy='460' rx='620' ry='300' fill='%233a2a3c' opacity='0.5'/%3E%3Cellipse cx='1400' cy='520' rx='520' ry='330' fill='%231a3838' opacity='0.58'/%3E%3Cellipse cx='800' cy='600' rx='700' ry='200' fill='%23262848' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E"); --mist: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 700' preserveAspectRatio='none'%3E%3Cfilter id='m' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='3' seed='5' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='90' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='26'/%3E%3C/filter%3E%3Cg filter='url(%23m)'%3E%3Cellipse cx='500' cy='350' rx='420' ry='270' fill='%23141826' opacity='0.34'/%3E%3Cellipse cx='500' cy='300' rx='330' ry='200' fill='%23141826' opacity='0.34'/%3E%3C/g%3E%3C/svg%3E");
+    --wash-bg: url("art/tex/t4.webp"); --wash-band: url("art/tex/t5.webp"); --mist: url("art/tex/t6.webp");
     --sky3: #0f1430; --sky2: #2c2c58; --sky1: #b07c74; --sunglow: #f2c79a; --cloud: #1c2148;
     --hill: #262449; --hill-2: #1c1a3a; --temple: #1e1a38; --temple-lit: #6e4a40; --ink-deep: #07061a;
     --palm: #14172a; --stone: #3a3448; --stone-2: #2c2838; --water1: #3a3d66; --water2: #0d0e24;
@@ -70,7 +70,7 @@
   --kumkum: #e08a6a; --leaf: #82b8a4; --indigo: #a3b4f0; --gold: #e2bb6c; --lotus: #e0a0a8;
   --hind: #e8916e; --karn: #7fc4ba; --brass: #e6b65e; --brass-ink: #1a1408;
   --grain-blend: overlay; --grain-op: .26;
-  --wash-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='xMidYMid slice'%3E%3Cfilter id='w' x='-20%25' y='-20%25' width='140%25' height='140%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='150' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='9' result='b1'/%3E%3CfeGaussianBlur in='d' stdDeviation='30' result='b2'/%3E%3CfeComposite in='b1' in2='b2' operator='arithmetic' k2='1.45' k3='-0.45' result='e'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' seed='7' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.7 1.2' result='ga'/%3E%3CfeComposite in='e' in2='ga' operator='in'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cellipse cx='120' cy='160' rx='460' ry='280' fill='%23223250' opacity='0.58'/%3E%3Cellipse cx='1480' cy='140' rx='500' ry='260' fill='%234a3040' opacity='0.5'/%3E%3Cellipse cx='1320' cy='880' rx='560' ry='320' fill='%231c3a3a' opacity='0.58'/%3E%3Cellipse cx='220' cy='900' rx='520' ry='280' fill='%2340302a' opacity='0.45'/%3E%3Cellipse cx='820' cy='520' rx='640' ry='340' fill='%231f2440' opacity='0.4'/%3E%3Cellipse cx='760' cy='40' rx='360' ry='140' fill='%232f2a4a' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E"); --wash-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='none'%3E%3Cfilter id='w' x='-20%25' y='-20%25' width='140%25' height='140%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='120' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='9' result='b1'/%3E%3CfeGaussianBlur in='d' stdDeviation='30' result='b2'/%3E%3CfeComposite in='b1' in2='b2' operator='arithmetic' k2='1.45' k3='-0.45' result='e'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' seed='7' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.7 1.2' result='ga'/%3E%3CfeComposite in='e' in2='ga' operator='in'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cellipse cx='200' cy='500' rx='520' ry='330' fill='%2322304e' opacity='0.62'/%3E%3Cellipse cx='800' cy='460' rx='620' ry='300' fill='%233a2a3c' opacity='0.5'/%3E%3Cellipse cx='1400' cy='520' rx='520' ry='330' fill='%231a3838' opacity='0.58'/%3E%3Cellipse cx='800' cy='600' rx='700' ry='200' fill='%23262848' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E"); --mist: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 700' preserveAspectRatio='none'%3E%3Cfilter id='m' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='3' seed='5' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='90' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='26'/%3E%3C/filter%3E%3Cg filter='url(%23m)'%3E%3Cellipse cx='500' cy='350' rx='420' ry='270' fill='%23141826' opacity='0.34'/%3E%3Cellipse cx='500' cy='300' rx='330' ry='200' fill='%23141826' opacity='0.34'/%3E%3C/g%3E%3C/svg%3E");
+  --wash-bg: url("art/tex/t4.webp"); --wash-band: url("art/tex/t5.webp"); --mist: url("art/tex/t6.webp");
   --sky3: #0f1430; --sky2: #2c2c58; --sky1: #b07c74; --sunglow: #f2c79a; --cloud: #1c2148;
   --hill: #262449; --hill-2: #1c1a3a; --temple: #1e1a38; --temple-lit: #6e4a40; --ink-deep: #07061a;
   --palm: #14172a; --stone: #3a3448; --stone-2: #2c2838; --water1: #3a3d66; --water2: #0d0e24;
@@ -86,8 +86,9 @@ html, body { min-height: 100%; }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.75 var(--f-body); letter-spacing: .005em; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 /* pigment blooms soaked into the paper, and the paper's own fibre */
 body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; background: var(--wash-bg) center / cover no-repeat; }
-body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: var(--grain-op); mix-blend-mode: var(--grain-blend);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.045' numOctaves='4' seed='3'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='1.4'%3E%3CfeDistantLight azimuth='50' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"); }
+/* paper grain: dark specks with their own alpha, so no blend mode has to be recomputed over the page every frame */
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: calc(var(--grain-op) * 1.6);
+  background-image: url("art/tex/grain.png"); }
 button, input, textarea, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--kumkum); outline-offset: 3px; }
@@ -97,7 +98,8 @@ a { color: var(--kumkum); text-underline-offset: 3px; }
 
 /* ---------- hero: a painted dusk ---------- */
 .hero { position: relative; z-index: 3; overflow-x: clip; min-height: clamp(720px, 94vh, 960px); display: grid; align-content: start; }
-.scene { position: absolute; inset: 0; overflow: hidden; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cfilter id='e' x='-5%25' y='-5%25' width='110%25' height='110%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .05' numOctaves='3' seed='8' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='34' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='4'/%3E%3C/filter%3E%3Cpath d='M-40 -40H1040V968C900 986 760 952 620 976C470 996 330 956 190 980C90 996 20 972 -40 986Z' fill='%23000' filter='url(%23e)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cfilter id='e' x='-5%25' y='-5%25' width='110%25' height='110%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .05' numOctaves='3' seed='8' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='34' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='4'/%3E%3C/filter%3E%3Cpath d='M-40 -40H1040V968C900 986 760 952 620 976C470 996 330 956 190 980C90 996 20 972 -40 986Z' fill='%23000' filter='url(%23e)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.scene { position: absolute; inset: 0; overflow: hidden; -webkit-mask: linear-gradient(#000 95%, transparent); mask: linear-gradient(#000 95%, transparent); }
+#embers { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; pointer-events: none; }
 .scene svg, .scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .scene .rays { mix-blend-mode: screen; animation: breathe 9s ease-in-out infinite; transform-origin: 50% 43%; }
 .scene .lampglow { animation: flick 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
@@ -346,7 +348,7 @@ ul.srcs { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
 
 /* ---------- workbench: manuscript folios ---------- */
 .bench { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: clamp(18px, 2.5vw, 28px); }
-.panel { position: relative; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.06' numOctaves='3' seed='2' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='5' y='5' width='390' height='390' fill='%23000' filter='url(%23d)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.06' numOctaves='3' seed='2' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='5' y='5' width='390' height='390' fill='%23000' filter='url(%23d)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; background: var(--wash-band) top / 100% 160px no-repeat, var(--folio); border-radius: 3px; padding: clamp(22px, 3vw, 32px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-content: start; min-width: 0;
+.panel { position: relative; -webkit-mask: url("art/tex/t0.webp") center / 100% 100% no-repeat; mask: url("art/tex/t0.webp") center / 100% 100% no-repeat; background: var(--wash-band) top / 100% 160px no-repeat, var(--folio); border-radius: 3px; padding: clamp(22px, 3vw, 32px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-content: start; min-width: 0;
   box-shadow: inset 0 0 0 6px var(--folio), inset 0 0 0 7px color-mix(in oklab, var(--kumkum) 55%, transparent), inset 0 0 0 10px var(--folio), inset 0 0 0 11px color-mix(in oklab, var(--gold) 55%, transparent), var(--shadow); }
 .panel::before, .panel::after { content: ""; position: absolute; width: 30px; height: 30px; top: 4px; background: var(--gold); opacity: .7;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath d='M4 4C14 4 20 8 22 16C16 12 10 12 4 14C8 10 8 7 4 4Z'/%3E%3Ccircle cx='6' cy='6' r='2'/%3E%3C/svg%3E") no-repeat center / contain;
@@ -444,7 +446,7 @@ footer b { color: var(--ink); font-weight: 600; }
 .secnav a { color: var(--ink-soft); text-decoration: none; padding: 6px 0; background: linear-gradient(var(--kumkum), var(--kumkum)) bottom / 0 2px no-repeat; transition: color .2s, background-size .3s; }
 .secnav a:hover, .secnav a:focus-visible { color: var(--ink); background-size: 100% 2px; }
 .search-box { padding: 2px 0 12px; border-radius: 0; background: none; box-shadow: none; color: var(--ink); }
-.search-box::before { inset: auto -2% 0 -2%; height: 16px; border-radius: 0; background: var(--kumkum); opacity: .5; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 22' preserveAspectRatio='none'%3E%3Cfilter id='b' x='-5%25' y='-50%25' width='110%25' height='200%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.06 .6' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='7' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Cpath d='M6 13C120 7 260 10 380 8C470 7 540 9 594 7C566 13 470 16 360 16C240 17 120 17 8 18Z' fill='%23000' filter='url(%23b)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 22' preserveAspectRatio='none'%3E%3Cfilter id='b' x='-5%25' y='-50%25' width='110%25' height='200%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.06 .6' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='7' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Cpath d='M6 13C120 7 260 10 380 8C470 7 540 9 594 7C566 13 470 16 360 16C240 17 120 17 8 18Z' fill='%23000' filter='url(%23b)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.search-box::before { inset: auto -2% 0 -2%; height: 16px; border-radius: 0; background: var(--kumkum); opacity: .5; -webkit-mask: url("art/tex/t8.webp") center / 100% 100% no-repeat; mask: url("art/tex/t8.webp") center / 100% 100% no-repeat; }
 .search-box::after { content: none; }
 .search-box > svg { display: block; width: 20px; height: 20px; color: var(--kumkum); }
 .search-box input { font: italic 500 25px/1.2 var(--f-display); color: var(--ink); padding: 8px 0; }
@@ -479,7 +481,7 @@ footer b { color: var(--ink); font-weight: 600; }
 .search-box.ask { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 2px 14px; padding: 20px 40px 22px; border-radius: 0; background: none; box-shadow: none;
   font: italic 500 clamp(24px, 1.5vw + 17px, 36px)/1.25 var(--f-display); color: var(--ink); }
 .search-box.ask::before { content: ""; position: absolute; inset: -8% -6%; height: auto; z-index: -1; pointer-events: none; border-radius: 0; opacity: 1;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .5 0 0 0 0 .44 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), color-mix(in oklab, var(--paper) 52%, transparent);
+  background: url("art/tex/t9.webp"), color-mix(in oklab, var(--paper) 52%, transparent);
   -webkit-backdrop-filter: blur(12px) saturate(1.08); backdrop-filter: blur(12px) saturate(1.08);
   -webkit-mask: radial-gradient(closest-side, #000 58%, transparent 100%); mask: radial-gradient(closest-side, #000 58%, transparent 100%); }
 .search-box.ask::after { content: none; }
@@ -548,11 +550,11 @@ html { scroll-behavior: smooth; }
 .sh-art .mini .archline { display: none; }
 /* the player: no hard arch; fog drifts in unevenly over the top, and the sides bleed softly like paper */
 .stage { border-radius: 0; box-shadow: none; margin: 0; padding-top: clamp(150px, 15vw, 210px);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-10%25' y='-40%25' width='120%25' height='180%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.03 .12' numOctaves='3' seed='6' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='14' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='4 3'/%3E%3C/filter%3E%3Cg filter='url(%23f)' fill='%23000'%3E%3Cpath fill-opacity='.22' d='M-5 30C8 14 18 26 30 18C42 10 52 22 64 15C76 8 86 20 105 12V105H-5Z'/%3E%3Cpath fill-opacity='.4' d='M-5 48C10 34 22 44 36 37C50 30 58 42 72 35C84 29 92 38 105 32V105H-5Z'/%3E%3Cpath d='M-5 68C12 56 24 64 38 58C52 52 62 62 76 56C88 51 96 58 105 54V105H-5Z'/%3E%3C/g%3E%3C/svg%3E") top / 100% clamp(170px, 17vw, 240px) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - clamp(150px, 15vw, 215px)) no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-10%25' y='-40%25' width='120%25' height='180%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.03 .12' numOctaves='3' seed='6' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='14' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='4 3'/%3E%3C/filter%3E%3Cg filter='url(%23f)' fill='%23000'%3E%3Cpath fill-opacity='.22' d='M-5 30C8 14 18 26 30 18C42 10 52 22 64 15C76 8 86 20 105 12V105H-5Z'/%3E%3Cpath fill-opacity='.4' d='M-5 48C10 34 22 44 36 37C50 30 58 42 72 35C84 29 92 38 105 32V105H-5Z'/%3E%3Cpath d='M-5 68C12 56 24 64 38 58C52 52 62 62 76 56C88 51 96 58 105 54V105H-5Z'/%3E%3C/g%3E%3C/svg%3E") top / 100% clamp(170px, 17vw, 240px) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - clamp(150px, 15vw, 215px)) no-repeat; }
-.stage-wrap { position: relative; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.05' numOctaves='3' seed='9' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='6' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='4' y='-20' width='392' height='416' fill='%23000' filter='url(%23d)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.05' numOctaves='3' seed='9' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='6' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='4' y='-20' width='392' height='416' fill='%23000' filter='url(%23d)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; filter: drop-shadow(0 30px 40px rgba(20, 30, 30, .35)); }
+  -webkit-mask: url("art/tex/t10.webp") top / 100% clamp(170px, 17vw, 240px) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - clamp(150px, 15vw, 215px)) no-repeat;
+  mask: url("art/tex/t10.webp") top / 100% clamp(170px, 17vw, 240px) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - clamp(150px, 15vw, 215px)) no-repeat; }
+.stage-wrap { position: relative; -webkit-mask: url("art/tex/t11.webp") center / 100% 100% no-repeat; mask: url("art/tex/t11.webp") center / 100% 100% no-repeat; filter: drop-shadow(0 30px 40px rgba(20, 30, 30, .35)); }
 /* glows behind the logo, menu and search: faint, finely grained, dissolving at the edges */
-:root { --glow-tint: color-mix(in oklab, var(--paper) 34%, transparent); --glow-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .46 0 0 0 0 .42 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); --glow-blur: 5px; }
+:root { --glow-tint: color-mix(in oklab, var(--paper) 34%, transparent); --glow-noise: url("art/tex/t12.webp"); --glow-blur: 5px; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --glow-tint: rgba(255, 246, 230, .035); --glow-noise: none; --glow-blur: 3px; } }
 :root[data-theme="dark"] { --glow-tint: rgba(255, 246, 230, .035); --glow-noise: none; --glow-blur: 3px; }
 .mark::before, .secnav::before, .search-box.ask::before {
@@ -589,12 +591,12 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 .quick { position: relative; z-index: 2; }
 .stage-wrap { z-index: 1; margin-top: calc(-1 * var(--fogx)); filter: none; container-type: inline-size; }
 .stage { padding-top: calc(var(--fogx) + clamp(150px, 15vw, 210px));
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='m' filterUnits='userSpaceOnUse' x='-20' y='-20' width='140' height='140'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.05 .2' numOctaves='2' seed='11' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='12' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='3 1.6'/%3E%3C/filter%3E%3Cg filter='url(%23m)' fill='%23e9e1d0'%3E%3Cellipse cx='18' cy='62' rx='30' ry='4' fill-opacity='.16'/%3E%3Cellipse cx='62' cy='70' rx='36' ry='3.5' fill-opacity='.14'/%3E%3Cellipse cx='88' cy='58' rx='22' ry='3' fill-opacity='.12'/%3E%3Cellipse cx='40' cy='82' rx='34' ry='3' fill-opacity='.1'/%3E%3Cellipse cx='80' cy='86' rx='26' ry='2.6' fill-opacity='.08'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 100% var(--fogh) no-repeat, #1f4447 url("art/panel.jpg") -24.6cqw calc(var(--fogx) + clamp(150px, 15vw, 210px) + 255px - 10.6cqw) / 125cqw auto no-repeat;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='f' filterUnits='userSpaceOnUse' x='-20' y='-40' width='140' height='180'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.035 .09' numOctaves='3' seed='4' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='26' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='2.5 2'/%3E%3C/filter%3E%3ClinearGradient id='v' gradientUnits='userSpaceOnUse' x1='0' y1='0' x2='0' y2='100'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='.3' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='.5' stop-color='%23fff' stop-opacity='.07'/%3E%3Cstop offset='.66' stop-color='%23fff' stop-opacity='.26'/%3E%3Cstop offset='.82' stop-color='%23fff' stop-opacity='.64'/%3E%3Cstop offset='.95' stop-color='%23fff'/%3E%3C/linearGradient%3E%3ClinearGradient id='h' gradientUnits='userSpaceOnUse' x1='0' y1='0' x2='100' y2='0'%3E%3Cstop offset='0' stop-color='%23000'/%3E%3Cstop offset='.16' stop-color='%23fff'/%3E%3Cstop offset='.84' stop-color='%23fff'/%3E%3Cstop offset='1' stop-color='%23000'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='0' y1='55' x2='0' y2='96'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23fff'/%3E%3C/linearGradient%3E%3Cmask id='m' maskUnits='userSpaceOnUse' x='-20' y='-40' width='140' height='180'%3E%3Crect x='-20' y='-40' width='140' height='180' fill='url(%23h)'/%3E%3Crect x='-20' y='-40' width='140' height='180' fill='url(%23b)'/%3E%3C/mask%3E%3Cg filter='url(%23f)'%3E%3Crect x='-20' y='-40' width='140' height='180' fill='url(%23v)' mask='url(%23m)'/%3E%3C/g%3E%3C/svg%3E") top / 100% var(--fogh) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - var(--fogh) + 2px) no-repeat;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='f' filterUnits='userSpaceOnUse' x='-20' y='-40' width='140' height='180'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.035 .09' numOctaves='3' seed='4' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='26' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='2.5 2'/%3E%3C/filter%3E%3ClinearGradient id='v' gradientUnits='userSpaceOnUse' x1='0' y1='0' x2='0' y2='100'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='.3' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='.5' stop-color='%23fff' stop-opacity='.07'/%3E%3Cstop offset='.66' stop-color='%23fff' stop-opacity='.26'/%3E%3Cstop offset='.82' stop-color='%23fff' stop-opacity='.64'/%3E%3Cstop offset='.95' stop-color='%23fff'/%3E%3C/linearGradient%3E%3ClinearGradient id='h' gradientUnits='userSpaceOnUse' x1='0' y1='0' x2='100' y2='0'%3E%3Cstop offset='0' stop-color='%23000'/%3E%3Cstop offset='.16' stop-color='%23fff'/%3E%3Cstop offset='.84' stop-color='%23fff'/%3E%3Cstop offset='1' stop-color='%23000'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='0' y1='55' x2='0' y2='96'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23fff'/%3E%3C/linearGradient%3E%3Cmask id='m' maskUnits='userSpaceOnUse' x='-20' y='-40' width='140' height='180'%3E%3Crect x='-20' y='-40' width='140' height='180' fill='url(%23h)'/%3E%3Crect x='-20' y='-40' width='140' height='180' fill='url(%23b)'/%3E%3C/mask%3E%3Cg filter='url(%23f)'%3E%3Crect x='-20' y='-40' width='140' height='180' fill='url(%23v)' mask='url(%23m)'/%3E%3C/g%3E%3C/svg%3E") top / 100% var(--fogh) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - var(--fogh) + 2px) no-repeat; }
+  background: url("art/tex/t13.webp") 0 0 / 100% var(--fogh) no-repeat, #1f4447 url("art/panel.jpg") -24.6cqw calc(var(--fogx) + clamp(150px, 15vw, 210px) + 255px - 10.6cqw) / 125cqw auto no-repeat;
+  -webkit-mask: url("art/tex/t14.webp") top / 100% var(--fogh) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - var(--fogh) + 2px) no-repeat;
+          mask: url("art/tex/t14.webp") top / 100% var(--fogh) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - var(--fogh) + 2px) no-repeat; }
 @media (max-width: 760px) {
   .stage { padding-top: calc(var(--fogx) + 104px);
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='m' filterUnits='userSpaceOnUse' x='-20' y='-20' width='140' height='140'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.05 .2' numOctaves='2' seed='11' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='12' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='3 1.6'/%3E%3C/filter%3E%3Cg filter='url(%23m)' fill='%23e9e1d0'%3E%3Cellipse cx='18' cy='62' rx='30' ry='4' fill-opacity='.16'/%3E%3Cellipse cx='62' cy='70' rx='36' ry='3.5' fill-opacity='.14'/%3E%3Cellipse cx='88' cy='58' rx='22' ry='3' fill-opacity='.12'/%3E%3Cellipse cx='40' cy='82' rx='34' ry='3' fill-opacity='.1'/%3E%3Cellipse cx='80' cy='86' rx='26' ry='2.6' fill-opacity='.08'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 100% var(--fogh) no-repeat, linear-gradient(#14292c calc(var(--fogx) + (100% - var(--fogx)) * .34), rgba(20, 41, 44, 0) calc(var(--fogx) + (100% - var(--fogx)) * .5)), #14292c url("art/panel.jpg") 58% 100% / auto calc((100% - var(--fogx)) * .62) no-repeat; }
+    background: url("art/tex/t13.webp") 0 0 / 100% var(--fogh) no-repeat, linear-gradient(#14292c calc(var(--fogx) + (100% - var(--fogx)) * .34), rgba(20, 41, 44, 0) calc(var(--fogx) + (100% - var(--fogx)) * .5)), #14292c url("art/panel.jpg") 58% 100% / auto calc((100% - var(--fogx)) * .62) no-repeat; }
 }
 /* candlelight on the search words, at night only */
 @media (prefers-color-scheme: dark) {
@@ -611,13 +613,13 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 
 /* "Sitarify it": a single vermilion brushstroke of wash */
 #go { position: relative; padding: 16px 46px 18px 40px; gap: 12px; color: #fbf1de; border-radius: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 72' preserveAspectRatio='none'%3E%3Cfilter id='w' x='-10%25' y='-30%25' width='120%25' height='160%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.03 .12' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='.5' result='b'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='5' result='g'/%3E%3CfeColorMatrix in='g' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.55 1.18' result='ga'/%3E%3CfeComposite in='b' in2='ga' operator='in'/%3E%3C/filter%3E%3Cfilter id='e' x='-10%25' y='-30%25' width='120%25' height='160%25'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cpath fill='%23a33c25' d='M6 40C22 22 78 13 140 14C196 14 238 17 254 30C260 42 244 54 212 58C158 64 84 62 32 56C14 54 2 48 6 40Z'/%3E%3Cpath fill='none' stroke='%235e1b0e' stroke-opacity='.55' stroke-width='4' filter='url(%23e)' d='M6 40C22 22 78 13 140 14C196 14 238 17 254 30C260 42 244 54 212 58C158 64 84 62 32 56C14 54 2 48 6 40Z'/%3E%3Cpath fill='%23ffd9b0' fill-opacity='.16' d='M44 30C96 22 176 21 232 30C186 30 108 31 44 38Z'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat; text-shadow: 0 1px 2px rgba(60, 12, 4, .45); transition: transform .3s, filter .3s; }
+  background: url("art/tex/t15.webp") center / 100% 100% no-repeat; text-shadow: 0 1px 2px rgba(60, 12, 4, .45); transition: transform .3s, filter .3s; }
 #go::after { width: 20px; height: 20px; border: 0; border-radius: 0; background: currentColor;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h15M14 7l5 5-5 5'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h15M14 7l5 5-5 5'/%3E%3C/svg%3E") center / contain no-repeat; transition: transform .3s; }
 #go:hover, #go:focus-visible { transform: rotate(-1deg) scale(1.03); filter: saturate(1.15) brightness(1.06); }
 #go:hover::after, #go:focus-visible::after { background-color: currentColor; transform: translateX(4px); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #go { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 72' preserveAspectRatio='none'%3E%3Cfilter id='w' x='-10%25' y='-30%25' width='120%25' height='160%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.03 .12' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='.5' result='b'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='5' result='g'/%3E%3CfeColorMatrix in='g' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.55 1.18' result='ga'/%3E%3CfeComposite in='b' in2='ga' operator='in'/%3E%3C/filter%3E%3Cfilter id='e' x='-10%25' y='-30%25' width='120%25' height='160%25'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cpath fill='%23b84a2e' d='M6 40C22 22 78 13 140 14C196 14 238 17 254 30C260 42 244 54 212 58C158 64 84 62 32 56C14 54 2 48 6 40Z'/%3E%3Cpath fill='none' stroke='%236a2112' stroke-opacity='.55' stroke-width='4' filter='url(%23e)' d='M6 40C22 22 78 13 140 14C196 14 238 17 254 30C260 42 244 54 212 58C158 64 84 62 32 56C14 54 2 48 6 40Z'/%3E%3Cpath fill='%23ffd9b0' fill-opacity='.16' d='M44 30C96 22 176 21 232 30C186 30 108 31 44 38Z'/%3E%3C/g%3E%3C/svg%3E"); } }
-:root[data-theme="dark"] #go { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 72' preserveAspectRatio='none'%3E%3Cfilter id='w' x='-10%25' y='-30%25' width='120%25' height='160%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.03 .12' numOctaves='3' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='.5' result='b'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='5' result='g'/%3E%3CfeColorMatrix in='g' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.55 1.18' result='ga'/%3E%3CfeComposite in='b' in2='ga' operator='in'/%3E%3C/filter%3E%3Cfilter id='e' x='-10%25' y='-30%25' width='120%25' height='160%25'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3Cg filter='url(%23w)'%3E%3Cpath fill='%23b84a2e' d='M6 40C22 22 78 13 140 14C196 14 238 17 254 30C260 42 244 54 212 58C158 64 84 62 32 56C14 54 2 48 6 40Z'/%3E%3Cpath fill='none' stroke='%236a2112' stroke-opacity='.55' stroke-width='4' filter='url(%23e)' d='M6 40C22 22 78 13 140 14C196 14 238 17 254 30C260 42 244 54 212 58C158 64 84 62 32 56C14 54 2 48 6 40Z'/%3E%3Cpath fill='%23ffd9b0' fill-opacity='.16' d='M44 30C96 22 176 21 232 30C186 30 108 31 44 38Z'/%3E%3C/g%3E%3C/svg%3E"); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #go { background-image: url("art/tex/t16.webp"); } }
+:root[data-theme="dark"] #go { background-image: url("art/tex/t16.webp"); }
 /* import tips: one line of guidance, then three aligned examples */
 .formats-lead { margin: 0; color: var(--ink-soft); font-size: 15px; }
 .fmt { display: flex; flex-direction: column; gap: 8px; padding-bottom: 4px; }
@@ -663,15 +665,15 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 .scene .wave { position: absolute; inset: 0; background: inherit; pointer-events: none; opacity: .6;
   -webkit-mask: linear-gradient(transparent var(--hz, 60%), #000 calc(var(--hz, 60%) + 40px)), repeating-linear-gradient(180deg, transparent 0, #000 3px, #000 5px, transparent 9px);
           mask: linear-gradient(transparent var(--hz, 60%), #000 calc(var(--hz, 60%) + 40px)), repeating-linear-gradient(180deg, transparent 0, #000 3px, #000 5px, transparent 9px);
-  -webkit-mask-composite: source-in; mask-composite: intersect; animation: sway 5.5s ease-in-out infinite; will-change: transform; }
-.scene .wave.w2 { opacity: .45; animation-duration: 7.8s; animation-delay: -2.4s;
+  -webkit-mask-composite: source-in; mask-composite: intersect; animation: sway 5.5s steps(44) infinite; }
+.scene .wave.w2 { display: none; opacity: .45; animation-duration: 7.8s; animation-delay: -2.4s;
   -webkit-mask: linear-gradient(transparent calc(var(--hz, 60%) + 20px), #000 calc(var(--hz, 60%) + 90px)), repeating-linear-gradient(180deg, transparent 0, #000 5px, #000 8px, transparent 14px);
           mask: linear-gradient(transparent calc(var(--hz, 60%) + 20px), #000 calc(var(--hz, 60%) + 90px)), repeating-linear-gradient(180deg, transparent 0, #000 5px, #000 8px, transparent 14px);
   -webkit-mask-composite: source-in; mask-composite: intersect; }
 @keyframes sway { 0%, 100% { transform: translate(-2.5px, 0); } 50% { transform: translate(2.5px, .8px); } }
 /* lamplight */
 .lamps { position: absolute; inset: 0; pointer-events: none; }
-.lamps span { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
+.lamps span { position: absolute; border-radius: 50%; }
 .lamp-halo { background: radial-gradient(closest-side, rgba(255, 226, 160, .75), rgba(255, 176, 80, .28) 45%, rgba(255, 150, 60, 0)); animation: flicker 2.3s infinite; }
 .lamp-core { background: radial-gradient(closest-side, rgba(255, 250, 225, .95), rgba(255, 214, 120, .5) 60%, rgba(255, 190, 90, 0)); animation: flicker 1.1s infinite; transform-origin: 50% 90%; }
 .lamp-refl { background: radial-gradient(closest-side, rgba(255, 214, 140, .55), rgba(255, 170, 80, 0)); border-radius: 40%; animation: shimmer 1.7s infinite; }
@@ -710,15 +712,15 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 /* ---------- v19: the suggestions sit in the fog as before, seen through watery glass ---------- */
 .quick { width: auto; max-width: none; margin-inline: 0; padding: 22px 0 26px; border-radius: 0; animation: none; }
 .quick::before { inset: -34px -4% -40px; border-radius: 0; box-shadow: none;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='260'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.009 .03' numOctaves='2' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -3.2 0 0 0 0.55'/%3E%3CfeGaussianBlur stdDeviation='.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E") 0 0 / 520px 260px, linear-gradient(180deg, rgba(222, 236, 238, .16), rgba(190, 214, 220, .1));
+  background: url("art/tex/t17.webp") 0 0 / 520px 260px, linear-gradient(180deg, rgba(222, 236, 238, .16), rgba(190, 214, 220, .1));
   -webkit-backdrop-filter: blur(7px) saturate(1.3) brightness(1.03); backdrop-filter: blur(7px) saturate(1.3) brightness(1.03);
   -webkit-mask: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(transparent, #000 32%, #000 68%, transparent);
           mask: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(transparent, #000 32%, #000 68%, transparent);
   -webkit-mask-composite: source-in; mask-composite: intersect; animation: ripplelight 26s linear infinite; }
 .quick::after { display: none; }
 @keyframes ripplelight { from { background-position: 0 0, 0 0; } to { background-position: 520px 130px, 0 0; } }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .quick::before { box-shadow: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='260'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.009 .03' numOctaves='2' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -3.2 0 0 0 0.24'/%3E%3CfeGaussianBlur stdDeviation='.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E") 0 0 / 520px 260px, linear-gradient(180deg, rgba(150, 175, 215, .07), rgba(90, 110, 150, .04)); } }
-:root[data-theme="dark"] .quick::before { box-shadow: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='260'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.009 .03' numOctaves='2' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -3.2 0 0 0 0.24'/%3E%3CfeGaussianBlur stdDeviation='.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E") 0 0 / 520px 260px, linear-gradient(180deg, rgba(150, 175, 215, .07), rgba(90, 110, 150, .04)); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .quick::before { box-shadow: none; background: url("art/tex/t18.webp") 0 0 / 520px 260px, linear-gradient(180deg, rgba(150, 175, 215, .07), rgba(90, 110, 150, .04)); } }
+:root[data-theme="dark"] .quick::before { box-shadow: none; background: url("art/tex/t18.webp") 0 0 / 520px 260px, linear-gradient(180deg, rgba(150, 175, 215, .07), rgba(90, 110, 150, .04)); }
 @media (prefers-reduced-motion: reduce) { .quick::before { animation: none; } }
 /* night: a soft dark burn behind the song names, with a faint lamplight glow */
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .quick .chip { color: #f7eedb; text-shadow: 0 1px 2px rgba(8, 8, 28, .9), 0 0 8px rgba(8, 8, 28, .75), 0 0 18px rgba(8, 8, 28, .5), 0 0 26px rgba(255, 210, 140, .22); } :root:not([data-theme="light"]) .quick span { color: #e6d9c0; text-shadow: 0 1px 2px rgba(8, 8, 28, .9), 0 0 8px rgba(8, 8, 28, .6); } :root:not([data-theme="light"]) .quick .chip:hover { color: #ffd9a3; } }
@@ -784,9 +786,9 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
     <div class="wave"></div><div class="wave w2"></div>
     <div class="lamps" id="lamps"></div>
     <svg class="birds" id="birds" preserveAspectRatio="none"></svg>
-    <canvas id="embers"></canvas>
     <div class="veil"></div>
   </div>
+  <canvas id="embers" aria-hidden="true"></canvas>
   <div class="hero-in gutter">
   <header class="top">
       <div class="mark" aria-label="sitarify">
@@ -1513,7 +1515,7 @@ const SAMPLES = {
 /* ---------------- Text parsers ---------------- */
 function readDirectives(text) {
   const d = {};
-  for (const m of text.matchAll(/\{\s*(title|t|artist|subtitle|st|tempo|capo|key|comment)\s*:\s*([^}]*)\}/gi)) {
+  for (const m of text.matchAll(/\{\s*(title|t|artist|subtitle|st|tempo|capo|key|comment|chordmap|groove)\s*:\s*([^}]*)\}/gi)) {
     const k = m[1].toLowerCase(), v = m[2].trim();
     if (k === 'title' || k === 't') d.title = v;
     else if (k === 'artist' || k === 'subtitle' || k === 'st') d.artist = d.artist || v;
@@ -1811,9 +1813,16 @@ function generateFromChords(chords, sa, mode, seed) {
 
 // harmonium accompaniment: hold the chords of a chord sheet; otherwise follow the sitar's
 // phrase on the strong beats as a dyad over a low Sa, the way a harmonium supports a soloist
-function buildAccomp(notes, sa, total) {
+function buildAccomp(notes, sa, total, chordMap) {
   const acc = [];
   const fit = m => { while (m < sa + 2) m += 12; while (m > sa + 14) m -= 12; return m; };
+  if (chordMap && chordMap.length) {
+    chordMap.forEach(ch => {
+      const root = fit(sa + mod12(ch.c.pcs[0] - sa));
+      acc.push({ beat: ch.beat, notes: [root - 12, ...ch.c.pcs.slice(0, 3).map(pc => { let m = root; while (mod12(m) !== pc) m++; return m; })] });
+    });
+    return acc;
+  }
   const chordNotes = notes.filter(n => n.pcs);
   if (chordNotes.length) {
     chordNotes.forEach(n => {
@@ -1839,6 +1848,9 @@ function buildAccomp(notes, sa, total) {
 function buildSong(meta, text, pre) {
   const src = (text || '').trim();
   const dir = readDirectives(src);
+  // a cover written by the online search names its key, where the groove enters, and its chords by beat
+  if (dir.key && meta.tonic === undefined) { const km = dir.key.match(/^([A-G])([#b]?)(m(?!aj)|min|minor)?/); if (km) meta = { ...meta, tonic: pcOf(km[1], km[2]), mode: km[3] ? 'minor' : 'major' }; }
+  if (dir.groove !== undefined && meta.pickup === undefined) meta = { ...meta, pickup: +dir.groove, meter: 4 };
   const capo = dir.capo || 0;
   const body = cleanText(src);
   let fmt, notes, kind = '', key, sa;
@@ -1894,10 +1906,15 @@ function buildSong(meta, text, pre) {
       prevM = n.m;
     }
   });
+  let chordMap = null;
+  if (dir.chordmap) {
+    chordMap = dir.chordmap.trim().split(/\s+/).map(t => { const [b, c] = t.split(':'); return { beat: +b, c: c ? chordTones(c, 0) : null }; }).filter(x => x.c && isFinite(x.beat));
+    chordMap.forEach(ch => { const n = notes.find(x => x.beat >= ch.beat - 1e-6); if (n && !n.chord) n.chord = ch.c.name; });
+  }
   const bpm = meta.bpm || (pre && pre.bpm) || dir.tempo || (fmt === 'chords' ? 92 : fmt === 'tab' ? 100 : 96);
   const song = {
     id: meta.id, title: meta.title || dir.title || 'Untitled', artist: meta.artist || dir.artist || '', art: meta.art || null,
-    fmt, kind, notes, totalBeats: beat, sa, key, scale, acc: buildAccomp(notes, sa, beat), drone: meta.drone || 'Pa', raga: meta.raga || null, seed: meta.seed, trad: meta.trad || 'h',
+    fmt, kind, notes, totalBeats: beat, sa, key, scale, acc: buildAccomp(notes, sa, beat, chordMap), drone: meta.drone || 'Pa', raga: meta.raga || null, seed: meta.seed, trad: meta.trad || 'h',
     bpm: Math.max(40, Math.min(180, Math.round(bpm))), capo, text: pre ? (meta.raga ? '' : notesToText(notes)) : src, credit: dir.comment || null
   };
   song.tala = buildThaalam(song, meta);
@@ -2374,6 +2391,12 @@ function drawStrings(now) {
 
 /* ---------------- Floating notes ---------------- */
 const fxLayer = $('#fx'), stageEl = $('#stage');
+// animation loops only draw while their part of the page is on screen
+let heroOn = true, stageOn = true;
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.target === stageEl) stageOn = e.isIntersecting; else heroOn = e.isIntersecting; }), { rootMargin: '120px' });
+  io.observe(stageEl); io.observe($('#hero'));
+}
 const GLYPHS = [
   '<svg viewBox="0 0 24 24"><ellipse cx="7" cy="18" rx="3.8" ry="2.7" transform="rotate(-22 7 18)"/><rect x="9.7" y="3.5" width="1.7" height="14.5"/><path d="M11.4 3.5c.3 3.4 5 4.4 5.2 8.6-1.1-2.3-2.8-3.3-5.2-3.7z"/></svg>',
   '<svg viewBox="0 0 24 24"><ellipse cx="5.6" cy="19" rx="3.3" ry="2.4" transform="rotate(-22 5.6 19)"/><ellipse cx="17" cy="16.6" rx="3.3" ry="2.4" transform="rotate(-22 17 16.6)"/><rect x="7.9" y="5" width="1.6" height="14"/><rect x="19.3" y="2.6" width="1.6" height="14"/><path d="M7.9 5 20.9 2.6v3.1L7.9 8.1z"/></svg>',
@@ -2759,7 +2782,7 @@ function frame(now) {
     }
     updateProgress(Math.min(1, Math.max(0, curBeat() / S.song.totalBeats)));
   }
-  drawStrings(now); drawHalos(now);
+  if (stageOn) { drawStrings(now); drawHalos(now); }
   requestAnimationFrame(frame);
 }
 function updateProgress(p) {
@@ -3128,37 +3151,42 @@ function paintNight() {
   svg.innerHTML = s;
 }
 // drifting lamp-motes and falling jasmine petals over the hero
+const MOTE = (() => { const c = document.createElement('canvas'); c.width = c.height = 32; const g = c.getContext('2d'), rg = g.createRadialGradient(16, 16, 0, 16, 16, 16); rg.addColorStop(0, 'rgba(255,224,150,1)'); rg.addColorStop(1, 'rgba(255,180,80,0)'); g.fillStyle = rg; g.fillRect(0, 0, 32, 32); return c; })();
 function startEmbers() {
   const cv = $('#embers'); if (!cv || RM) return;
   const ctx = cv.getContext('2d'); let W = 0, H = 0, parts = [];
-  const size = () => { const r = cv.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+  const size = () => { const r = cv.getBoundingClientRect(), d = 1; W = r.width; H = r.height; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0);
     const n = W < 600 ? 26 : 48; parts = Array.from({ length: n }, (_, i) => spawn(i % 4 === 0 ? 'petal' : 'mote', true));
     hm = heroMap(); glints = Array.from({ length: W < 600 ? 40 : 90 }, () => glint(true)); };
   let hm = null, glints = [];
   // sparkles of light on the lake, thicker in the moon's (or sun's) path
-  const glint = any => { const path = Math.random() < .45; const ix = path ? 760 + Math.random() * 260 : Math.random() * HERO_W; const iy = 470 + Math.pow(Math.random(), .8) * 290; return { x: hm.x(ix), y: hm.y(iy), len: (6 + Math.random() * 20) * hm.s * (iy / 600), t0: performance.now() - (any ? Math.random() * 3000 : 0), life: 1600 + Math.random() * 2400, dx: (Math.random() - .5) * .08 }; };
+  const glint = any => { const path = Math.random() < .45; const ix = path ? 760 + Math.random() * 260 : Math.random() * HERO_W; const iy = 470 + Math.pow(Math.random(), .8) * 255; return { x: hm.x(ix), y: hm.y(iy), len: (6 + Math.random() * 20) * hm.s * (iy / 600), t0: performance.now() - (any ? Math.random() * 3000 : 0), life: 1600 + Math.random() * 2400, dx: (Math.random() - .5) * .08 }; };
   const spawn = (kind, any) => ({ kind, x: Math.random() * W, y: any ? Math.random() * H : (kind === 'petal' ? -10 : H * (.6 + Math.random() * .4)), s: .6 + Math.random() * 1.2, ph: Math.random() * 6.28, rot: Math.random() * 6.28, v: .15 + Math.random() * .35 });
   addEventListener('resize', size); size();
+  let odd = false;
   (function loop(t) {
+    // embers drift slowly, so 30 frames a second is plenty and halves the painting work
+    odd = !odd;
+    if (!heroOn || document.hidden || odd) { requestAnimationFrame(loop); return; }
     ctx.clearRect(0, 0, W, H);
     const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
     ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over'; ctx.lineCap = 'round';
     glints.forEach((g, i) => {
       const p = (t - g.t0) / g.life; if (p >= 1) { glints[i] = glint(false); return; }
       const a = Math.sin(p * Math.PI) ** 2 * (dark ? .55 : .7);
-      g.x += g.dx;
+      g.x += g.dx * 2;
       ctx.strokeStyle = dark ? `rgba(255,222,160,${a})` : `rgba(255,255,250,${a})`; ctx.lineWidth = 1.2 * Math.max(.7, hm.s);
       ctx.beginPath(); ctx.moveTo(g.x - g.len / 2, g.y); ctx.lineTo(g.x + g.len / 2, g.y); ctx.stroke();
     });
     parts.forEach((p, i) => {
       if (p.kind === 'mote') {
-        p.y -= p.v * .6; p.x += Math.sin(t / 1400 + p.ph) * .25;
+        p.y -= p.v * 1.2; p.x += Math.sin(t / 1400 + p.ph) * .5;
         const a = (.35 + .35 * Math.sin(t / 500 + p.ph)) * Math.min(1, (H - p.y) / 120) * Math.min(1, p.y / 140);
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 7 * p.s); g.addColorStop(0, `rgba(255,224,150,${a})`); g.addColorStop(1, 'rgba(255,180,80,0)');
-        ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, 7 * p.s, 0, 6.283); ctx.fill();
+        ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = Math.max(0, Math.min(1, a)); const r7 = 7 * p.s;
+        ctx.drawImage(MOTE, p.x - r7, p.y - r7, r7 * 2, r7 * 2); ctx.globalAlpha = 1;
         if (p.y < -10) parts[i] = spawn('mote');
       } else {
-        p.y += p.v * .5; p.x += Math.sin(t / 1800 + p.ph) * .4; p.rot += .006;
+        p.y += p.v; p.x += Math.sin(t / 1800 + p.ph) * .8; p.rot += .012;
         ctx.globalCompositeOperation = 'source-over'; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = 'rgba(255,251,240,.85)';
         ctx.beginPath(); ctx.ellipse(0, 0, 2.4 * p.s, 5.5 * p.s, 0, 0, 6.283); ctx.fill(); ctx.restore();
         if (p.y > H + 10) parts[i] = spawn('petal');
@@ -3183,33 +3211,53 @@ const FLAMES = [[511, 680, 1], [729, 695, 1.1], [1219, 630, .85]];
 const LOTUS_GLOW = [[858, 690, 1], [938, 665, .9], [1031, 710, 1], [1026, 648, .8], [1081, 628, .7], [996, 608, .6], [956, 608, .6], [1036, 585, .5], [1066, 585, .5], [1121, 570, .45]];
 // the stretches of the bottom edge the tear must not bite into
 const KEEP = [[470, 560, 712], [680, 780, 742], [800, 1100, 756], [1190, 1260, 660]];
-function tornPath(m, seed, drop) {
-  const R = rng(seed), pts = [], step = 5;
+function tornEdge(m, seed, drop) {
+  const R = rng(seed), pts = [], step = 3;
   const p1 = R() * 6.28, p2 = R() * 6.28, p3 = R() * 6.28;
   let jag = 0;
-  for (let x = -20; x <= m.W + 20; x += step) {
+  for (let x = -6; x <= m.W + 6; x += step) {
     const ix = (x - m.x(0)) / m.s;
     // base line a little above the painting's bottom, dipping to just under the lamps and lotuses
     let floor = HERO_H * .962;
     KEEP.forEach(([a, b, need]) => { const d = Math.max(a - ix, ix - b, 0); const want = Math.max(need + 14, HERO_H * .99); const k = Math.exp(-(d * d) / (2 * 60 * 60)); floor = floor * (1 - k) + want * k; });
     let y = m.y(floor);
     y += Math.sin(x / 210 + p1) * 7 + Math.sin(x / 63 + p2) * 3.5 + Math.sin(x / 23 + p3) * 1.6;
-    jag = jag * .45 + (R() - .5) * 7; y += jag;
-    if (R() < .05) y -= 3 + R() * 7;           // a fibre pulled up out of the tear
+    jag = jag * .5 + (R() - .5) * 5; y += jag + (R() - .5) * 1.6;
+    if (R() < .04) y -= 3 + R() * 7;           // a fibre pulled up out of the tear
     pts.push([x, Math.min(m.H - 1.5, y + drop)]);
   }
-  return `M-40 -40H${m.W + 40}V${pts[pts.length - 1][1].toFixed(1)}` + pts.reverse().map(([x, y]) => `L${x.toFixed(1)} ${y.toFixed(1)}`).join('') + 'Z';
+  return pts;
 }
-function svgMask(m, d, rough) {
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${m.W}' height='${m.H}' viewBox='0 0 ${m.W} ${m.H}'><filter id='t' x='-2%' y='-2%' width='104%' height='104%'><feTurbulence type='fractalNoise' baseFrequency='.09 .35' numOctaves='3' seed='${rough}' result='n'/><feDisplacementMap in='SourceGraphic' in2='n' scale='${4 + rough % 3}' xChannelSelector='R' yChannelSelector='G' result='d'/><feGaussianBlur in='d' stdDeviation='.45'/></filter><path d='${d}' fill='black' filter='url(#t)'/></svg>`;
-  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+// the tear is drawn once into a bitmap: Safari re-renders SVG-filter masks on every frame, which froze the page
+function tornMask(m, seed, drop, fibres, done) {
+  const k = Math.min(1.5, devicePixelRatio || 1), c = document.createElement('canvas');
+  c.width = Math.ceil(m.W * k); c.height = Math.ceil(m.H * k);
+  const g = c.getContext('2d'); g.scale(k, k);
+  const pts = tornEdge(m, seed, drop), R = rng(seed + 1);
+  g.fillStyle = '#000'; g.beginPath(); g.moveTo(-10, -10); g.lineTo(m.W + 10, -10);
+  for (let i = pts.length - 1; i >= 0; i--) g.lineTo(pts[i][0], pts[i][1]);
+  g.closePath(); g.fill();
+  // paper fibres: fine strands left hanging along the torn line
+  g.lineCap = 'round';
+  pts.forEach(([x, y]) => {
+    for (let f = 0; f < fibres; f++) {
+      const len = 1 + R() * (R() < .1 ? 9 : 3.5), ang = Math.PI / 2 + (R() - .5) * 1.6;
+      g.strokeStyle = `rgba(0,0,0,${.25 + R() * .55})`; g.lineWidth = .4 + R() * .7;
+      const x0 = x + (R() - .5) * 3, y0 = y - .5;
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(x0 + Math.cos(ang) * len, y0 + Math.sin(ang) * len); g.stroke();
+    }
+  });
+  c.toBlob(b => done(URL.createObjectURL(b)));
 }
+let tearURLs = [];
 function tearHero() {
   const sc = $('.scene'), tear = $('#tear'); if (!sc.clientWidth) return;
   const m = heroMap();
-  const main = svgMask(m, tornPath(m, 41, 0), 3), fringe = svgMask(m, tornPath(m, 77, 6), 5);
-  [['webkitMask', main], ['mask', main]].forEach(([k, v]) => { sc.style[k] = v + ' 0 0 / 100% 100% no-repeat'; });
-  [['webkitMask', fringe], ['mask', fringe]].forEach(([k, v]) => { tear.style[k] = v + ' 0 0 / 100% 100% no-repeat'; });
+  const set = (el, url) => { const v = `url("${url}") 0 0 / 100% 100% no-repeat`; el.style.webkitMask = v; el.style.mask = v; };
+  tornMask(m, 41, 0, 2, u1 => tornMask(m, 77, 6, 3, u2 => {
+    tearURLs.forEach(u => URL.revokeObjectURL(u)); tearURLs = [u1, u2];
+    set(sc, u1); set(tear, u2);
+  }));
   // the water starts at the far shore
   sc.style.setProperty('--hz', m.y(452) + 'px');
   // lamplight
@@ -3582,18 +3630,14 @@ async function analyseAudio(x, SR) {
   }
   const e = new Float32Array(nF), W = 30;
   for (let i = 0; i < nF; i++) { let s = 0, n = 0; for (let j = Math.max(0, i - W); j < Math.min(nF, i + W); j++) { s += env[j]; n++; } e[i] = Math.max(0, env[i] - s / n); }
-  const fps = SR / H1, lmin = Math.floor(fps * 60 / 190), lmax = Math.ceil(fps * 60 / 55);
-  const ac = new Float32Array(2 * lmax + 4);
-  for (let l = lmin; l < ac.length; l++) { let s = 0; for (let i = 0; i + l < nF; i++) s += e[i] * e[i + l]; ac[l] = s / Math.max(1, nF - l); }
-  let bestL = lmin, bestS = -1;
-  for (let l = lmin; l <= lmax; l++) {
-    const bpm = 60 * fps / l, w = Math.exp(-.5 * (Math.log2(bpm / 100) / .75) ** 2);
-    const s = w * (ac[l] + .5 * ac[2 * l] + .25 * (ac[Math.round(l / 2)] || 0));
-    if (s > bestS) { bestS = s; bestL = l; }
-  }
-  const y0 = ac[bestL - 1], y1 = ac[bestL], y2 = ac[bestL + 1], dl = (y0 - y2) / (2 * (y0 - 2 * y1 + y2) || 1);
-  let P = bestL + (Math.abs(dl) < 1 ? dl : 0), bpm = 60 * fps / P;
-  while (bpm < 66) { bpm *= 2; P /= 2; } while (bpm > 142) { bpm /= 2; P *= 2; }
+  const fps = SR / H1, lmax = Math.ceil(fps * 60 / 55);
+  const ac = new Float32Array(4 * lmax + 8);
+  for (let l = 1; l < ac.length; l++) { let s = 0; for (let i = 0; i + l < nF; i++) s += e[i] * e[i + l]; ac[l] = s / Math.max(1, nF - l); }
+  const acAt = l => { const a = Math.floor(l), f = l - a; return (ac[a] || 0) * (1 - f) + (ac[a + 1] || 0) * f; };
+  // a real beat repeats at the beat, the half bar and the bar; prefer tempos near 90 only gently
+  let bpm = 90, bestS = -1;
+  for (let b = 55; b <= 185; b += .5) { const L = 60 * fps / b, w = Math.exp(-.5 * (Math.log2(b / 90) / 1.3) ** 2), sc = w * (acAt(L) + acAt(2 * L) + acAt(4 * L)); if (sc > bestS) { bestS = sc; bpm = b; } }
+  const P = 60 * fps / bpm;
   let ph = 0, phS = -1;
   for (let p = 0; p < P; p++) { let s = 0; for (let t = p; t < nF; t += P) { const i = Math.round(t); s += Math.max(e[i - 1] || 0, e[i] || 0, e[i + 1] || 0); } if (s > phS) { phS = s; ph = p; } }
   const beats = []; for (let t = ph; t < nF; t += P) beats.push((t * H1 + N1 / 2) / SR);
@@ -3642,7 +3686,117 @@ async function analyseAudio(x, SR) {
   const bars = [];
   for (let j = bar0; j + 3 < nB; j += 4) { const h1 = half(j), h2 = half(j + 2); bars.push(h1 === h2 ? [name(h1)] : [name(h1), name(h2)]); }
   const conf = path.reduce((a, st, j) => a + em[j][st], 0) / nB;
-  return { bpm: Math.round(bpm), bars, rough: conf < .45 };
+  // the key, from how long each chord sounds
+  const hist = new Array(12).fill(0);
+  path.forEach(st => { const T = TPL[st]; hist[T.r] += 2; hist[(T.r + (T.minor ? 3 : 4)) % 12] += 1; hist[(T.r + 7) % 12] += 1; });
+  const key = detectKey(hist);
+  const beatChords = path.map(st => name(st));
+  return { bpm: Math.round(bpm), bars, rough: conf < .45, beats, bar0, beatChords, key, x, SR, env: e, fps };
+}
+
+// ---- the tune itself: follow the strongest sung or played line through the preview ----
+// harmonic-sum pitch salience on a whitened spectrum, a Viterbi path that prefers smooth pitch,
+// then notes cut where the pitch moves, snapped to the key and laid on the recording's own beats
+async function extractMelody(x, SR, beats, key) {
+  const tick = () => new Promise(r => setTimeout(r, 0));
+  const N = 2048, H = 256, fft = makeFFT(N), mag = new Float32Array(N / 2), w = new Float32Array(N / 2), cs = new Float32Array(N / 2 + 1);
+  const nF = Math.max(0, Math.floor((x.length - N) / H));
+  const LO = 52, HI = 84, STEP = .25, nC = Math.round((HI - LO) / STEP) + 1;
+  const f0 = Array.from({ length: nC }, (_, i) => 440 * 2 ** ((LO + i * STEP - 69) / 12));
+  const sal = new Array(nF), peak = new Float32Array(nF);
+  for (let t = 0; t < nF; t++) {
+    fft(x, t * H, mag);
+    // whiten: divide by the local spectral envelope so the bass and drums don't drown the tune
+    cs[0] = 0; for (let k = 0; k < N / 2; k++) cs[k + 1] = cs[k] + Math.sqrt(mag[k]);
+    for (let k = 0; k < N / 2; k++) { const r = 6 + (k >> 4), a = Math.max(0, k - r), b = Math.min(N / 2, k + r + 1); const env = (cs[b] - cs[a]) / (b - a); w[k] = Math.sqrt(mag[k]) / Math.pow(env + 1e-4, .7); }
+    const s = new Float32Array(nC); let mx = 0;
+    for (let i = 0; i < nC; i++) {
+      let v = 0;
+      for (let h = 1; h <= 8; h++) { const kk = f0[i] * h * N / SR; if (kk >= N / 2 - 1) break; const k0 = Math.floor(kk), fr = kk - k0; v += Math.max(w[k0] * (1 - fr) + w[k0 + 1] * fr, w[k0], w[k0 + 1]) * Math.pow(.82, h - 1); }
+      s[i] = v; if (v > mx) mx = v;
+    }
+    sal[t] = s; peak[t] = mx;
+    if (t % 120 === 0) await tick();
+  }
+  if (!nF) return [];
+  // how loud the tune must be to count as sounding
+  const sorted = Float32Array.from(peak).sort(), thr = sorted[Math.floor(nF * .35)];
+  // Viterbi over the pitch grid: staying close is cheap, leaps cost more
+  let dp = sal[0].map(v => Math.log(v + 1e-6)); const back = new Array(nF);
+  const jump = d => d <= 2 ? d * .02 : d <= 16 ? .04 + d * .03 : .6 + d * .02;
+  for (let t = 1; t < nF; t++) {
+    const nd = new Float32Array(nC), bk = new Uint16Array(nC), s = sal[t];
+    let gb = 0; for (let i = 1; i < nC; i++) if (dp[i] > dp[gb]) gb = i;
+    for (let j = 0; j < nC; j++) {
+      let best = dp[gb] - jump(Math.abs(gb - j)), bi = gb;
+      for (let i = Math.max(0, j - 8); i <= Math.min(nC - 1, j + 8); i++) { const v = dp[i] - jump(Math.abs(i - j)); if (v > best) { best = v; bi = i; } }
+      nd[j] = best + Math.log(s[j] / (peak[t] + 1e-9) + 1e-3); bk[j] = bi;
+    }
+    dp = nd; back[t] = bk;
+    if (t % 200 === 0) await tick();
+  }
+  let j = 0; for (let i = 1; i < nC; i++) if (dp[i] > dp[j]) j = i;
+  const path = new Float32Array(nF); for (let t = nF - 1; t >= 0; t--) { path[t] = LO + j * STEP; if (t) j = back[t][j]; }
+  // median-smooth the contour and mark quiet frames as rests
+  const pm = new Float32Array(nF);
+  for (let t = 0; t < nF; t++) { const win = []; for (let d = -3; d <= 3; d++) { const u = t + d; if (u >= 0 && u < nF) win.push(path[u]); } win.sort((a, b) => a - b); pm[t] = peak[t] >= thr ? win[win.length >> 1] : NaN; }
+  // cut into notes
+  const scale = (key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11]).map(i => mod12(key.tonic + i));
+  const snap = p => { const n = Math.round(p); if (scale.includes(mod12(n))) return n; const up = Math.ceil(p), dn = Math.floor(p); const cu = scale.includes(mod12(up)), cd = scale.includes(mod12(dn)); return Math.abs(p - n) > .3 ? (cu && !cd ? up : cd && !cu ? dn : n) : n; };
+  const tsec = t => (t * H + N / 2) / SR;
+  const raw = []; let cur = null;
+  for (let t = 0; t <= nF; t++) {
+    const p = t < nF ? pm[t] : NaN;
+    if (cur && (isNaN(p) || Math.abs(p - cur.sum / cur.n) > .8)) {
+      if (cur.n >= 3) raw.push({ m: snap(cur.sum / cur.n), t0: tsec(cur.a), t1: tsec(t) });
+      cur = null;
+    }
+    if (!isNaN(p)) { if (!cur) cur = { a: t, sum: 0, n: 0 }; cur.sum += p; cur.n++; }
+  }
+  // fix lone octave slips
+  for (let i = 1; i < raw.length - 1; i++) { const a = raw[i - 1].m, b = raw[i].m, c = raw[i + 1].m; if (Math.abs(b - a) >= 10 && Math.abs(b - c) >= 10) raw[i].m += (b > a ? -12 : 12); }
+  // onto the recording's beat grid, in quarter-beats
+  const beatAt = s => { if (s <= beats[0]) return (s - beats[0]) / (beats[1] - beats[0]); for (let i = 0; i + 1 < beats.length; i++) if (s < beats[i + 1]) return i + (s - beats[i]) / (beats[i + 1] - beats[i]); const L = beats.length - 1; return L + (s - beats[L]) / (beats[L] - beats[L - 1]); };
+  const q = v => Math.round(v * 4) / 4;
+  const out = [];
+  raw.forEach(n => { const b0 = q(beatAt(n.t0)), b1 = Math.max(b0 + .25, q(beatAt(n.t1))); if (out.length && b0 < out[out.length - 1].b1) { const p = out[out.length - 1]; if (p.m === n.m) { p.b1 = Math.max(p.b1, b1); return; } p.b1 = b0; if (p.b1 - p.b0 < .25) out.pop(); } if (b1 > b0) out.push({ m: n.m, b0, b1 }); });
+  // join a note to the next one if only a hair of silence separates them
+  for (let i = 0; i + 1 < out.length; i++) if (out[i + 1].b0 - out[i].b1 <= .25) out[i].b1 = out[i + 1].b0;
+  return out;
+}
+
+// an Indian cover of the preview: alaap over the drone, the tune twice with the groove, a taan, a tihai
+function coverText(meta, h, mel, credit) {
+  const key = h.key, M = h.bars.length * 4;
+  const tune = mel.map(n => ({ m: n.m, b0: n.b0 - h.bar0, b1: Math.min(n.b1 - h.bar0, M) })).filter(n => n.b0 >= -2 && n.b0 < M - .01 && n.b1 > n.b0);
+  const sung = tune.reduce((a, n) => a + n.b1 - n.b0, 0);
+  if (tune.length < 10 || sung < M * .3 || M < 16) return null;
+  const scale = key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11];
+  const ms = tune.map(n => n.m).sort((a, b) => a - b), med = ms[ms.length >> 1];
+  const sa = med - mod12(med - key.tonic);
+  const deg = d => { const o = Math.floor(d / 7), i = ((d % 7) + 7) % 7; return sa + 12 * o + scale[i]; };
+  const out = []; let t = 0;
+  const put = (m, b) => { if (b > 1e-6) { out.push([m, b]); t += b; } };
+  const restTo = x => { if (x > t + 1e-6) put(null, x - t); };
+  const INTRO = 12, pick = Math.max(0, -Math.min(...tune.map(n => n.b0)));
+  // alaap: Sa, a dip to the note below, then up to Ga and home, slow enough for the glides to bloom
+  const al = [[0, 2], [-1, 1], [0, 1.5], [1, 1], [2, 2.5], [1, 1]];
+  al.forEach(([d, b]) => put(deg(d), b)); put(deg(0), INTRO - pick - t);
+  const pass = (off, taan) => {
+    tune.forEach(n => { const s0 = off + n.b0; if (s0 < t - 1e-6) return; restTo(s0); put(n.m, off + n.b1 - s0); });
+    // a quick taan up the scale fills an empty last half bar
+    if (taan && t <= off + M - 2 + 1e-6) { restTo(off + M - 2); for (let i = 0; i < 8; i++) put(deg(i), .25); }
+    restTo(off + M);
+  };
+  pass(INTRO, true); pass(INTRO + M, false);
+  // tihai: Ga Re Sa three times, the last Sa landing on the downbeat with the drum
+  for (let r = 0; r < 3; r++) { put(deg(2), .5); put(deg(1), .5); put(deg(0), r === 2 ? 4 : .5); }
+  const E = INTRO + 2 * M, tonicName = PCN[key.tonic] + (key.mode === 'minor' ? 'm' : '');
+  const cm = [`0:${tonicName}`];
+  [INTRO, INTRO + M].forEach(off => h.bars.forEach((b, i) => { cm.push(`${off + i * 4}:${b[0]}`); if (b[1]) cm.push(`${off + i * 4 + 2}:${b[1]}`); }));
+  cm.push(`${E}:${tonicName}`);
+  const notesTxt = out.map(([m, b]) => (m === null ? 'r' : nameOf(m)) + '/' + (+b.toFixed(3))).join(' ');
+  return `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${h.bpm}}\n{key: ${tonicName}}\n{groove: ${INTRO}}\n{chordmap: ${cm.join(' ')}}\n{comment: ${credit}}\n${notesTxt}`;
 }
 function barsToSheet(bars) {
   const fmt = b => b.length === 1 ? `${b[0]} / / /` : `${b[0]} / ${b[1]} /`, lines = [];
@@ -3674,13 +3828,30 @@ async function findOnline(it) {
     const chartP = (async () => { try { const sid = meta.spotifyId || await spotifyIdFor(meta.title, meta.artist); if (sid) { const c = await chordonomicon(sid); if (c) return chordonomiconSheet(c); } } catch (e) {} return null; })();
     const heardP = (async () => { if (!meta.preview) return null; try { const a = await decodePreview(meta.preview); step('Listening… finding the beat and the chords'); return await analyseAudio(a.x, a.SR); } catch (e) { return null; } })();
     const [chart, heard] = await Promise.all([chartP, heardP]);
+    let cover = null;
+    if (heard) { try {
+      step('Listening for the tune…');
+      let mel = await extractMelody(heard.x, heard.SR, heard.beats, heard.key);
+      // the key from the chords and the tune together: the tune's long notes settle on the real Sa
+      const hist = new Array(12).fill(0);
+      heard.beatChords.forEach(c => { const ch = chordTones(c, 0); if (ch) ch.pcs.forEach((pc, i) => hist[pc] += i ? 1 : 2); });
+      mel.forEach(n => hist[mod12(n.m)] += 1.5 * (n.b1 - n.b0));
+      // score all 24 keys, nudged toward the chord the loop opens on (a song's home chord usually starts its phrase)
+      const first = chordTones(heard.bars[0][0], 0);
+      let key = { tonic: 0, mode: 'major' }, best = -9;
+      for (let t = 0; t < 12; t++) { const rot = hist.map((_, i) => hist[(i + t) % 12]); for (const mode of ['major', 'minor']) { let sc = corr(rot, mode === 'major' ? KMAJ : KMIN); if (first && first.root === t && first.minor === (mode === 'minor')) sc += .12; if (sc > best) { best = sc; key = { tonic: t, mode }; } } }
+      if (key.tonic !== heard.key.tonic || key.mode !== heard.key.mode) { heard.key = key; mel = await extractMelody(heard.x, heard.SR, heard.beats, key); }
+      cover = coverText(meta, heard, mel, 'an Indian cover of the Apple Music preview');
+    } catch (e) {} }
     if (!live()) return;
-    if (!chart && !(heard && heard.bars.length >= 4)) throw new Error('nochords');
-    const credit = chart ? 'chords from the Chordonomicon dataset' : 'chords worked out by ear from the Apple Music preview' + (heard.rough ? ', a rough guess' : '');
-    const text = `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${heard ? heard.bpm : 96}}\n{comment: ${credit}}\n${chart || barsToSheet(heard.bars)}`;
+    if (!cover && !chart && !(heard && heard.bars.length >= 4)) throw new Error('nochords');
+    const credit = cover ? 'an Indian cover of the Apple Music preview' : chart ? 'chords from the Chordonomicon dataset' : 'chords worked out by ear from the Apple Music preview' + (heard.rough ? ', a rough guess' : '');
+    const text = cover || `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${heard ? heard.bpm : 96}}\n{comment: ${credit}}\n${chart || barsToSheet(heard.bars)}`;
     const song = buildSong({ id: 'net-' + (meta.trackId || hash(norm(meta.title + '|' + meta.artist))), title: meta.title, artist: meta.artist, art: meta.art || null }, text);
     saveSong(song);
-    say(chart
+    say(cover
+      ? `Sitarify listened to the 30-second Apple Music preview of ${meta.title}, picked out its tune, chords and tempo (${heard.bpm} bpm), and arranged them as a cover: an alaap over the drone, the tune twice with tabla, a fast taan and a tihai to finish. All worked out in your browser; saved to your songs.`
+      : chart
       ? `Found a chord chart for ${meta.title} in Chordonomicon, a research dataset of charts written by Ultimate Guitar users (CC BY-NC 4.0). Tempo from the Apple Music preview. Saved to your songs.`
       : `Worked out ${heard.bars.length} bars of chords by listening to the 30-second Apple Music preview, right in your browser. ${heard.rough ? 'It was hard to hear, so treat it as a sketch. ' : ''}Saved to your songs; edit the chords below if you like.`);
     await loadSong(song, { autoplay: true });
@@ -3692,7 +3863,7 @@ async function findOnline(it) {
     const offline = !reached;
     status(offline ? 'Couldn’t reach the music services from here.' : 'Couldn’t find chords for this one online.');
     say(offline
-      ? 'This copy of Sitarify can’t reach the internet, so online search is off. Paste the chords or tab instead, or use Sitarify at shradhalakshman.com/sitarify.'
+      ? (location.protocol === 'file:' ? 'This is a copy opened from a file, and browsers like Safari don’t let a file reach other sites, so online search is off here. Use Sitarify at shradhalakshman.com/sitarify, or paste the chords instead.' : 'This copy of Sitarify can’t reach the internet, so online search is off. Paste the chords or tab instead, or use Sitarify at shradhalakshman.com/sitarify.')
       : `Couldn’t find chords for ${S.pending.title} online. Paste them from your tab app and Sitarify will play them.`, !offline);
     $('#notaPanel').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
   }
@@ -3714,14 +3885,18 @@ function localMatches(q) {
 async function catalogSearch(q) {
   if (catalogOff || q.length < 2) return [];
   try {
-    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 4000);
+    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 8000);
     const r = await fetch(`https://itunes.apple.com/search?media=music&entity=song&limit=8&country=${COUNTRY}&term=${encodeURIComponent(q)}`, { signal: ctl.signal });
     clearTimeout(to);
     const j = await r.json();
     const seen = new Set();
     return (j.results || []).map(itunesItem)
       .filter(x => { const k = songKey(x.title, x.artist); if (seen.has(k)) return false; seen.add(k); return true; });
-  } catch (e) { catalogOff = true; return []; }
+  } catch (e) {
+    // a slow answer is not a dead network; a blocked one (a local file, a preview) switches online search off for a while
+    if (e.name !== 'AbortError') { catalogOff = true; setTimeout(() => { catalogOff = false; }, 30000); }
+    return [];
+  }
 }
 function renderResults(q) {
   items = [];
@@ -3737,13 +3912,13 @@ function renderResults(q) {
     const cat = catalog.filter(c => !have.has(songKey(c.title, c.artist)));
     if (local.length) html += '<h4>Ready to play</h4>' + local.map(it => row(it, it.kind === 'saved' ? 'Your song' : it.kind === 'raga' ? 'Raga' : 'Built in', 'ready')).join('');
     if (cat.length) html += '<h4>Find the chords online</h4>' + cat.map(it => row(it, 'Find chords', '')).join('');
-    if (q) html += '<h4>Any song</h4>' + row({ kind: 'new', title: q, artist: '' }, 'Paste chords or tab', '');
+    if (q) html += '<h4>Any song</h4>' + row({ kind: 'new', title: q, artist: '' }, catalogOff ? 'Paste chords or tab' : 'Find chords', '');
   }
   resEl.innerHTML = html;
   resEl.querySelectorAll('.res').forEach(b => {
     const it = items[+b.dataset.i];
-    b.querySelector('.t').textContent = it.kind === 'new' ? `Add “${it.title}”` : it.title;
-    b.querySelector('.a').textContent = it.kind === 'new' ? 'Paste its chords or tab from your tab app' : it.artist;
+    b.querySelector('.t').textContent = it.kind === 'new' ? (catalogOff ? `Add “${it.title}”` : `Find chords for “${it.title}”`) : it.title;
+    b.querySelector('.a').textContent = it.kind === 'new' ? (catalogOff ? 'Paste its chords or tab from your tab app' : 'Looks it up online; if nothing turns up, paste them') : it.artist;
     b.addEventListener('click', () => pick(it));
   });
   sel = -1;
@@ -3773,7 +3948,7 @@ $('#searchForm').addEventListener('submit', e => {
   const q = qEl.value.trim(); if (!q) return;
   if (/^https?:\/\//i.test(q)) { const st = streamOf(q); if (st) { pick({ kind: 'stream', stream: st, title: '', artist: '' }); return; } const l = parseSongLink(q); if (l) { pick({ kind: 'link', link: l }); return; } }
   const local = localMatches(q);
-  if (local.length) pick(local[0]); else if (catalog.length) pick(catalog[0]); else pick({ kind: 'new', title: q, artist: '' });
+  if (local.length) pick(local[0]); else if (catalog.length) pick(catalog[0]); else if (!catalogOff) findOnline({ kind: 'cat', title: q, artist: '' }); else pick({ kind: 'new', title: q, artist: '' });
 });
 document.addEventListener('pointerdown', e => { if (!$('#search').contains(e.target)) openResults(false); });
 
@@ -3784,7 +3959,7 @@ function pick(it) {
   if (it.kind === 'raga') { playRaga(it.r, false); stageEl.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); return; }
   if (it.kind === 'saved') { try { loadSong(buildSong(it, it.text), { autoplay: true }); } catch (e) { status(e.message); } return; }
   if (it.kind === 'link') { startLink(it.link); return; }
-  if (it.kind === 'stream' || (it.kind === 'cat' && !catalogOff)) { findOnline(it); return; }
+  if (it.kind === 'stream' || ((it.kind === 'cat' || it.kind === 'new') && !catalogOff)) { findOnline(it); return; }
   S.pending = { id: it.kind === 'cat' ? it.id : null, title: it.title, artist: it.artist, art: it.art || null };
   $('#fTitle').value = it.title; $('#fArtist').value = it.artist; $('#nota').value = '';
   say('');
@@ -3840,7 +4015,7 @@ function drawWater(now) {
   }
 }
 addEventListener('resize', sizeWater); sizeWater();
-(function waterLoop(now) { drawWater(now); requestAnimationFrame(waterLoop); })(performance.now());
+(function waterLoop(now) { if (stageOn && !document.hidden) drawWater(now); requestAnimationFrame(waterLoop); })(performance.now());
 
 /* ---------------- Jasmine garland across the hero ---------------- */
 (function drawGarland() {
@@ -3862,9 +4037,29 @@ addEventListener('resize', sizeWater); sizeWater();
 })();
 
 lastNarrow = stageEl.clientWidth < 620;
+
+// ?bench: a self-test for any browser. Scrolls the page, times frames, tries an online search,
+// and shows the results in a panel at the foot of the screen.
+if (/[?&]bench\b/.test(location.search)) setTimeout(async () => {
+  const rep = { ua: navigator.userAgent, w: innerWidth, dpr: devicePixelRatio, errors: [] };
+  addEventListener('error', e => rep.errors.push(String(e.message)));
+  const frames = async (ms, step) => { const fr = []; let last = performance.now(); const s0 = last; await new Promise(res => { (function f(t) { fr.push(t - last); last = t; if (step) step((t - s0) / ms); if (t - s0 < ms) requestAnimationFrame(f); else res(); })(last); }); fr.sort((a, b) => a - b); return { n: fr.length, fps: Math.round(fr.length / (ms / 1000)), p50: +fr[fr.length >> 1].toFixed(1), p95: +fr[Math.floor(fr.length * .95)].toFixed(1), max: Math.round(fr[fr.length - 1]) }; };
+  document.documentElement.style.scrollBehavior = 'auto';
+  const H = document.documentElement.scrollHeight - innerHeight;
+  rep.idleTop = await frames(2000);
+  rep.scroll = await frames(8000, p => window.scrollTo(0, H * Math.min(1, p)));
+  rep.scrollBack = await frames(4000, p => window.scrollTo(0, H * (1 - Math.min(1, p))));
+  try {
+    const f = await itunesFind('Riptide', 'Vance Joy'); rep.search = !!f;
+    const d = await decodePreview(f.preview); const h = await analyseAudio(d.x, d.SR); const mel = await extractMelody(d.x, d.SR, h.beats, h.key);
+    rep.analysis = { bpm: h.bpm, bars: h.bars.length, tune: mel.length, cover: !!coverText(f, h, mel, 'bench') };
+  } catch (e) { rep.analysis = 'ERR ' + e.name + ': ' + e.message; }
+  const box = document.createElement('pre'); box.style.cssText = 'position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#111;color:#9f9;font:11px/1.35 monospace;padding:10px;white-space:pre-wrap;max-height:60vh;overflow:auto';
+  box.textContent = JSON.stringify(rep, null, 1); document.body.appendChild(box);
+}, 2500);
 loadSong(ragaSong(RAGAS[0], 20261019));
 requestAnimationFrame(frame);
-window.__sitarify = { ragaSong, RAGAS, LIBRARY, S, eng, analyseAudio, decodePreview, findOnline, chordonomicon, chordonomiconSheet, spotifyIdFor, itunesFind, resolveStream, streamOf, barsToSheet, buildSong, parseTab, parseChordSheet, parseNoteList, parseMidi, parseMusicXML, parseSongLink, readDirectives, improviseRaga, RAGAS, SAMPLES, renderString, S, eng, setHarm, buildAccomp, ragaSong, importText, curBeat: () => curBeat() };
+window.__sitarify = { coverText, extractMelody, ragaSong, RAGAS, LIBRARY, S, eng, analyseAudio, decodePreview, findOnline, chordonomicon, chordonomiconSheet, spotifyIdFor, itunesFind, resolveStream, streamOf, barsToSheet, buildSong, parseTab, parseChordSheet, parseNoteList, parseMidi, parseMusicXML, parseSongLink, readDirectives, improviseRaga, RAGAS, SAMPLES, renderString, S, eng, setHarm, buildAccomp, ragaSong, importText, curBeat: () => curBeat() };
 })();
 </script>
 
