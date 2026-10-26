@@ -727,6 +727,15 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 :root[data-theme="dark"] .quick .chip { color: #f7eedb; text-shadow: 0 1px 2px rgba(8, 8, 28, .9), 0 0 8px rgba(8, 8, 28, .75), 0 0 18px rgba(8, 8, 28, .5), 0 0 26px rgba(255, 210, 140, .22); }
 :root[data-theme="dark"] .quick span { color: #e6d9c0; text-shadow: 0 1px 2px rgba(8, 8, 28, .9), 0 0 8px rgba(8, 8, 28, .6); }
 :root[data-theme="dark"] .quick .chip:hover { color: #ffd9a3; }
+
+/* ---------- v23 ---------- */
+/* the glass band's caustics stay still: animating under a backdrop blur re-blurs every frame */
+.quick::before { animation: none !important; }
+/* lighter effects for devices that can't keep up */
+.lite .wave, .lite #embers, .lite .birds { display: none !important; }
+.lite .lamps span, .lite .quick, .lite .quick::after { animation: none !important; }
+.lite *, .lite *::before, .lite *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.lite body::after { display: none; }
 </style>
 
 <svg class="defs" aria-hidden="true" focusable="false"><defs>
@@ -3167,7 +3176,7 @@ function startEmbers() {
   (function loop(t) {
     // embers drift slowly, so 30 frames a second is plenty and halves the painting work
     odd = !odd;
-    if (!heroOn || document.hidden || odd) { requestAnimationFrame(loop); return; }
+    if (!heroOn || document.hidden || odd || document.documentElement.classList.contains('lite')) { requestAnimationFrame(loop); return; }
     ctx.clearRect(0, 0, W, H);
     const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
     ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over'; ctx.lineCap = 'round';
@@ -3565,7 +3574,7 @@ async function spotifyIdFor(title, artist) {
 }
 async function chordonomicon(id) {
   if (!/^[A-Za-z0-9]{22}$/.test(id)) return null;
-  const j = await getJSON('https://datasets-server.huggingface.co/filter?dataset=ailsntua/Chordonomicon&config=default&split=train&length=1&where=' + encodeURIComponent(`"spotify_song_id"='${id}'`), 7000);
+  const j = await getJSON('https://datasets-server.huggingface.co/filter?dataset=ailsntua/Chordonomicon&config=default&split=train&length=1&where=' + encodeURIComponent(`"spotify_song_id"='${id}'`), 4500);
   const r = j.rows && j.rows[0] && j.rows[0].row; return r && r.chords ? r.chords : null;
 }
 // Chordonomicon writes chords like "Fsmin7" and "D/Fs" and tags sections like <verse_1>.
@@ -3766,11 +3775,52 @@ async function extractMelody(x, SR, beats, key) {
 }
 
 // an Indian cover of the preview: alaap over the drone, the tune twice with the groove, a taan, a tihai
+// raga-style phrases over the song's chords, in the tune's register: approach a chord tone stepwise and hold it
+function phrasesOver(bars, key, tune) {
+  const ms = tune.map(n => n.m).sort((a, b) => a - b), med = ms[ms.length >> 1];
+  const sa = med - mod12(med - key.tonic), scale = key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11];
+  const R = rng(bars.length * 31 + key.tonic), out = [];
+  const shapes = [[[0, 1], [1, .5], [2, .5], [3, 2]], [[2, .5], [1, .5], [0, 1], [0, 2]], [[0, 1.5], [-1, .5], [0, 2]], [[1, .5], [2, .5], [3, 1], [2, 2]]];
+  bars.forEach((b, i) => {
+    const c = chordTones(b[0], 0); if (!c) return;
+    let root = sa + mod12(c.root - sa); if (root > sa + 9) root -= 12;
+    const step = (from, k) => { let m = from; const d = Math.sign(k); for (let j = 0; j < Math.abs(k); j++) { m += d; while (!scale.includes(mod12(m - sa))) m += d; } return m; };
+    let t = i * 4;
+    shapes[Math.floor(R() * shapes.length)].forEach(([k, d]) => { out.push({ m: step(root, k), b0: t, b1: t + d }); t += d; });
+  });
+  return out;
+}
+// how a sitarist would carry a sung line: every note in the key's scale, chord tones on the strong beats,
+// nothing shorter than half a beat, repeated syllables joined into one sustained note, no stray leaps
+function sitarLine(tune, key, bars) {
+  const scale = (key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11]).map(i => mod12(key.tonic + i));
+  const chordAt = b => { const bar = bars[Math.max(0, Math.min(bars.length - 1, Math.floor(b / 4)))] || []; const c = chordTones((b % 4 >= 2 && bar[1]) || bar[0] || '', 0); return c ? c.pcs : null; };
+  const near = (m, pcs) => { let best = m, d = 99; for (let k = -2; k <= 2; k++) if (pcs.includes(mod12(m + k)) && Math.abs(k) < d) { d = Math.abs(k); best = m + k; } return best; };
+  const ns = tune.map(n => ({ ...n, m: near(n.m, scale) }));
+  ns.forEach(n => { const on = Math.abs(n.b0 - Math.round(n.b0)) < .01, pcs = chordAt(n.b0); if (on && pcs) { const c = near(n.m, pcs); if (Math.abs(c - n.m) <= 2) n.m = c; } });
+  const out = [];
+  ns.forEach(n => {
+    const p = out[out.length - 1];
+    if (p && p.m === n.m && n.b0 - p.b1 < .26 && Math.abs(n.b0 - Math.round(n.b0)) > .01) { p.b1 = n.b1; return; }
+    if (n.b1 - n.b0 < .5) { if (p && n.b0 - p.b1 < .26) { p.b1 = n.b1; return; } n.b1 = n.b0 + .5; }
+    if (p && n.b0 < p.b1) n.b0 = p.b1;
+    if (n.b1 > n.b0) out.push(n);
+  });
+  for (let i = 1; i + 1 < out.length; i++) { const a = out[i - 1], c = out[i + 1], n = out[i]; if (Math.abs(n.m - a.m) > 9 && Math.abs(n.m - c.m) > 9) n.m += n.m > a.m ? -12 : 12; }
+  return out;
+}
 function coverText(meta, h, mel, credit) {
   const key = h.key, M = h.bars.length * 4;
-  const tune = mel.map(n => ({ m: n.m, b0: n.b0 - h.bar0, b1: Math.min(n.b1 - h.bar0, M) })).filter(n => n.b0 >= -2 && n.b0 < M - .01 && n.b1 > n.b0);
+  let tune = mel.map(n => ({ m: n.m, b0: n.b0 - h.bar0, b1: Math.min(n.b1 - h.bar0, M) })).filter(n => n.b0 >= -2 && n.b0 < M - .01 && n.b1 > n.b0);
   const sung = tune.reduce((a, n) => a + n.b1 - n.b0, 0);
   if (tune.length < 10 || sung < M * .3 || M < 16) return null;
+  // trust the heard tune only when it is mostly in the key and not a stream of slivers
+  const scaleSet = (key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11]).map(i => mod12(key.tonic + i));
+  const inKey = tune.filter(n => scaleSet.includes(mod12(n.m))).length / tune.length;
+  const slivers = tune.filter(n => n.b1 - n.b0 <= .25).length / tune.length;
+  const trusted = inKey >= .8 && slivers <= .55;
+  tune = trusted ? sitarLine(tune, key, h.bars) : phrasesOver(h.bars, key, tune);
+  if (!trusted) credit = 'raga-style phrases over the chords of the Apple Music preview';
   const scale = key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11];
   const ms = tune.map(n => n.m).sort((a, b) => a - b), med = ms[ms.length >> 1];
   const sa = med - mod12(med - key.tonic);
@@ -3793,7 +3843,11 @@ function coverText(meta, h, mel, credit) {
   for (let r = 0; r < 3; r++) { put(deg(2), .5); put(deg(1), .5); put(deg(0), r === 2 ? 4 : .5); }
   const E = INTRO + 2 * M, tonicName = PCN[key.tonic] + (key.mode === 'minor' ? 'm' : '');
   const cm = [`0:${tonicName}`];
-  [INTRO, INTRO + M].forEach(off => h.bars.forEach((b, i) => { cm.push(`${off + i * 4}:${b[0]}`); if (b[1]) cm.push(`${off + i * 4 + 2}:${b[1]}`); }));
+  // the harmonium holds one chord of the key per bar, the way it supports a soloist
+  const keyPcs = scale.map(i => mod12(key.tonic + i));
+  const diat = name => { const c = chordTones(name, 0); if (!c) return tonicName; if (c.pcs.every(pc => keyPcs.includes(pc))) return name;
+    let r = c.root; for (let k = 0; k < 12 && !keyPcs.includes(r); k++) r = mod12(r + 1); const i = keyPcs.indexOf(r); return PCN[r] + (mod12(keyPcs[(i + 2) % 7] - r) === 3 ? 'm' : ''); };
+  [INTRO, INTRO + M].forEach(off => h.bars.forEach((b, i) => cm.push(`${off + i * 4}:${diat(b[0])}`)));
   cm.push(`${E}:${tonicName}`);
   const notesTxt = out.map(([m, b]) => (m === null ? 'r' : nameOf(m)) + '/' + (+b.toFixed(3))).join(' ');
   return `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${h.bpm}}\n{key: ${tonicName}}\n{groove: ${INTRO}}\n{chordmap: ${cm.join(' ')}}\n{comment: ${credit}}\n${notesTxt}`;
@@ -3827,8 +3881,8 @@ async function findOnline(it) {
     step(meta.preview ? `Looking for a chord chart and listening to “${meta.title}”…` : `Looking for a chord chart for “${meta.title}”…`);
     const chartP = (async () => { try { const sid = meta.spotifyId || await spotifyIdFor(meta.title, meta.artist); if (sid) { const c = await chordonomicon(sid); if (c) return chordonomiconSheet(c); } } catch (e) {} return null; })();
     const heardP = (async () => { if (!meta.preview) return null; try { const a = await decodePreview(meta.preview); step('Listening… finding the beat and the chords'); return await analyseAudio(a.x, a.SR); } catch (e) { return null; } })();
-    const [chart, heard] = await Promise.all([chartP, heardP]);
-    let cover = null;
+    const heard = await heardP;
+    let cover = null, chart = null;
     if (heard) { try {
       step('Listening for the tune…');
       let mel = await extractMelody(heard.x, heard.SR, heard.beats, heard.key);
@@ -3843,13 +3897,17 @@ async function findOnline(it) {
       if (key.tonic !== heard.key.tonic || key.mode !== heard.key.mode) { heard.key = key; mel = await extractMelody(heard.x, heard.SR, heard.beats, key); }
       cover = coverText(meta, heard, mel, 'an Indian cover of the Apple Music preview');
     } catch (e) {} }
+    // the chart service is slow or down at times: only wait for it when there is no cover
+    if (!cover) chart = await chartP;
     if (!live()) return;
     if (!cover && !chart && !(heard && heard.bars.length >= 4)) throw new Error('nochords');
     const credit = cover ? 'an Indian cover of the Apple Music preview' : chart ? 'chords from the Chordonomicon dataset' : 'chords worked out by ear from the Apple Music preview' + (heard.rough ? ', a rough guess' : '');
     const text = cover || `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${heard ? heard.bpm : 96}}\n{comment: ${credit}}\n${chart || barsToSheet(heard.bars)}`;
     const song = buildSong({ id: 'net-' + (meta.trackId || hash(norm(meta.title + '|' + meta.artist))), title: meta.title, artist: meta.artist, art: meta.art || null }, text);
     saveSong(song);
-    say(cover
+    say(cover && /raga-style/.test(cover)
+      ? `The sung line in the preview of ${meta.title} is too processed or busy to follow note for note on a sitar, so Sitarify kept the song's own chords and tempo (${heard.bpm} bpm) and plays raga-style phrases over them: an alaap, the groove with tabla, a taan and a tihai. Saved to your songs.`
+      : cover
       ? `Sitarify listened to the 30-second Apple Music preview of ${meta.title}, picked out its tune, chords and tempo (${heard.bpm} bpm), and arranged them as a cover: an alaap over the drone, the tune twice with tabla, a fast taan and a tihai to finish. All worked out in your browser; saved to your songs.`
       : chart
       ? `Found a chord chart for ${meta.title} in Chordonomicon, a research dataset of charts written by Ultimate Guitar users (CC BY-NC 4.0). Tempo from the Apple Music preview. Saved to your songs.`
@@ -4057,9 +4115,19 @@ if (/[?&]bench\b/.test(location.search)) setTimeout(async () => {
   const box = document.createElement('pre'); box.style.cssText = 'position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#111;color:#9f9;font:11px/1.35 monospace;padding:10px;white-space:pre-wrap;max-height:60vh;overflow:auto';
   box.textContent = JSON.stringify(rep, null, 1); document.body.appendChild(box);
 }, 2500);
+// if this device can't keep the page smooth, drop the costliest decoration rather than stutter
+(function watchFrames() {
+  let n = 0, slow = 0, last = performance.now(), seen = 0;
+  (function f(t) {
+    const d = t - last; last = t;
+    if (!document.hidden && d < 1000) { n++; if (d > 45) slow++; }
+    if (n >= 90) { seen++; if (slow > 35) document.documentElement.classList.add('lite'); n = slow = 0; }
+    if (!document.documentElement.classList.contains('lite') && seen < 40) requestAnimationFrame(f);
+  })(last);
+})();
 loadSong(ragaSong(RAGAS[0], 20261019));
 requestAnimationFrame(frame);
-window.__sitarify = { coverText, extractMelody, ragaSong, RAGAS, LIBRARY, S, eng, analyseAudio, decodePreview, findOnline, chordonomicon, chordonomiconSheet, spotifyIdFor, itunesFind, resolveStream, streamOf, barsToSheet, buildSong, parseTab, parseChordSheet, parseNoteList, parseMidi, parseMusicXML, parseSongLink, readDirectives, improviseRaga, RAGAS, SAMPLES, renderString, S, eng, setHarm, buildAccomp, ragaSong, importText, curBeat: () => curBeat() };
+window.__sitarify = { sitarLine, phrasesOver, coverText, extractMelody, ragaSong, RAGAS, LIBRARY, S, eng, analyseAudio, decodePreview, findOnline, chordonomicon, chordonomiconSheet, spotifyIdFor, itunesFind, resolveStream, streamOf, barsToSheet, buildSong, parseTab, parseChordSheet, parseNoteList, parseMidi, parseMusicXML, parseSongLink, readDirectives, improviseRaga, RAGAS, SAMPLES, renderString, S, eng, setHarm, buildAccomp, ragaSong, importText, curBeat: () => curBeat() };
 })();
 </script>
 
