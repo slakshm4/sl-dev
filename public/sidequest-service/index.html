@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Press+Start+2P&family=Shrikhand&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Press+Start+2P&family=Shrikhand&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./style.css" />
@@ -26,7 +26,7 @@
         <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="wobble" />
         <feDisplacementMap in="SourceGraphic" in2="wobble" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="rough" />
         <feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" seed="11" result="grain" />
-        <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -3.2 0 0 0 2.75" result="ink" />
+        <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -3.2 0 0 0 3.2" result="ink" />
         <feComposite in="rough" in2="ink" operator="in" />
       </filter>
     </svg>

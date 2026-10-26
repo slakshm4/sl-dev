@@ -1,13 +1,17 @@
 :root {
   --cream: #f7e7bd;
   --paper: #fff7df;
-  --red: #a82029;
-  --deep-red: #65151f;
+  --red: #a3161f;
+  --deep-red: #5e0f16;
   --tomato: #e34b36;
   --yellow: #f1bd38;
   --mustard: #d99d1c;
   --turq: #62b8b0;
-  --ink: #222029;
+  --ink: #1e1a1d;
+  --milk-glass: #f6ebd3;
+  --honey: #f5c877;
+  --teal: #3fa79a;
+  --powder: #9cc3df;
   --chrome-light: #fff8dc;
   --chrome: #b9b9b3;
   --chrome-dark: #55575b;
@@ -18,6 +22,7 @@
   --mono: "DM Mono", monospace;
   --script: "Shrikhand", Georgia, serif;
   --led: "VT323", "DM Mono", monospace;
+  --sign: "Bebas Neue", "Space Grotesk", sans-serif;
 
   --chrome-strip: linear-gradient(#fffdf0, #d6d4ca 30%, #6f7174 55%, #a9a9a3 75%, #f1efe4);
   --pixel-star: polygon(40% 0, 60% 0, 60% 40%, 100% 40%, 100% 60%, 60% 60%, 60% 100%, 40% 100%, 40% 60%, 0 60%, 0 40%, 40% 40%);
@@ -30,10 +35,13 @@ body {
   margin: 0;
   overflow-x: hidden;
   color: var(--ink);
+  /* milk-glass wall with a faint tile grid, warmed by the light from the window */
   background:
-    radial-gradient(ellipse at 50% 18%, rgba(255, 232, 166, .72), transparent 30rem),
-    radial-gradient(ellipse at 20% 62%, rgba(116, 190, 182, .22), transparent 30rem),
-    linear-gradient(112deg, #f5d998 0%, #f7e8bd 42%, #eed4a0 100%);
+    radial-gradient(ellipse at 50% 18%, rgba(255, 232, 166, .6), transparent 30rem),
+    radial-gradient(ellipse at 20% 62%, rgba(116, 190, 182, .18), transparent 30rem),
+    linear-gradient(rgba(30, 26, 29, .045) 1px, transparent 1px) 0 0 / 28px 14px,
+    linear-gradient(90deg, rgba(30, 26, 29, .045) 1px, transparent 1px) 0 0 / 28px 14px,
+    linear-gradient(112deg, #f3dca6 0%, var(--milk-glass) 42%, #ecd6a8 100%);
   font-family: "Space Grotesk", Arial, sans-serif;
 }
 
@@ -239,10 +247,23 @@ h1 em { color: var(--ink); font-style: normal; }
   letter-spacing: .14em;
   text-shadow: 0 0 6px var(--mustard);
 }
-.flicker { animation: flicker 4.5s infinite; }
-@keyframes flicker {
-  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
-  20%, 24%, 55% { opacity: .2; text-shadow: none; }
+/* Neon hum: the word and its "E" dim softly on two unrelated rhythms (9.7s and 6.1s), so the
+   pattern never visibly repeats. Every dip eases over 150ms or more and dips are spaced well
+   apart, so it stays far below the 3-flashes-per-second limit (WCAG 2.3.1). */
+.open-sign span { animation: neon-hum 9.7s ease-in-out infinite; }
+.flicker { animation: neon-hum-e 6.1s ease-in-out infinite; }
+@keyframes neon-hum {
+  0%, 17%, 20.5%, 51%, 53.6%, 56%, 58.6%, 81%, 84.5%, 100% { opacity: 1; }
+  18.5% { opacity: .84; }
+  52.2% { opacity: .9; }
+  57.2% { opacity: .87; }
+  82.6% { opacity: .82; }
+}
+@keyframes neon-hum-e {
+  0%, 30%, 36%, 70%, 76%, 81%, 86%, 100% { opacity: 1; }
+  32.5% { opacity: .62; }
+  72.5% { opacity: .7; }
+  83.5% { opacity: .8; }
 }
 @keyframes sign-sway { 0%, 100% { transform: rotate(1.4deg); } 50% { transform: rotate(-1.2deg); } }
 
@@ -364,12 +385,11 @@ h1 em { color: var(--ink); font-style: normal; }
   letter-spacing: .45em;
   text-shadow: 0 0 4px var(--turq), 0 0 12px var(--turq), 0 0 24px rgba(98, 184, 176, .8);
 }
+/* two soft dips, each eased over 100ms or more, well under 3 flashes per second */
 @keyframes neon-buzz {
-  0%, 91%, 100% { opacity: 1; }
-  92% { opacity: .65; }
-  93% { opacity: 1; }
-  95% { opacity: .5; }
-  96% { opacity: 1; }
+  0%, 88%, 91.5%, 94%, 97.5%, 100% { opacity: 1; }
+  89.6% { opacity: .8; }
+  95.6% { opacity: .86; }
 }
 
 /* LED ticker */
@@ -629,30 +649,32 @@ h1 em { color: var(--ink); font-style: normal; }
 .share-ticket:hover { background: #4fa39b; }
 .share-ticket:active { box-shadow: none; transform: translate(3px, 3px); }
 .share-icon { font-family: "Space Grotesk", Arial, sans-serif; font-size: 17px; line-height: 1; text-shadow: none; }
+/* the stamp sits in its own row at the foot of the check, so it never lands on the buttons */
 .stamp {
-  position: absolute;
-  right: 26px;
-  bottom: 30px;
-  padding: 8px 9px 7px;
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin: 26px 34px 0 auto;
+  padding: 8px 10px 7px;
   color: #b0232f;
   border: 4px double #b0232f;
   border-radius: 5px;
   font-family: var(--pixel);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .08em;
   opacity: 0;
   mix-blend-mode: multiply;
   pointer-events: none;
-  transform: rotate(-14deg);
+  transform: rotate(-8deg);
   /* real rubber-stamp ink: rough edges, speckled gaps, lighter where it was pressed unevenly */
   filter: url(#stamp-ink) blur(.25px);
-  -webkit-mask-image: linear-gradient(100deg, #000 50%, rgba(0, 0, 0, .68) 82%, rgba(0, 0, 0, .9));
-  mask-image: linear-gradient(100deg, #000 50%, rgba(0, 0, 0, .68) 82%, rgba(0, 0, 0, .9));
+  -webkit-mask-image: linear-gradient(100deg, #000 60%, rgba(0, 0, 0, .82) 85%, #000);
+  mask-image: linear-gradient(100deg, #000 60%, rgba(0, 0, 0, .82) 85%, #000);
 }
 .stamp.is-stamped { opacity: .95; animation: stamp .38s cubic-bezier(.2, 1.6, .4, 1); }
 @keyframes stamp {
-  from { opacity: 0; transform: rotate(-14deg) scale(2.4); }
-  to { opacity: .95; transform: rotate(-14deg) scale(1); }
+  from { opacity: 0; transform: rotate(-8deg) scale(2.4); }
+  to { opacity: .95; transform: rotate(-8deg) scale(1); }
 }
 
 /* pixel sparkles: burst out of the ticket, or out of a caught bonus item */
@@ -897,8 +919,8 @@ h1 em { color: var(--ink); font-style: normal; }
   .check-head { padding-inline: 14px; font-size: 7px; } .check-meta { padding-inline: 14px; font-size: 9px; }
   .check-body { padding: 16px 18px 0; }
   .result-text { font-size: 1.18rem; }
-  .result-card { padding-bottom: 72px; }
-  .stamp { right: 12px; bottom: 16px; font-size: 7px; }
+  .result-card { padding-bottom: 28px; }
+  .stamp { margin-right: 18px; }
   .signature { font-size: 7px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -909,3 +931,58 @@ h1 em { color: var(--ink); font-style: normal; }
 
 /* keep moving parts on their own compositor layers so they animate without repainting the page */
 .palm, .open-sign, .home-sign, .arrow-sign, .ticker-text, .topline-track, .lever-tag { will-change: transform; }
+
+/* ---------- Golden-hour pass: diner light, readability ---------- */
+
+/* late sun through a window on the left: soft diagonal shafts over the top of the page */
+main::after {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1000px;
+  content: "";
+  background:
+    repeating-linear-gradient(115deg, transparent 0 150px, rgba(255, 240, 205, .2) 150px 230px),
+    linear-gradient(115deg, rgba(245, 200, 119, .42), rgba(245, 200, 119, .1) 34%, transparent 58%);
+  -webkit-mask-image: linear-gradient(115deg, #000 20%, transparent 62%);
+  mask-image: linear-gradient(115deg, #000 20%, transparent 62%);
+  pointer-events: none;
+}
+
+/* the awning: a scalloped cherry edge under the banner */
+.topline { overflow-x: clip; overflow-y: visible; font-size: 9px; }
+.topline::after {
+  position: absolute;
+  top: calc(100% + 3px);
+  right: 0;
+  left: 0;
+  height: 9px;
+  content: "";
+  background: radial-gradient(circle at 10px 0, var(--red) 0 8px, transparent 9px) 0 0 / 20px 9px repeat-x;
+}
+
+/* the ticket gets a red-and-powder-blue tablecloth check along its top */
+.check-head {
+  padding-top: 21px;
+  background: conic-gradient(var(--powder) 25%, var(--red) 0 50%, var(--powder) 0 75%, var(--red) 0) 0 0 / 12px 12px repeat-x, var(--red);
+}
+.ticket-title { color: var(--red); font-family: var(--sign); font-size: 21px; letter-spacing: .08em; }
+
+/* PRESS START gets a chrome stool ring */
+.spin-button { box-shadow: inset 0 3px 0 #fff0a8, inset 0 -4px 0 rgba(140, 80, 10, .35), 0 0 0 3px var(--chrome), 0 6px 0 var(--ink), 0 10px 0 rgba(65, 8, 14, .35); }
+.spin-button:active { box-shadow: inset 0 3px 0 #fff0a8, 0 0 0 3px var(--chrome), 0 2px 0 var(--ink); }
+
+/* readability: dark text on teal (5.9:1), and no pixel label below 9px (8px where phones are tight) */
+.share-ticket { color: var(--ink); background: var(--teal); text-shadow: none; }
+.share-ticket:hover { background: #56b8ab; }
+.hero-hint, .marquee-kicker, .reel-labels, .readout-label, .coin-slot small, .control-label, .mode-option,
+.button-top, .sound-toggle, .payout-label, .reroll, .share-ticket, .signature { font-size: 9px; }
+.tiny-print { color: #fff3d6; font-size: 11px; }
+@media (max-width: 610px) {
+  .eyebrow, .hero-hint, .control-label, .button-top, .check-head, .stamp, .signature, .payout-label, .sound-toggle { font-size: 9px; }
+  .marquee-kicker, .reel-labels, .readout-label, .mode-option { font-size: 8px; }
+  .mode-option { padding-inline: 5px; white-space: nowrap; letter-spacing: 0; }
+  .tiny-print { font-size: 10px; }
+}
