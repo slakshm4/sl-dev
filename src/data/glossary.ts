@@ -21,8 +21,9 @@ export const glossary: Gloss[] = [
   { term: "Karnatik", match: ["Karnatik", "Carnatic"], def: "the classical music tradition of southern India. also spelled Carnatic." },
   { term: "Hindustani", match: ["Hindustani"], def: "the classical music tradition of northern India." },
   { term: "sitar", match: ["sitar"], def: "a long-necked, plucked string instrument from India, known for its shimmering sympathetic strings." },
+  { term: "Kerala Iyer Tamizh", match: ["Kerala Iyer Tamizh"], def: "a Tamil-speaking Iyer (Brahmin) community whose families settled in Kerala generations ago, especially around Palakkad, so their culture blends Tamil and Malayalam. Tamizh is the Tamil language and its people, spelled closer to how it sounds in Tamil." },
   { term: "diaspora", match: ["diaspora"], def: "a people living away from their ancestral homeland, and the communities they build there." },
-  { term: "NRI", match: ["NRI"], cs: true, def: "non-resident Indian: a common term for Indian citizens living abroad, often used more loosely for the wider diaspora." },
+  { term: "NRI", match: ["NRI"], def: "non-resident Indian: a common term for Indian citizens living abroad, often used more loosely for the wider diaspora." },
 
   // ── ideas & art words
   { term: "chiaroscuro", match: ["chiaroscuro"], def: "an Italian art term for strong contrast between light and dark, used in painting to give a scene depth and drama." },
