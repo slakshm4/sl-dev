@@ -64,7 +64,7 @@ const caseStudies: Piece[] = [
     body: [
       "a personality quiz that sorts you into species based on your choices. i made it for [Atelier Town](/projects/little-town), alongside the world of _The Providence Duology_.",
       "_The Providence Duology_ began, for me, with a question: what happens when a society becomes so afraid of its own ending that it decides some lives are more worth saving than others?",
-      "it's about a group of people from six worlds, all circling the same red giant, who set out to fix something monstrous. the people doing it don't think it's monstrous. Elysia's planet is dying, and its scientists are completely sure that saving their own justifies whatever they do to everyone else.",
+      "it's about a group of people from six domains, all circling the same red giant, who set out to put right a terrible wrong. the people responsible think they're in the right. Elysia is dying, and its scientists are completely sure that saving their own excuses whatever they do to everyone else.",
       "nobody in it can quite tell which way is up. right and wrong keep trading places, and the ones who look helpless might not be, if they actually tried.",
       "_Forsaken_ and _Redeemer_ are about rebellion, and about refusing the future you were given.",
       "~> an uprising is on the horizon. [which side are you on?](https://which-alien-species-are-you-quiz.vercel.app/)",
