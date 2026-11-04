@@ -82,7 +82,8 @@ function wrap(root: HTMLElement) {
     acceptNode(n) {
       const el = n.parentElement;
       if (!el || !n.nodeValue || n.nodeValue.trim().length < 4) return NodeFilter.FILTER_REJECT;
-      if (el.closest(SKIP)) return NodeFilter.FILTER_REJECT;
+      // card blurbs sit inside a link but still get hover definitions
+      if (!el.closest(".nbc-blurb, .wlc-blurb") && el.closest(SKIP)) return NodeFilter.FILTER_REJECT;
       const lang = el.closest("[lang]")?.getAttribute("lang");
       if (lang && !/^en/i.test(lang)) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT;
@@ -116,7 +117,7 @@ function wrap(root: HTMLElement) {
       if (h.i > at) frag.append(text.slice(at, h.i));
       const span = document.createElement("span");
       span.className = "gl";
-      span.tabIndex = 0;
+      if (!span.closest?.("a") && !node.parentElement?.closest("a")) span.tabIndex = 0;
       span.dataset.gl = String(h.idx);
       span.textContent = h.s;
       const id = `gl-d-${h.idx}`;
