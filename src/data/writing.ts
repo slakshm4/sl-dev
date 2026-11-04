@@ -55,7 +55,7 @@ const words: Drawer[] = [
         body: [
           "in school, an ethical dilemma comes labelled. there is a case, a cast of characters, every relevant fact, and a framework waiting in the margin: autonomy, beneficence, nonmaleficence, justice. you get a week to think it over, and nobody in the scenario is sitting in the chair, waiting.",
           "in clinic, it arrives mid-sentence. a patient declines radiographs you are fairly sure they need. what they want, what you would recommend, what the appointment time allows, and what you can chart honestly are four different things. nobody says _and this is the ethics part._ you just notice, halfway through a sentence, that you are already in it.",
-          "the frameworks did not stop being useful. they just stopped arriving in order. school gave me the vocabulary. clinic is teaching me the timing.",
+          "the frameworks still work. they just show up out of order, usually while i'm mid-sentence with a patient, and i'm learning to reach for them then.",
         ],
       },
     ],
@@ -91,7 +91,7 @@ const words: Drawer[] = [
         body: [
           "i used to think death was the worst thing that could happen because it makes a person unavailable to you. i still think absence is brutal. but i have trouble with the concept of ==brutal and bad as synonyms of one another==.",
           "i was raised with the idea that life is part of a much larger cycle: karma, return, release. i don't pretend to know what happens next. but the image that stays with me is ==the closing of a loop==. something completed, even if i was not ready to stop holding its hand. there's an episode, [Chapter 7: Four Souls](https://open.spotify.com/episode/1cfQ6nXr2kCqBpeF5Bch7U?si=597ee447d62d4207), of _Midnight Burger_, a fictional podcast about a transdimensional diner (don't ask), that explores a similar concept.",
-          "loss has not made death feel neat. it has made me ==less interested in calling it a failure==.",
+          "death still doesn't feel neat. i just ==stopped calling it a failure==.",
         ],
       },
       {
@@ -102,8 +102,8 @@ const words: Drawer[] = [
         note: "correction to a previous belief: closure is not a door.",
         stickers: ["key", "pencil", "star"],
         body: [
-          "i thought ==closure was an event==: one conversation, one realization, one very cinematic final scene.",
-          "now i think it is more like moving house with too many boxes. years later, you find one in a closet. you open it. ==it is still yours, but it is no longer the centrepiece==. it no longer seeks attention. it no longer lives in the middle of the room.",
+          "i used to file closure under ==events==: one conversation, one realization, one very cinematic final scene.",
+          "it's more like moving house with too many boxes. years later, you find one in a closet. you open it. ==it is still yours, but it is no longer the centrepiece==. it no longer seeks attention. it no longer lives in the middle of the room.",
         ],
       },
       {
@@ -114,7 +114,7 @@ const words: Drawer[] = [
         note: "margin note: perhaps this is why i over-explain.",
         stickers: ["eye", "cloud", "sparkle"],
         body: [
-          "being understood is lovely, but ==it is not the price of admission for being real==.",
+          "being understood is lovely, but ==i'm still real when i'm misunderstood==.",
           "some things in me will remain poorly captioned. some things will be misread. i am trying to let that be ==an ordinary sadness== instead of evidence that i have failed to communicate.",
         ],
       },
@@ -126,8 +126,8 @@ const words: Drawer[] = [
         note: "revision: not every hour needs a destiny.",
         stickers: ["leaf", "sun", "pencil"],
         body: [
-          "i used to think a good day was ==one i could account for==.",
-          "now i think a good day can include staring at (or hugging, or communicating with using dowsing sticks cuz apparently that actually works quite well) a tree (be careful, kind, and patient, because they're actually quite prideful beings), sending one email (yippee!), eating something beige (a donut? a singular noodle?), and briefly becoming obsessed with a niche question (which i tend to do… a lot). productivity has a place (sort of). it just… ==doesn't need to be the landlord==.",
+          "a good day used to be ==one i could account for==.",
+          "now a good day can include staring at (or hugging, or communicating with using dowsing sticks cuz apparently that actually works quite well) a tree (be careful, kind, and patient, because they're actually quite prideful beings), sending one email (yippee!), eating something beige (a donut? a singular noodle?), and briefly becoming obsessed with a niche question (which i tend to do… a lot). productivity has a place (sort of). it just… ==doesn't need to be the landlord==.",
         ],
       },
     ],
@@ -149,7 +149,7 @@ const words: Drawer[] = [
         kicker: "unresolved",
         stickers: ["key", "cloud"],
         body: [
-          "i admire coherence. i also think it can become a very polished cage.",
+          "i like being consistent. i also notice it can make me feel stuck.",
           "when someone has known you for a long time, how much notice do you owe them before changing your mind, your shape, your whole little operating system? is surprise a kind of betrayal, or just proof that a person is still alive?",
         ],
       },

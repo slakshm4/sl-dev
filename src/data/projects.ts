@@ -37,7 +37,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "bilingual-inquiry",
-    title: "absence, in two languages",
+    title: "(dé)générescence",
     note: "a bilingual inquiry into absence, memory, and loss through the fragmentation of language.",
     paper: "newsprint",
     sticker: "ghost",
@@ -67,7 +67,7 @@ export const projects: Project[] = [
   {
     slug: "eureka-questscapes",
     title: "eureka: questscapes",
-    note: "pioneering oral-health-integrated hiv education for youth through bilingual, accessible play.",
+    note: "a bilingual platformer where combat is trivia, and the topic is hiv and oral health.",
     year: "may 2024–present",
     place: "Vancouver, BC",
     paper: "floral",
@@ -76,8 +76,8 @@ export const projects: Project[] = [
     posts: ["sel-hiv-oralhealth"],
     written: true,
     story: [
-      "eureka: questscapes is a gamified, web-based hiv education platform for youth ages 15–24 that weaves sexual-health and oral-health literacy together. interactive storytelling, immersive gameplay, and trivia-based combat inside a classic 2d platformer let players build health literacy, confront stigma, and practise preventive behaviours.",
-      "it grew out of a rapid scoping review of digital hiv interventions, which shaped both the content and the product design. i'm currently finalizing the manuscript for that review, which found that no online gamified hiv education platform touches on oral health at all— a glaring and significant gap, and the one eureka: questscapes sets out to fill. i translate academic evidence into accessible, youth-facing learning content, with attention to stigma reduction and inclusive communication.",
+      "eureka: questscapes is a web-based hiv education game for ages 15–24 that teaches sexual health and oral health together. it's a classic 2d platformer: you play through a story, and combat is trivia. along the way you learn what you need to know, run into stigma head-on, and practise habits that protect you.",
+      "it grew out of a rapid scoping review of digital hiv interventions, which shaped both the content and the product design. i'm currently finalizing the manuscript for that review, which found that no online gamified hiv education platform touches on oral health at all— a glaring and significant gap, and the one eureka: questscapes sets out to fill. i turn the research into plain language for young people, and try to keep it free of stigma.",
       "the project has secured more than $2,000 in seed funding and awards, including an $800 bursary from LetsStopAIDS.",
     ],
   },
@@ -96,7 +96,7 @@ export const projects: Project[] = [
         "![the trifold poster for The Providence Duology: a dark starfield with the title, a map of six domains orbiting a red giant, a character web, and a trait system](/images/providence-duology-poster.webp \"the poster i demoed: _The Providence Duology_, on trifold bristol board.\")",
         "i also helped organize the event, especially the music demo: a group of musicians came together to perform a prepared song on stage, then opened things up into a jam session. watching something carefully made turn into something shared and spontaneous felt very Atelier core.",
         "![a group photo of everyone at Atelier Town, on stage in front of the projected Atelier Town screen, some holding up signs](/images/atelier-town.webp \"everyone at Atelier Town.\")",
-        "infinitely grateful to everyone who brought their work, curiosity, and generosity to make our little town feel alive.",
+        "thank you to everyone who showed up with something they made.",
       ],
   },
   {
@@ -130,7 +130,7 @@ export const projects: Project[] = [
   {
     slug: "roadshow",
     title: "North Coast healthcare travelling roadshow",
-    note: "delivering dynamic oral health workshops to Northern BC students through UNBC's North Coast healthcare travelling roadshow.",
+    note: "teaching oral health workshops to Northern BC students through UNBC's North Coast healthcare travelling roadshow.",
     year: "may 2025",
     place: "Northern BC",
     paper: "kraft",
@@ -140,7 +140,7 @@ export const projects: Project[] = [
     written: true,
     story: [
       "as the dental hygiene representative for UNBC's 2025 North Coast healthcare travelling roadshow, i delivered interactive oral-health workshops to students in grades 4–12 across Northern BC, representing the dental hygiene profession and the UBC Faculty of Dentistry.",
-      "the roadshow exists to expose students to different healthcare careers. i focused on the oral-systemic link and on dental hygiene as a primary care profession, tailoring each session with educators and community leaders to spark curiosity and confidence.",
+      "the roadshow exists to introduce students to different healthcare careers. i focused on the oral-systemic link and on dental hygiene as a primary care profession.",
     ],
     links: [
       { label: "read the feature article", href: "https://terracestandard.com/2025/05/08/students-urged-to-consider-health-careers/" },
@@ -169,7 +169,7 @@ export const projects: Project[] = [
   {
     slug: "reclaimed-history",
     title: "Hitler, Himmler, and the Nazi appropriation of ancient India",
-    note: "tracing the ideological theft and deliberate distortion of ancient Indian heritage and historiography to validate totalitarian rule.",
+    note: "how the Nazis took ancient Indian symbols and texts and bent them to justify their rule.",
     paper: "butter",
     sticker: "moon",
     written: true,
