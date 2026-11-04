@@ -37,9 +37,9 @@ const caseStudies: Piece[] = [
     kicker: "web",
     blurb: "indecisive? try your hand at slots!",
     body: [
-      "for the indecisive. pull the lever and the machine hands you a plan for Vancouver: an activity, a place, and how long to give it. every combination it can roll is one you can actually do.",
-      "go solo or bring friends. when a quest sounds right, print it as a ticket and send it to whoever you want to drag along.",
-      "it is dressed like an arcade cabinet because deciding what to do should feel like a game, not a group chat that goes quiet for three days. you can always ignore the machine. hate the result? blame the CPU.",
+      "for the indecisive. pull the lever and see what comes out. the machine picks an activity, a place in Vancouver, and roughly how long you'll need. every combination is a real thing you can go out and do.",
+      "you can take yourself on a quest or bring some friends along. if you like what you get, print it out as a ticket and send it to whoever you want to come with you.",
+      "the whole thing looks like an arcade cabinet because i thought it would be more fun than another website telling you where to go. and certainly more fun than spending three days in a group chat trying to make plans. you don't have to take the machine's word for anything, of course. don't like your quest? pull again. or blame the CPU.",
     ],
     link: { label: "pull the lever", href: "https://www.shradhalakshman.com/sidequest-service/", style: "ticket", aside: "feeling indecisive? hand it to the machine:", meta: "1 activity · 1 place · 1 duration" },
   },
