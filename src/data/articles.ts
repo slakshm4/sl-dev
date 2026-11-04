@@ -13,7 +13,7 @@
 // ─────────────────────────────────────────────────────────────
 import type { Drawer, Piece } from "./writing-types";
 
-const soon = ["the full write-up for this one is still being assembled: sketches, screenshots, the works. ==come back soon.=="];
+const soon = ["this one's still on the desk. sketches and screenshots are coming. ==come back soon.=="];
 
 const caseStudies: Piece[] = [
   {
@@ -25,9 +25,9 @@ const caseStudies: Piece[] = [
       "i love blackout poetry. i know how that sounds. depending on who you ask, it's a kitschy classroom craft or something from r/im14andthisisdeep.",
       "but i keep coming back. to me, it's poetry in its purest form— art imitating life imitating other art, and so on. you don't have to write anything. you read a page until a smaller page shows up inside it, and every word you keep means something only because of everything you covered.",
       "that's more or less what contextomy means: lifting words out of their surroundings until they say something new. usually a bad thing. here, you're doing it on purpose, and the original page is still right there.",
-      "contextomy is the studio i wished existed. pick a page from a small archive of public-domain writing— Dickinson, Poe, Austen, Thoreau, Shelley, Carroll— or bring your own. then make it yours: redaction blocks, Sharpie scribbles, strikethroughs, slow fades. paper, palette, typeface, spacing. nothing is fixed. keep it as a print, a GIF, or a short film of the poem surfacing from the page.",
+      "i wanted a studio for this, so i built one. pick a page from a small archive of public-domain writing— Dickinson, Poe, Austen, Thoreau, Shelley, Carroll— or bring your own. then make it yours: redaction blocks, Sharpie scribbles, strikethroughs, slow fades. paper, palette, typeface, spacing. nothing is fixed. keep it as a print, a GIF, or a short film of the poem surfacing from the page.",
       "i wanted it to feel like a desk, not a tool. it runs in your browser, no account, no upload. your poems stay with you. every export has a small \"made with contextomy\" mark, like signing the back of a finished page.",
-      "so yes, kitschy. maybe. but so is most of what people love on purpose. i'd rather make the kitsch beautiful than pretend i don't love it.",
+      "so yes, kitschy. i'm fine with that. i'd rather make it look good than pretend i don't love it.",
     ],
     link: { label: "try it!", href: "https://www.shradhalakshman.com/contextomy/" },
   },
@@ -47,12 +47,12 @@ const caseStudies: Piece[] = [
     slug: "sitarify",
     title: "sitarify",
     kicker: "music",
-    blurb: "hindustani and karnatik music visualizer— let's take a journey.",
+    blurb: "hindustani and karnatik music visualizer.",
     body: [
       "i built sitarify from a feeling i know well as an nri: being close to a culture, but often meeting it through fragments.",
       "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back— a drone in the background, a raga name i half-recognize, the sense that there is a whole language of feeling i want to spend more time learning.",
-      "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods, stories, and ways of moving. i wanted it to feel less like putting an \"Indian\" filter on music, and more like an invitation to listen differently.",
-      "maybe it is also my own small way of making the distance feel a little more inhabitable.",
+      "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods and their stories. i didn't want it to feel like an \"Indian\" filter on music. i wanted it to feel like something you'd actually learn from.",
+      "it's also how i make the distance feel a bit smaller.",
     ],
     link: { label: "hear a song on sitar", href: "https://www.shradhalakshman.com/sitarify/", style: "string", aside: "headphones on, then:" },
   },
@@ -64,9 +64,9 @@ const caseStudies: Piece[] = [
     body: [
       "a personality quiz that sorts you into species based on your choices. i made it for [Atelier Town](/projects/little-town), alongside the world of _The Providence Duology_.",
       "_The Providence Duology_ began, for me, with a question: what happens when a society becomes so afraid of its own ending that it decides some lives are more worth saving than others?",
-      "it is a story about Elysia, an empire built on borrowed time, and Eden— known first only as 1415— an escaped experiment carrying the evidence of what the empire has done in the name of survival. around him is a world shaped by genetic control, inheritance, grief, and the quiet violence of progress when no one asks who pays for it.",
-      "but it is also a story about learning how to see. about Nivara, who must confront the cruelty hidden inside her family's legacy. about the fragile work of trust after betrayal. about people from different worlds choosing, slowly and imperfectly, to build something beyond the systems that made them.",
-      "_Forsaken_ and _Redeemer_ are about rebellion. they are about what it means to refuse the future you were given— and to imagine a different one anyway.",
+      "it's set in Elysia, an empire built on borrowed time. Eden, known at first only as 1415, is an escaped experiment, and he's carrying the evidence of what the empire has done in the name of survival. around him is a world of genetic control, inheritance, and grief, and of progress that nobody asks the price of.",
+      "it's also about Nivara, who has to face the cruelty hidden in her family's legacy, and about whether trust can survive betrayal. people from different worlds try, slowly and badly, to build something outside the systems that made them.",
+      "_Forsaken_ and _Redeemer_ are about rebellion, and about refusing the future you were given.",
       "~> an uprising is on the horizon. [which side are you on?](https://which-alien-species-are-you-quiz.vercel.app/)",
     ],
   },
