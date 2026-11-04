@@ -26,7 +26,7 @@ const caseStudies: Piece[] = [
       "but i keep coming back. to me, it's poetry in its purest form— art imitating life imitating other art, and so on. you don't have to write anything. you read a page until a smaller page shows up inside it, and every word you keep means something only because of everything you covered.",
       "that's more or less what contextomy means: lifting words out of their surroundings until they say something new. usually a bad thing. here, you're doing it on purpose, and the original page is still right there.",
       "i wanted a studio for this, so i built one. pick a page from a small archive of public-domain writing— Dickinson, Poe, Austen, Thoreau, Shelley, Carroll— or bring your own. then make it yours: redaction blocks, Sharpie scribbles, strikethroughs, slow fades. paper, palette, typeface, spacing. nothing is fixed. keep it as a print, a GIF, or a short film of the poem surfacing from the page.",
-      "i wanted it to feel like a desk, not a tool. it runs in your browser, no account, no upload. your poems stay with you. every export has a small \"made with contextomy\" mark, like signing the back of a finished page.",
+      "i wanted it to feel like a desk in your bedroom rather than simply a tool. it runs in your browser, with no extra stuff (sign-ins, accounts, uploads, etc.— it isn't a social media platform). every export has a small \"made with contextomy\" mark, like signing the back of a finished page.",
       "so yes, kitschy. i'm fine with that. i'd rather make it look good than pretend i don't love it.",
     ],
     link: { label: "try it!", href: "https://www.shradhalakshman.com/contextomy/" },
