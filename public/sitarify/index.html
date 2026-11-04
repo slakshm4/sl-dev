@@ -24,8 +24,8 @@
   --hind: #9c3b26;   --karn: #2f6b66;
   --brass: #9c3b26;  --brass-ink: #fbeed4;
   --grain-blend: multiply; --grain-op: .2;
-  --wash-bg: url("art/tex/t1.webp");
-  --wash-band: url("art/tex/t2.webp");
+  --wash-bg: url("art/tex/t1b.webp");
+  --wash-band: url("art/tex/t2b.webp");
   --mist: url("art/tex/t3.webp");
   /* the hero painting's pigments */
   --sky3: #9db6d4; --sky2: #dfe5ea; --sky1: #f0e4cc; --sunglow: #fff0c8; --cloud: #5b7cb2;
@@ -34,7 +34,7 @@
   --leafc: #4f7a5a; --lotusc: #e3889c; --padhi: #93b98a; --leafrim: #2f5440; --frame-dark: #3a2219; --stars: 0;
   --wall: #86a3c6; --wall-2: #56739e; --sand: #dbc7a4; --sand-2: #b99c78; --gild: #c8a35c; --gild-hi: #ecd59f;
   --window: #2c3854; --dome2: #ecebe6; --haze: #8ea4c0; --boat: #2c3247; --winglow: 0;
-  --hero-img: url("art/hero-dusk.jpg");
+  --hero-img: url("art/hero-dusk.webp");
   /* the night stage keeps its own pigments in both themes */
   --s-ink: #f6eedc; --s-muted: #c9c0a8; --s-line: #3e5a58;
   --wood-hi: #c97a3c; --wood-1: #7b3b19; --wood-2: #33170a; --tabli-1: #e2a96b; --tabli-2: #a9632e;
@@ -54,13 +54,13 @@
     --kumkum: #e08a6a; --leaf: #82b8a4; --indigo: #a3b4f0; --gold: #e2bb6c; --lotus: #e0a0a8;
     --hind: #e8916e; --karn: #7fc4ba; --brass: #e6b65e; --brass-ink: #1a1408;
     --grain-blend: overlay; --grain-op: .26;
-    --wash-bg: url("art/tex/t4.webp"); --wash-band: url("art/tex/t5.webp"); --mist: url("art/tex/t6.webp");
+    --wash-bg: url("art/tex/t4b.webp"); --wash-band: url("art/tex/t5b.webp"); --mist: url("art/tex/t6.webp");
     --sky3: #0f1430; --sky2: #2c2c58; --sky1: #b07c74; --sunglow: #f2c79a; --cloud: #1c2148;
     --hill: #262449; --hill-2: #1c1a3a; --temple: #1e1a38; --temple-lit: #6e4a40; --ink-deep: #07061a;
     --palm: #14172a; --stone: #3a3448; --stone-2: #2c2838; --water1: #3a3d66; --water2: #0d0e24;
     --leafc: #2d4a40; --lotusc: #c47790; --padhi: #4b6f5c; --leafrim: #16302a; --frame-dark: #08071a; --stars: 1; --jas: #fbf4e4; --jas-edge: transparent;
     --wall: #34436e; --wall-2: #222d52; --sand: #5a4c55; --sand-2: #3e3442; --gild: #d9ad5a; --gild-hi: #f4d48a;
-    --window: #f0b45a; --dome2: #b7b3c6; --haze: #474470; --boat: #0e1024; --winglow: .85; --hero-img: url("art/hero-night.jpg");
+    --window: #f0b45a; --dome2: #b7b3c6; --haze: #474470; --boat: #0e1024; --winglow: .85; --hero-img: url("art/hero-night.webp");
     --shadow: 0 40px 80px -40px rgba(0,0,0,.85);
   }
 }
@@ -70,13 +70,13 @@
   --kumkum: #e08a6a; --leaf: #82b8a4; --indigo: #a3b4f0; --gold: #e2bb6c; --lotus: #e0a0a8;
   --hind: #e8916e; --karn: #7fc4ba; --brass: #e6b65e; --brass-ink: #1a1408;
   --grain-blend: overlay; --grain-op: .26;
-  --wash-bg: url("art/tex/t4.webp"); --wash-band: url("art/tex/t5.webp"); --mist: url("art/tex/t6.webp");
+  --wash-bg: url("art/tex/t4b.webp"); --wash-band: url("art/tex/t5b.webp"); --mist: url("art/tex/t6.webp");
   --sky3: #0f1430; --sky2: #2c2c58; --sky1: #b07c74; --sunglow: #f2c79a; --cloud: #1c2148;
   --hill: #262449; --hill-2: #1c1a3a; --temple: #1e1a38; --temple-lit: #6e4a40; --ink-deep: #07061a;
   --palm: #14172a; --stone: #3a3448; --stone-2: #2c2838; --water1: #3a3d66; --water2: #0d0e24;
   --leafc: #2d4a40; --lotusc: #c47790; --padhi: #4b6f5c; --leafrim: #16302a; --frame-dark: #08071a; --stars: 1; --jas: #fbf4e4; --jas-edge: transparent;
   --wall: #34436e; --wall-2: #222d52; --sand: #5a4c55; --sand-2: #3e3442; --gild: #d9ad5a; --gild-hi: #f4d48a;
-  --window: #f0b45a; --dome2: #b7b3c6; --haze: #474470; --boat: #0e1024; --winglow: .85; --hero-img: url("art/hero-night.jpg");
+  --window: #f0b45a; --dome2: #b7b3c6; --haze: #474470; --boat: #0e1024; --winglow: .85; --hero-img: url("art/hero-night.webp");
   --shadow: 0 40px 80px -40px rgba(0,0,0,.85);
 }
 
@@ -203,6 +203,10 @@ a { color: var(--kumkum); text-underline-offset: 3px; }
 .dpill small { font: 500 11px/1 var(--f-mono); color: var(--s-muted); }
 .inst-wrap { position: relative; margin-top: clamp(20px, 6vw, 70px); }
 .inst-wrap svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 20px 22px rgba(0,0,0,.55)); }
+/* the painted (filtered) bodies are drawn once and kept on their own layer; only the thin live layer of
+   strings and fingertip repaints while notes ring, so the watercolour filter never re-runs on every frame */
+#sitar, #harmonium { will-change: transform; }
+.inst-wrap #sitarLive { position: absolute; left: 0; top: 0; filter: none; pointer-events: none; }
 #harmonium { width: min(100%, 620px); margin: clamp(8px, 2vw, 18px) auto 0; }
 .fx { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
 .fxn { position: absolute; left: 0; top: 0; color: hsl(var(--h) 92% var(--note-l) / var(--note-a)); filter: drop-shadow(0 0 12px hsl(var(--h) 95% 62% / .65)); will-change: transform, opacity; }
@@ -485,9 +489,9 @@ footer b { color: var(--ink); font-weight: 600; }
 /* ---------- v13: painted scenes and a search you complete like a sentence ---------- */
 .scene { background: var(--hero-img) center 72% / cover no-repeat; }
 .scene::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in oklab, var(--paper) 22%, transparent), transparent 38%); pointer-events: none; }
-.stage { background: #14292c url("art/panel.jpg") 82% 0% / auto 112% no-repeat; }
+.stage { background: #14292c url("art/panel.webp") 82% 0% / auto 112% no-repeat; }
 @media (max-aspect-ratio: 1/1) { .stage { background-size: auto 112%; } }
-@media (max-width: 560px) { .stage { background: linear-gradient(#14292c 34%, rgba(20,41,44,0) 50%), #14292c url("art/panel.jpg") 58% 92% / auto 62% no-repeat; } }
+@media (max-width: 560px) { .stage { background: linear-gradient(#14292c 34%, rgba(20,41,44,0) 50%), #14292c url("art/panel.webp") 58% 92% / auto 62% no-repeat; } }
 .night-art { display: none; }
 .mini img, .sh-art .mini img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.1); }
 .search { width: min(100%, 780px); }
@@ -604,12 +608,12 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 .quick { position: relative; z-index: 2; }
 .stage-wrap { z-index: 1; margin-top: calc(-1 * var(--fogx)); filter: none; container-type: inline-size; }
 .stage { padding-top: calc(var(--fogx) + clamp(150px, 15vw, 210px));
-  background: url("art/tex/t13.webp") 0 0 / 100% var(--fogh) no-repeat, #1f4447 url("art/panel.jpg") -24.6cqw calc(var(--fogx) + clamp(150px, 15vw, 210px) + 255px - 10.6cqw) / 125cqw auto no-repeat;
+  background: url("art/tex/t13.webp") 0 0 / 100% var(--fogh) no-repeat, #1f4447 url("art/panel.webp") -24.6cqw calc(var(--fogx) + clamp(150px, 15vw, 210px) + 255px - 10.6cqw) / 125cqw auto no-repeat;
   -webkit-mask: url("art/tex/t14.webp") top / 100% var(--fogh) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - var(--fogh) + 2px) no-repeat;
           mask: url("art/tex/t14.webp") top / 100% var(--fogh) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - var(--fogh) + 2px) no-repeat; }
 @media (max-width: 760px) {
   .stage { padding-top: calc(var(--fogx) + 104px);
-    background: url("art/tex/t13.webp") 0 0 / 100% var(--fogh) no-repeat, linear-gradient(#14292c calc(var(--fogx) + (100% - var(--fogx)) * .34), rgba(20, 41, 44, 0) calc(var(--fogx) + (100% - var(--fogx)) * .5)), #14292c url("art/panel.jpg") 58% 100% / auto calc((100% - var(--fogx)) * .62) no-repeat; }
+    background: url("art/tex/t13.webp") 0 0 / 100% var(--fogh) no-repeat, linear-gradient(#14292c calc(var(--fogx) + (100% - var(--fogx)) * .34), rgba(20, 41, 44, 0) calc(var(--fogx) + (100% - var(--fogx)) * .5)), #14292c url("art/panel.webp") 58% 100% / auto calc((100% - var(--fogx)) * .62) no-repeat; }
 }
 /* candlelight on the search words, at night only */
 @media (prefers-color-scheme: dark) {
@@ -698,7 +702,9 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lamps .lamp-halo, :root:not([data-theme="light"]) .lamps .lamp-refl { opacity: 1; } }
 @keyframes flicker { 0% { opacity: .85; transform: scale(1); } 12% { opacity: .6; transform: scale(.94, .98); } 23% { opacity: .95; transform: scale(1.04, 1.02); } 41% { opacity: .7; transform: scale(.97); } 58% { opacity: 1; transform: scale(1.05, 1.03); } 74% { opacity: .66; transform: scale(.95, .99); } 88% { opacity: .9; transform: scale(1.02); } 100% { opacity: .85; transform: scale(1); } }
 @keyframes shimmer { 0%, 100% { opacity: .5; transform: scaleX(1) translateX(0); } 30% { opacity: .85; transform: scaleX(1.25) translateX(1px); } 60% { opacity: .4; transform: scaleX(.85) translateX(-1px); } }
-@keyframes breathe2 { 0%, 100% { transform: scale(.92); filter: brightness(.9); } 50% { transform: scale(1.08); filter: brightness(1.15); } }
+@keyframes breathe2 { 0%, 100% { transform: scale(.92); } 50% { transform: scale(1.08); } }
+/* while the page is being scrolled, the decorative motion holds still so every frame goes to the scroll */
+html.scrolling .scene *, html.scrolling .lamps span, html.scrolling .night-art * { animation-play-state: paused !important; }
 .birds { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .birds path { fill: rgba(46, 54, 74, .72); }
 :root[data-theme="dark"] .birds path { fill: rgba(24, 22, 48, .8); }
@@ -726,10 +732,10 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
 .quick { width: auto; max-width: none; margin-inline: 0; padding: 22px 0 26px; border-radius: 0; animation: none; }
 .quick::before { inset: -34px -4% -40px; border-radius: 0; box-shadow: none;
   background: url("art/tex/t17.webp") 0 0 / 520px 260px, linear-gradient(180deg, rgba(222, 236, 238, .16), rgba(190, 214, 220, .1));
-  -webkit-backdrop-filter: blur(7px) saturate(1.3) brightness(1.03); backdrop-filter: blur(7px) saturate(1.3) brightness(1.03);
+  /* no backdrop blur: blurring the animated hero behind it cost a full-width blur on every frame */
   -webkit-mask: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(transparent, #000 32%, #000 68%, transparent);
           mask: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(transparent, #000 32%, #000 68%, transparent);
-  -webkit-mask-composite: source-in; mask-composite: intersect; animation: ripplelight 26s linear infinite; }
+  -webkit-mask-composite: source-in; mask-composite: intersect; animation: none; }
 .quick::after { display: none; }
 @keyframes ripplelight { from { background-position: 0 0, 0 0; } to { background-position: 520px 130px, 0 0; } }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .quick::before { box-shadow: none; background: url("art/tex/t18.webp") 0 0 / 520px 260px, linear-gradient(180deg, rgba(150, 175, 215, .07), rgba(90, 110, 150, .04)); } }
@@ -924,6 +930,8 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
         <rect x="160" y="180" width="16" height="46" rx="3" style="fill:var(--inlay)"/>
         <rect x="222" y="192" width="10" height="20" rx="2" style="fill:var(--inlay)" opacity=".8"/>
         </g>
+      </svg>
+      <svg id="sitarLive" viewBox="0 0 1200 360" aria-hidden="true">
         <g id="tarabs" opacity=".35"></g>
         <g id="strings"></g>
         <circle id="finger" cx="1100" cy="190" r="16" fill="url(#gFinger)" opacity="0"/>
@@ -2448,7 +2456,14 @@ const strings = [], chik = [];
 const sY = (i, x) => MAIN_Y0[i] + (MAIN_Y1[i] - MAIN_Y0[i]) * (x - BX) / L;
 const vib = { amp: [0, 0, 0, 0, 0], t0: [0, 0, 0, 0, 0], chik: [0, 0], ct0: [0, 0] };
 let fingerX = NX;
+let stringsStill = false;
 function drawStrings(now) {
+  // once every string has stopped moving, leave the drawing alone until the next pluck
+  let live = false;
+  for (let i = 0; i < strings.length; i++) if (vib.amp[i] * Math.exp(-(now - vib.t0[i]) / 1000 * 2.4) > .02) live = true;
+  for (let i = 0; i < chik.length; i++) if (vib.chik[i] * Math.exp(-(now - vib.ct0[i]) / 1000 * 4) > .02) live = true;
+  if (!live && stringsStill && drawStrings.fx === fingerX) return;
+  stringsStill = !live; drawStrings.fx = fingerX;
   strings.forEach((p, i) => {
     const age = (now - vib.t0[i]) / 1000;
     const a = vib.amp[i] * Math.exp(-age * 2.4) * Math.sin(age * 70 + i);
@@ -3243,7 +3258,7 @@ function startEmbers() {
   (function loop(t) {
     // embers drift slowly, so 30 frames a second is plenty and halves the painting work
     odd = !odd;
-    if (!heroOn || document.hidden || odd || document.documentElement.classList.contains('lite')) { requestAnimationFrame(loop); return; }
+    if (!heroOn || document.hidden || odd || document.documentElement.classList.contains('lite') || document.documentElement.classList.contains('scrolling')) { requestAnimationFrame(loop); return; }
     ctx.clearRect(0, 0, W, H);
     const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
     ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over'; ctx.lineCap = 'round';
@@ -3405,7 +3420,7 @@ RAGAS.forEach(rg => {
   const c = document.createElement('article'); c.className = 'rcard'; c.dataset.id = rg.id; c.dataset.trad = rg.trad;
   c.innerHTML = `<button class="rplay" aria-pressed="false" aria-label="Play an improvisation in ${esc(rg.name)}">
       <span class="inscr" lang="${rg.trad === 'k' ? 'ta' : 'hi'}">${SCRIPT[rg.id] || esc(rg.name)}</span>
-      <span class="mini"><img src="art/raga-${rg.id}.jpg" alt="" loading="lazy" decoding="async"><svg class="archline" viewBox="0 0 100 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 140V64H5V58Q0.26 49.00 7.76 43.19Q6.58 35.25 14.18 32.73Q14.95 25.56 22.15 25.08Q24.05 18.56 30.25 19.25Q32.71 13.47 37.64 14.61Q40.20 9.71 43.88 10.83Q46.77 5.89 50.00 7.00L50 0L50 7Q56.91 4.75 62.36 14.61Q69.90 13.07 73.32 21.67Q80.52 21.44 82.05 28.74Q88.24 29.77 88.30 35.96Q93.29 37.89 92.24 43.19Q96.12 45.64 94.28 50.12Q97.91 53.48 95.00 58.00H95V58V64H100V140Z"/></svg></span>
+      <span class="mini"><img src="art/raga-${rg.id}.webp" alt="" loading="lazy" decoding="async"><svg class="archline" viewBox="0 0 100 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 140V64H5V58Q0.26 49.00 7.76 43.19Q6.58 35.25 14.18 32.73Q14.95 25.56 22.15 25.08Q24.05 18.56 30.25 19.25Q32.71 13.47 37.64 14.61Q40.20 9.71 43.88 10.83Q46.77 5.89 50.00 7.00L50 0L50 7Q56.91 4.75 62.36 14.61Q69.90 13.07 73.32 21.67Q80.52 21.44 82.05 28.74Q88.24 29.77 88.30 35.96Q93.29 37.89 92.24 43.19Q96.12 45.64 94.28 50.12Q97.91 53.48 95.00 58.00H95V58V64H100V140Z"/></svg></span>
       <span class="cap">
         <span class="nm">${esc(rg.name)}</span>
         <span class="th">${esc(rg.time)}</span>
@@ -4396,7 +4411,14 @@ function drawWater(now) {
   }
 }
 addEventListener('resize', sizeWater); sizeWater();
-(function waterLoop(now) { if (stageOn && !document.hidden) drawWater(now); requestAnimationFrame(waterLoop); })(performance.now());
+// the water moves slowly: 30 frames a second is plenty, and it holds still while the page scrolls
+let waterOdd = false;
+(function waterLoop(now) { waterOdd = !waterOdd; if (waterOdd && stageOn && !document.hidden && !document.documentElement.classList.contains('scrolling')) drawWater(now); requestAnimationFrame(waterLoop); })(performance.now());
+{ let st = 0; const root = document.documentElement, birds = document.getElementById('birds');
+  addEventListener('scroll', () => {
+    if (!root.classList.contains('scrolling')) { root.classList.add('scrolling'); try { birds && birds.pauseAnimations(); } catch (e) {} }
+    clearTimeout(st); st = setTimeout(() => { root.classList.remove('scrolling'); try { birds && birds.unpauseAnimations(); } catch (e) {} }, 180);
+  }, { passive: true }); }
 
 /* ---------------- Jasmine garland across the hero ---------------- */
 (function drawGarland() {
