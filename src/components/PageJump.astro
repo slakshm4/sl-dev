@@ -1,0 +1,16 @@
+---
+// PageJump.astro  ·  "on this page": a row of links to the sections below, for long pages. <PageJump items={[{ label, href }]} />
+const { items = [] } = Astro.props;
+---
+<nav class="pjump" aria-label="on this page">
+  <span class="pjump-l" aria-hidden="true">on this page:</span>
+  <ul>{items.map((i) => <li><a class="chip" href={i.href}>{i.label}</a></li>)}</ul>
+</nav>
+<style is:global>
+  .pjump { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.8rem; margin: 0.4rem 0 2rem; }
+  .pjump-l { font: 400 0.8rem/1 var(--f-type); letter-spacing: 0.06em; color: var(--ink-soft); }
+  .pjump ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; }
+  .pjump .chip { display: inline-block; text-decoration: none; color: var(--ink); background: var(--paper); font-size: 0.9rem; padding: 0.4em 0.9em 0.45em; }
+  .pjump .chip:hover, .pjump .chip:focus-visible { background: var(--butter); color: #1f1b2e; }
+  [id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
+</style>

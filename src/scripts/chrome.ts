@@ -121,13 +121,23 @@ export function initChrome() {
       if ((e.target as Element).closest("input, textarea, select")) return;
       stars(e.clientX, e.clientY);
     });
-    // the note under the accessibility button fades once you scroll, so it is never left half-hidden under the nav
-    let away = false;
-    const noteWatch = () => {
-      const a = window.scrollY > 12;
-      if (a !== away) { away = a; document.documentElement.classList.toggle("note-away", a); }
+    // back to top: shows after about a screen and a half of scrolling
+    const topBtn = () => document.querySelector<HTMLButtonElement>("[data-to-top]");
+    const topWatch = () => {
+      const b = topBtn();
+      if (!b) return;
+      const on = window.scrollY > window.innerHeight * 1.5;
+      const isOn = b.classList.contains("is-on");
+      if (on && !isOn) { b.hidden = false; requestAnimationFrame(() => b.classList.add("is-on")); }
+      else if (!on && isOn) { b.classList.remove("is-on"); setTimeout(() => { if (!b.classList.contains("is-on")) b.hidden = true; }, 300); }
     };
-    window.addEventListener("scroll", noteWatch, { passive: true });
+    window.addEventListener("scroll", topWatch, { passive: true });
+    document.addEventListener("click", (e) => {
+      if (!(e.target as Element).closest("[data-to-top]")) return;
+      const still = document.documentElement.dataset.motion === "off";
+      window.scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
+      document.querySelector<HTMLElement>("#main")?.focus({ preventScroll: true });
+    });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && document.body.classList.contains("menu-open")) {
         setMenu(false);
@@ -137,5 +147,6 @@ export function initChrome() {
   }
   setMenu(false);
   sync();
-  document.documentElement.classList.toggle("note-away", window.scrollY > 12);
+  const tb = document.querySelector<HTMLButtonElement>("[data-to-top]");
+  if (tb) { tb.classList.remove("is-on"); tb.hidden = true; }
 }

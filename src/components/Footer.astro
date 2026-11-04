@@ -1,13 +1,52 @@
 ---
-// Footer.astro  ·  one line, every page.
+// Footer.astro  ·  every page: a map of the whole site, then the small print. also holds the back-to-top button.
+const map = [
+  { label: "home", href: "/", sub: "start here" },
+  { label: "north star", href: "/north-star", sub: "what drives me, drawn as a map" },
+  { label: "explore", href: "/explore", sub: "projects, field notes, the archive" },
+  { label: "experience", href: "/experience", sub: "my cv, folded up" },
+  { label: "notebook", href: "/notebook", sub: "writing, case studies, odds and ends" },
+  { label: "say hi!", href: "/say-hi", sub: "contact, ten songs, a game" },
+];
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const here = (h) => (h === "/" ? path === "/" : path === h || path.startsWith(h + "/"));
 ---
 <footer class="foot">
   <div class="wrap foot-in">
+    <nav class="foot-map" aria-label="site map">
+      <ul>
+        {map.map((m) => (
+          <li><a href={m.href} aria-current={here(m.href) ? "page" : undefined}><span class="fm-l">{m.label}</span><span class="fm-s">{m.sub}</span></a></li>
+        ))}
+      </ul>
+    </nav>
     <p class="keep-case">© 2026 Shradha Lakshman. all rights reserved.</p>
   </div>
 </footer>
+<button class="to-top" type="button" data-to-top aria-label="back to top" hidden>
+  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 20V5M5 11l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>top</span>
+</button>
 
 <style is:global>
   .foot { padding: 3rem 0 4.5rem; text-align: center; color: var(--ink-soft); font-size: 0.95rem; }
   .foot p { margin: 0; }
+  .foot-map { margin: 0 auto 2.2rem; max-width: 62rem; padding-top: 1.6rem; border-top: 2px dashed color-mix(in srgb, var(--ink) 35%, transparent); }
+  .foot-map ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem 1.5rem; text-align: left; }
+  .foot-map a { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.35rem 0.2rem; color: var(--ink); text-decoration: none; }
+  .fm-l { font: italic 600 1.35rem/1.1 var(--f-display); }
+  .fm-s { font-size: 0.9rem; line-height: 1.3; color: var(--ink-soft); }
+  .foot-map a:hover .fm-l, .foot-map a:focus-visible .fm-l { text-decoration: underline; text-underline-offset: 0.2em; }
+  .foot-map a[aria-current="page"] .fm-l::before { content: "★ "; font-size: 0.8em; }
+  @media (max-width: 640px) { .foot-map ul { grid-template-columns: repeat(2, 1fr); } }
+
+  .to-top {
+    position: fixed; z-index: 95; left: 0.9rem; bottom: 0.9rem; display: inline-flex; align-items: center; gap: 0.35rem; min-height: 44px; padding: 0 0.95rem 0 0.75rem;
+    background: var(--paper); color: var(--ink); border: 2px solid var(--ink); border-radius: 99px; font: 500 0.95rem/1 var(--f-body);
+    box-shadow: 2px 3px 0 var(--shadow); cursor: pointer; opacity: 0; transform: translateY(8px); transition: opacity 0.3s, transform 0.3s;
+  }
+  .to-top[hidden] { display: none; }
+  .to-top.is-on { opacity: 1; transform: none; }
+  .to-top:hover { transform: translateY(-2px); }
+  @media print { .to-top { display: none; } }
 </style>

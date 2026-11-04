@@ -164,7 +164,5 @@ html.js[data-a11y="on"] .hl { background-size: 100% 100% !important; }
 :root[data-a11y="on"] .gl-tape { display: none; }
 :root[data-a11y="on"] .gl-h { font-style: normal; font-weight: 700; }
 
-/* the note under the accessibility button invites people to switch accessible mode on, so once it is on the note (and the room the page made for it) goes away.
-   screen readers still get its words as the button's description. */
-:root[data-a11y="on"] { --note-h: 0px; }
-:root[data-a11y="on"] .a11y-note { display: none; }
+/* the note shown on hover/focus of the accessibility button: plain and upright in accessible mode (no hand-drawn arrow) */
+:root[data-a11y="on"] .a11y-note { transition: none; transform: none; }

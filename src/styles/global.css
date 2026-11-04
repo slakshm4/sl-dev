@@ -127,8 +127,8 @@ button { font: inherit; color: inherit; }
 }
 
 .wrap { width: min(var(--wrap), calc(100% - var(--gutter) * 2)); margin-inline: auto; }
-main { display: block; padding-top: calc(var(--header-h) + var(--note-h, 0px) + 1.25rem); min-height: 70vh; }
-body[data-page="home"] main { padding-top: var(--note-h, 0px); }
+main { display: block; padding-top: calc(var(--header-h) + 1.25rem); min-height: 70vh; }
+body[data-page="home"] main { padding-top: 0; }
 .page-section { padding-block: clamp(1.5rem, 4vw, 3rem) clamp(2.5rem, 6vw, 5rem); }
 
 /* ── custom cursors: a paper tooth. ink outline over a white halo so it shows on any colour ── */

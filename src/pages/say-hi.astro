@@ -6,6 +6,7 @@ import Sticker from "../components/Sticker.astro";
 import HandArrow from "../components/HandArrow.astro";
 import Eyes from "../components/Eyes.astro";
 import songs from "../data/songs.json";
+import PageJump from "../components/PageJump.astro";
 
 // ── things to edit ───────────────────────────────────────────
 const email = "shradha.rdh@gmail.com";
@@ -68,6 +69,7 @@ const stats = [
 <Layout page="say-hi" title="say hi! · Shradha Lakshman" description="contact Shradha Lakshman, and meet her: id card, ten songs on repeat, and a game of two truths and a lie.">
   <div class="wrap page-section">
     <SectionTitle text="say hi!" start={4} />
+    <PageJump items={[{ label: "my id card", href: "#idc-name" }, { label: "ten songs", href: "#deck-h" }, { label: "two truths and a lie", href: "#ttl-h" }, { label: "find me", href: "#soc-h" }]} />
 
     <!-- id card + turntable -->
     <div class="hi-top">

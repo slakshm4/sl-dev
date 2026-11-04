@@ -5,6 +5,7 @@ import SectionTitle from "../components/SectionTitle.astro";
 import HandArrow from "../components/HandArrow.astro";
 import Sticker from "../components/Sticker.astro";
 import Sprite from "../components/Sprite.astro";
+import PageJump from "../components/PageJump.astro";
 import { projects, getProject } from "../data/projects";
 import PostLinks from "../components/PostLinks.astro";
 import { eportfolioHome } from "../data/eportfolio";
@@ -26,6 +27,7 @@ const tones = ["peri", "butter", "sage", "blush"];
 <Layout page="explore" title="explore · Shradha Lakshman" description="featured projects, field notes, and the archive of what Shradha Lakshman has been working on.">
   <div class="wrap page-section">
     <SectionTitle text="explore" start={1} />
+    <PageJump items={[{ label: "featured", href: "#feat-h" }, { label: "field notes", href: "#fn-h" }, { label: "the archive", href: "#ar-h" }]} />
 
     <!-- featured -->
     <section aria-labelledby="feat-h" class="ex-feat">
