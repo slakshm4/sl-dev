@@ -50,8 +50,8 @@ const caseStudies: Piece[] = [
     blurb: "hindustani and karnatik music visualizer— let's take a journey.",
     body: [
       "i built sitarify from a feeling i know well as an nri: being close to a culture, but often meeting it through fragments.",
-      "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back— a drone in the background, a raga name i half-recognize, the sense that there is a whole language of feeling i want to spend more time learning.",
-      "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods and their stories. i didn't want it to feel like an \"Indian\" filter on music. i wanted it to feel like something you'd actually learn from.",
+      "as a Kerala Iyer Tamizh person in the diaspora, music has always felt like one of the ways back— a drone humming in the background, a raga name i only half-recognize. i want to learn the rest.",
+      "sitarify lets you hear any song reimagined on a modelled sitar, while making room for both Hindustani and Karnatik ragas, their moods and their stories. i didn't want to just slap an \"Indian\" filter on a song and call it done. i wanted people to come away knowing a bit about the ragas.",
       "it's also how i make the distance feel a bit smaller.",
     ],
     link: { label: "hear a song on sitar", href: "https://www.shradhalakshman.com/sitarify/", style: "string", aside: "headphones on, then:" },
