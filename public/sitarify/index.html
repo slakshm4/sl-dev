@@ -339,6 +339,19 @@ details.g[open] summary { color: #8e3b26; }
 .g-body thead th { font-weight: 600; color: var(--ink-soft); font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; }
 .g-body tbody th { font-weight: 600; color: var(--ink-soft); font-size: 13.5px; white-space: nowrap; }
 .g-body td.mono { font-family: var(--f-mono); }
+.plan-wrap { margin-top: calc(-1 * clamp(10px, 3vw, 30px)); }
+.g-body h4 { margin: 8px 0 0; font: 600 19px/1.3 var(--f-display); color: var(--kumkum); }
+.pl-dl { display: grid; grid-template-columns: 11.5em minmax(0, 1fr); gap: 8px 18px; margin: 0; align-items: baseline; }
+.pl-dl dt { font-weight: 600; } .pl-dl dd { margin: 0; max-width: 76ch; } .pl-dl dd::first-letter { text-transform: uppercase; }
+.g-body ul { margin: 4px 0 0; padding-left: 1.2em; display: grid; gap: 4px; }
+.g-body table.pl-grid { min-width: 680px; font-size: 13px; }
+.pl-grid th { white-space: nowrap; font-weight: 600; padding-right: 14px; }
+.pl-grid td { text-align: center; padding: 6px 2px; font-family: var(--f-mono); }
+.pl-grid td.on { border-left: 1px solid var(--rule); }
+.pl-grid td.c { color: var(--ink-soft); }
+.pl-grid td.bol { font-family: inherit; font-style: italic; }
+.g-body td.mono { white-space: nowrap; }
+@media (max-width: 560px) { .pl-dl { grid-template-columns: minmax(0, 1fr); gap: 2px; } .pl-dl dd { margin-bottom: 8px; } }
 .g-body dl { margin: 0; display: grid; gap: 4px; }
 .g-body dt { font-weight: 700; margin-top: 6px; }
 .g-body dd { margin: 0; color: var(--ink-soft); max-width: 70ch; }
@@ -958,6 +971,7 @@ footer > div:not(.kolam) + div:not(.copy) { margin-top: 14px; }
     <div class="ribbon" id="ribbon" aria-label="Notes in sargam"></div>
   </section>
   </div>
+  <div class="plan-wrap" id="planWrap" hidden><details class="g" id="plan"></details></div>
 
   <section class="ragas" id="ragas">
     <div class="kolam" aria-hidden="true"></div>
@@ -1524,7 +1538,7 @@ const SAMPLES = {
 /* ---------------- Text parsers ---------------- */
 function readDirectives(text) {
   const d = {};
-  for (const m of text.matchAll(/\{\s*(title|t|artist|subtitle|st|tempo|capo|key|comment|chordmap|groove)\s*:\s*([^}]*)\}/gi)) {
+  for (const m of text.matchAll(/\{\s*(title|t|artist|subtitle|st|tempo|capo|key|comment|chordmap|groove|scale|meter|drone|pulse|swing)\s*:\s*([^}]*)\}/gi)) {
     const k = m[1].toLowerCase(), v = m[2].trim();
     if (k === 'title' || k === 't') d.title = v;
     else if (k === 'artist' || k === 'subtitle' || k === 'st') d.artist = d.artist || v;
@@ -1859,7 +1873,11 @@ function buildSong(meta, text, pre) {
   const dir = readDirectives(src);
   // a cover written by the online search names its key, where the groove enters, and its chords by beat
   if (dir.key && meta.tonic === undefined) { const km = dir.key.match(/^([A-G])([#b]?)(m(?!aj)|min|minor)?/); if (km) meta = { ...meta, tonic: pcOf(km[1], km[2]), mode: km[3] ? 'minor' : 'major' }; }
-  if (dir.groove !== undefined && meta.pickup === undefined) meta = { ...meta, pickup: +dir.groove, meter: 4 };
+  if (dir.groove !== undefined && meta.pickup === undefined) { const g = dir.groove.split(/\s+/).map(parseFloat); meta = { ...meta, pickup: g[0], pass2: g[1], meter: +dir.meter || 4 }; }
+  // what the cover's three-step plan decided: the scale (or raga) the sitar keeps to, its drone, and the groove translated to tabla
+  if (dir.scale && !meta.scale) { const sc = dir.scale.split(/\s+/).map(Number).filter(v => isFinite(v) && v >= 0 && v < 12); if (sc.length >= 5) meta = { ...meta, scale: sc }; }
+  if (dir.drone && !meta.drone && DRONE_SEMI[dir.drone] !== undefined) meta = { ...meta, drone: dir.drone };
+  if (dir.pulse) meta = { ...meta, pulse: dir.pulse.split(/\s+/).map(t => { const m = t.match(/^([a-z]+)(\d)(c?)$/); return m && BOLS[m[1]] ? { b: m[1], v: +m[2] / 9, c: !!m[3] } : null; }), swing: Math.min(.7, Math.max(.5, +dir.swing || .5)) };
   const capo = dir.capo || 0;
   const body = cleanText(src);
   let fmt, notes, kind = '', key, sa;
@@ -1910,7 +1928,7 @@ function buildSong(meta, text, pre) {
       if (meta.andolan && meta.andolan.includes(pc) && n.b >= 1) { n.orn = 'andolan'; n.from = n.m; }
       // kampita: the oscillating gamaka at the heart of Karnatik style; Sa and Pa stay steady
       else if (meta.trad === 'k' && n.b >= 1 && pc !== 0 && pc !== 7 && R() < .55) { let up = n.m + 1; while (!inScale(up) && up < n.m + 4) up++; n.orn = 'kampita'; n.from = up; }
-      else if (prevM !== null && Math.abs(d) >= 1 && Math.abs(d) <= 5 && (n.flag === 'm' || (n.b >= .75 && R() < .4))) { n.orn = 'meend'; n.from = prevM; }
+      else if (prevM !== null && Math.abs(d) >= 1 && Math.abs(d) <= 5 && (n.flag === 'm' || (n.b >= (meta.raga ? .75 : 1) && R() < (meta.raga ? .4 : .3)))) { n.orn = 'meend'; n.from = prevM; }
       else if (n.b >= 1 && R() < .16) { let up = n.m + 1; while (!inScale(up) && up < n.m + 4) up++; n.orn = 'kan'; n.from = up; }
       prevM = n.m;
     }
@@ -1927,6 +1945,7 @@ function buildSong(meta, text, pre) {
     bpm: Math.max(40, Math.min(180, Math.round(bpm))), capo, text: pre ? (meta.raga ? '' : notesToText(notes)) : src, credit: dir.comment || null
   };
   song.tala = buildThaalam(song, meta);
+  song.plan = meta.plan || null;
   return song;
 }
 
@@ -2027,7 +2046,12 @@ function buildThaalam(song, meta) {
   const L = song.raga ? last : B0 + Math.max(0, Math.floor((last - B0) / ((meta.meter || 4))) * (meta.meter || 4));
   const ev = [], R = rng(hash(song.title + def.name));
   const hum = () => (R() - .5) * .012;
-  const add = (beat, bol, v, idx) => { if (beat >= 0 && beat <= L + 1e-6) ev.push({ beat: beat + (idx === undefined ? hum() * .5 : 0), bol, v: v * (.92 + R() * .12), idx }); };
+  // a swung song pushes every off-beat stroke later, by the amount measured in the original
+  const swing = !song.raga && meta.swing > .52 ? meta.swing : .5;
+  const swung = b => { if (swing === .5) return b; const r = b - B0, w = Math.floor(r + 1e-6), f = r - w; return B0 + w + (f < .5 ? f * 2 * swing : swing + (f - .5) * 2 * (1 - swing)); };
+  const add = (beat, bol, v, idx) => { beat = swung(beat); if (beat >= 0 && beat <= L + 1e-6) ev.push({ beat: beat + (idx === undefined ? hum() * .5 : 0), bol, v: v * (.92 + R() * .12), idx }); };
+  const pulse = !song.raga && meta.pulse && meta.pulse.length === 4 * (meta.meter || 4) ? meta.pulse : null, pass2 = meta.pass2 || Infinity;
+  const STRIP = { dha: 'ta', dhin: 'tin', dhi: 'tin', ge: null, ka: 'ka', na: 'na', ti: 'ti', ta: 'ta', tin: 'tin' };
   const bols = def.theka.split(' ');
   const tihai = (end) => {
     // three times: ti ra ki ta then a ringing stroke, the last one landing on `end`
@@ -2056,6 +2080,23 @@ function buildThaalam(song, meta) {
       }
       def.hand.forEach((h, a) => { const b = c0 + a * m; if (b < stopAt - 1e-6) add(b, h, h === 'clap' ? .55 : h === 'palm' ? .4 : .5, a); });
     } else {
+      if (pulse && !fill) {
+        // the song's own groove, stroke for stroke: first time through as the theka with its bayan moved onto
+        // the kick, second time through the full translation with handclaps on the snare
+        const SL = pulse.length, full = c0 >= pass2 - 1e-6;
+        for (let q = 0; q < cyc * 4; q++) {
+          const b = c0 + q / 4; if (b >= stopAt - 1e-6) break;
+          const p = pulse[q % SL], j = q / (4 * m), isM = Number.isInteger(j), kick = p && (p.b === 'dha' || p.b === 'ge');
+          if (full) { if (p) { add(b, p.b, .45 + .6 * p.v, isM ? j : undefined); if (p.c) add(b, 'clap', .3 + .3 * p.v); } continue; }
+          if (isM) {
+            const r = STRIP[bols[j]] === undefined ? bols[j] : STRIP[bols[j]];
+            let bol = j === 0 ? 'dha' : kick ? (r === 'tin' ? 'dhin' : r ? 'dha' : 'ge') : p && p.b === 'ta' ? 'ta' : r;
+            let acc = 0, vib = 0; for (let v = 0; v < def.vib.length; v++) { if (j < acc + def.vib[v]) { vib = v; break; } acc += def.vib[v]; }
+            if (bol) add(b, bol, j === 0 ? 1.05 : p && p.b === 'ta' ? .9 : def.marks[vib] === '0' ? .62 : .74, j);
+          } else if (p && p.b === 'ge') add(b, 'ge', .5 + .4 * p.v);
+        }
+        continue;
+      }
       for (let j = 0; j < def.n; j++) {
         const b = c0 + j * m; if (b >= stopAt - 1e-6) break;
         let vib = 0, acc = 0; for (let v = 0; v < def.vib.length; v++) { if (j < acc + def.vib[v]) { vib = v; break; } acc += def.vib[v]; }
@@ -2074,6 +2115,31 @@ function buildThaalam(song, meta) {
   return { def, m, B0, L, events: ev, strokes: [...strokes], info: `${def.name} ${def.n}` };
 }
 function talaIndexAt(b) { const t = S.song && S.song.tala; if (!t) return 0; let i = 0; while (i < t.events.length && t.events[i].beat < b - 1e-6) i++; return i; }
+// the three-step plan behind a cover, shown on a palm leaf under the player
+function renderPlan(v) {
+  const wrap = $('#planWrap'), el = $('#plan');
+  if (!v || !v.src) { wrap.hidden = true; el.innerHTML = ''; return; }
+  const rows = r => `<dl class="pl-dl">${r.map(([k, t]) => `<dt>${esc(k)}</dt><dd>${esc(t)}</dd>`).join('')}</dl>`;
+  const ul = a => `<ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+  const R = v.rhythm, cells = (a, cls) => a.map((x, i) => `<td class="${cls}${i % 4 === 0 ? ' on' : ''}">${esc(x)}</td>`).join('');
+  el.innerHTML = `<summary>How it was arranged</summary>
+  <div class="g-body">
+    <p class="muted">Sitarify works in three steps before it arranges a note: it breaks the song down, chooses an Indian framework that can carry it, and translates the groove. Everything here was measured from the 30-second Apple Music preview of ${esc(v.title)} in your browser, so treat the numbers as estimates.</p>
+    <h4>1 · The original</h4>${rows(v.src)}
+    <h4>2 · The Indian adaptation</h4>${rows(v.plan)}
+    <h4>3 · The rhythm, translated</h4>
+    <div class="tbl-wrap"><table class="pl-grid"><tr><th>Count</th>${cells(R.count, 'c')}</tr><tr><th>Original</th>${cells(R.src, 'mono')}</tr><tr><th>${esc(R.tala)}, first time</th>${cells(R.p1, 'bol')}</tr><tr><th>Second time</th>${cells(R.p2, 'bol')}</tr></table></div>
+    <p class="muted">K low accent (kick or bass), S sharp accent (snare or clap), h cymbal or shaker, * with a handclap. They are heard in the mix, so a piano or guitar can show up here too. One row is one bar, counted in sixteenths (1 e &amp; a).</p>
+    ${ul(R.notes)}
+    <h4>The arrangement</h4>
+    <div class="tbl-wrap"><table><tr><th>Section</th><th>Time</th><th>What happens</th></tr>${v.sections.map(([a, b, c]) => `<tr><td>${esc(a)}</td><td class="mono">${esc(b)}</td><td>${esc(c)}</td></tr>`).join('')}</table></div>
+    <h4>Who plays what</h4>${rows(v.roles)}
+    <h4>How faithful it is</h4>
+    <div class="terms"><div><b>Kept from the original</b>${ul(v.fid.keep)}</div><div><b>Reinterpreted</b>${ul(v.fid.change)}</div><div><b>Added from Indian music</b>${ul(v.fid.add)}</div><div><b>Deliberate departures</b>${ul(v.fid.depart)}</div></div>
+    <p class="muted">Sources: ${v.refs.map(([t, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(' · ')}</p>
+  </div>`;
+  wrap.hidden = false;
+}
 function drawTala(song) {
   const el = $('#tala'), t = song && song.tala;
   el.hidden = !t || !S.thaalam;
@@ -2637,6 +2703,7 @@ async function loadSong(song, opts = {}) {
   });
   ribbon.appendChild(frag); ribbon.scrollLeft = 0;
   drawKeyboard(song);
+  renderPlan(song.plan);
   updateProgress(0);
   document.querySelectorAll('.rcard').forEach(c => { const on = !!song.raga && c.dataset.id === song.raga; c.classList.toggle('on', on); c.querySelector('.rplay').setAttribute('aria-pressed', String(on)); });
   if (!song.raga) { $('#fTitle').value = song.title; $('#fArtist').value = song.artist; $('#nota').value = song.text; S.pending = null; renderTarget(); }
@@ -3438,7 +3505,7 @@ function startLink(link) {
 function saveSong(song) {
   const k = songKey(song.title, song.artist);
   const saved = savedSongs().filter(s => s.id !== song.id && songKey(s.title, s.artist) !== k);
-  saved.unshift({ id: song.id, title: song.title, artist: song.artist, art: song.art, text: song.text, bpm: song.bpm });
+  saved.unshift({ id: song.id, title: song.title, artist: song.artist, art: song.art, text: song.text, bpm: song.bpm, plan: song.plan || undefined });
   store.set('sitarify:songs', saved.slice(0, 60));
 }
 function importText(text, opts = {}) {
@@ -3632,13 +3699,17 @@ async function analyseAudio(x, SR) {
   // onset strength: rises in log spectrum, frame by frame
   const N1 = 1024, H1 = 128, fft1 = makeFFT(N1), mag = new Float32Array(N1 / 2), prev = new Float32Array(N1 / 2);
   const nF = Math.max(0, Math.floor((x.length - N1) / H1)), env = new Float32Array(nF);
+  // the same rises split by register: kick drum (below 140 Hz), the body of a snare (200 Hz–1.5 kHz), its crack and the cymbals (above 1.8 kHz)
+  const bK = new Float32Array(nF), bM = new Float32Array(nF), bH = new Float32Array(nF);
+  const kLo = Math.round(140 * N1 / SR), mA = Math.round(200 * N1 / SR), mB = Math.round(1500 * N1 / SR), hA = Math.round(1800 * N1 / SR);
   for (let i = 0; i < nF; i++) {
-    fft1(x, i * H1, mag); let s = 0;
-    for (let k = 2; k < N1 / 2; k++) { const l = Math.log(1 + 1000 * mag[k]); const d = l - prev[k]; if (d > 0) s += d; prev[k] = l; }
-    env[i] = i ? s : 0; if (i % 500 === 0) await tick();
+    fft1(x, i * H1, mag); let s = 0, sk = 0, sm = 0, sh = 0;
+    for (let k = 2; k < N1 / 2; k++) { const l = Math.log(1 + 1000 * mag[k]); const d = l - prev[k]; if (d > 0) { s += d; if (k <= kLo) sk += d; else if (k >= mA && k <= mB) sm += d; else if (k >= hA) sh += d; } prev[k] = l; }
+    if (i) { env[i] = s; bK[i] = sk; bM[i] = sm; bH[i] = sh; } if (i % 500 === 0) await tick();
   }
-  const e = new Float32Array(nF), W = 30;
-  for (let i = 0; i < nF; i++) { let s = 0, n = 0; for (let j = Math.max(0, i - W); j < Math.min(nF, i + W); j++) { s += env[j]; n++; } e[i] = Math.max(0, env[i] - s / n); }
+  const W = 30, hp = a => { const o = new Float32Array(nF); let run = 0; for (let j = 0; j < Math.min(nF, W); j++) run += a[j];
+    for (let i = 0; i < nF; i++) { if (i + W < nF) run += a[i + W]; if (i - W - 1 >= 0) run -= a[i - W - 1]; const n = Math.min(nF, i + W + 1) - Math.max(0, i - W); o[i] = Math.max(0, a[i] - run / n); } return o; };
+  const e = hp(env), eK = hp(bK), eM = hp(bM), eH = hp(bH);
   const fps = SR / H1, lmax = Math.ceil(fps * 60 / 55);
   const ac = new Float32Array(4 * lmax + 8);
   for (let l = 1; l < ac.length; l++) { let s = 0; for (let i = 0; i + l < nF; i++) s += e[i] * e[i + l]; ac[l] = s / Math.max(1, nF - l); }
@@ -3646,11 +3717,6 @@ async function analyseAudio(x, SR) {
   // a real beat repeats at the beat, the half bar and the bar; prefer tempos near 90 only gently
   let bpm = 90, bestS = -1;
   for (let b = 55; b <= 185; b += .5) { const L = 60 * fps / b, w = Math.exp(-.5 * (Math.log2(b / 90) / 1.3) ** 2), sc = w * (acAt(L) + acAt(2 * L) + acAt(4 * L)); if (sc > bestS) { bestS = sc; bpm = b; } }
-  const P = 60 * fps / bpm;
-  let ph = 0, phS = -1;
-  for (let p = 0; p < P; p++) { let s = 0; for (let t = p; t < nF; t += P) { const i = Math.round(t); s += Math.max(e[i - 1] || 0, e[i] || 0, e[i + 1] || 0); } if (s > phS) { phS = s; ph = p; } }
-  const beats = []; for (let t = ph; t < nF; t += P) beats.push((t * H1 + N1 / 2) / SR);
-  await tick();
   // chroma: energy folded onto the 12 pitch classes, treble and bass kept apart
   const N2 = 4096, H2 = 1024, fft2 = makeFFT(N2), m2 = new Float32Array(N2 / 2), map = [];
   for (let k = 1; k < N2 / 2; k++) {
@@ -3665,6 +3731,12 @@ async function analyseAudio(x, SR) {
     tre.push(c); bas.push(b); if (i % 60 === 0) await tick();
   }
   const frameT = i => (i * H2 + N2 / 2) / SR;
+  const fromTempo = async bpm => {
+  const P = 60 * fps / bpm;
+  let ph = 0, phS = -1;
+  for (let p = 0; p < P; p++) { let s = 0; for (let t = p; t < nF; t += P) { const i = Math.round(t); s += Math.max(e[i - 1] || 0, e[i] || 0, e[i + 1] || 0); } if (s > phS) { phS = s; ph = p; } }
+  const beats = []; for (let t = ph; t < nF; t += P) beats.push((t * H1 + N1 / 2) / SR);
+  await tick();
   // average chroma over each beat
   const segC = [], segB = [];
   for (let j = 0; j + 1 < beats.length; j++) {
@@ -3682,31 +3754,69 @@ async function analyseAudio(x, SR) {
   for (let j = 1; j < nB; j++) {
     let bi = 0; for (let s = 1; s < nS; s++) if (dp[s] > dp[bi]) bi = s;
     const nd = new Array(nS), bk = new Array(nS);
-    for (let s = 0; s < nS; s++) { const stay = dp[s], move = dp[bi] - 1.1; if (stay >= move) { nd[s] = stay + em[j][s] * 5; bk[s] = s; } else { nd[s] = move + em[j][s] * 5; bk[s] = bi; } }
+    for (let s = 0; s < nS; s++) { const stay = dp[s], move = dp[bi] - 1.1 * Math.max(1, bpm / 100); if (stay >= move) { nd[s] = stay + em[j][s] * 5; bk[s] = s; } else { nd[s] = move + em[j][s] * 5; bk[s] = bi; } }
     dp = nd; back.push(bk);
   }
   let s = 0; for (let k = 1; k < nS; k++) if (dp[k] > dp[s]) s = k;
   const path = [s]; for (let j = back.length - 1; j >= 0; j--) { s = back[j][s]; path.unshift(s); }
   // the downbeat: the phase where chord changes most often fall
-  let bar0 = 0, barS = -1e9;
-  for (let p = 0; p < 4; p++) { let sc = 0; for (let j = 1; j < nB; j++) if (path[j] !== path[j - 1]) sc += (j - p) % 4 === 0 ? 1 : (j - p + 4) % 4 === 2 ? .3 : -.4; if (sc > barS) { barS = sc; bar0 = p; } }
+  const downbeat = per => { let best = -1e9, bp = 0, hit = 0, all = 0; const scores = [];
+    for (let p = 0; p < per; p++) { let sc = 0, h = 0, n = 0; for (let j = 1; j < nB; j++) if (path[j] !== path[j - 1]) { n++; const r = (j - p) % per; if (r === 0) { sc += 1; h++; } else sc += per === 4 && r === 2 ? .3 : -.4; } scores.push(sc); if (sc > best) { best = sc; bp = p; hit = h; all = n; } }
+    return { bar0: bp, share: all ? hit / all : 0, scores }; };
+  // three beats to the bar only when both the chord changes and the accents say so; four otherwise
+  const d4 = downbeat(4), d3 = downbeat(3);
+  const meter = d3.share >= .6 && d3.share > d4.share + .2 && acAt(3 * P) + acAt(6 * P) > 1.1 * (acAt(4 * P) + acAt(8 * P)) ? 3 : 4;
+  let bar0 = (meter === 3 ? d3 : d4).bar0;
   const name = i => PCN[TPL[i].r] + (TPL[i].minor ? 'm' : '');
   const half = j => { const a = path[j], b = path[j + 1]; if (a === b || b === undefined) return a; return em[j][a] + em[j + 1][a] >= em[j][b] + em[j + 1][b] ? a : b; };
+  // the groove: how strongly each register strikes on every sixteenth of the bar, averaged over all bars
+  const SL = 4 * meter, at = (a, t) => { const i = Math.round((t * SR - N1 / 2) / H1); return Math.max(a[i - 1] || 0, a[i] || 0, a[i + 1] || 0); };
+  const pr = [eK, eM, eH, e].map(() => new Float32Array(SL)); let nBar = 0;
+  for (let j = bar0; j + meter < beats.length; j += meter) { nBar++;
+    for (let s2 = 0; s2 < SL; s2++) { const bj = j + (s2 >> 2), t = beats[bj] + (s2 & 3) / 4 * (beats[bj + 1] - beats[bj]); [eK, eM, eH, e].forEach((a, q) => pr[q][s2] += at(a, t)); } }
+  const span = a => { const lo = Math.min(...a), hi = Math.max(...a); return Array.from(a, v => +((v - lo) / ((hi - lo) || 1)).toFixed(2)); };
+  let [gK, gM, gH, gA] = pr.map(span);
+  // how clearly each register repeats a pattern: near 0 when it strikes evenly everywhere (no drummer), higher with drums
+  const clar = pr.map(a => { const mx = Math.max(...a), mean = a.reduce((x, y) => x + y, 0) / a.length; return mx ? +(1 - mean / mx).toFixed(2) : 0; });
+  // a snare is struck in the body and the crack at once. The kick leaks into the mids too, so take away
+  // the least the kick ever leaks there; in four, a backbeat shows as louder mids on 2 and 4 than on 1 and 3
+  const kl = gK.map((k, i) => k > .5 ? gM[i] / k : 9), leak = Math.min(1, ...kl);
+  let gS = span(gM.map((m, i) => Math.max(0, Math.min(m, gH[i] + .25) - leak * gK[i])));
+  // pop and rock almost always put the snare on 2 and 4. If it lands on 1 and 3 and the chords don't firmly
+  // say where the bar starts, the downbeat is a beat off: move it to whichever neighbour the chords prefer
+  if (meter === 4 && gS[0] + gS[8] > gS[4] + gS[12] + .5 && d4.share < .8) {
+    const sh = d4.scores[(bar0 + 1) % 4] >= d4.scores[(bar0 + 3) % 4] ? 1 : 3, rot = a => a.map((_, i) => a[(i + 4 * sh) % 16]);
+    [gK, gM, gH, gA, gS] = [gK, gM, gH, gA, gS].map(rot); bar0 = (bar0 + sh) % 4;
+  }
+  if (meter === 4 && gM[4] + gM[12] > gM[0] + gM[8] + .1) [4, 12].forEach(i => gS[i] = Math.max(gS[i], .8));
   const bars = [];
-  for (let j = bar0; j + 3 < nB; j += 4) { const h1 = half(j), h2 = half(j + 2); bars.push(h1 === h2 ? [name(h1)] : [name(h1), name(h2)]); }
+  for (let j = bar0; j + meter - 1 < nB; j += meter) { if (meter === 3) { bars.push([name(path[j])]); continue; } const h1 = half(j), h2 = half(j + 2); bars.push(h1 === h2 ? [name(h1)] : [name(h1), name(h2)]); }
+
+  // swing: where the off-beat notes really fall between two beats (0.5 straight, about 0.67 for a triplet shuffle)
+  const sw = {}; for (const f of [0, .5, .54, .58, .62, .667, .7]) { let v = 0; for (let j = 0; j + 1 < beats.length; j++) v += at(e, beats[j] + f * (beats[j + 1] - beats[j])); sw[f] = v; }
+  let swing = .5; for (const f of [.54, .58, .62, .667, .7]) if (sw[f] > sw[swing]) swing = f;
+  if (!(swing > .5 && sw[swing] > 1.15 * sw[.5] && sw[swing] > .35 * sw[0])) swing = .5;
+  const groove = { K: gK, S: gS, M: gM, H: gH, A: gA, swing, meter, bars: nBar, clar };
   const conf = path.reduce((a, st, j) => a + em[j][st], 0) / nB;
   // the key, from how long each chord sounds
   const hist = new Array(12).fill(0);
   path.forEach(st => { const T = TPL[st]; hist[T.r] += 2; hist[(T.r + (T.minor ? 3 : 4)) % 12] += 1; hist[(T.r + 7) % 12] += 1; });
   const key = detectKey(hist);
   const beatChords = path.map(st => name(st));
-  return { bpm: Math.round(bpm), bars, rough: conf < .45, beats, bar0, beatChords, key, x, SR, env: e, fps };
+  return { bpm: Math.round(bpm), bars, rough: conf < .45, beats, bar0, beatChords, key, x, SR, env: e, fps, meter, groove };
+  };
+  // half time? a dance track at 128 is easily heard at 64. Count twice as fast when the whole mix
+  // repeats strongly at half the beat (tested on 24 songs: fast tracks score 0.54–0.56, ballads 0.11–0.42)
+  const acOf = (a, l) => { let n = 0, d = 0; const li = Math.round(l); for (let i = 0; i + li < nF; i++) { n += a[i] * a[i + li]; d += a[i] * a[i]; } return d ? n / d : 0; };
+  const half = bpm < 90 && acOf(e, 30 * fps / bpm) >= .48;
+  const res = await fromTempo(half ? bpm * 2 : bpm); res.doubled = half;
+  return res;
 }
 
 // ---- the tune itself: follow the strongest sung or played line through the preview ----
 // harmonic-sum pitch salience on a whitened spectrum, a Viterbi path that prefers smooth pitch,
 // then notes cut where the pitch moves, snapped to the key and laid on the recording's own beats
-async function extractMelody(x, SR, beats, key) {
+async function extractMelody(x, SR, beats, key, onset, ofps) {
   const tick = () => new Promise(r => setTimeout(r, 0));
   const N = 2048, H = 256, fft = makeFFT(N), mag = new Float32Array(N / 2), w = new Float32Array(N / 2), cs = new Float32Array(N / 2 + 1);
   const nF = Math.max(0, Math.floor((x.length - N) / H));
@@ -3750,7 +3860,7 @@ async function extractMelody(x, SR, beats, key) {
   const pm = new Float32Array(nF);
   for (let t = 0; t < nF; t++) { const win = []; for (let d = -3; d <= 3; d++) { const u = t + d; if (u >= 0 && u < nF) win.push(path[u]); } win.sort((a, b) => a - b); pm[t] = peak[t] >= thr ? win[win.length >> 1] : NaN; }
   // cut into notes
-  const scale = (key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11]).map(i => mod12(key.tonic + i));
+  const scale = keyScale(key).map(i => mod12(key.tonic + i));
   const snap = p => { const n = Math.round(p); if (scale.includes(mod12(n))) return n; const up = Math.ceil(p), dn = Math.floor(p); const cu = scale.includes(mod12(up)), cd = scale.includes(mod12(dn)); return Math.abs(p - n) > .3 ? (cu && !cd ? up : cd && !cu ? dn : n) : n; };
   const tsec = t => (t * H + N / 2) / SR;
   const raw = []; let cur = null;
@@ -3768,36 +3878,195 @@ async function extractMelody(x, SR, beats, key) {
   const beatAt = s => { if (s <= beats[0]) return (s - beats[0]) / (beats[1] - beats[0]); for (let i = 0; i + 1 < beats.length; i++) if (s < beats[i + 1]) return i + (s - beats[i]) / (beats[i + 1] - beats[i]); const L = beats.length - 1; return L + (s - beats[L]) / (beats[L] - beats[L - 1]); };
   const q = v => Math.round(v * 4) / 4;
   const out = [];
+  // the pitch tracker hears a note only once its pitch has settled, 60–90 ms after the attack. Move each start
+  // back to the attack itself: the strongest onset just before it (or a fixed 70 ms when none stands out)
+  if (onset && onset.length) {
+    const srt = Float32Array.from(onset).sort(), floor = srt[Math.floor(srt.length * .6)] * 2 + 1e-9;
+    raw.forEach(n => { const c = Math.round(n.t0 * ofps); let bi = -1, bv = floor;
+      for (let i = Math.max(0, c - Math.round(.14 * ofps)); i <= Math.min(onset.length - 1, c + Math.round(.03 * ofps)); i++) if (onset[i] > bv) { bv = onset[i]; bi = i; }
+      const t = bi >= 0 ? (bi * 128 + 512) / SR : n.t0 - .07; n.t1 += (t - n.t0) * .5; n.t0 = t; });
+  }
   raw.forEach(n => { const b0 = q(beatAt(n.t0)), b1 = Math.max(b0 + .25, q(beatAt(n.t1))); if (out.length && b0 < out[out.length - 1].b1) { const p = out[out.length - 1]; if (p.m === n.m) { p.b1 = Math.max(p.b1, b1); return; } p.b1 = b0; if (p.b1 - p.b0 < .25) out.pop(); } if (b1 > b0) out.push({ m: n.m, b0, b1 }); });
   // join a note to the next one if only a hair of silence separates them
   for (let i = 0; i + 1 < out.length; i++) if (out[i + 1].b0 - out[i].b1 <= .25) out[i].b1 = out[i + 1].b0;
   return out;
 }
 
-// an Indian cover of the preview: alaap over the drone, the tune twice with the groove, a taan, a tihai
+// ---- an Indian cover of the preview, made in three steps before a note is arranged:
+// 1. break the original down (tune, groove, harmony, form), 2. choose the Indian framework that can carry it
+// (raga only if the tune truly fits one, tala from the groove), 3. translate the groove stroke by stroke.
+const keyScale = key => key.scale || SCALES[key.mode];
+// the seven-note scales songs use, by their Hindustani thaat and Karnatik melakarta names
+const MODES = [
+  { id: 'bilawal', fam: 'major', s: [0, 2, 4, 5, 7, 9, 11], thaat: 'Bilawal thaat', mela: 'Dheerashankarabharanam, the 29th melakarta', west: 'the major scale' },
+  { id: 'khamaj', fam: 'major', s: [0, 2, 4, 5, 7, 9, 10], thaat: 'Khamaj thaat', mela: 'Harikambhoji, the 28th melakarta', west: 'the Mixolydian mode (major with a flat seventh)' },
+  { id: 'kalyan', fam: 'major', s: [0, 2, 4, 6, 7, 9, 11], thaat: 'Kalyan thaat', mela: 'Mechakalyani, the 65th melakarta', west: 'the Lydian mode (major with a raised fourth)' },
+  { id: 'asavari', fam: 'minor', s: [0, 2, 3, 5, 7, 8, 10], thaat: 'Asavari thaat', mela: 'Natabhairavi, the 20th melakarta', west: 'the natural minor scale' },
+  { id: 'kafi', fam: 'minor', s: [0, 2, 3, 5, 7, 9, 10], thaat: 'Kafi thaat', mela: 'Kharaharapriya, the 22nd melakarta', west: 'the Dorian mode (minor with a natural sixth)' },
+  { id: 'bhairavi', fam: 'minor', s: [0, 1, 3, 5, 7, 8, 10], thaat: 'Bhairavi thaat', mela: 'Hanumatodi, the 8th melakarta', west: 'the Phrygian mode (minor with a flat second)' },
+  { id: 'keeravani', fam: 'minor', s: [0, 2, 3, 5, 7, 8, 11], thaat: null, mela: 'Keeravani, the 21st melakarta', west: 'the harmonic minor scale', note: 'Hindustani music has no thaat for it, but raga Kirwani, borrowed from the south, uses the same notes.' }
+];
+function detectMode(hist, key) {
+  const tot = hist.reduce((a, b) => a + b, 0) || 1, rel = i => hist[mod12(key.tonic + i)];
+  const fit = s => { let v = 0; for (let i = 0; i < 12; i++) v += (s.includes(i) ? 1 : -1) * rel(i); return v / tot; };
+  // Khamaj and Kafi colours are common in pop and rock; Kalyan, Bhairavi and harmonic minor need clearer evidence
+  const fam = MODES.filter(m => m.fam === key.mode), base = fit(fam[0].s); let best = fam[0], bs = base;
+  fam.slice(1).forEach(m => { const v = fit(m.s) - (m.id === 'khamaj' || m.id === 'kafi' ? .06 : .12); if (v > bs) { bs = v; best = m; } });
+  return best;
+}
+const COUNT = s => (s & 3) === 0 ? String((s >> 2) + 1) : ['', 'e', '&', 'a'][s & 3];
+// step 3: each sixteenth of the bar becomes a tabla stroke. Kick → bayan (ge), snare → a sharp open stroke
+// on the dayan (ta), both → dha; cymbal and shaker taps → light na and ti. Sam always gets dha.
+function translateGroove(g, bpm) {
+  const fast = bpm > 128, out = [];
+  for (let s = 0; s < g.K.length; s++) {
+    const k = g.K[s], sn = g.S[s], h = g.H[s], a = g.A[s], on = (s & 3) === 0, eighth = (s & 1) === 0;
+    let b = null, v = Math.max(k, sn, h * .8, a * .8);
+    if (s === 0) { b = 'dha'; v = 1; }
+    else if (sn >= .75 && k >= .55) b = 'dha';
+    else if (sn >= .75) b = 'ta';
+    else if (k >= .55) b = 'ge';
+    else if (eighth && (h >= .5 || a >= .5)) b = on ? 'tin' : 'na';
+    else if (!fast && (h >= .6 || a >= .65)) b = 'ti';
+    out.push(b ? { b, v: Math.round(Math.min(9, 2 + v * 7)), c: !!(sn >= .75 && s !== 0) } : null);
+  }
+  return out;
+}
+function planCover(meta, h, tune, trusted, stats) {
+  const key = h.key, B = h.meter || 4, g = h.groove, bpm = h.bpm, mode = MODES.find(m => m.id === key.modeId) || MODES.find(m => m.fam === key.mode);
+  const sec = b => Math.round(b * 60 / bpm), tonic = PCN[key.tonic];
+  const rel = new Array(12).fill(0), chordRel = new Array(12).fill(0);
+  tune.forEach(n => rel[mod12(n.m - key.tonic)] += n.b1 - n.b0);
+  h.bars.forEach(b => b.forEach(c => { const ch = chordTones(c, 0); if (ch) ch.pcs.forEach(pc => chordRel[mod12(pc - key.tonic)] += B / b.length); }));
+  const tot = a => a.reduce((x, y) => x + y, 0) || 1, swn = i => SARGAM[mod12(i)] + ` (${PCN[mod12(key.tonic + i)]})`;
+  const usedOf = a => a.map((v, i) => v / tot(a) >= .04 ? i : -1).filter(i => i >= 0);
+  const used = trusted ? usedOf(rel) : usedOf(chordRel);
+  // ---- step 2a: a raga only if the actual notes fit it, never because the mood seems close
+  const cands = RAGAS.map(rg => {
+    const set = [...new Set([...rg.aroh, ...rg.avroh].map(mod12))].sort((a, b) => a - b);
+    const inSet = a => a.reduce((x, v, i) => x + (set.includes(i) ? v : 0), 0) / tot(a);
+    const melFit = trusted ? inSet(rel) : 1, chordFit = inSet(chordRel), extra = set.filter(i => !used.includes(i)), outside = used.filter(i => !set.includes(i));
+    // only ragas that leave notes out (five or six notes) can be recognised from notes alone: a tune that avoids
+    // exactly those notes says something. Seven-note ragas share their notes with a thaat and are told apart by movement
+    const ok = set.length <= 6 && (trusted ? melFit >= .96 && chordFit >= .9 && used.length >= 4 && extra.length <= 1 : chordFit >= .97 && extra.length <= 1);
+    return { rg, set, melFit, chordFit, extra, outside, ok, score: melFit + .5 * chordFit - .08 * extra.length + .3 * (trusted ? rel : chordRel)[mod12(rg.vadi)] / tot(trusted ? rel : chordRel) + (rg.trad === 'h' ? .03 : 0) };
+  }).sort((a, b) => b.score - a.score);
+  const pick = cands.find(c => c.ok) || null, near = pick ? null : cands.filter(c => c.set.length <= 6 && c.extra.length <= 2).sort((a, b) => b.melFit + b.chordFit - a.melFit - a.chordFit)[0];
+  const same = cands.filter(c => c.set.length === 7 && c.set.every((v, i) => v === mode.s[i])).map(c => c.rg.name);
+  const scale = pick ? pick.set : mode.s;
+  const scaleName = mode.thaat ? `${mode.thaat} (Karnatik ${mode.mela}), the same notes as ${mode.west}` : `${mode.mela}, ${mode.west}. ${mode.note}`;
+  // ---- step 1: what the original does
+  const thr = (a, t) => a.map((v, i) => v >= t ? i : -1).filter(i => i >= 0), cnt = list => list.length ? list.map(COUNT).join(' ') : 'nowhere clearly';
+  const kicks = thr(g.K, .55), snares = thr(g.S, .75), hats = thr(g.H, .5);
+  const back = B === 4 && (g.S[4] + g.S[12]) / 2 >= .75 && (g.S[4] + g.S[12]) / 2 > (g.S[0] + g.S[8]) / 2 + .15;
+  const floor4 = B === 4 && [0, 4, 8, 12].every(i => g.K[i] >= .55);
+  const synK = kicks.filter(i => i & 3), synAll = [...new Set([...synK, ...snares.filter(i => i & 3)])].sort((a, b) => a - b);
+  const offShare = tune.length ? tune.filter(n => Math.abs(n.b0 - Math.round(n.b0)) > .01).length / tune.length : 0;
+  const ms = tune.map(n => n.m), lo = Math.min(...ms), hi = Math.max(...ms);
+  const loop = []; h.bars.forEach(b => { const t = b.join(' '); if (loop[loop.length - 1] !== t) loop.push(t); });
+  const per = h.bars.reduce((a, b) => a + b.length, 0) / h.bars.length;
+  const keyPcs = mode.s.map(i => mod12(key.tonic + i));
+  const off = [...new Set(h.bars.flat().filter(c => { const ch = chordTones(c, 0); return ch && !ch.pcs.every(pc => keyPcs.includes(pc)); }))];
+  const swingTxt = g.swing > .5 ? `swung: the off-beat eighths land about ${Math.round(g.swing * 100)}% of the way through each beat (straight is 50%, a triplet shuffle 67%)` : 'straight eighths, no swing';
+  const feel = floor4 ? 'four-on-the-floor kick with a backbeat' : back ? 'a backbeat groove (snare on 2 and 4)' : B === 3 ? 'a three-beat lilt' : 'a groove without a strong backbeat';
+  const src = [
+    ['Tempo', `${bpm} bpm, ${B}/4. Measured from the beat in the preview; a drummer might count it at ${bpm < 90 ? 'double' : 'half'} that speed.`],
+    ['Key', `${tonic} ${key.mode}: ${mode.west}.`],
+    ['Groove', `${feel}, ${swingTxt}.`],
+    ['Low accents', `kick drum or bass on ${cnt(kicks)}${synK.length ? `. ${synK.length === 1 ? 'One kick falls' : synK.length + ' kicks fall'} between the beats, which gives the groove its push` : ''}.`],
+    ['Sharp accents', `snare or clap on ${cnt(snares)}${back ? ': the backbeat' : ''}.`],
+    ['Cymbals and shakers', hats.length > 6 ? `a running pattern of ${hats.length} strokes a bar, which sets the subdivision` : `on ${cnt(hats)}.`],
+    ['Syncopation', synAll.length ? `drum accents off the beat on ${cnt(synAll)}` + (trusted ? `; ${Math.round(offShare * 100)}% of the tune's notes start between beats` : '') + '.' : 'the drums keep to the beats' + (trusted ? `; ${Math.round(offShare * 100)}% of the tune's notes start between beats` : '') + '.'],
+    ['Harmony', `${loop.slice(0, 8).join(' → ')}${loop.length > 8 ? ' …' : ''}; ${per > 1.3 ? 'often two chords a bar' : 'about one chord a bar'}${off.length ? `; ${off.join(', ')} ${off.length > 1 ? 'step' : 'steps'} outside the key` : ', all inside the key'}.`],
+    ['Tune', trusted ? `${tune.length} notes from ${nameOf(lo)} to ${nameOf(hi)} (a range of ${hi - lo} semitones)${tune.length && tune[0].b0 < 0 ? ', starting with a pickup before the downbeat' : ''}.` : `too processed or too dense to follow note for note (${Math.round(stats.inKey * 100)}% in key, ${Math.round(stats.slivers * 100)}% of the notes shorter than a sixteenth), so Sitarify won't pretend to know it.`],
+    ['Form', `Only the 30-second preview is available (${h.bars.length} bars), usually the chorus or hook, so the full verse and chorus layout is unknown.`]
+  ];
+  // ---- step 2b: tala from the groove, not from a beat count alone
+  const tala = B === 3 ? TALAS.dadra : TALAS.keherwa, m = bpm > 140 ? 1 : .5;
+  const pulse = translateGroove(g, bpm);
+  const ragaTxt = pick
+    ? `Raga ${pick.rg.name} (${TRAD[pick.rg.trad]}). ${trusted ? `${Math.round(pick.melFit * 100)}% of the tune's time is on its notes` : 'the chords use only its notes'}, so the alaap opens with its pakad (signature phrase) and the taan runs up its aroh. The tune itself is the song's, not a raga composition: this is raga-coloured, not a full performance of ${pick.rg.name}.` +
+      (pick.chordFit < .999 ? ` The song's chords touch ${pick.outside.length ? pick.outside.map(swn).join(', ') : 'notes'} that ${pick.rg.name} leaves out; the harmonium keeps them, a deliberate hybrid choice.` : '')
+    : `No raga. ${near ? `The closest five- or six-note raga was ${near.rg.name}, but the ${trusted ? 'tune' : 'chords'} ${near.outside.length ? `${trusted ? 'leans' : 'lean'} on ${near.outside.slice(0, 2).map(swn).join(' and ')}, which it leaves out` : `${trusted ? 'skips' : 'skip'} ${near.extra.map(swn).join(' and ')}, which it needs`}. ` : ''}${same.length ? `${same.join(' and ')} ${same.length > 1 ? 'use' : 'uses'} the same seven notes, but a raga is told apart by its movements, its resting notes and ornaments, which this tune doesn't follow, so none is claimed. ` : ''}The sitar keeps to the song's own scale: ${scaleName}. A thaat is a parent scale, not a raga.`;
+  const plan = [
+    ['Tradition', 'Hindustani light classical: sitar, tabla, tanpura and harmonium, the way sitar players cover film and pop songs. The sitar takes the vocal line, as a gayaki (singing) style player would.'],
+    ['Raga or scale', ragaTxt],
+    ['Tala', B === 3 ? `Dadra, 6 matras (3+3), ${m === .5 ? 'one cycle to each bar, each matra an eighth note' : 'one cycle every two bars, each matra one beat'}. It is the tala of light classical and folk songs in three, so the lilt stays.` :
+      `Keherwa, 8 matras (4+4)${m === .5 ? ', one cycle to each bar with each matra an eighth note' : ', one cycle every two bars at this fast tempo'}. It is the tala of film, folk and qawwali songs and has the 4+4 shape of a pop bar. Teental also counts in fours, but it is a slow 16-matra cycle for khayal and gat; one cycle would stretch over ${m === .5 ? 'four bars' : 'two bars'} and blur the backbeat.`],
+    ['Tempo', `kept at ${bpm} bpm, the original's.`],
+    ['Ornament', 'meend (glides) only between neighbouring notes, kan (grace notes) on long notes; no ornament on the short syncopated notes, so the rhythm stays crisp.']
+  ];
+  // ---- step 3: the rhythm, stroke by stroke
+  const SL = g.K.length, srcRow = [], p2 = [], p1 = [], thk = tala.theka.split(' '), spm = 4 * m;
+  for (let s = 0; s < SL; s++) {
+    const t = [g.K[s] >= .55 ? 'K' : '', g.S[s] >= .75 ? 'S' : '', g.H[s] >= .5 ? 'h' : ''].join('');
+    srcRow.push(t || '·'); p2.push(pulse[s] ? pulse[s].b + (pulse[s].c ? '*' : '') : '·');
+    if (s % spm === 0) { const j = (s / spm) % tala.n, r = { dha: 'ta', dhin: 'tin', dhi: 'tin', ge: '', ka: 'ka', na: 'na', ti: 'ti', ta: 'ta', tin: 'tin' }[thk[j]] ?? thk[j]; const kick = pulse[s] && (pulse[s].b === 'dha' || pulse[s].b === 'ge'); p1.push(j === 0 ? 'dha' : kick ? (r === 'tin' ? 'dhin' : r ? 'dha' : 'ge') : (pulse[s] && pulse[s].b === 'ta' ? 'ta' : r || '·')); }
+    else p1.push(pulse[s] && pulse[s].b === 'ge' ? 'ge' : '·');
+  }
+  const khaliSlot = tala.n / 2 * spm, rhythmNotes = [
+    `Sam (X), the first matra, sits on beat 1 of the bar with dha (both drums), where the song's bar begins.`,
+    kicks.length ? `The kick becomes the bayan (left drum) on ${cnt(kicks)}${synK.length ? ', keeping the kicks that fall between beats' : ''}.` : `There is no clear kick pattern, so the bayan follows the theka.`,
+    snares.length ? `The snare becomes ta, a sharp open stroke on the dayan, on ${cnt(snares)}.` : `There is no clear snare, so the theka's own accents lead.`,
+    g.swing > .5 ? `The off-beat strokes are swung to match: played ${Math.round(g.swing * 100)}% of the way through each beat, not halfway.` : `Straight subdivisions, as in the original.`,
+    `The first time through, the tabla plays the ${tala.name} theka (${tala.theka}) with the bayan moved to the kick's beats. The second time through, it plays the full translation above${snares.length ? ', and handclaps double the snare, a folk and qawwali touch' : ''}.`,
+    khaliSlot < SL && g.K[khaliSlot] >= .55 ? `${tala.name}'s khali (the "empty" half, marked 0) normally drops the bayan. The song kicks there, so Sitarify keeps the bayan: a lighter khali, not an empty one, chosen for the groove.` : `The khali half (0) drops the bayan, as the tala expects, and it lines up with the song's lighter second half of the bar.`,
+    `Every fourth cycle ends with a short fill, and the piece closes on a tihai: one phrase played three times, the last stroke landing on sam.`
+  ];
+  const INTRO = 12, M = h.bars.length * B;
+  const sections = [
+    ['Alaap', `0:00–0:${String(sec(INTRO)).padStart(2, '0')}`, `Sitar alone over the tanpura and shruti box, free in feel, ${pick ? `opening with ${pick.rg.name}'s pakad` : 'climbing from Sa to Ga and home'}. The tabla leads in with a short roll (uthaan).`],
+    ['The song', `${fmtT(sec(INTRO))}–${fmtT(sec(INTRO + M))}`, `${trusted ? 'The tune on sitar' : 'Raga-style phrases on sitar, built on each bar\'s chord'}, harmonium chords, ${tala.name} theka shaped by the kick. A fast taan fills the last half bar.`],
+    ['Again, fuller', `${fmtT(sec(INTRO + M))}–${fmtT(sec(INTRO + 2 * M))}`, `The same again with the full translated groove${snares.length ? ' and handclaps' : ''}.`],
+    ['Tihai', `${fmtT(sec(INTRO + 2 * M))}–end`, `${(pick ? pick.rg.avroh.slice(-3) : [scale[2], scale[1], 0]).map(i => SARGAM[mod12(i)]).join(' ')} three times on sitar and a tihai on tabla, both landing on sam.`]
+  ];
+  const roles = [
+    ['Sitar', trusted ? 'Plays the vocal line: every note in the scale, chord tones on strong beats, nothing shorter than half a beat, repeated syllables joined into one held note.' : 'Plays short phrases that step onto each bar\'s chord tone and hold it.'],
+    ['Tanpura', `Drone on Sa and ${scale.includes(7) ? 'Pa' : 'Ma'}, plucked on the beat, from the alaap to the end.`],
+    ['Shruti box', 'A held Sa under everything.'],
+    ['Harmonium', `One chord a bar from the song's progression${off.length ? `, with ${off.join(', ')} swapped for the nearest chord in the key so it doesn't clash with the sitar` : ''}. It enters with the tabla.`],
+    ['Tabla', `${tala.name}, entering after the alaap; carries the song's groove as described in step 3.`]
+  ];
+  const fid = {
+    keep: ['the tempo', `the ${B}/4 meter and bar length`, 'the chord progression', kicks.length || snares.length ? 'where the kick and snare land, including the syncopated ones' : 'the pulse', g.swing > .5 ? 'the swing' : 'the straight feel', ...(trusted ? ['the tune\'s contour and rhythm, including its off-beat entries'] : [])],
+    change: [trusted ? 'notes outside the scale move to the nearest scale note, and very short notes join their neighbours (sitar phrasing)' : 'the sung tune is replaced by raga-style phrases', 'drums become tabla strokes', 'out-of-key chords on the harmonium become their nearest in-key chord'],
+    add: ['an alaap before the song', 'a taan and a tihai', 'drones on Sa', 'an uthaan roll and fills'],
+    depart: [pick ? `${pick.rg.name}'s grammar (which notes come in which order) isn't enforced on the song's tune` : 'no raga is claimed, because none fits', B === 4 && khaliSlot < SL && g.K[khaliSlot] >= .55 ? 'the khali keeps the bayan for the kick' : null, 'the arrangement covers only the preview, not the whole song'].filter(Boolean)
+  };
+  const refs = [['Thaat — Wikipedia', WIKI('Thaat')], ['Melakarta — Wikipedia', WIKI('Melakarta')], ['Tala (music) — Wikipedia', WIKI('Tala_(music)')], ['Tabla — Wikipedia', WIKI('Tabla')]];
+  if (pick) refs.unshift(pick.rg.src[0]);
+  return { scale, raga: pick ? pick.rg.id : null, drone: scale.includes(7) ? 'Pa' : 'Ma', tala: tala === TALAS.dadra ? 'dadra' : 'keherwa', pulse,
+    view: { title: meta.title, artist: meta.artist, src, plan, rhythm: { count: Array.from({ length: SL }, (_, s) => COUNT(s)), src: srcRow, p1, p2, notes: rhythmNotes, tala: tala.name }, sections, roles, fid, refs, trusted, raga: pick ? pick.rg.name : null } };
+}
+const fmtT = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 // raga-style phrases over the song's chords, in the tune's register: approach a chord tone stepwise and hold it
-function phrasesOver(bars, key, tune) {
+function phrasesOver(bars, key, tune, B = 4, set) {
   const ms = tune.map(n => n.m).sort((a, b) => a - b), med = ms[ms.length >> 1];
-  const sa = med - mod12(med - key.tonic), scale = key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11];
+  const sa = med - mod12(med - key.tonic), scale = set || keyScale(key), k = B / 4;
   const R = rng(bars.length * 31 + key.tonic), out = [];
   const shapes = [[[0, 1], [1, .5], [2, .5], [3, 2]], [[2, .5], [1, .5], [0, 1], [0, 2]], [[0, 1.5], [-1, .5], [0, 2]], [[1, .5], [2, .5], [3, 1], [2, 2]]];
   bars.forEach((b, i) => {
     const c = chordTones(b[0], 0); if (!c) return;
     let root = sa + mod12(c.root - sa); if (root > sa + 9) root -= 12;
-    const step = (from, k) => { let m = from; const d = Math.sign(k); for (let j = 0; j < Math.abs(k); j++) { m += d; while (!scale.includes(mod12(m - sa))) m += d; } return m; };
-    let t = i * 4;
-    shapes[Math.floor(R() * shapes.length)].forEach(([k, d]) => { out.push({ m: step(root, k), b0: t, b1: t + d }); t += d; });
+    // the chord's root may not be in a pentatonic raga: start from the nearest note that is
+    for (let d = 0; d < 3 && !scale.includes(mod12(root - sa)); d++) root += (scale.includes(mod12(root - sa - 1)) ? -1 : 1);
+    const step = (from, kk) => { let m = from; const d = Math.sign(kk); for (let j = 0; j < Math.abs(kk); j++) { m += d; while (!scale.includes(mod12(m - sa))) m += d; } return m; };
+    let t = i * B;
+    shapes[Math.floor(R() * shapes.length)].forEach(([kk, d]) => { out.push({ m: step(root, kk), b0: t, b1: t + d * k }); t += d * k; });
   });
   return out;
 }
-// how a sitarist would carry a sung line: every note in the key's scale, chord tones on the strong beats,
+// how a sitarist would carry a sung line: every note in the scale, chord tones on the strong beats,
 // nothing shorter than half a beat, repeated syllables joined into one sustained note, no stray leaps
-function sitarLine(tune, key, bars) {
-  const scale = (key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11]).map(i => mod12(key.tonic + i));
-  const chordAt = b => { const bar = bars[Math.max(0, Math.min(bars.length - 1, Math.floor(b / 4)))] || []; const c = chordTones((b % 4 >= 2 && bar[1]) || bar[0] || '', 0); return c ? c.pcs : null; };
+function sitarLine(tune, key, bars, B = 4, set) {
+  const scale = (set || keyScale(key)).map(i => mod12(key.tonic + i));
+  const chordAt = b => { const bar = bars[Math.max(0, Math.min(bars.length - 1, Math.floor(b / B)))] || []; const c = chordTones((B === 4 && b % 4 >= 2 && bar[1]) || bar[0] || '', 0); return c ? c.pcs.filter(pc => scale.includes(pc)) : null; };
   const near = (m, pcs) => { let best = m, d = 99; for (let k = -2; k <= 2; k++) if (pcs.includes(mod12(m + k)) && Math.abs(k) < d) { d = Math.abs(k); best = m + k; } return best; };
-  const ns = tune.map(n => ({ ...n, m: near(n.m, scale) }));
-  ns.forEach(n => { const on = Math.abs(n.b0 - Math.round(n.b0)) < .01, pcs = chordAt(n.b0); if (on && pcs) { const c = near(n.m, pcs); if (Math.abs(c - n.m) <= 2) n.m = c; } });
+  // a sitarist phrases on the tabla's matras and half-matras: every start goes to the nearest eighth note
+  // (exactly halfway, toward the beat), so the sitar and the tabla strike together
+  const q8 = v => { const f = v - Math.floor(v); return Math.floor(v) + (f < .3 ? 0 : f < .8 ? .5 : 1); };
+  const ns = tune.map(n => ({ ...n, m: near(n.m, scale), b0: q8(n.b0), b1: Math.max(q8(n.b0) + .5, q8(n.b1)) }));
+  ns.forEach(n => { const on = Math.abs(n.b0 - Math.round(n.b0)) < .01, pcs = chordAt(n.b0); if (on && pcs && pcs.length) { const c = near(n.m, pcs); if (Math.abs(c - n.m) <= 2) n.m = c; } });
   const out = [];
   ns.forEach(n => {
     const p = out[out.length - 1];
@@ -3810,47 +4079,58 @@ function sitarLine(tune, key, bars) {
   return out;
 }
 function coverText(meta, h, mel, credit) {
-  const key = h.key, M = h.bars.length * 4;
+  const key = h.key, B = h.meter || 4, M = h.bars.length * B;
   let tune = mel.map(n => ({ m: n.m, b0: n.b0 - h.bar0, b1: Math.min(n.b1 - h.bar0, M) })).filter(n => n.b0 >= -2 && n.b0 < M - .01 && n.b1 > n.b0);
   const sung = tune.reduce((a, n) => a + n.b1 - n.b0, 0);
   if (tune.length < 10 || sung < M * .3 || M < 16) return null;
   // trust the heard tune only when it is mostly in the key and not a stream of slivers
-  const scaleSet = (key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11]).map(i => mod12(key.tonic + i));
+  const scaleSet = keyScale(key).map(i => mod12(key.tonic + i));
   const inKey = tune.filter(n => scaleSet.includes(mod12(n.m))).length / tune.length;
   const slivers = tune.filter(n => n.b1 - n.b0 <= .25).length / tune.length;
   const trusted = inKey >= .8 && slivers <= .55;
-  tune = trusted ? sitarLine(tune, key, h.bars) : phrasesOver(h.bars, key, tune);
+  const P = planCover(meta, h, tune, trusted, { inKey, slivers }), set = P.scale, rg = P.raga && RAGAS.find(r => r.id === P.raga);
+  tune = trusted ? sitarLine(tune, key, h.bars, B, set) : phrasesOver(h.bars, key, tune, B, set);
   if (!trusted) credit = 'raga-style phrases over the chords of the Apple Music preview';
-  const scale = key.mode === 'minor' ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11];
   const ms = tune.map(n => n.m).sort((a, b) => a - b), med = ms[ms.length >> 1];
   const sa = med - mod12(med - key.tonic);
-  const deg = d => { const o = Math.floor(d / 7), i = ((d % 7) + 7) % 7; return sa + 12 * o + scale[i]; };
+  const deg = d => { const n = set.length, o = Math.floor(d / n), i = ((d % n) + n) % n; return sa + 12 * o + set[i]; };
   const out = []; let t = 0;
   const put = (m, b) => { if (b > 1e-6) { out.push([m, b]); t += b; } };
   const restTo = x => { if (x > t + 1e-6) put(null, x - t); };
-  const INTRO = 12, pick = Math.max(0, -Math.min(...tune.map(n => n.b0)));
-  // alaap: Sa, a dip to the note below, then up to Ga and home, slow enough for the glides to bloom
-  const al = [[0, 2], [-1, 1], [0, 1.5], [1, 1], [2, 2.5], [1, 1]];
-  al.forEach(([d, b]) => put(deg(d), b)); put(deg(0), INTRO - pick - t);
+  const INTRO = 12, pick = Math.max(0, -Math.min(...tune.map(n => n.b0))), room = INTRO - pick;
+  // alaap: with a raga, its pakad (the phrase that identifies it), slow enough for the glides to bloom;
+  // otherwise Sa, a dip to the note below, then up to Ga and home
+  if (rg) {
+    const wt = a => a.slice(0, -1).reduce((x, _, i) => x + (i % 3 === 2 ? 1.5 : 1), 0);
+    let pk = rg.pakad.slice(); while (pk.length > 3 && (room - 2) / wt(pk) < .5) pk = pk.slice(1);
+    const base = Math.min(1.25, (room - 2) / wt(pk));
+    pk.forEach((sem, i) => put(sa + sem, i === pk.length - 1 ? 0 : base * (i % 3 === 2 ? 1.5 : 1)));
+    put(sa + pk[pk.length - 1], Math.max(1, room - t));
+  } else {
+    [[0, 2], [-1, 1], [0, 1.5], [1, 1], [2, 2.5], [1, 1]].forEach(([d, b]) => put(deg(d), b)); put(deg(0), room - t);
+  }
   const pass = (off, taan) => {
     tune.forEach(n => { const s0 = off + n.b0; if (s0 < t - 1e-6) return; restTo(s0); put(n.m, off + n.b1 - s0); });
-    // a quick taan up the scale fills an empty last half bar
-    if (taan && t <= off + M - 2 + 1e-6) { restTo(off + M - 2); for (let i = 0; i < 8; i++) put(deg(i), .25); }
+    // a quick taan up the raga's aroh (or the scale) fills an empty last half bar
+    if (taan && t <= off + M - 2 + 1e-6) { restTo(off + M - 2); const run = rg ? [...rg.aroh, ...rg.avroh.slice(1)] : [0, 1, 2, 3, 4, 5, 6, 7].map(i => deg(i) - sa); for (let i = 0; i < 8; i++) put(sa + run[i % run.length], .25); }
     restTo(off + M);
   };
   pass(INTRO, true); pass(INTRO + M, false);
-  // tihai: Ga Re Sa three times, the last Sa landing on the downbeat with the drum
-  for (let r = 0; r < 3; r++) { put(deg(2), .5); put(deg(1), .5); put(deg(0), r === 2 ? 4 : .5); }
+  // tihai: the last three notes of the descent (Ga Re Sa in most scales) three times, the last Sa on sam
+  const tail = rg ? rg.avroh.slice(-3) : [deg(2) - sa, deg(1) - sa, 0];
+  for (let r = 0; r < 3; r++) { put(sa + tail[0], .5); put(sa + tail[1], .5); put(sa + tail[2], r === 2 ? 4 : .5); }
   const E = INTRO + 2 * M, tonicName = PCN[key.tonic] + (key.mode === 'minor' ? 'm' : '');
   const cm = [`0:${tonicName}`];
   // the harmonium holds one chord of the key per bar, the way it supports a soloist
-  const keyPcs = scale.map(i => mod12(key.tonic + i));
+  const mode = MODES.find(m => m.id === key.modeId) || MODES.find(m => m.fam === key.mode), keyPcs = mode.s.map(i => mod12(key.tonic + i));
   const diat = name => { const c = chordTones(name, 0); if (!c) return tonicName; if (c.pcs.every(pc => keyPcs.includes(pc))) return name;
     let r = c.root; for (let k = 0; k < 12 && !keyPcs.includes(r); k++) r = mod12(r + 1); const i = keyPcs.indexOf(r); return PCN[r] + (mod12(keyPcs[(i + 2) % 7] - r) === 3 ? 'm' : ''); };
-  [INTRO, INTRO + M].forEach(off => h.bars.forEach((b, i) => cm.push(`${off + i * 4}:${diat(b[0])}`)));
+  [INTRO, INTRO + M].forEach(off => h.bars.forEach((b, i) => cm.push(`${off + i * B}:${diat(b[0])}`)));
   cm.push(`${E}:${tonicName}`);
   const notesTxt = out.map(([m, b]) => (m === null ? 'r' : nameOf(m)) + '/' + (+b.toFixed(3))).join(' ');
-  return `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${h.bpm}}\n{key: ${tonicName}}\n{groove: ${INTRO}}\n{chordmap: ${cm.join(' ')}}\n{comment: ${credit}}\n${notesTxt}`;
+  const pulse = P.pulse.map(p => p ? p.b + p.v + (p.c ? 'c' : '') : '-').join(' ');
+  const text = `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${h.bpm}}\n{key: ${tonicName}}\n{scale: ${set.join(' ')}}\n{meter: ${B}}\n{drone: ${P.drone}}\n{groove: ${INTRO} ${INTRO + M}}\n{pulse: ${pulse}}\n{swing: ${h.groove.swing}}\n{chordmap: ${cm.join(' ')}}\n{comment: ${credit}}\n${notesTxt}`;
+  return { text, plan: P.view, trusted };
 }
 function barsToSheet(bars) {
   const fmt = b => b.length === 1 ? `${b[0]} / / /` : `${b[0]} / ${b[1]} /`, lines = [];
@@ -3885,7 +4165,7 @@ async function findOnline(it) {
     let cover = null, chart = null;
     if (heard) { try {
       step('Listening for the tune…');
-      let mel = await extractMelody(heard.x, heard.SR, heard.beats, heard.key);
+      let mel = await extractMelody(heard.x, heard.SR, heard.beats, heard.key, heard.env, heard.fps);
       // the key from the chords and the tune together: the tune's long notes settle on the real Sa
       const hist = new Array(12).fill(0);
       heard.beatChords.forEach(c => { const ch = chordTones(c, 0); if (ch) ch.pcs.forEach((pc, i) => hist[pc] += i ? 1 : 2); });
@@ -3894,7 +4174,10 @@ async function findOnline(it) {
       const first = chordTones(heard.bars[0][0], 0);
       let key = { tonic: 0, mode: 'major' }, best = -9;
       for (let t = 0; t < 12; t++) { const rot = hist.map((_, i) => hist[(i + t) % 12]); for (const mode of ['major', 'minor']) { let sc = corr(rot, mode === 'major' ? KMAJ : KMIN); if (first && first.root === t && first.minor === (mode === 'minor')) sc += .12; if (sc > best) { best = sc; key = { tonic: t, mode }; } } }
-      if (key.tonic !== heard.key.tonic || key.mode !== heard.key.mode) { heard.key = key; mel = await extractMelody(heard.x, heard.SR, heard.beats, key); }
+      // which seven-note scale: a flat seventh (Khamaj), a natural sixth in minor (Kafi) and so on, so the tune's own notes aren't bent to fit
+      const mode = detectMode(hist, key); key.scale = mode.s; key.modeId = mode.id;
+      if (key.tonic !== heard.key.tonic || key.mode !== heard.key.mode || mode !== MODES.find(m => m.fam === key.mode)) { heard.key = key; mel = await extractMelody(heard.x, heard.SR, heard.beats, key, heard.env, heard.fps); } else heard.key = key;
+      step('Planning the arrangement: groove, raga, tala…');
       cover = coverText(meta, heard, mel, 'an Indian cover of the Apple Music preview');
     } catch (e) {} }
     // the chart service is slow or down at times: only wait for it when there is no cover
@@ -3902,13 +4185,13 @@ async function findOnline(it) {
     if (!live()) return;
     if (!cover && !chart && !(heard && heard.bars.length >= 4)) throw new Error('nochords');
     const credit = cover ? 'an Indian cover of the Apple Music preview' : chart ? 'chords from the Chordonomicon dataset' : 'chords worked out by ear from the Apple Music preview' + (heard.rough ? ', a rough guess' : '');
-    const text = cover || `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${heard ? heard.bpm : 96}}\n{comment: ${credit}}\n${chart || barsToSheet(heard.bars)}`;
-    const song = buildSong({ id: 'net-' + (meta.trackId || hash(norm(meta.title + '|' + meta.artist))), title: meta.title, artist: meta.artist, art: meta.art || null }, text);
+    const text = cover ? cover.text : `{title: ${meta.title}}\n{artist: ${meta.artist}}\n{tempo: ${heard ? heard.bpm : 96}}\n{comment: ${credit}}\n${chart || barsToSheet(heard.bars)}`;
+    const song = buildSong({ id: 'net-' + (meta.trackId || hash(norm(meta.title + '|' + meta.artist))), title: meta.title, artist: meta.artist, art: meta.art || null, plan: cover ? cover.plan : null }, text);
     saveSong(song);
-    say(cover && /raga-style/.test(cover)
-      ? `The sung line in the preview of ${meta.title} is too processed or busy to follow note for note on a sitar, so Sitarify kept the song's own chords and tempo (${heard.bpm} bpm) and plays raga-style phrases over them: an alaap, the groove with tabla, a taan and a tihai. Saved to your songs.`
+    say(cover && !cover.trusted
+      ? `The sung line in the preview of ${meta.title} is too processed or busy to follow note for note on a sitar, so Sitarify kept the song's own chords and tempo (${heard.bpm} bpm) and plays raga-style phrases over them, with the drums translated to tabla. See “How it was arranged” under the player. Saved to your songs.`
       : cover
-      ? `Sitarify listened to the 30-second Apple Music preview of ${meta.title}, picked out its tune, chords and tempo (${heard.bpm} bpm), and arranged them as a cover: an alaap over the drone, the tune twice with tabla, a fast taan and a tihai to finish. All worked out in your browser; saved to your songs.`
+      ? `Sitarify listened to the 30-second Apple Music preview of ${meta.title}, picked out its tune, chords and tempo (${heard.bpm} bpm), and arranged them as a cover, with the drums translated stroke by stroke to tabla. See “How it was arranged” under the player for each step. All worked out in your browser; saved to your songs.`
       : chart
       ? `Found a chord chart for ${meta.title} in Chordonomicon, a research dataset of charts written by Ultimate Guitar users (CC BY-NC 4.0). Tempo from the Apple Music preview. Saved to your songs.`
       : `Worked out ${heard.bars.length} bars of chords by listening to the 30-second Apple Music preview, right in your browser. ${heard.rough ? 'It was hard to hear, so treat it as a sketch. ' : ''}Saved to your songs; edit the chords below if you like.`);
@@ -4127,7 +4410,7 @@ if (/[?&]bench\b/.test(location.search)) setTimeout(async () => {
 })();
 loadSong(ragaSong(RAGAS[0], 20261019));
 requestAnimationFrame(frame);
-window.__sitarify = { sitarLine, phrasesOver, coverText, extractMelody, ragaSong, RAGAS, LIBRARY, S, eng, analyseAudio, decodePreview, findOnline, chordonomicon, chordonomiconSheet, spotifyIdFor, itunesFind, resolveStream, streamOf, barsToSheet, buildSong, parseTab, parseChordSheet, parseNoteList, parseMidi, parseMusicXML, parseSongLink, readDirectives, improviseRaga, RAGAS, SAMPLES, renderString, S, eng, setHarm, buildAccomp, ragaSong, importText, curBeat: () => curBeat() };
+window.__sitarify = { planCover, translateGroove, detectMode, renderPlan, sitarLine, phrasesOver, coverText, extractMelody, ragaSong, RAGAS, LIBRARY, S, eng, analyseAudio, decodePreview, findOnline, chordonomicon, chordonomiconSheet, spotifyIdFor, itunesFind, resolveStream, streamOf, barsToSheet, buildSong, parseTab, parseChordSheet, parseNoteList, parseMidi, parseMusicXML, parseSongLink, readDirectives, improviseRaga, RAGAS, SAMPLES, renderString, S, eng, setHarm, buildAccomp, ragaSong, importText, curBeat: () => curBeat() };
 })();
 </script>
 
