@@ -161,3 +161,19 @@ export function initChrome() {
   const tb = document.querySelector<HTMLButtonElement>("[data-to-top]");
   if (tb) { tb.classList.remove("is-on"); tb.hidden = true; }
 }
+
+
+// hidden links inside card blurbs (the card is a link, so these are spans that open a new tab)
+if (typeof document !== "undefined" && !(window as any).__gagBound) {
+  (window as any).__gagBound = true;
+  const openGag = (e: Event) => {
+    const g = (e.target as Element | null)?.closest?.<HTMLElement>("[data-gag]");
+    if (!g) return false;
+    e.preventDefault();
+    e.stopPropagation();
+    window.open(g.dataset.gag!, "_blank", "noopener");
+    return true;
+  };
+  document.addEventListener("click", (e) => { openGag(e); }, true);
+  document.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") openGag(e); }, true);
+}

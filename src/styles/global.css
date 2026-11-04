@@ -389,3 +389,7 @@ html[data-motion="off"] .gl, html[data-motion="off"] .gl-pop { transition-durati
 
 /* paused by idle.ts while off screen */
 .is-idle { animation-play-state: paused !important; }
+
+/* hidden links inside card blurbs */
+.gag { cursor: pointer; }
+.gag:hover, .gag:focus-visible { text-decoration: underline; text-underline-offset: 0.18em; }

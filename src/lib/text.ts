@@ -109,3 +109,17 @@ export function voiceFlags(lines: string[]): boolean[] {
     return flag;
   });
 }
+
+
+/** little hidden links inside card blurbs (cards are links themselves, so these are spans that open a new tab on click; see chrome.ts) */
+const GAGS: { phrase: string; href: string; label: string }[] = [
+  { phrase: "let's take a journey", href: "https://www.youtube.com/watch?v=F57P9C4SAW4", label: "opens the California Gurls video on youtube in a new tab" },
+];
+export function gag(html: string): string {
+  let out = html;
+  for (const g of GAGS) {
+    out = out.replace(g.phrase, `<span class="gag" role="link" tabindex="0" data-gag="${g.href}" aria-label="${g.phrase}: ${g.label}">${g.phrase}</span>`);
+  }
+  return out;
+}
+export const escapeHtml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

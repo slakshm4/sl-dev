@@ -1,7 +1,7 @@
 ---
 // WriteCard.astro  ·  one box in a drawer's grid. also used for the poems inside an anthology.
 import Sticker from "./Sticker.astro";
-import { readTime, plain } from "../lib/text";
+import { readTime, plain, gag } from "../lib/text";
 
 const { drawer, piece, n = 0, i = 0, href, tag = "", tilt } = Astro.props;
 const tilts = [-1.6, 1.2, -0.8, 1.7, -1.2, 0.9];
@@ -24,7 +24,7 @@ const foot = piece.date ?? (piece.parts ? `${piece.parts.length} ${drawer.slug =
         {piece.draft && <span class="stamp wlc-stamp">in the drafts</span>}
       </span>
       <span class="wlc-title">{piece.title}</span>
-      {piece.blurb && <span class="wlc-blurb" set:html={plain(piece.blurb)} />}
+      {piece.blurb && <span class="wlc-blurb" set:html={gag(plain(piece.blurb))} />}
       {foot && <span class="wlc-date keep-case">{foot}</span>}
     </span>
   </a>

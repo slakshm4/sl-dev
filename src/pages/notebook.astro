@@ -9,6 +9,7 @@ import Sprite from "../components/Sprite.astro";
 import Clip from "../components/Clip.astro";
 import HandArrow from "../components/HandArrow.astro";
 import { notebook } from "../data/notebook";
+import { gag, escapeHtml } from "../lib/text";
 
 const papers: Record<string, string[]> = {
   words: ["ruled"],
@@ -93,7 +94,7 @@ let counter = 0;
                           <span class="nbc-body">
                             <span class="nbc-title">{e.title}</span>
                             <span class={`chip chip--${s.tone} keep-case`}>{e.tag}</span>
-                            {e.blurb && <span class="nbc-blurb">{e.blurb}</span>}
+                            {e.blurb && <span class="nbc-blurb" set:html={gag(escapeHtml(e.blurb))} />}
                             {e.status === "draft" && <span class="stamp nbc-stamp keep-case">in the drafts</span>}
                             {e.external && <span class="nbc-out keep-case">opens in a new tab ↗</span>}
                           </span>
