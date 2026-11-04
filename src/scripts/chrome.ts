@@ -80,7 +80,18 @@ function stars(x: number, y: number) {
   }
 }
 
+let introShown = false;
+function showIntroNote() {
+  if (introShown) return;
+  introShown = true;
+  const note = document.querySelector<HTMLElement>(".a11y-note");
+  if (!note) return;
+  note.classList.add("is-intro");
+  window.setTimeout(() => note.classList.remove("is-intro"), 3000);
+}
+
 export function initChrome() {
+  showIntroNote();
   if (!wired) {
     wired = true;
     document.addEventListener("click", (e) => {
