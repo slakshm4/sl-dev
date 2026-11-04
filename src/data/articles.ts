@@ -64,8 +64,8 @@ const caseStudies: Piece[] = [
     body: [
       "a personality quiz that sorts you into species based on your choices. i made it for [Atelier Town](/projects/little-town), alongside the world of _The Providence Duology_.",
       "_The Providence Duology_ began, for me, with a question: what happens when a society becomes so afraid of its own ending that it decides some lives are more worth saving than others?",
-      "it's set in Elysia, an empire that's basically living on borrowed time. Eden starts out as just a number, 1415. he's an experiment who got out, and he's carrying proof of what the empire has done in the name of survival. the world around him runs on genetic control and who gets to inherit what, there's a lot of grief in it, and nobody ever asks who's paying for all that progress.",
-      "then there's Nivara, who has to face how cruel her own family's legacy turns out to be. a lot of the story is about whether you can trust someone again after they've betrayed you. people from totally different worlds keep trying to build something outside the systems that made them, and it's slow and messy.",
+      "Elysia is an empire built on borrowed time. Eden escapes it as 1415— no name, just a number— carrying evidence of what Elysia has done to stay alive. the whole world runs on genetics and inheritance, and nobody stops to ask who pays for any of it. (it's as cheerful as that sounds.)",
+      "then there's Nivara, who has to look at something cruel hidden in her own family's legacy. from there it's people from different worlds trying to trust each other after a betrayal, slowly and badly, and trying to build something that isn't the system that made them.",
       "_Forsaken_ and _Redeemer_ are about rebellion, and about refusing the future you were given.",
       "~> an uprising is on the horizon. [which side are you on?](https://which-alien-species-are-you-quiz.vercel.app/)",
     ],
