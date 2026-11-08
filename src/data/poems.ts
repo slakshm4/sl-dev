@@ -13,6 +13,18 @@ export const degenerescence = "degenerescence";
 
 export const poemPieces: Piece[] = [
   {
+    slug: "open-your-eyes",
+    title: "open your eyes.",
+    tags: ["prose poem"],
+    blurb: "open your eyes. they can hear you.",
+    pinned: true,
+    look: "stream",
+    stickers: ["eye", "ghost", "moon"],
+    body: [
+      "open your eyes. they can hear you. but i am unsure of whether you grasp the concept of being heard— does anyone hear you? steal my thumb my eye my face for the price of the newest iPhone hey siri, play disconnected by 5 seconds of summer on spotify oh my god have you heard they're coming in November? we NEED to go. Twenty-nine step everything shower. Have you tried this new victoria secret shake it up chic shea butter plumping firming body better because you can't go walking around showing off your ashy knees stretch marks cellulite it's unsightly! roulette genus close shave razors were buy one get one at costco, so I bought four! So economical, if you ignore the landfills filled with razor blades but it's worth it if it means i don't express my secondary sex characteristics. you must believe i curve love hip hug high waist white dove flare denim sale, sold! all in a size double zero, all in a day's work, but you know who else has that perfect milky smooth as a baby's bottom hairless untextured untainted so petite so skinny and small and innocent? what are you so worried about, don't be paranoid! it's not like the lawmakers feed from the hand of pedophiles, we're safe in this country. god bless this country, god bless a free land, but is god worth more than paper to you? look me in the eye. is god worth more than the coins in your piggy bank? i don't think so.",
+    ],
+  },
+  {
     slug: "degenerescence",
     title: "(dé)générescence",
     tags: ["anthology", "free verse"],

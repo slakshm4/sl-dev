@@ -92,6 +92,7 @@ const words: Drawer[] = [
           "i used to think death was the worst thing that could happen, since it makes a person unreachable. it's still brutal. i just can't get myself to treat ==brutal and bad as the same thing==.",
           "i was raised thinking life is one big cycle: karma, return, release. no idea what actually happens next. what i picture is ==a loop closing==: something finished, even though i wasn't ready to let go of its hand. there's an episode, [Chapter 7: Four Souls](https://open.spotify.com/episode/1cfQ6nXr2kCqBpeF5Bch7U?si=597ee447d62d4207), of _Midnight Burger_ (a fictional podcast about a transdimensional diner, don't ask) that goes into a similar idea.",
           "so no, death doesn't feel neat to me. but i don't ==call it a failure== anymore.",
+          "if death is simply a part of life, then why does it warrant the memorialization of people? real people. kids who then grow up with the false notion that martyrdom is a trait to aspire to, and not the tragic result of unending systemic failure.",
         ],
       },
       {
