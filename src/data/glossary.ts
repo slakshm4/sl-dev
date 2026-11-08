@@ -25,6 +25,9 @@ export const glossary: Gloss[] = [
   { term: "diaspora", match: ["diaspora"], def: "a people living away from their ancestral homeland, and the communities they build there." },
   { term: "NRI", match: ["NRI"], def: "non-resident Indian: a common term for Indian citizens living abroad, often used more loosely for the wider diaspora." },
 
+  // ── health words
+  { term: "licensed dental hygienist", match: ["licensed dental hygienist"], def: "in BC, a dental hygienist who trained through a four-year university degree and holds a licence to practise. registered dental hygienists have an 18-month college diploma instead. same profession, different training." },
+
   // ── ideas & art words
   { term: "chiaroscuro", match: ["chiaroscuro"], def: "an Italian art term for strong contrast between light and dark, used in painting to give a scene depth and drama." },
   { term: "allegory", match: ["allegory"], def: "a story whose characters and events stand in for bigger ideas." },
