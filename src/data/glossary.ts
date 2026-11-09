@@ -25,6 +25,10 @@ export const glossary: Gloss[] = [
   { term: "diaspora", match: ["diaspora"], def: "a people living away from their ancestral homeland, and the communities they build there." },
   { term: "NRI", match: ["NRI"], def: "non-resident Indian: a common term for Indian citizens living abroad, often used more loosely for the wider diaspora." },
 
+  { term: "martyrdom", match: ["martyrdom"], def: "being killed, or suffering greatly, for a cause or belief; a martyr is often remembered as a hero." },
+  { term: "memorialization", match: ["memorialization", "memorialize"], def: "honouring someone's memory through a monument, ritual, or public remembrance." },
+  { term: "systemic", match: ["systemic"], def: "built into the rules, habits, and institutions of a whole system, rather than caused by one person." },
+
   // ── health words
   { term: "licensed dental hygienist", match: ["licensed dental hygienist"], def: "in BC, a dental hygienist who trained through a four-year university degree and holds a licence to practise. registered dental hygienists have an 18-month college diploma instead. same profession, different training." },
 
