@@ -264,4 +264,20 @@ export const prosePieces: Piece[] = [
       "outside, the sun hits my face: real light, not fluorescent. for a second i wonder if this is a shadow too. i let the warmth in anyway. even if perfect truth stays out of reach, moments of clarity are still possible.",
     ],
   },
+  {
+    slug: "the-moth",
+    title: "the moth",
+    tags: ["short story"],
+    blurb: "i keep having this recurring dream. or maybe it's a memory.",
+    stickers: ["moon", "ghost"],
+    body: [
+      "i keep having this recurring dream. or maybe it's a memory. i was in the seventh grade, just started at a new school. i held in my hands a paperback, from the school library, i think. the spine was cracked white in three places, the cover soft and furred at the corners from all the other hands that had grazed it before me.",
+      "on its cover, a butterfly and a moth. they were sisters, though i can't remember their names. the pages were flimsy, yellowed and dusty. the print was too big, the drawings flat and a little off, colours bleeding past the lines. the butterfly got every colour in the box. the moth got mottled shades of grey and brown, powdery, her wings torn at the edges.",
+      "i remember thinking to myself, how come? i wondered if moths had been butterflies once, had had their colour drained from them. i thought back to depictions of depression in health class.",
+      "the moth looked so tired... and not a normal tired. it was a heavy, quiet, grey tired with no bottom to it. i never had siblings. still, i wondered what it was like to be the one nobody looks at, standing beside the one everybody does.",
+      "i thought, isn't it cruel? moths only come out at night. they eat holes in wool, in sweaters, in the good coats folded away in the cedar chest, and people set out poison for them. nobody is glad when they arrive. and still they go toward the flame. any flame. a candle in a window, a lantern on a porch. whatever is awake and warm while everyone else is asleep. they fly closer, and closer. the heat feels like being wanted. the small dry crackle of a wing catching.",
+      "_your sister is so beautiful, so perfect, so pure. i could never do this to her. you, though. you're a moth. you knew what flames do._",
+      "do you know a moth? i do.",
+    ],
+  },
 ];
