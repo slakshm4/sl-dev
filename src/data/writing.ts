@@ -92,7 +92,7 @@ const words: Drawer[] = [
           "i used to think death was the worst thing that could happen because it makes a person unavailable to you. i still think absence is brutal. but i have trouble with the concept of ==brutal and bad as synonyms of one another==.",
           "i was raised with the idea that life is part of a much larger cycle: karma, return, release. i don't pretend to know what happens next. but the image that stays with me is ==the closing of a loop==. something completed, even if i was not ready to stop holding its hand. there's an episode, [Chapter 7: Four Souls](https://open.spotify.com/episode/1cfQ6nXr2kCqBpeF5Bch7U?si=597ee447d62d4207), of _Midnight Burger_, a fictional podcast about a transdimensional diner (don't ask), that explores a similar concept.",
           "death itself i have mostly made peace with. but if death is simply a part of life, then why does it warrant the ==memorialization== of people? real people. kids who then grow up with the false notion that ==martyrdom== is a trait to aspire to, and not the tragic result of ==unending systemic failure==.",
-          "the way some people reach it, ==i have not==.",
+          "it's strange, really.",
         ],
       },
       {
